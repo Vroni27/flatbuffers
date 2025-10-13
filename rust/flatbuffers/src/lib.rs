@@ -42,22 +42,24 @@ mod get_root;
 mod primitives;
 mod push;
 mod table;
+mod union;
 mod vector;
 mod verifier;
 mod vtable;
 mod vtable_writer;
 
 pub use crate::array::{array_init, emplace_scalar_array, Array};
-pub use crate::builder::{Allocator, DefaultAllocator, FlatBufferBuilder};
+pub use crate::builder::{Allocator, BuildVector, DefaultAllocator, FlatBufferBuilder};
 pub use crate::endian_scalar::{emplace_scalar, read_scalar, read_scalar_at, EndianScalar};
 pub use crate::follow::{Follow, FollowStart};
 pub use crate::primitives::*;
 pub use crate::push::{Push, PushAlignment};
 pub use crate::table::{buffer_has_identifier, Table};
+pub use crate::union::{TaggedUnion, UnionVectorWIPOffsets, UnionWIPOffset};
 pub use crate::vector::{follow_cast_ref, Vector, VectorIter};
 pub use crate::verifier::{
-    ErrorTraceDetail, InvalidFlatbuffer, SimpleToVerifyInSlice, TableVerifier, Verifiable,
-    Verifier, VerifierOptions,
+    ErrorTraceDetail, InvalidFlatbuffer, SimpleToVerifyInSlice, TableVerifier, UnionVerifiable,
+    Verifiable, Verifier, VerifierOptions,
 };
 pub use crate::vtable::field_index_to_field_offset;
 pub use bitflags;

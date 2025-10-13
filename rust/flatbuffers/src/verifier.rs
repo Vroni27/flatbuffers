@@ -1,5 +1,5 @@
 use crate::follow::Follow;
-use crate::{ForwardsUOffset, SOffsetT, SkipSizePrefix, UOffsetT, VOffsetT, Vector, SIZE_UOFFSET};
+use crate::{ForwardsUOffset, SOffsetT, SkipSizePrefix, TaggedUnion, UOffsetT, VOffsetT, Vector, SIZE_UOFFSET};
 #[cfg(not(feature = "std"))]
 use alloc::vec::Vec;
 use core::ops::Range;
@@ -46,6 +46,18 @@ pub enum InvalidFlatbuffer {
     InconsistentUnion {
         field: Cow<'static, str>,
         field_type: Cow<'static, str>,
+        error_trace: ErrorTrace,
+    },
+    InconsistentUnionVector {
+        field: &'static str,
+        field_type: &'static str,
+        error_trace: ErrorTrace,
+    },
+    UnionVectorCountMismatch {
+        field: &'static str,
+        field_type: &'static str,
+        keys_count: usize,
+        vals_count: usize,
         error_trace: ErrorTrace,
     },
     Utf8Error {
@@ -98,6 +110,20 @@ impl core::fmt::Display for InvalidFlatbuffer {
                 writeln!(
                     f,
                     "Exactly one of union discriminant (`{}`) and value (`{}`) are present.\n{}",
+                    field_type, field, error_trace
+                )?;
+            }
+            InvalidFlatbuffer::InconsistentUnionVector { field, field_type, error_trace } => {
+                writeln!(
+                    f,
+                    "Only one of discriminants (`{}`) and values (`{}`) fields is present.\n{}",
+                    field_type, field, error_trace
+                )?;
+            }
+            InvalidFlatbuffer::UnionVectorCountMismatch { field, field_type, error_trace, .. } => {
+                writeln!(
+                    f,
+                    "Number of discriminants in (`{}`) and value in (`{}`) do not match.\n{}",
                     field_type, field, error_trace
                 )?;
             }
@@ -194,6 +220,30 @@ impl InvalidFlatbuffer {
             error_trace: Default::default(),
         })
     }
+    fn new_inconsistent_union_vector<T>(
+        field: &'static str,
+        field_type: &'static str,
+    ) -> Result<T> {
+        Err(Self::InconsistentUnionVector {
+            field,
+            field_type,
+            error_trace: Default::default(),
+        })
+    }
+    fn new_union_vector_count_mismatch<T>(
+        field: &'static str,
+        field_type: &'static str,
+        keys_count: usize,
+        vals_count: usize,
+    ) -> Result<T> {
+        Err(Self::UnionVectorCountMismatch {
+            field,
+            field_type,
+            keys_count,
+            vals_count,
+            error_trace: Default::default(),
+        })
+    }
     pub fn new_missing_required<T>(required: impl Into<Cow<'static, str>>) -> Result<T> {
         Err(Self::MissingRequiredField {
             required: required.into(),
@@ -210,6 +260,8 @@ fn append_trace<T>(mut res: Result<T>, d: ErrorTraceDetail) -> Result<T> {
         | Unaligned { error_trace, .. }
         | RangeOutOfBounds { error_trace, .. }
         | InconsistentUnion { error_trace, .. }
+        | InconsistentUnionVector { error_trace, .. }
+        | UnionVectorCountMismatch { error_trace, .. }
         | Utf8Error { error_trace, .. }
         | MissingNullTerminator { error_trace, .. }
         | SignedOffsetOutOfBounds { error_trace, .. } = e
@@ -450,23 +502,19 @@ impl<'ver, 'opts, 'buf> TableVerifier<'ver, 'opts, 'buf> {
         }
     }
     #[inline]
-    /// Union verification is complicated. The schemas passes this function the metadata of the
+    /// Union verification is complicated. The schemas pass this function the metadata of the
     /// union's key (discriminant) and value fields, and a callback. The function verifies and
-    /// reads the key, then invokes the callback to perform data-dependent verification.
-    pub fn visit_union<Key, UnionVerifier>(
+    /// reads the key, then invokes the trait function to perform data-dependent verification.
+    pub fn visit_union<T: TaggedUnion + UnionVerifiable<'buf>>(
         mut self,
         key_field_name: impl Into<Cow<'static, str>>,
         key_field_voff: VOffsetT,
         val_field_name: impl Into<Cow<'static, str>>,
         val_field_voff: VOffsetT,
         required: bool,
-        verify_union: UnionVerifier,
     ) -> Result<Self>
     where
-        Key: Follow<'buf> + Verifiable,
-        UnionVerifier:
-            (core::ops::FnOnce(<Key as Follow<'buf>>::Inner, &mut Verifier, usize) -> Result<()>),
-        // NOTE: <Key as Follow<'buf>>::Inner == Key
+        T::Tag: Follow<'buf> + Verifiable,
     {
         // TODO(caspern): how to trace vtable errors?
         let val_pos = self.deref(val_field_voff)?;
@@ -480,12 +528,12 @@ impl<'ver, 'opts, 'buf> TableVerifier<'ver, 'opts, 'buf> {
                 }
             }
             (Some(k), Some(v)) => {
-                trace_field(Key::run_verifier(self.verifier, k), key_field_name.into(), k)?;
+                trace_field(T::Tag::run_verifier(self.verifier, k), key_field_name.into(), k)?;
                 // Safety:
                 // Run verifier on `k` above
-                let discriminant = unsafe { Key::follow(self.verifier.buffer, k) };
+                let discriminant = unsafe { T::Tag::follow(self.verifier.buffer, k) };
                 trace_field(
-                    verify_union(discriminant, self.verifier, v),
+                    T::run_union_verifier(self.verifier, discriminant, v),
                     val_field_name.into(),
                     v,
                 )?;
@@ -497,10 +545,103 @@ impl<'ver, 'opts, 'buf> TableVerifier<'ver, 'opts, 'buf> {
             ),
         }
     }
+
+    #[inline]
+    /// Union vector verification is complicated. Schemas pass this function the metadata of the
+    /// union's keys (discriminants) and values fields. For each item the function verifies and
+    /// reads the key, then invokes the trait function to perform data-dependent verification.
+    pub fn visit_union_vector<T: TaggedUnion + UnionVerifiable<'buf>>(
+        mut self,
+        keys_vec_field_name: &'static str,
+        keys_vec_field_voff: VOffsetT,
+        vals_vec_field_name: &'static str,
+        vals_vec_field_voff: VOffsetT,
+        required: bool,
+    ) -> Result<Self>
+    where
+        T::Tag: Follow<'buf> + Verifiable,
+    {
+        let keys_vec_pos = self.deref(keys_vec_field_voff)?;
+        let vals_vec_pos = self.deref(vals_vec_field_voff)?;
+        match (keys_vec_pos, vals_vec_pos) {
+            (None, None) => {
+                if required {
+                    InvalidFlatbuffer::new_missing_required(vals_vec_field_name)
+                } else {
+                    Ok(self)
+                }
+            }
+            (Some(k), Some(v)) => {
+                let keys_offset = self.verifier.get_uoffset(k)? as usize;
+                let keys_pos = keys_offset.saturating_add(k);
+                let keys_range = trace_field(
+                    verify_vector_range::<T::Tag>(self.verifier, keys_pos),
+                    std::borrow::Cow::Borrowed(keys_vec_field_name),
+                    keys_pos,
+                )?;
+
+                let vals_offset = self.verifier.get_uoffset(v)? as usize;
+                let vals_pos = vals_offset.saturating_add(v);
+                let vals_range = trace_field(
+                    verify_vector_range::<ForwardsUOffset<T>>(self.verifier, vals_pos),
+                    std::borrow::Cow::Borrowed(vals_vec_field_name),
+                    vals_pos,
+                )?;
+
+                let key_size = std::mem::size_of::<T::Tag>();
+                let val_size = std::mem::size_of::<ForwardsUOffset<T>>();
+
+                let keys_count = keys_range.len() / key_size;
+                let vals_count = vals_range.len() / val_size;
+
+                if keys_count != vals_count {
+                    return InvalidFlatbuffer::new_union_vector_count_mismatch(
+                        keys_vec_field_name,
+                        vals_vec_field_name,
+                        keys_count,
+                        vals_count,
+                    );
+                }
+
+                keys_range
+                    .step_by(key_size)
+                    .zip(vals_range.step_by(val_size))
+                    .fold(Ok(self), |result, kv| match result {
+                        Ok(verifier) => verifier.visit_union::<T>(
+                            keys_vec_field_name,
+                            kv.0 as u16,
+                            vals_vec_field_name,
+                            kv.1 as u16,
+                            false,
+                        ),
+                        Err(err) => Err(err),
+                    })
+            }
+            _ => InvalidFlatbuffer::new_inconsistent_union_vector(
+                keys_vec_field_name,
+                vals_vec_field_name,
+            ),
+        }
+    }
+
     pub fn finish(self) -> &'ver mut Verifier<'opts, 'buf> {
         self.verifier.depth -= 1;
         self.verifier
     }
+}
+
+pub trait UnionVerifiable<'a>: TaggedUnion
+where
+    <Self as TaggedUnion>::Tag: Follow<'a>,
+{
+    /// Runs a verifier for a union type,
+    /// assuming it is at position `pos` in the verifier's buffer.
+    /// Should not need to be called directly.
+    fn run_union_verifier(
+        v: &mut Verifier,
+        tag: <<Self as TaggedUnion>::Tag as Follow<'a>>::Inner,
+        pos: usize,
+    ) -> Result<()>;
 }
 
 // Needs to be implemented for Tables and maybe structs.

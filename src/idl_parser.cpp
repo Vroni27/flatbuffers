@@ -977,7 +977,6 @@ CheckedError Parser::ParseField(StructDef& struct_def) {
 
   } else if (IsVector(type) && type.element == BASE_TYPE_UNION) {
     advanced_features_ |= reflection::AdvancedUnionFeatures;
-    // Only cpp, js and ts supports the union vector feature so far.
     if (!SupportsAdvancedUnionFeatures()) {
       return Error(
           "Vectors of unions are not yet supported in at least one of "
@@ -2751,7 +2750,7 @@ bool Parser::SupportsAdvancedUnionFeatures() const {
           ~(IDLOptions::kCpp | IDLOptions::kTs | IDLOptions::kPhp |
             IDLOptions::kJava | IDLOptions::kCSharp | IDLOptions::kKotlin |
             IDLOptions::kBinary | IDLOptions::kSwift | IDLOptions::kNim |
-            IDLOptions::kJson | IDLOptions::kKotlinKmp)) == 0;
+            IDLOptions::kJson | IDLOptions::kKotlinKmp | IDLOptions::kRust)) == 0;
 }
 
 bool Parser::SupportsAdvancedArrayFeatures() const {
