@@ -1075,7 +1075,7 @@ class RustGenerator : public BaseGenerator {
     code_ += "#[derive(Debug, Clone, PartialEq)]";
     code_ += "{{ACCESS_TYPE}} enum {{ENUM_OTY}} {";
     code_ += "  NONE,";
-    ForAllUnionObjectVariantsBesidesNone(enum_def, [&](const EnumVal& ev) {
+    ForAllUnionObjectVariantsBesidesNone(enum_def, [&]([[maybe_unused]] const EnumVal& ev) {
       code_ += "  {{NATIVE_VARIANT}}(Box<{{NATIVE_U_ELEMENT_TYPE}}>),";
     });
     code_ += "}";
@@ -1094,7 +1094,7 @@ class RustGenerator : public BaseGenerator {
     code_ += "  pub fn {{ENUM_FN}}_type(&self) -> {{ENUM_TY}} {";
     code_ += "    match self {";
     code_ += "      Self::NONE => {{ENUM_TY}}::NONE,";
-    ForAllUnionObjectVariantsBesidesNone(enum_def, [&](const EnumVal& ev) {
+    ForAllUnionObjectVariantsBesidesNone(enum_def, [&]([[maybe_unused]] const EnumVal& ev) {
       code_ +=
           "    Self::{{NATIVE_VARIANT}}(_) => {{ENUM_TY}}::"
           "{{VARIANT_NAME}},";
@@ -1109,7 +1109,7 @@ class RustGenerator : public BaseGenerator {
         " {";
     code_ += "    match self {";
     code_ += "      Self::NONE => None,";
-    ForAllUnionObjectVariantsBesidesNone(enum_def, [&](const EnumVal& ev) {
+    ForAllUnionObjectVariantsBesidesNone(enum_def, [&]([[maybe_unused]] const EnumVal& ev) {
       if (IsString(ev.union_type)) {
         code_.SetValue("PACK_FUNCTION_CALL", "fbb.create_string(v.as_str())");
       } else if (IsStruct(ev.union_type)) {
@@ -1126,7 +1126,7 @@ class RustGenerator : public BaseGenerator {
     code_ += "  }";
 
     // Generate some accessors;
-    ForAllUnionObjectVariantsBesidesNone(enum_def, [&](const EnumVal& ev) {
+    ForAllUnionObjectVariantsBesidesNone(enum_def, [&]([[maybe_unused]] const EnumVal& ev) {
       // Move accessor.
       code_ +=
           "/// If the union variant matches, return the owned "
@@ -2344,7 +2344,7 @@ class RustGenerator : public BaseGenerator {
             code_ += "    match self.{{UNION_TYPE_METHOD}}() {";
             code_ += "      {{ENUM_TY}}::NONE => (),";
             ForAllUnionObjectVariantsBesidesNone(
-                enum_def, [&](const EnumVal& ev) {
+                enum_def, [&]([[maybe_unused]] const EnumVal& ev) {
                   code_.SetValue("FIELD", namer_.Field(field));
                   code_ += "      {{ENUM_TY}}::{{VARIANT_NAME}} => {";
                   code_ +=
