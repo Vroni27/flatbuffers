@@ -24,6 +24,7 @@ use core::str::from_utf8_unchecked;
 use crate::endian_scalar::read_scalar_at;
 use crate::follow::Follow;
 use crate::primitives::*;
+use crate::read_buffer::ReadBuffer;
 
 pub struct Vector<'a, T: 'a>(&'a [u8], usize, PhantomData<T>);
 
@@ -72,7 +73,7 @@ impl<'a, T: 'a> Vector<'a, T> {
     pub fn len(&self) -> usize {
         // Safety:
         // Valid vector at time of construction starting with UOffsetT element count
-        unsafe { read_scalar_at::<UOffsetT>(self.0, self.1) as usize }
+        unsafe { read_scalar_at::<UOffsetT, [u8]>(self.0, self.1) as usize }
     }
 
     #[inline(always)]
@@ -152,7 +153,7 @@ pub unsafe fn follow_cast_ref<'a, T: Sized + 'a>(buf: &'a [u8], loc: usize) -> &
 impl<'a> Follow<'a> for &'a str {
     type Inner = &'a str;
     unsafe fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
-        let len = read_scalar_at::<UOffsetT>(buf, loc) as usize;
+        let len = read_scalar_at::<UOffsetT, [u8]>(buf, loc) as usize;
         let slice = &buf[loc + SIZE_UOFFSET..loc + SIZE_UOFFSET + len];
         from_utf8_unchecked(slice)
     }
@@ -161,16 +162,24 @@ impl<'a> Follow<'a> for &'a str {
 impl<'a> Follow<'a> for &'a [u8] {
     type Inner = &'a [u8];
     unsafe fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
-        let len = read_scalar_at::<UOffsetT>(buf, loc) as usize;
+        let len = read_scalar_at::<UOffsetT, [u8]>(buf, loc) as usize;
         &buf[loc + SIZE_UOFFSET..loc + SIZE_UOFFSET + len]
     }
 }
 
 /// Implement Follow for all possible Vectors that have Follow-able elements.
-impl<'a, T: Follow<'a> + 'a> Follow<'a> for Vector<'a, T> {
+///
+/// The vector struct itself stores `&'a [u8]` (obtained via
+/// [`ReadBuffer::bytes`]) so that its internal element accessors keep working
+/// unchanged regardless of the backing buffer type.
+impl<'a, T: Follow<'a> + 'a, B: ReadBuffer + ?Sized> Follow<'a, B> for Vector<'a, T> {
     type Inner = Vector<'a, T>;
-    unsafe fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
-        Vector::new(buf, loc)
+    unsafe fn follow(buf: &'a B, loc: usize) -> Self::Inner {
+        // Pin the full buffer as a contiguous slice tied to 'a.
+        // For plain [u8] this is a zero-cost sub-slice; for a pager it
+        // commits those pages to stay resident for 'a.
+        let full = buf.bytes(0, buf.len());
+        Vector::new(full, loc)
     }
 }
 

@@ -15,6 +15,7 @@
  */
 
 use crate::follow::Follow;
+use crate::read_buffer::ReadBuffer;
 use crate::vector::VectorIter;
 use crate::EndianScalar;
 use core::fmt::{Debug, Formatter, Result};
@@ -85,11 +86,19 @@ impl<'a, T: Follow<'a> + Debug, const N: usize> From<Array<'a, T, N>> for [T::In
 }
 
 /// Implement Follow for all possible Arrays that have Follow-able elements.
-impl<'a, T: Follow<'a> + 'a, const N: usize> Follow<'a> for Array<'a, T, N> {
+///
+/// The array struct stores a `&'a [u8]` slice obtained via
+/// [`ReadBuffer::bytes`], so element accessors remain unchanged.
+impl<'a, T: Follow<'a> + 'a, const N: usize, B: ReadBuffer + ?Sized> Follow<'a, B>
+    for Array<'a, T, N>
+{
     type Inner = Array<'a, T, N>;
     #[inline(always)]
-    unsafe fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
-        Array::new(&buf[loc..loc + N * size_of::<T>()])
+    unsafe fn follow(buf: &'a B, loc: usize) -> Self::Inner {
+        let len = N * size_of::<T>();
+        // Safety: caller guarantees buf is valid; bytes() ties lifetime to 'a.
+        let slice = buf.bytes(loc, len);
+        Array::new(slice)
     }
 }
 

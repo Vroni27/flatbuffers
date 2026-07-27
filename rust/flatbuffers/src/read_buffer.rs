@@ -136,7 +136,29 @@ pub unsafe trait ReadBuffer {
     ///
     /// Implementations may panic if `offset + len > self.len()`.
     fn pin_bytes(&self, offset: usize, len: usize) -> Self::PageGuard<'_>;
-
+    /// Returns a byte slice tied to the buffer's **own** lifetime `'a`.
+    ///
+    /// Unlike [`pin_bytes`][ReadBuffer::pin_bytes], the returned reference is
+    /// not mediated by a guard — it borrows directly from `&'a self`. This is
+    /// used by [`Follow`][crate::Follow] implementations that must return
+    /// references (e.g. `&str`, `&[u8]`, inline arrays) whose lifetime equals
+    /// the buffer's lifetime, not just the duration of a pin.
+    ///
+    /// For a plain `[u8]` this is a zero-cost sub-slice. For a pager, this
+    /// commits that the addressed page(s) stay resident and at a **stable
+    /// address** for the entire lifetime `'a` of the `&'a Self` reference —
+    /// effectively pinning them until no more buffer borrows exist.
+    ///
+    /// # Safety
+    ///
+    /// - `offset + len <= self.len()`.
+    /// - The implementor must ensure the returned bytes remain valid and at the
+    ///   same virtual address for all of `'a`.
+    ///
+    /// # Panics
+    ///
+    /// May panic if `offset + len > self.len()`.
+    unsafe fn bytes<'a>(&'a self, offset: usize, len: usize) -> &'a [u8];
     /// Returns the total number of bytes in the buffer.
     fn len(&self) -> usize;
 
@@ -160,6 +182,11 @@ unsafe impl ReadBuffer for [u8] {
 
     #[inline]
     fn pin_bytes(&self, offset: usize, len: usize) -> &[u8] {
+        &self[offset..offset + len]
+    }
+
+    #[inline]
+    unsafe fn bytes<'a>(&'a self, offset: usize, len: usize) -> &'a [u8] {
         &self[offset..offset + len]
     }
 

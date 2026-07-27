@@ -744,7 +744,7 @@ impl<'fbb, A: Allocator> FlatBufferBuilder<'fbb, A> {
                 let old_vtable_pos = self.allocator.len() - *old_vtable_revpos as usize;
                 // Safety:
                 // Already written vtables are valid by construction
-                let old_vtable = unsafe { VTable::init(&self.allocator, old_vtable_pos) };
+                let old_vtable = unsafe { VTable::init(&*self.allocator, old_vtable_pos) };
                 new_vt_bytes.cmp(old_vtable.as_bytes())
             });
         let final_vtable_revpos = match found {

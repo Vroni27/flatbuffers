@@ -16,17 +16,42 @@
 
 use crate::follow::Follow;
 use crate::primitives::*;
+use crate::read_buffer::ReadBuffer;
 use crate::vtable::VTable;
 
-#[derive(Clone, Copy, Debug, PartialEq, Eq)]
-pub struct Table<'a> {
-    buf: &'a [u8],
+/// A FlatBuffers table accessor.
+///
+/// The generic parameter `B` is the backing buffer type (defaults to `[u8]`).
+/// All existing call-sites using `Table<'a>` continue to work unchanged.
+pub struct Table<'a, B: ReadBuffer + ?Sized = [u8]> {
+    buf: &'a B,
     loc: usize,
 }
 
-impl<'a> Table<'a> {
+// Manual trait impls — derive would add incorrect `B: Trait` bounds because
+// `[u8]` is not `Copy`, `Eq`, etc., even though `&'a [u8]` is.
+impl<B: ReadBuffer + ?Sized> Copy for Table<'_, B> {}
+impl<B: ReadBuffer + ?Sized> Clone for Table<'_, B> {
     #[inline]
-    pub fn buf(&self) -> &'a [u8] {
+    fn clone(&self) -> Self {
+        *self
+    }
+}
+impl<B: ReadBuffer + ?Sized> core::fmt::Debug for Table<'_, B> {
+    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
+        f.debug_struct("Table").field("loc", &self.loc).finish()
+    }
+}
+impl<B: ReadBuffer + ?Sized + PartialEq> PartialEq for Table<'_, B> {
+    fn eq(&self, other: &Self) -> bool {
+        self.buf == other.buf && self.loc == other.loc
+    }
+}
+impl<B: ReadBuffer + ?Sized + Eq> Eq for Table<'_, B> {}
+
+impl<'a, B: ReadBuffer + ?Sized> Table<'a, B> {
+    #[inline]
+    pub fn buf(&self) -> &'a B {
         self.buf
     }
 
@@ -39,25 +64,24 @@ impl<'a> Table<'a> {
     ///
     /// `buf` must contain a `soffset_t` at `loc`, which points to a valid vtable
     #[inline]
-    pub unsafe fn new(buf: &'a [u8], loc: usize) -> Self {
+    pub unsafe fn new(buf: &'a B, loc: usize) -> Self {
         Table { buf, loc }
     }
 
     #[inline]
-    pub fn vtable(&self) -> VTable<'a> {
-        // Safety:
-        // Table::new is created with a valid buf and location
-        unsafe { <BackwardsSOffset<VTable<'a>>>::follow(self.buf, self.loc) }
+    pub fn vtable(&self) -> VTable<'a, B> {
+        // Safety: Table::new is created with a valid buf and location
+        unsafe { <BackwardsSOffset<VTable<'a, B>>>::follow(self.buf, self.loc) }
     }
 
     /// Retrieves the value at the provided `slot_byte_loc` returning `default`
-    /// if no value present
+    /// if no value present.
     ///
     /// # Safety
     ///
-    /// The value of the corresponding slot must have type T
+    /// The value of the corresponding slot must have type T.
     #[inline]
-    pub unsafe fn get<T: Follow<'a> + 'a>(
+    pub unsafe fn get<T: Follow<'a, B> + 'a>(
         &self,
         slot_byte_loc: VOffsetT,
         default: Option<T::Inner>,
@@ -70,10 +94,10 @@ impl<'a> Table<'a> {
     }
 }
 
-impl<'a> Follow<'a> for Table<'a> {
-    type Inner = Table<'a>;
+impl<'a, B: ReadBuffer + ?Sized> Follow<'a, B> for Table<'a, B> {
+    type Inner = Table<'a, B>;
     #[inline]
-    unsafe fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+    unsafe fn follow(buf: &'a B, loc: usize) -> Self::Inner {
         Table { buf, loc }
     }
 }
@@ -85,13 +109,11 @@ pub fn buffer_has_identifier(data: &[u8], ident: &str, size_prefixed: bool) -> b
 
     let got = if size_prefixed {
         assert!(data.len() >= SIZE_SIZEPREFIX + SIZE_UOFFSET + FILE_IDENTIFIER_LENGTH);
-        // Safety:
-        // Verified data has sufficient bytes
+        // Safety: Verified data has sufficient bytes
         unsafe { <SkipSizePrefix<SkipRootOffset<FileIdentifier>>>::follow(data, 0) }
     } else {
         assert!(data.len() >= SIZE_UOFFSET + FILE_IDENTIFIER_LENGTH);
-        // Safety:
-        // Verified data has sufficient bytes
+        // Safety: Verified data has sufficient bytes
         unsafe { <SkipRootOffset<FileIdentifier>>::follow(data, 0) }
     };
 

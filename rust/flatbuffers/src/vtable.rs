@@ -17,22 +17,33 @@
 use crate::endian_scalar::read_scalar_at;
 use crate::follow::Follow;
 use crate::primitives::*;
+use crate::read_buffer::ReadBuffer;
 
 /// VTable encapsulates read-only usage of a vtable. It is only to be used
 /// by generated code.
-#[derive(Debug)]
-pub struct VTable<'a> {
-    buf: &'a [u8],
+///
+/// The generic parameter `B` is the backing buffer type (defaults to `[u8]`).
+pub struct VTable<'a, B: ReadBuffer + ?Sized = [u8]> {
+    buf: &'a B,
     loc: usize,
 }
 
-impl<'a> PartialEq for VTable<'a> {
-    fn eq(&self, other: &VTable) -> bool {
-        self.as_bytes().eq(other.as_bytes())
+impl<B: ReadBuffer + ?Sized> core::fmt::Debug for VTable<'_, B> {
+    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
+        f.debug_struct("VTable")
+            .field("bytes", &self.as_bytes())
+            .field("loc", &self.loc)
+            .finish()
     }
 }
 
-impl<'a> VTable<'a> {
+impl<B: ReadBuffer + ?Sized + PartialEq> PartialEq for VTable<'_, B> {
+    fn eq(&self, other: &Self) -> bool {
+        self.as_bytes() == other.as_bytes()
+    }
+}
+
+impl<'a, B: ReadBuffer + ?Sized> VTable<'a, B> {
     /// SAFETY
     /// `buf` must contain a valid vtable at `loc`
     ///
@@ -40,7 +51,7 @@ impl<'a> VTable<'a> {
     /// - size of vtable in bytes including size element
     /// - size of object in bytes including the vtable offset
     /// - n fields where n is the number of fields in the table's schema when the code was compiled
-    pub unsafe fn init(buf: &'a [u8], loc: usize) -> Self {
+    pub unsafe fn init(buf: &'a B, loc: usize) -> Self {
         VTable { buf, loc }
     }
 
@@ -49,28 +60,23 @@ impl<'a> VTable<'a> {
     }
 
     pub fn num_bytes(&self) -> usize {
-        // Safety:
-        // Valid VTable at time of construction
-        unsafe { read_scalar_at::<VOffsetT>(self.buf, self.loc) as usize }
+        // Safety: Valid VTable at time of construction
+        unsafe { read_scalar_at::<VOffsetT, B>(self.buf, self.loc) as usize }
     }
 
     pub fn object_inline_num_bytes(&self) -> usize {
-        // Safety:
-        // Valid VTable at time of construction
-        let n = unsafe { read_scalar_at::<VOffsetT>(self.buf, self.loc + SIZE_VOFFSET) };
+        // Safety: Valid VTable at time of construction
+        let n = unsafe { read_scalar_at::<VOffsetT, B>(self.buf, self.loc + SIZE_VOFFSET) };
         n as usize
     }
 
     pub fn get_field(&self, idx: usize) -> VOffsetT {
-        // TODO(rw): distinguish between None and 0?
         if idx > self.num_fields() {
             return 0;
         }
-
-        // Safety:
-        // Valid VTable at time of construction
+        // Safety: Valid VTable at time of construction
         unsafe {
-            read_scalar_at::<VOffsetT>(
+            read_scalar_at::<VOffsetT, B>(
                 self.buf,
                 self.loc + SIZE_VOFFSET + SIZE_VOFFSET + SIZE_VOFFSET * idx,
             )
@@ -78,18 +84,17 @@ impl<'a> VTable<'a> {
     }
 
     pub fn get(&self, byte_loc: VOffsetT) -> VOffsetT {
-        // TODO(rw): distinguish between None and 0?
         if byte_loc as usize + 2 > self.num_bytes() {
             return 0;
         }
-        // Safety:
-        // byte_loc is within bounds of vtable, which was valid at time of construction
-        unsafe { read_scalar_at::<VOffsetT>(self.buf, self.loc + byte_loc as usize) }
+        // Safety: byte_loc is within bounds of vtable
+        unsafe { read_scalar_at::<VOffsetT, B>(self.buf, self.loc + byte_loc as usize) }
     }
 
-    pub fn as_bytes(&self) -> &[u8] {
+    pub fn as_bytes(&self) -> &'a [u8] {
         let len = self.num_bytes();
-        &self.buf[self.loc..self.loc + len]
+        // Safety: valid vtable with known byte length at construction time
+        unsafe { self.buf.bytes(self.loc, len) }
     }
 }
 
@@ -107,9 +112,9 @@ pub fn field_offset_to_field_index(field_o: VOffsetT) -> VOffsetT {
     (field_o / (SIZE_VOFFSET as VOffsetT)) - fixed_fields
 }
 
-impl<'a> Follow<'a> for VTable<'a> {
-    type Inner = VTable<'a>;
-    unsafe fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+impl<'a, B: ReadBuffer + ?Sized> Follow<'a, B> for VTable<'a, B> {
+    type Inner = VTable<'a, B>;
+    unsafe fn follow(buf: &'a B, loc: usize) -> Self::Inner {
         VTable::init(buf, loc)
     }
 }

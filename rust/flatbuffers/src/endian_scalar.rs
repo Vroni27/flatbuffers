@@ -17,6 +17,8 @@
 
 use core::mem::size_of;
 
+use crate::read_buffer::ReadBuffer;
+
 mod private {
     /// Types that are trivially transmutable are those where any combination of bits
     /// represents a valid value of that type
@@ -154,13 +156,22 @@ pub unsafe fn emplace_scalar<T: EndianScalar>(s: &mut [u8], x: T) {
     );
 }
 
-/// Read an EndianScalar from the provided byte slice at the specified location.
+/// Read an EndianScalar from the provided buffer at the specified location.
 /// Performs endian conversion, if necessary.
+///
+/// The buffer is accessed through the [`ReadBuffer`] trait, so any backing
+/// store — plain `[u8]` slice or a user-space pager — works here.
+///
 /// # Safety
-/// Caller must ensure `s.len() >= loc + size_of::<T>()`.
+/// Caller must ensure `buf.len() >= loc + size_of::<T>()`.
 #[inline]
-pub unsafe fn read_scalar_at<T: EndianScalar>(s: &[u8], loc: usize) -> T {
-    read_scalar(&s[loc..])
+pub unsafe fn read_scalar_at<T: EndianScalar, B: ReadBuffer + ?Sized>(
+    buf: &B,
+    loc: usize,
+) -> T {
+    let size = size_of::<T::Scalar>();
+    let guard = buf.pin_bytes(loc, size);
+    read_scalar::<T>(&*guard)
 }
 
 /// Read an EndianScalar from the provided byte slice. Performs endian

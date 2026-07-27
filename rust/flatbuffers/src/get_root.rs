@@ -15,7 +15,7 @@
  */
 
 use crate::{
-    Follow, ForwardsUOffset, InvalidFlatbuffer, SkipSizePrefix, Verifiable, Verifier,
+    Follow, ForwardsUOffset, InvalidFlatbuffer, ReadBuffer, SkipSizePrefix, Verifiable, Verifier,
     VerifierOptions,
 };
 
@@ -47,7 +47,7 @@ where
     <ForwardsUOffset<T>>::run_verifier(&mut v, 0)?;
     // Safety:
     // Run verifier above
-    Ok(unsafe { root_unchecked::<T>(data) })
+    Ok(unsafe { root_unchecked::<T, [u8]>(data) })
 }
 
 #[inline]
@@ -79,7 +79,7 @@ where
     <SkipSizePrefix<ForwardsUOffset<T>>>::run_verifier(&mut v, 0)?;
     // Safety:
     // Run verifier above
-    Ok(unsafe { size_prefixed_root_unchecked::<T>(data) })
+    Ok(unsafe { size_prefixed_root_unchecked::<T, [u8]>(data) })
 }
 
 #[inline]
@@ -89,9 +89,9 @@ where
 /// `root` functions, this does not validate the flatbuffer before returning the accessor. Users
 /// must trust `data` contains a valid flatbuffer (e.g. b/c it was built by your software). Reading
 /// unchecked buffers may cause panics or even UB.
-pub unsafe fn root_unchecked<'buf, T>(data: &'buf [u8]) -> T::Inner
+pub unsafe fn root_unchecked<'buf, T, B: ReadBuffer + ?Sized>(data: &'buf B) -> T::Inner
 where
-    T: Follow<'buf> + 'buf,
+    T: Follow<'buf, B> + 'buf,
 {
     <ForwardsUOffset<T>>::follow(data, 0)
 }
@@ -103,9 +103,9 @@ where
 /// `root` functions, this does not validate the flatbuffer before returning the accessor. Users
 /// must trust `data` contains a valid flatbuffer (e.g. b/c it was built by your software). Reading
 /// unchecked buffers may cause panics or even UB.
-pub unsafe fn size_prefixed_root_unchecked<'buf, T>(data: &'buf [u8]) -> T::Inner
+pub unsafe fn size_prefixed_root_unchecked<'buf, T, B: ReadBuffer + ?Sized>(data: &'buf B) -> T::Inner
 where
-    T: Follow<'buf> + 'buf,
+    T: Follow<'buf, B> + 'buf,
 {
     <SkipSizePrefix<ForwardsUOffset<T>>>::follow(data, 0)
 }
