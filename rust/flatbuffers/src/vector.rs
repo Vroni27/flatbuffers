@@ -139,31 +139,34 @@ impl<'a, T: Follow<'a> + 'a> Vector<'a, T> {
 
 /// # Safety
 ///
-/// `buf` must contain a value of T at `loc` and have alignment of 1
-pub unsafe fn follow_cast_ref<'a, T: Sized + 'a>(buf: &'a [u8], loc: usize) -> &'a T {
+/// `buf` must contain a value of T at `loc` and have alignment of 1.
+/// For any `B: ReadBuffer`, `buf.bytes(loc, size_of::<T>())` must be valid.
+pub unsafe fn follow_cast_ref<'a, T: Sized + 'a, B: ReadBuffer + ?Sized>(buf: &'a B, loc: usize) -> &'a T {
     assert_eq!(align_of::<T>(), 1);
     let sz = size_of::<T>();
-    let buf = &buf[loc..loc + sz];
-    let ptr = buf.as_ptr() as *const T;
+    // SAFETY: caller guarantees valid data; bytes() ties lifetime to 'a.
+    let slice = unsafe { buf.bytes(loc, sz) };
+    let ptr = slice.as_ptr() as *const T;
     // SAFETY
     // buf contains a value at loc of type T and T has no alignment requirements
-    &*ptr
+    unsafe { &*ptr }
 }
 
-impl<'a> Follow<'a> for &'a str {
+impl<'a, B: ReadBuffer + ?Sized> Follow<'a, B> for &'a str {
     type Inner = &'a str;
-    unsafe fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
-        let len = read_scalar_at::<UOffsetT, [u8]>(buf, loc) as usize;
-        let slice = &buf[loc + SIZE_UOFFSET..loc + SIZE_UOFFSET + len];
-        from_utf8_unchecked(slice)
+    unsafe fn follow(buf: &'a B, loc: usize) -> Self::Inner {
+        let len = unsafe { read_scalar_at::<UOffsetT, B>(buf, loc) } as usize;
+        // SAFETY: caller guarantees valid UTF-8 bytes at this location.
+        let bytes = unsafe { buf.bytes(loc + SIZE_UOFFSET, len) };
+        unsafe { from_utf8_unchecked(bytes) }
     }
 }
 
-impl<'a> Follow<'a> for &'a [u8] {
+impl<'a, B: ReadBuffer + ?Sized> Follow<'a, B> for &'a [u8] {
     type Inner = &'a [u8];
-    unsafe fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
-        let len = read_scalar_at::<UOffsetT, [u8]>(buf, loc) as usize;
-        &buf[loc + SIZE_UOFFSET..loc + SIZE_UOFFSET + len]
+    unsafe fn follow(buf: &'a B, loc: usize) -> Self::Inner {
+        let len = unsafe { read_scalar_at::<UOffsetT, B>(buf, loc) } as usize;
+        unsafe { buf.bytes(loc + SIZE_UOFFSET, len) }
     }
 }
 

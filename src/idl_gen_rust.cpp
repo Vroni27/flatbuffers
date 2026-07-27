@@ -873,13 +873,13 @@ class RustGenerator : public BaseGenerator {
     }
 
     // Generate Follow and Push so we can serialize and stuff.
-    code_ += "impl<'a> flatbuffers::Follow<'a> for {{ENUM_TY}} {";
+    code_ += "impl<'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'a, B> for {{ENUM_TY}} {";
     code_ += "  type Inner = Self;";
     code_ += "  #[inline]";
-    code_ += "  unsafe fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {";
+    code_ += "  unsafe fn follow(buf: &'a B, loc: usize) -> Self::Inner {";
     code_ +=
         "    let b = unsafe { "
-        "flatbuffers::read_scalar_at::<{{BASE_TYPE}}>(buf, loc) };";
+        "flatbuffers::read_scalar_at::<{{BASE_TYPE}}, B>(buf, loc) };";
     if (IsBitFlagsEnum(enum_def)) {
       code_ += "    Self::from_bits_retain(b)";
     } else {
@@ -1573,10 +1573,15 @@ class RustGenerator : public BaseGenerator {
   }
 
   std::string GenTableAccessorFuncReturnType(const FieldDef& field,
-                                             const std::string& lifetime) {
+                                             const std::string& lifetime,
+                                             bool with_buf_type = false) {
     const Type& type = field.value.type;
     const auto WrapOption = [&](std::string s) {
       return field.IsOptional() ? "Option<" + s + ">" : s;
+    };
+    // When with_buf_type is true, table types include the generic buffer param.
+    const auto TableParams = [&](const std::string& lt) -> std::string {
+      return with_buf_type ? lt + ", B" : lt;
     };
 
     switch (GetFullType(field.value.type)) {
@@ -1591,7 +1596,7 @@ class RustGenerator : public BaseGenerator {
       }
       case ftTable: {
         const auto typname = WrapInNameSpace(*type.struct_def);
-        return WrapOption(typname + "<" + lifetime + ">");
+        return WrapOption(typname + "<" + TableParams(lifetime) + ">");
       }
       case ftEnumKey:
       case ftUnionKey: {
@@ -1599,7 +1604,7 @@ class RustGenerator : public BaseGenerator {
       }
 
       case ftUnionValue: {
-        return WrapOption("flatbuffers::Table<" + lifetime + ">");
+        return WrapOption("flatbuffers::Table<" + TableParams(lifetime) + ">");
       }
       case ftString: {
         return WrapOption("&" + lifetime + " str");
@@ -1626,7 +1631,7 @@ class RustGenerator : public BaseGenerator {
         const auto typname = WrapInNameSpace(*type.struct_def);
         return WrapOption("flatbuffers::Vector<" + lifetime +
                           ", flatbuffers::ForwardsUOffset<" + typname + "<" +
-                          lifetime + ">>>");
+                          TableParams(lifetime) + ">>>");
       }
       case ftVectorOfString: {
         return WrapOption("flatbuffers::Vector<" + lifetime +
@@ -1638,7 +1643,7 @@ class RustGenerator : public BaseGenerator {
         //           Into trait to convert tables to typesafe union values.
         return WrapOption("flatbuffers::Vector<" + lifetime +
                           ", flatbuffers::ForwardsUOffset<flatbuffers::Table<" +
-                          lifetime + ">>>");
+                          TableParams(lifetime) + ">>>");
       }
       case ftArrayOfEnum:
       case ftArrayOfStruct:
@@ -1650,7 +1655,8 @@ class RustGenerator : public BaseGenerator {
     return "INVALID_CODE_GENERATION";  // for return analysis
   }
 
-  std::string FollowType(const Type& type, const std::string& lifetime) {
+  std::string FollowType(const Type& type, const std::string& lifetime,
+                         bool with_buf_type = false) {
     // IsVector... This can be made iterative?
 
     const auto WrapForwardsUOffset = [](std::string ty) -> std::string {
@@ -1662,6 +1668,11 @@ class RustGenerator : public BaseGenerator {
     const auto WrapArray = [&](std::string ty, uint16_t length) -> std::string {
       return "flatbuffers::Array<" + lifetime + ", " + ty + ", " +
              NumToString(length) + ">";
+    };
+    // When with_buf_type is true, table-type arguments include the generic
+    // buffer parameter so that _tab.get::<T>() resolves to Follow<'a, B>.
+    const auto TableSuffix = [&]() -> std::string {
+      return with_buf_type ? "<" + lifetime + ", B>" : "";
     };
     switch (GetFullType(type)) {
       case ftInteger:
@@ -1678,10 +1689,11 @@ class RustGenerator : public BaseGenerator {
       }
       case ftTable: {
         const auto typname = WrapInNameSpace(*type.struct_def);
-        return WrapForwardsUOffset(typname);
+        return WrapForwardsUOffset(typname + TableSuffix());
       }
       case ftUnionValue: {
-        return WrapForwardsUOffset("flatbuffers::Table<" + lifetime + ">");
+        return WrapForwardsUOffset("flatbuffers::Table<" + lifetime +
+                                   (with_buf_type ? ", B" : "") + ">");
       }
       case ftString: {
         return WrapForwardsUOffset("&str");
@@ -1703,13 +1715,16 @@ class RustGenerator : public BaseGenerator {
       }
       case ftVectorOfTable: {
         const auto typname = WrapInNameSpace(*type.struct_def);
-        return WrapForwardsUOffset(WrapVector(WrapForwardsUOffset(typname)));
+        // Vector stores &[u8] internally — elements are always [u8]-backed.
+        return WrapForwardsUOffset(
+            WrapVector(WrapForwardsUOffset(typname)));
       }
       case ftVectorOfString: {
         return WrapForwardsUOffset(
             WrapVector(WrapForwardsUOffset("&" + lifetime + " str")));
       }
       case ftVectorOfUnionValue: {
+        // Vector stores &[u8] internally — raw tables are [u8]-backed.
         return WrapForwardsUOffset(WrapVector(
             WrapForwardsUOffset("flatbuffers::Table<" + lifetime + ">")));
       }
@@ -1730,9 +1745,11 @@ class RustGenerator : public BaseGenerator {
   }
 
   std::string GenTableAccessorFuncBody(const FieldDef& field,
-                                       const std::string& lifetime) {
+                                       const std::string& lifetime,
+                                       bool with_buf_type = false) {
     const std::string vt_offset = namer_.LegacyRustFieldOffsetName(field);
-    const std::string typname = FollowType(field.value.type, lifetime);
+    const std::string typname =
+        FollowType(field.value.type, lifetime, with_buf_type);
     // Default-y fields (scalars so far) are neither optional nor required.
     const std::string default_value =
         !(field.IsOptional() || field.IsRequired())
@@ -1741,7 +1758,7 @@ class RustGenerator : public BaseGenerator {
     const std::string unwrap = field.IsOptional() ? "" : ".unwrap()";
 
     return "unsafe { self._tab.get::<" + typname +
-           ">({{STRUCT_TY}}::" + vt_offset + ", " + default_value + ")" +
+           ">(Self::" + vt_offset + ", " + default_value + ")" +
            unwrap + "}";
   }
 
@@ -1824,19 +1841,19 @@ class RustGenerator : public BaseGenerator {
 
     GenComment(struct_def.doc_comment);
 
-    code_ += "{{ACCESS_TYPE}} struct {{STRUCT_TY}}<'a> {";
-    code_ += "  pub _tab: flatbuffers::Table<'a>,";
+    code_ += "{{ACCESS_TYPE}} struct {{STRUCT_TY}}<'a, B: flatbuffers::ReadBuffer + ?Sized = [u8]> {";
+    code_ += "  pub _tab: flatbuffers::Table<'a, B>,";
     code_ += "}";
     code_ += "";
-    code_ += "impl<'a> flatbuffers::Follow<'a> for {{STRUCT_TY}}<'a> {";
-    code_ += "  type Inner = {{STRUCT_TY}}<'a>;";
+    code_ += "impl<'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'a, B> for {{STRUCT_TY}}<'a, B> {";
+    code_ += "  type Inner = {{STRUCT_TY}}<'a, B>;";
     code_ += "  #[inline]";
-    code_ += "  unsafe fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {";
+    code_ += "  unsafe fn follow(buf: &'a B, loc: usize) -> Self::Inner {";
     code_ += "    Self { _tab: unsafe { flatbuffers::Table::new(buf, loc) } }";
     code_ += "  }";
     code_ += "}";
     code_ += "";
-    code_ += "impl<'a> {{STRUCT_TY}}<'a> {";
+    code_ += "impl<'a, B: flatbuffers::ReadBuffer + ?Sized> {{STRUCT_TY}}<'a, B> {";
 
     // Generate field id constants.
     ForAllTableFields(struct_def, [&](const FieldDef& unused) {
@@ -1853,7 +1870,7 @@ class RustGenerator : public BaseGenerator {
 
     code_ += "  #[inline]";
     code_ +=
-        "  pub unsafe fn init_from_table(table: flatbuffers::Table<'a>) -> "
+        "  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> "
         "Self {";
     code_ += "    {{STRUCT_TY}} { _tab: table }";
     code_ += "  }";
@@ -1989,7 +2006,7 @@ class RustGenerator : public BaseGenerator {
             code_ +=
                 "          .map(|x: (&Vec<{{ENUM_TY}}>, "
                 "flatbuffers::Vector<'_, "
-                "flatbuffers::ForwardsUOffset<flatbuffers::Table<'_>>>)| {";
+                "flatbuffers::ForwardsUOffset<flatbuffers::Table<'_, B>>>)| {";
             code_ += "            x.0.iter().zip(x.1.iter()).map(|t| {";
             code_ += "              let key = t.0;";
             code_ += "              let table = t.1;";
@@ -2001,10 +2018,10 @@ class RustGenerator : public BaseGenerator {
                 enum_def, [&](const EnumVal& ev) {
                   if (IsString(ev.union_type)) {
                     code_.SetValue("UNPACK_FUNCTION_CALL",
-                                   "follow(table.buf, table.loc).to_string()");
+                                   "follow(table.buf(), table.loc()).to_string()");
                   } else if (IsStruct(ev.union_type)) {
                     code_.SetValue("UNPACK_FUNCTION_CALL",
-                                   "follow(table.buf, table.loc).unpack()");
+                                   "follow(table.buf(), table.loc()).unpack()");
                   } else {
                     code_.SetValue("UNPACK_FUNCTION_CALL",
                                    "init_from_table(table).unpack()");
@@ -2065,7 +2082,7 @@ class RustGenerator : public BaseGenerator {
     //   }
     ForAllTableFields(struct_def, [&](const FieldDef& field) {
       code_.SetValue("RETURN_TYPE",
-                     GenTableAccessorFuncReturnType(field, "'a"));
+                     GenTableAccessorFuncReturnType(field, "'a", true));
 
       this->GenComment(field.doc_comment);
       code_ += "#[inline]";
@@ -2073,7 +2090,7 @@ class RustGenerator : public BaseGenerator {
       code_ += "  // Safety:";
       code_ += "  // Created from valid Table for this object";
       code_ += "  // which contains a valid value in this slot";
-      code_ += "  " + GenTableAccessorFuncBody(field, "'a");
+      code_ += "  " + GenTableAccessorFuncBody(field, "'a", true);
       code_ += "}";
 
       // Generate a comparison function for this field if it is a key.
@@ -2128,21 +2145,21 @@ class RustGenerator : public BaseGenerator {
           *field.value.type.enum_def, [&](const EnumVal& ev) {
             if (IsString(ev.union_type)) {
               code_.SetValue("CLOSURE", "|t| ");
-              code_.SetValue("INIT_FUNCTION_CALL", "follow(t.buf, t.loc)");
+              code_.SetValue("INIT_FUNCTION_CALL", "follow(t.buf(), t.loc())");
               // replace initial '&' with "&'a "
               code_.SetValue(
                   "RETURN_TYPE",
                   code_.GetValue("U_ELEMENT_TABLE_TYPE").replace(0, 1, "&'a "));
             } else if (IsStruct(ev.union_type)) {
               code_.SetValue("CLOSURE", "|t| ");
-              code_.SetValue("INIT_FUNCTION_CALL", "follow(t.buf, t.loc)");
+              code_.SetValue("INIT_FUNCTION_CALL", "follow(t.buf(), t.loc())");
               code_.SetValue("RETURN_TYPE",
                              "&'a " + code_.GetValue("U_ELEMENT_TABLE_TYPE"));
             } else {
               code_.SetValue("CLOSURE", "");
               code_.SetValue("INIT_FUNCTION_CALL", "init_from_table");
               code_.SetValue("RETURN_TYPE",
-                             code_.GetValue("U_ELEMENT_TABLE_TYPE") + "<'a>");
+                             code_.GetValue("U_ELEMENT_TABLE_TYPE") + "<'a, B>");
             }
             code_ += "#[inline]";
             code_ += "#[allow(non_snake_case)]";
@@ -2201,20 +2218,20 @@ class RustGenerator : public BaseGenerator {
           *field.value.type.enum_def, [&](const EnumVal& ev) {
             if (IsString(ev.union_type)) {
               code_.SetValue("INIT_FUNCTION_CALL",
-                             "follow(table.buf, table.loc)");
+                             "follow(table.buf(), table.loc())");
               // replace initial '&' with "&'a "
               code_.SetValue(
                   "RETURN_TYPE",
                   code_.GetValue("U_ELEMENT_TABLE_TYPE").replace(0, 1, "&'a "));
             } else if (IsStruct(ev.union_type)) {
               code_.SetValue("INIT_FUNCTION_CALL",
-                             "follow(table.buf, table.loc)");
+                             "follow(table.buf(), table.loc())");
               code_.SetValue("RETURN_TYPE",
                              "&'a " + code_.GetValue("U_ELEMENT_TABLE_TYPE"));
             } else {
               code_.SetValue("INIT_FUNCTION_CALL", "init_from_table(table)");
               code_.SetValue("RETURN_TYPE",
-                             code_.GetValue("U_ELEMENT_TABLE_TYPE") + "<'a>");
+                             code_.GetValue("U_ELEMENT_TABLE_TYPE") + "<'a, B>");
             }
             code_ += "  #[inline]";
             code_ += "  #[allow(non_snake_case)]";
@@ -2244,7 +2261,7 @@ class RustGenerator : public BaseGenerator {
     code_ += "";
 
     // Generate Verifier;
-    code_ += "impl flatbuffers::Verifiable for {{STRUCT_TY}}<'_> {";
+    code_ += "impl<B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Verifiable for {{STRUCT_TY}}<'_, B> {";
     code_ += "  #[inline]";
     code_ += "  fn run_verifier(";
     code_ += "    v: &mut flatbuffers::Verifier, pos: usize";
@@ -2735,9 +2752,10 @@ class RustGenerator : public BaseGenerator {
     code_ += "/// previous, unchecked, behavior use";
     code_ += "/// `root_as_{{STRUCT_FN}}_unchecked`.";
     code_ +=
-        "pub fn root_as_{{STRUCT_FN}}(buf: &[u8]) "
-        "-> Result<{{STRUCT_TY}}<'_>, flatbuffers::InvalidFlatbuffer> {";
-    code_ += "  flatbuffers::root::<{{STRUCT_TY}}>(buf)";
+        "pub fn root_as_{{STRUCT_FN}}<B: flatbuffers::ReadBuffer + ?Sized>"
+        "(buf: &B) "
+        "-> Result<{{STRUCT_TY}}<'_, B>, flatbuffers::InvalidFlatbuffer> {";
+    code_ += "  flatbuffers::root_with_buffer::<{{STRUCT_TY}}<'_, B>, B>(buf)";
     code_ += "}";
     code_ += "#[inline]";
     code_ += "/// Verifies that a buffer of bytes contains a size prefixed";
@@ -2748,9 +2766,12 @@ class RustGenerator : public BaseGenerator {
     code_ += "/// `size_prefixed_root_as_{{STRUCT_FN}}_unchecked`.";
     code_ +=
         "pub fn size_prefixed_root_as_{{STRUCT_FN}}"
-        "(buf: &[u8]) -> Result<{{STRUCT_TY}}<'_>, "
+        "<B: flatbuffers::ReadBuffer + ?Sized>"
+        "(buf: &B) -> Result<{{STRUCT_TY}}<'_, B>, "
         "flatbuffers::InvalidFlatbuffer> {";
-    code_ += "  flatbuffers::size_prefixed_root::<{{STRUCT_TY}}>(buf)";
+    code_ +=
+        "  flatbuffers::size_prefixed_root_with_buffer::<{{STRUCT_TY}}"
+        "<'_, B>, B>(buf)";
     code_ += "}";
     // Verifier with options root fns.
     code_ += "#[inline]";
@@ -2760,13 +2781,17 @@ class RustGenerator : public BaseGenerator {
     code_ += "/// catch every error, or be maximally performant. For the";
     code_ += "/// previous, unchecked, behavior use";
     code_ += "/// `root_as_{{STRUCT_FN}}_unchecked`.";
-    code_ += "pub fn root_as_{{STRUCT_FN}}_with_opts<'b, 'o>(";
-    code_ += "  opts: &'o flatbuffers::VerifierOptions,";
-    code_ += "  buf: &'b [u8],";
     code_ +=
-        ") -> Result<{{STRUCT_TY}}<'b>, flatbuffers::InvalidFlatbuffer>"
+        "pub fn root_as_{{STRUCT_FN}}_with_opts"
+        "<'b, 'o, B: flatbuffers::ReadBuffer + ?Sized>(";
+    code_ += "  opts: &'o flatbuffers::VerifierOptions,";
+    code_ += "  buf: &'b B,";
+    code_ +=
+        ") -> Result<{{STRUCT_TY}}<'b, B>, flatbuffers::InvalidFlatbuffer>"
         " {";
-    code_ += "  flatbuffers::root_with_opts::<{{STRUCT_TY}}<'b>>(opts, buf)";
+    code_ +=
+        "  flatbuffers::root_with_buffer_and_opts::<{{STRUCT_TY}}<'b, B>, B>"
+        "(opts, buf)";
     code_ += "}";
     code_ += "#[inline]";
     code_ += "/// Verifies, with the given verifier options, that a buffer of";
@@ -2777,15 +2802,15 @@ class RustGenerator : public BaseGenerator {
     code_ += "/// `root_as_{{STRUCT_FN}}_unchecked`.";
     code_ +=
         "pub fn size_prefixed_root_as_{{STRUCT_FN}}_with_opts"
-        "<'b, 'o>(";
+        "<'b, 'o, B: flatbuffers::ReadBuffer + ?Sized>(";
     code_ += "  opts: &'o flatbuffers::VerifierOptions,";
-    code_ += "  buf: &'b [u8],";
+    code_ += "  buf: &'b B,";
     code_ +=
-        ") -> Result<{{STRUCT_TY}}<'b>, flatbuffers::InvalidFlatbuffer>"
+        ") -> Result<{{STRUCT_TY}}<'b, B>, flatbuffers::InvalidFlatbuffer>"
         " {";
     code_ +=
-        "  flatbuffers::size_prefixed_root_with_opts::<{{STRUCT_TY}}"
-        "<'b>>(opts, buf)";
+        "  flatbuffers::size_prefixed_root_with_buffer_and_opts::<{{STRUCT_TY}}"
+        "<'b, B>, B>(opts, buf)";
     code_ += "}";
     // Unchecked root fns.
     code_ += "#[inline]";
@@ -2798,8 +2823,11 @@ class RustGenerator : public BaseGenerator {
         " `{{STRUCT_TY}}`.";
     code_ +=
         "pub unsafe fn root_as_{{STRUCT_FN}}_unchecked"
-        "(buf: &[u8]) -> {{STRUCT_TY}}<'_> {";
-    code_ += "  unsafe { flatbuffers::root_unchecked::<{{STRUCT_TY}}>(buf) }";
+        "<B: flatbuffers::ReadBuffer + ?Sized>"
+        "(buf: &B) -> {{STRUCT_TY}}<'_, B> {";
+    code_ +=
+        "  unsafe { flatbuffers::root_unchecked::<{{STRUCT_TY}}<'_, B>, B>"
+        "(buf) }";
     code_ += "}";
     code_ += "#[inline]";
     code_ +=
@@ -2811,10 +2839,11 @@ class RustGenerator : public BaseGenerator {
         " size prefixed `{{STRUCT_TY}}`.";
     code_ +=
         "pub unsafe fn size_prefixed_root_as_{{STRUCT_FN}}"
-        "_unchecked(buf: &[u8]) -> {{STRUCT_TY}}<'_> {";
+        "_unchecked<B: flatbuffers::ReadBuffer + ?Sized>"
+        "(buf: &B) -> {{STRUCT_TY}}<'_, B> {";
     code_ +=
-        "  unsafe { flatbuffers::size_prefixed_root_unchecked::<{{STRUCT_TY}}>"
-        "(buf) }";
+        "  unsafe { flatbuffers::size_prefixed_root_unchecked::<{{STRUCT_TY}}"
+        "<'_, B>, B>(buf) }";
     code_ += "}";
 
     if (parser_.file_identifier_.length()) {
@@ -2970,19 +2999,19 @@ class RustGenerator : public BaseGenerator {
     // Follow for the value type, Follow for the reference type, Push for the
     // value type, and Push for the reference type.
     code_ += "impl flatbuffers::SimpleToVerifyInSlice for {{STRUCT_TY}} {}";
-    code_ += "impl<'a> flatbuffers::Follow<'a> for {{STRUCT_TY}} {";
+    code_ += "impl<'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'a, B> for {{STRUCT_TY}} {";
     code_ += "  type Inner = &'a {{STRUCT_TY}};";
     code_ += "  #[inline]";
-    code_ += "  unsafe fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {";
+    code_ += "  unsafe fn follow(buf: &'a B, loc: usize) -> Self::Inner {";
     code_ += "    unsafe { <&'a {{STRUCT_TY}}>::follow(buf, loc) }";
     code_ += "  }";
     code_ += "}";
-    code_ += "impl<'a> flatbuffers::Follow<'a> for &'a {{STRUCT_TY}} {";
+    code_ += "impl<'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'a, B> for &'a {{STRUCT_TY}} {";
     code_ += "  type Inner = &'a {{STRUCT_TY}};";
     code_ += "  #[inline]";
-    code_ += "  unsafe fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {";
+    code_ += "  unsafe fn follow(buf: &'a B, loc: usize) -> Self::Inner {";
     code_ +=
-        "    unsafe { flatbuffers::follow_cast_ref::<{{STRUCT_TY}}>(buf, loc) "
+        "    unsafe { flatbuffers::follow_cast_ref::<{{STRUCT_TY}}, B>(buf, loc) "
         "}";
     code_ += "  }";
     code_ += "}";
