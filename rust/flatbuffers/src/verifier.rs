@@ -1,4 +1,5 @@
 use crate::follow::Follow;
+use crate::read_buffer::ReadBuffer;
 use crate::{ForwardsUOffset, SOffsetT, SkipSizePrefix, TaggedUnion, UOffsetT, VOffsetT, Vector, SIZE_UOFFSET};
 #[cfg(not(feature = "std"))]
 use alloc::vec::Vec;
@@ -312,6 +313,11 @@ impl Default for VerifierOptions {
 }
 
 /// Carries the verification state. Should not be reused between tables.
+///
+/// Internally the verifier always works on a contiguous `&'buf [u8]` slice.
+/// When the backing store is a custom [`ReadBuffer`] (e.g. a user-space pager),
+/// use [`Verifier::new_with_buffer`] which pins the entire buffer once — this
+/// is unavoidable since verification must read every byte.
 #[derive(Debug)]
 pub struct Verifier<'opts, 'buf> {
     buffer: &'buf [u8],
@@ -322,9 +328,28 @@ pub struct Verifier<'opts, 'buf> {
 }
 
 impl<'opts, 'buf> Verifier<'opts, 'buf> {
+    /// Create a verifier for a plain byte slice.
     pub fn new(opts: &'opts VerifierOptions, buffer: &'buf [u8]) -> Self {
         Self { opts, buffer, depth: 0, num_tables: 0, apparent_size: 0 }
     }
+
+    /// Create a verifier for any [`ReadBuffer`] backing store.
+    ///
+    /// Calls [`ReadBuffer::bytes`]`(0, buffer.len())` once to obtain a
+    /// `&'buf [u8]` view of the whole buffer. For a pager this pins every page
+    /// for `'buf` — unavoidable since verification reads every byte anyway.
+    ///
+    /// # Safety
+    /// The `ReadBuffer` contract requires the returned bytes to remain valid
+    /// for `'buf`; see [`ReadBuffer::bytes`] for details.
+    pub unsafe fn new_with_buffer<B: ReadBuffer + ?Sized>(
+        opts: &'opts VerifierOptions,
+        buffer: &'buf B,
+    ) -> Self {
+        let slice = buffer.bytes(0, buffer.len());
+        Self::new(opts, slice)
+    }
+
     /// Resets verifier internal state.
     #[inline]
     pub fn reset(&mut self) {
@@ -529,8 +554,7 @@ impl<'ver, 'opts, 'buf> TableVerifier<'ver, 'opts, 'buf> {
             }
             (Some(k), Some(v)) => {
                 trace_field(T::Tag::run_verifier(self.verifier, k), key_field_name.into(), k)?;
-                // Safety:
-                // Run verifier on `k` above
+                // Safety: Run verifier on `k` above
                 let discriminant = unsafe { T::Tag::follow(self.verifier.buffer, k) };
                 trace_field(
                     T::run_union_verifier(self.verifier, discriminant, v),
@@ -727,7 +751,8 @@ impl<'a> Verifiable for &'a str {
     #[inline]
     fn run_verifier(v: &mut Verifier, pos: usize) -> Result<()> {
         let range = verify_vector_range::<u8>(v, pos)?;
-        let has_null_terminator = v.buffer.get(range.end).map(|&b| b == 0).unwrap_or(false);
+        let has_null_terminator =
+            v.buffer.get(range.end).map(|&b| b == 0).unwrap_or(false);
         let s = core::str::from_utf8(&v.buffer[range.clone()]);
         if let Err(error) = s {
             return Err(InvalidFlatbuffer::Utf8Error {

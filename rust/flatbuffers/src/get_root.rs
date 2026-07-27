@@ -109,3 +109,77 @@ where
 {
     <SkipSizePrefix<ForwardsUOffset<T>>>::follow(data, 0)
 }
+
+// ── Generic (ReadBuffer) verified entry points ─────────────────────────────
+//
+// These functions accept any `B: ReadBuffer` backing store. They obtain a
+// `&'buf [u8]` view of the whole buffer once (pinning all pages for `'buf`)
+// and run the existing `[u8]`-based verifier against it, then return the root
+// object accessed through the generic buffer.
+//
+// Verification necessarily reads every byte, so pinning all pages is optimal.
+
+#[inline]
+/// Verifies a [`ReadBuffer`]-backed FlatBuffer and returns its root.
+///
+/// Equivalent to [`root`] but works with any buffer type implementing
+/// [`ReadBuffer`], including user-space pagers.
+///
+/// # Safety (inner `unsafe` block)
+/// [`ReadBuffer::bytes`] is called once to obtain `&'buf [u8]`; the caller
+/// must uphold the [`ReadBuffer`] contract (bytes stable for `'buf`).
+pub fn root_with_buffer<'buf, T, B>(
+    data: &'buf B,
+) -> Result<T::Inner, InvalidFlatbuffer>
+where
+    B: ReadBuffer + ?Sized,
+    T: 'buf + Follow<'buf, B> + Verifiable,
+{
+    let opts = VerifierOptions::default();
+    root_with_buffer_and_opts::<T, B>(&opts, data)
+}
+
+#[inline]
+/// Verifies a [`ReadBuffer`]-backed FlatBuffer with custom options and returns its root.
+pub fn root_with_buffer_and_opts<'opts, 'buf, T, B>(
+    opts: &'opts VerifierOptions,
+    data: &'buf B,
+) -> Result<T::Inner, InvalidFlatbuffer>
+where
+    B: ReadBuffer + ?Sized,
+    T: 'buf + Follow<'buf, B> + Verifiable,
+{
+    // SAFETY: ReadBuffer contract guarantees bytes valid for 'buf.
+    let mut v = unsafe { Verifier::new_with_buffer(opts, data) };
+    <ForwardsUOffset<T>>::run_verifier(&mut v, 0)?;
+    Ok(unsafe { root_unchecked::<T, B>(data) })
+}
+
+#[inline]
+/// Verifies a size-prefixed [`ReadBuffer`]-backed FlatBuffer and returns its root.
+pub fn size_prefixed_root_with_buffer<'buf, T, B>(
+    data: &'buf B,
+) -> Result<T::Inner, InvalidFlatbuffer>
+where
+    B: ReadBuffer + ?Sized,
+    T: 'buf + Follow<'buf, B> + Verifiable,
+{
+    let opts = VerifierOptions::default();
+    size_prefixed_root_with_buffer_and_opts::<T, B>(&opts, data)
+}
+
+#[inline]
+/// Verifies a size-prefixed [`ReadBuffer`]-backed FlatBuffer with custom options and returns its root.
+pub fn size_prefixed_root_with_buffer_and_opts<'opts, 'buf, T, B>(
+    opts: &'opts VerifierOptions,
+    data: &'buf B,
+) -> Result<T::Inner, InvalidFlatbuffer>
+where
+    B: ReadBuffer + ?Sized,
+    T: 'buf + Follow<'buf, B> + Verifiable,
+{
+    // SAFETY: ReadBuffer contract guarantees bytes valid for 'buf.
+    let mut v = unsafe { Verifier::new_with_buffer(opts, data) };
+    <SkipSizePrefix<ForwardsUOffset<T>>>::run_verifier(&mut v, 0)?;
+    Ok(unsafe { size_prefixed_root_unchecked::<T, B>(data) })
+}
