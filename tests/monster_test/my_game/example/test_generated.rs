@@ -28,18 +28,18 @@ impl core::fmt::Debug for Test {
 }
 
 impl flatbuffers::SimpleToVerifyInSlice for Test {}
-impl<'a> flatbuffers::Follow<'a> for Test {
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'a, B> for Test {
   type Inner = &'a Test;
   #[inline]
-  unsafe fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+  unsafe fn follow(buf: &'a B, loc: usize) -> Self::Inner {
     unsafe { <&'a Test>::follow(buf, loc) }
   }
 }
-impl<'a> flatbuffers::Follow<'a> for &'a Test {
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'a, B> for &'a Test {
   type Inner = &'a Test;
   #[inline]
-  unsafe fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
-    unsafe { flatbuffers::follow_cast_ref::<Test>(buf, loc) }
+  unsafe fn follow(buf: &'a B, loc: usize) -> Self::Inner {
+    unsafe { flatbuffers::follow_cast_ref::<Test, B>(buf, loc) }
   }
 }
 impl<'b> flatbuffers::Push for Test {

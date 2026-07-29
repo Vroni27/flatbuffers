@@ -12,19 +12,19 @@ use super::*;
 pub enum GameMessageWrapperOffset {}
 #[derive(Copy, Clone, PartialEq)]
 
-pub struct GameMessageWrapper<'a> {
-  pub _tab: flatbuffers::Table<'a>,
+pub struct GameMessageWrapper<'a, B: flatbuffers::ReadBuffer + ?Sized = [u8]> {
+  pub _tab: flatbuffers::Table<'a, B>,
 }
 
-impl<'a> flatbuffers::Follow<'a> for GameMessageWrapper<'a> {
-  type Inner = GameMessageWrapper<'a>;
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'a, B> for GameMessageWrapper<'a, B> {
+  type Inner = GameMessageWrapper<'a, B>;
   #[inline]
-  unsafe fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+  unsafe fn follow(buf: &'a B, loc: usize) -> Self::Inner {
     Self { _tab: unsafe { flatbuffers::Table::new(buf, loc) } }
   }
 }
 
-impl<'a> GameMessageWrapper<'a> {
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> GameMessageWrapper<'a, B> {
   pub const VT_MESSAGE_TYPE: flatbuffers::VOffsetT = 4;
   pub const VT_MESSAGE: flatbuffers::VOffsetT = 6;
 
@@ -33,7 +33,7 @@ impl<'a> GameMessageWrapper<'a> {
   }
 
   #[inline]
-  pub unsafe fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
     GameMessageWrapper { _tab: table }
   }
   #[allow(unused_mut)]
@@ -53,17 +53,17 @@ impl<'a> GameMessageWrapper<'a> {
       GameMessage::PlayerStatEvent => GameMessageT::PlayerStatEvent(Box::new(
         self.Message_as_player_stat_event()
             .expect("Invalid union table, expected `GameMessage::PlayerStatEvent`.")
-            .unpack()
+     .unpack()
       )),
       GameMessage::PlayerSpectate => GameMessageT::PlayerSpectate(Box::new(
         self.Message_as_player_spectate()
             .expect("Invalid union table, expected `GameMessage::PlayerSpectate`.")
-            .unpack()
+     .unpack()
       )),
       GameMessage::PlayerInputChange => GameMessageT::PlayerInputChange(Box::new(
         self.Message_as_player_input_change()
             .expect("Invalid union table, expected `GameMessage::PlayerInputChange`.")
-            .unpack()
+     .unpack()
       )),
       _ => GameMessageT::NONE,
     };
@@ -80,15 +80,15 @@ impl<'a> GameMessageWrapper<'a> {
     unsafe { self._tab.get::<GameMessage>(GameMessageWrapper::VT_MESSAGE_TYPE, Some(GameMessage::NONE)).unwrap()}
   }
   #[inline]
-  pub fn Message(&self) -> Option<flatbuffers::Table<'a>> {
+  pub fn Message(&self) -> Option<flatbuffers::Table<'a, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Table<'a>>>(GameMessageWrapper::VT_MESSAGE, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Table<'a, B>>>(GameMessageWrapper::VT_MESSAGE, None)}
   }
   #[inline]
   #[allow(non_snake_case)]
-  pub fn Message_as_player_stat_event(&self) -> Option<PlayerStatEvent<'a>> {
+  pub fn Message_as_player_stat_event(&self) -> Option<PlayerStatEvent<'a, B>> {
     if self.Message_type() == GameMessage::PlayerStatEvent {
       self.Message().map(|t| {
        // Safety:
@@ -103,7 +103,7 @@ impl<'a> GameMessageWrapper<'a> {
 
   #[inline]
   #[allow(non_snake_case)]
-  pub fn Message_as_player_spectate(&self) -> Option<PlayerSpectate<'a>> {
+  pub fn Message_as_player_spectate(&self) -> Option<PlayerSpectate<'a, B>> {
     if self.Message_type() == GameMessage::PlayerSpectate {
       self.Message().map(|t| {
        // Safety:
@@ -118,7 +118,7 @@ impl<'a> GameMessageWrapper<'a> {
 
   #[inline]
   #[allow(non_snake_case)]
-  pub fn Message_as_player_input_change(&self) -> Option<PlayerInputChange<'a>> {
+  pub fn Message_as_player_input_change(&self) -> Option<PlayerInputChange<'a, B>> {
     if self.Message_type() == GameMessage::PlayerInputChange {
       self.Message().map(|t| {
        // Safety:
@@ -133,28 +133,21 @@ impl<'a> GameMessageWrapper<'a> {
 
 }
 
-impl flatbuffers::Verifiable for GameMessageWrapper<'_> {
+impl<B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Verifiable for GameMessageWrapper<'_, B> {
   #[inline]
   fn run_verifier(
     v: &mut flatbuffers::Verifier, pos: usize
   ) -> Result<(), flatbuffers::InvalidFlatbuffer> {
     use self::flatbuffers::Verifiable;
     v.visit_table(pos)?
-     .visit_union::<GameMessage, _>("Message_type", Self::VT_MESSAGE_TYPE, "Message", Self::VT_MESSAGE, false, |key, v, pos| {
-        match key {
-          GameMessage::PlayerStatEvent => v.verify_union_variant::<flatbuffers::ForwardsUOffset<PlayerStatEvent>>("GameMessage::PlayerStatEvent", pos),
-          GameMessage::PlayerSpectate => v.verify_union_variant::<flatbuffers::ForwardsUOffset<PlayerSpectate>>("GameMessage::PlayerSpectate", pos),
-          GameMessage::PlayerInputChange => v.verify_union_variant::<flatbuffers::ForwardsUOffset<PlayerInputChange>>("GameMessage::PlayerInputChange", pos),
-          _ => Ok(()),
-        }
-     })?
+     .visit_union::<GameMessageUnionValue>("Message_type", Self::VT_MESSAGE_TYPE, "Message", Self::VT_MESSAGE, false)?
      .finish();
     Ok(())
   }
 }
 pub struct GameMessageWrapperArgs {
     pub Message_type: GameMessage,
-    pub Message: Option<flatbuffers::WIPOffset<flatbuffers::UnionWIPOffset>>,
+    pub Message: Option<flatbuffers::WIPOffset<GameMessageUnionValue>>,
 }
 impl<'a> Default for GameMessageWrapperArgs {
   #[inline]
@@ -176,7 +169,7 @@ impl<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> GameMessageWrapperBuilder<'a, '
     self.fbb_.push_slot::<GameMessage>(GameMessageWrapper::VT_MESSAGE_TYPE, Message_type, GameMessage::NONE);
   }
   #[inline]
-  pub fn add_Message(&mut self, Message: flatbuffers::WIPOffset<flatbuffers::UnionWIPOffset>) {
+  pub fn add_Message(&mut self, Message: flatbuffers::WIPOffset<GameMessageUnionValue>) {
     self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(GameMessageWrapper::VT_MESSAGE, Message);
   }
   #[inline]

@@ -12,19 +12,19 @@ use super::*;
 pub enum TableInNestedNSOffset {}
 #[derive(Copy, Clone, PartialEq)]
 
-pub struct TableInNestedNS<'a> {
-  pub _tab: flatbuffers::Table<'a>,
+pub struct TableInNestedNS<'a, B: flatbuffers::ReadBuffer + ?Sized = [u8]> {
+  pub _tab: flatbuffers::Table<'a, B>,
 }
 
-impl<'a> flatbuffers::Follow<'a> for TableInNestedNS<'a> {
-  type Inner = TableInNestedNS<'a>;
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'a, B> for TableInNestedNS<'a, B> {
+  type Inner = TableInNestedNS<'a, B>;
   #[inline]
-  unsafe fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+  unsafe fn follow(buf: &'a B, loc: usize) -> Self::Inner {
     Self { _tab: unsafe { flatbuffers::Table::new(buf, loc) } }
   }
 }
 
-impl<'a> TableInNestedNS<'a> {
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> TableInNestedNS<'a, B> {
   pub const VT_FOO: flatbuffers::VOffsetT = 4;
 
   pub const fn get_fully_qualified_name() -> &'static str {
@@ -32,7 +32,7 @@ impl<'a> TableInNestedNS<'a> {
   }
 
   #[inline]
-  pub unsafe fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
     TableInNestedNS { _tab: table }
   }
   #[allow(unused_mut)]
@@ -61,7 +61,7 @@ impl<'a> TableInNestedNS<'a> {
   }
 }
 
-impl flatbuffers::Verifiable for TableInNestedNS<'_> {
+impl<B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Verifiable for TableInNestedNS<'_, B> {
   #[inline]
   fn run_verifier(
     v: &mut flatbuffers::Verifier, pos: usize

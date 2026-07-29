@@ -42,6 +42,14 @@ impl FieldUnion {
       _ => None,
     }
   }
+
+  #[inline]
+  pub fn tag_as_f(
+    o: flatbuffers::WIPOffset<FieldTable>,
+  ) -> flatbuffers::UnionWIPOffset<FieldUnionUnionValue> {
+    flatbuffers::UnionWIPOffset::new(Self::f, flatbuffers::WIPOffset::new(o.value()))
+  }
+
 }
 impl core::fmt::Debug for FieldUnion {
   fn fmt(&self, f: &mut core::fmt::Formatter) -> core::fmt::Result {
@@ -52,11 +60,11 @@ impl core::fmt::Debug for FieldUnion {
     }
   }
 }
-impl<'a> flatbuffers::Follow<'a> for FieldUnion {
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'a, B> for FieldUnion {
   type Inner = Self;
   #[inline]
-  unsafe fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
-    let b = unsafe { flatbuffers::read_scalar_at::<u8>(buf, loc) };
+  unsafe fn follow(buf: &'a B, loc: usize) -> Self::Inner {
+    let b = unsafe { flatbuffers::read_scalar_at::<u8, B>(buf, loc) };
     Self(b)
   }
 }
@@ -94,14 +102,71 @@ impl<'a> flatbuffers::Verifiable for FieldUnion {
 }
 
 impl flatbuffers::SimpleToVerifyInSlice for FieldUnion {}
-pub struct FieldUnionUnionTableOffset {}
+
+impl From<FieldUnion> for u8 {
+  #[inline]
+  fn from(v: FieldUnion) -> u8 {
+    v.0
+  }
+}
+
+impl<'a: 'b, 'b> flatbuffers::BuildVector<'a, 'b> for FieldUnion {
+  type VectorBuilder = FieldUnionVectorBuilder<'a, 'b>;
+}
+
+pub struct FieldUnionVectorBuilder<'a: 'b, 'b> {
+  fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>,
+  num_items: usize,
+}
+
+impl<'a: 'b, 'b> FieldUnionVectorBuilder<'a, 'b> {
+  #[inline]
+  pub fn new(fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>, num_items: usize) -> Self {
+    fbb.start_union_vector::<FieldUnionUnionValue>(num_items);
+    Self { fbb, num_items }
+  }
+
+  #[inline]
+  pub fn finish(&mut self) -> flatbuffers::UnionVectorWIPOffsets<'a, FieldUnionUnionValue> {
+    self.fbb.end_union_vector(self.num_items)
+  }
+
+  #[inline]
+  pub fn push_as_f(&mut self, o: flatbuffers::WIPOffset<FieldTable>) {
+    self.fbb.push_union_vector_item(FieldUnion::tag_as_f(o));
+  }
+
+}
+
+pub struct FieldUnionUnionValue {}
+
+impl flatbuffers::TaggedUnion for FieldUnionUnionValue {
+  type Tag = FieldUnion;
+}
+
+impl<'a> flatbuffers::UnionVerifiable<'a> for FieldUnionUnionValue {
+  fn run_union_verifier(
+    v: &mut flatbuffers::Verifier,
+    tag: <<Self as flatbuffers::TaggedUnion>::Tag as flatbuffers::Follow<'a>>::Inner,
+    pos: usize,
+  ) -> Result<(), flatbuffers::InvalidFlatbuffer> {
+    match tag {
+      FieldUnion::f => v
+        .verify_union_variant::<flatbuffers::ForwardsUOffset<FieldTable>>(
+          "FieldUnion::f",
+          pos,
+        ),
+      _ => Ok(()),
+    }
+  }
+}
 
 #[allow(clippy::upper_case_acronyms)]
 #[non_exhaustive]
 #[derive(Debug, Clone, PartialEq)]
 pub enum FieldUnionT {
   NONE,
-  F(Box<FieldTableT>),
+    F(Box<FieldTableT>),
 }
 impl Default for FieldUnionT {
   fn default() -> Self {
@@ -115,10 +180,10 @@ impl FieldUnionT {
       Self::F(_) => FieldUnion::f,
     }
   }
-  pub fn pack<'b, A: flatbuffers::Allocator + 'b>(&self, fbb: &mut flatbuffers::FlatBufferBuilder<'b, A>) -> Option<flatbuffers::WIPOffset<flatbuffers::UnionWIPOffset>> {
+  pub fn pack<'b, A: flatbuffers::Allocator + 'b>(&self, fbb: &mut flatbuffers::FlatBufferBuilder<'b, A>) -> Option<flatbuffers::WIPOffset<FieldUnionUnionValue>> {
     match self {
       Self::NONE => None,
-      Self::F(v) => Some(v.pack(fbb).as_union_value()),
+        Self::F(v) => Some(FieldUnion::tag_as_f(v.pack(fbb)).value_offset()),
     }
   }
   /// If the union variant matches, return the owned FieldTableT, setting the union to NONE.

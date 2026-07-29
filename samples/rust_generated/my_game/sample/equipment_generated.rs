@@ -42,6 +42,14 @@ impl Equipment {
       _ => None,
     }
   }
+
+  #[inline]
+  pub fn tag_as_weapon(
+    o: flatbuffers::WIPOffset<Weapon>,
+  ) -> flatbuffers::UnionWIPOffset<EquipmentUnionValue> {
+    flatbuffers::UnionWIPOffset::new(Self::Weapon, flatbuffers::WIPOffset::new(o.value()))
+  }
+
 }
 impl core::fmt::Debug for Equipment {
   fn fmt(&self, f: &mut core::fmt::Formatter) -> core::fmt::Result {
@@ -52,11 +60,11 @@ impl core::fmt::Debug for Equipment {
     }
   }
 }
-impl<'a> flatbuffers::Follow<'a> for Equipment {
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'a, B> for Equipment {
   type Inner = Self;
   #[inline]
-  unsafe fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
-    let b = unsafe { flatbuffers::read_scalar_at::<u8>(buf, loc) };
+  unsafe fn follow(buf: &'a B, loc: usize) -> Self::Inner {
+    let b = unsafe { flatbuffers::read_scalar_at::<u8, B>(buf, loc) };
     Self(b)
   }
 }
@@ -94,14 +102,71 @@ impl<'a> flatbuffers::Verifiable for Equipment {
 }
 
 impl flatbuffers::SimpleToVerifyInSlice for Equipment {}
-pub struct EquipmentUnionTableOffset {}
+
+impl From<Equipment> for u8 {
+  #[inline]
+  fn from(v: Equipment) -> u8 {
+    v.0
+  }
+}
+
+impl<'a: 'b, 'b> flatbuffers::BuildVector<'a, 'b> for Equipment {
+  type VectorBuilder = EquipmentVectorBuilder<'a, 'b>;
+}
+
+pub struct EquipmentVectorBuilder<'a: 'b, 'b> {
+  fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>,
+  num_items: usize,
+}
+
+impl<'a: 'b, 'b> EquipmentVectorBuilder<'a, 'b> {
+  #[inline]
+  pub fn new(fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>, num_items: usize) -> Self {
+    fbb.start_union_vector::<EquipmentUnionValue>(num_items);
+    Self { fbb, num_items }
+  }
+
+  #[inline]
+  pub fn finish(&mut self) -> flatbuffers::UnionVectorWIPOffsets<'a, EquipmentUnionValue> {
+    self.fbb.end_union_vector(self.num_items)
+  }
+
+  #[inline]
+  pub fn push_as_weapon(&mut self, o: flatbuffers::WIPOffset<Weapon>) {
+    self.fbb.push_union_vector_item(Equipment::tag_as_weapon(o));
+  }
+
+}
+
+pub struct EquipmentUnionValue {}
+
+impl flatbuffers::TaggedUnion for EquipmentUnionValue {
+  type Tag = Equipment;
+}
+
+impl<'a> flatbuffers::UnionVerifiable<'a> for EquipmentUnionValue {
+  fn run_union_verifier(
+    v: &mut flatbuffers::Verifier,
+    tag: <<Self as flatbuffers::TaggedUnion>::Tag as flatbuffers::Follow<'a>>::Inner,
+    pos: usize,
+  ) -> Result<(), flatbuffers::InvalidFlatbuffer> {
+    match tag {
+      Equipment::Weapon => v
+        .verify_union_variant::<flatbuffers::ForwardsUOffset<Weapon>>(
+          "Equipment::Weapon",
+          pos,
+        ),
+      _ => Ok(()),
+    }
+  }
+}
 
 #[allow(clippy::upper_case_acronyms)]
 #[non_exhaustive]
 #[derive(Debug, Clone, PartialEq)]
 pub enum EquipmentT {
   NONE,
-  Weapon(Box<WeaponT>),
+    Weapon(Box<WeaponT>),
 }
 impl Default for EquipmentT {
   fn default() -> Self {
@@ -115,10 +180,10 @@ impl EquipmentT {
       Self::Weapon(_) => Equipment::Weapon,
     }
   }
-  pub fn pack<'b, A: flatbuffers::Allocator + 'b>(&self, fbb: &mut flatbuffers::FlatBufferBuilder<'b, A>) -> Option<flatbuffers::WIPOffset<flatbuffers::UnionWIPOffset>> {
+  pub fn pack<'b, A: flatbuffers::Allocator + 'b>(&self, fbb: &mut flatbuffers::FlatBufferBuilder<'b, A>) -> Option<flatbuffers::WIPOffset<EquipmentUnionValue>> {
     match self {
       Self::NONE => None,
-      Self::Weapon(v) => Some(v.pack(fbb).as_union_value()),
+        Self::Weapon(v) => Some(Equipment::tag_as_weapon(v.pack(fbb)).value_offset()),
     }
   }
   /// If the union variant matches, return the owned WeaponT, setting the union to NONE.

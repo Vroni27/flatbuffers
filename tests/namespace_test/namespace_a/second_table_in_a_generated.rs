@@ -12,19 +12,19 @@ use super::*;
 pub enum SecondTableInAOffset {}
 #[derive(Copy, Clone, PartialEq)]
 
-pub struct SecondTableInA<'a> {
-  pub _tab: flatbuffers::Table<'a>,
+pub struct SecondTableInA<'a, B: flatbuffers::ReadBuffer + ?Sized = [u8]> {
+  pub _tab: flatbuffers::Table<'a, B>,
 }
 
-impl<'a> flatbuffers::Follow<'a> for SecondTableInA<'a> {
-  type Inner = SecondTableInA<'a>;
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'a, B> for SecondTableInA<'a, B> {
+  type Inner = SecondTableInA<'a, B>;
   #[inline]
-  unsafe fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+  unsafe fn follow(buf: &'a B, loc: usize) -> Self::Inner {
     Self { _tab: unsafe { flatbuffers::Table::new(buf, loc) } }
   }
 }
 
-impl<'a> SecondTableInA<'a> {
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> SecondTableInA<'a, B> {
   pub const VT_REFER_TO_C: flatbuffers::VOffsetT = 4;
 
   pub const fn get_fully_qualified_name() -> &'static str {
@@ -32,7 +32,7 @@ impl<'a> SecondTableInA<'a> {
   }
 
   #[inline]
-  pub unsafe fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
     SecondTableInA { _tab: table }
   }
   #[allow(unused_mut)]
@@ -55,15 +55,15 @@ impl<'a> SecondTableInA<'a> {
   }
 
   #[inline]
-  pub fn refer_to_c(&self) -> Option<super::namespace_c::TableInC<'a>> {
+  pub fn refer_to_c(&self) -> Option<super::namespace_c::TableInC<'a, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<super::namespace_c::TableInC>>(SecondTableInA::VT_REFER_TO_C, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<super::namespace_c::TableInC<'a, B>>>(SecondTableInA::VT_REFER_TO_C, None)}
   }
 }
 
-impl flatbuffers::Verifiable for SecondTableInA<'_> {
+impl<B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Verifiable for SecondTableInA<'_, B> {
   #[inline]
   fn run_verifier(
     v: &mut flatbuffers::Verifier, pos: usize

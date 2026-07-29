@@ -12,19 +12,19 @@ use super::*;
 pub(crate) enum GameOffset {}
 #[derive(Copy, Clone, PartialEq)]
 
-pub(crate) struct Game<'a> {
-  pub _tab: flatbuffers::Table<'a>,
+pub(crate) struct Game<'a, B: flatbuffers::ReadBuffer + ?Sized = [u8]> {
+  pub _tab: flatbuffers::Table<'a, B>,
 }
 
-impl<'a> flatbuffers::Follow<'a> for Game<'a> {
-  type Inner = Game<'a>;
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'a, B> for Game<'a, B> {
+  type Inner = Game<'a, B>;
   #[inline]
-  unsafe fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+  unsafe fn follow(buf: &'a B, loc: usize) -> Self::Inner {
     Self { _tab: unsafe { flatbuffers::Table::new(buf, loc) } }
   }
 }
 
-impl<'a> Game<'a> {
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Game<'a, B> {
   pub const VT_VALUE: flatbuffers::VOffsetT = 4;
 
   pub const fn get_fully_qualified_name() -> &'static str {
@@ -32,7 +32,7 @@ impl<'a> Game<'a> {
   }
 
   #[inline]
-  pub unsafe fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
     Game { _tab: table }
   }
   #[allow(unused_mut)]
@@ -61,7 +61,7 @@ impl<'a> Game<'a> {
   }
 }
 
-impl flatbuffers::Verifiable for Game<'_> {
+impl<B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Verifiable for Game<'_, B> {
   #[inline]
   fn run_verifier(
     v: &mut flatbuffers::Verifier, pos: usize

@@ -14,19 +14,19 @@ use super::*;
 pub enum StatOffset {}
 #[derive(Copy, Clone, PartialEq)]
 
-pub struct Stat<'a> {
-  pub _tab: flatbuffers::Table<'a>,
+pub struct Stat<'a, B: flatbuffers::ReadBuffer + ?Sized = [u8]> {
+  pub _tab: flatbuffers::Table<'a, B>,
 }
 
-impl<'a> flatbuffers::Follow<'a> for Stat<'a> {
-  type Inner = Stat<'a>;
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'a, B> for Stat<'a, B> {
+  type Inner = Stat<'a, B>;
   #[inline]
-  unsafe fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+  unsafe fn follow(buf: &'a B, loc: usize) -> Self::Inner {
     Self { _tab: unsafe { flatbuffers::Table::new(buf, loc) } }
   }
 }
 
-impl<'a> Stat<'a> {
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Stat<'a, B> {
   pub const VT_ID: flatbuffers::VOffsetT = 4;
   pub const VT_VAL: flatbuffers::VOffsetT = 6;
   pub const VT_COUNT: flatbuffers::VOffsetT = 8;
@@ -36,7 +36,7 @@ impl<'a> Stat<'a> {
   }
 
   #[inline]
-  pub unsafe fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
     Stat { _tab: table }
   }
   #[allow(unused_mut)]
@@ -97,7 +97,7 @@ impl<'a> Stat<'a> {
   }
 }
 
-impl flatbuffers::Verifiable for Stat<'_> {
+impl<B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Verifiable for Stat<'_, B> {
   #[inline]
   fn run_verifier(
     v: &mut flatbuffers::Verifier, pos: usize

@@ -14,26 +14,26 @@ use super::*;
 pub enum InParentNamespaceOffset {}
 #[derive(Copy, Clone, PartialEq)]
 
-pub struct InParentNamespace<'a> {
-  pub _tab: flatbuffers::Table<'a>,
+pub struct InParentNamespace<'a, B: flatbuffers::ReadBuffer + ?Sized = [u8]> {
+  pub _tab: flatbuffers::Table<'a, B>,
 }
 
-impl<'a> flatbuffers::Follow<'a> for InParentNamespace<'a> {
-  type Inner = InParentNamespace<'a>;
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'a, B> for InParentNamespace<'a, B> {
+  type Inner = InParentNamespace<'a, B>;
   #[inline]
-  unsafe fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+  unsafe fn follow(buf: &'a B, loc: usize) -> Self::Inner {
     Self { _tab: unsafe { flatbuffers::Table::new(buf, loc) } }
   }
 }
 
-impl<'a> InParentNamespace<'a> {
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> InParentNamespace<'a, B> {
 
   pub const fn get_fully_qualified_name() -> &'static str {
     "MyGame.InParentNamespace"
   }
 
   #[inline]
-  pub unsafe fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
     InParentNamespace { _tab: table }
   }
   #[allow(unused_mut)]
@@ -51,7 +51,7 @@ impl<'a> InParentNamespace<'a> {
   }
 }
 
-impl flatbuffers::Verifiable for InParentNamespace<'_> {
+impl<B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Verifiable for InParentNamespace<'_, B> {
   #[inline]
   fn run_verifier(
     v: &mut flatbuffers::Verifier, pos: usize

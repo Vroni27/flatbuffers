@@ -48,11 +48,11 @@ impl core::fmt::Debug for FromInclude {
     }
   }
 }
-impl<'a> flatbuffers::Follow<'a> for FromInclude {
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'a, B> for FromInclude {
   type Inner = Self;
   #[inline]
-  unsafe fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
-    let b = unsafe { flatbuffers::read_scalar_at::<i64>(buf, loc) };
+  unsafe fn follow(buf: &'a B, loc: usize) -> Self::Inner {
+    let b = unsafe { flatbuffers::read_scalar_at::<i64, B>(buf, loc) };
     Self(b)
   }
 }
@@ -90,3 +90,4 @@ impl<'a> flatbuffers::Verifiable for FromInclude {
 }
 
 impl flatbuffers::SimpleToVerifyInSlice for FromInclude {}
+

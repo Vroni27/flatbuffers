@@ -50,6 +50,28 @@ impl GameMessage {
       _ => None,
     }
   }
+
+  #[inline]
+  pub fn tag_as_player_stat_event(
+    o: flatbuffers::WIPOffset<PlayerStatEvent>,
+  ) -> flatbuffers::UnionWIPOffset<GameMessageUnionValue> {
+    flatbuffers::UnionWIPOffset::new(Self::PlayerStatEvent, flatbuffers::WIPOffset::new(o.value()))
+  }
+
+  #[inline]
+  pub fn tag_as_player_spectate(
+    o: flatbuffers::WIPOffset<PlayerSpectate>,
+  ) -> flatbuffers::UnionWIPOffset<GameMessageUnionValue> {
+    flatbuffers::UnionWIPOffset::new(Self::PlayerSpectate, flatbuffers::WIPOffset::new(o.value()))
+  }
+
+  #[inline]
+  pub fn tag_as_player_input_change(
+    o: flatbuffers::WIPOffset<PlayerInputChange>,
+  ) -> flatbuffers::UnionWIPOffset<GameMessageUnionValue> {
+    flatbuffers::UnionWIPOffset::new(Self::PlayerInputChange, flatbuffers::WIPOffset::new(o.value()))
+  }
+
 }
 impl core::fmt::Debug for GameMessage {
   fn fmt(&self, f: &mut core::fmt::Formatter) -> core::fmt::Result {
@@ -60,11 +82,11 @@ impl core::fmt::Debug for GameMessage {
     }
   }
 }
-impl<'a> flatbuffers::Follow<'a> for GameMessage {
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'a, B> for GameMessage {
   type Inner = Self;
   #[inline]
-  unsafe fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
-    let b = unsafe { flatbuffers::read_scalar_at::<u8>(buf, loc) };
+  unsafe fn follow(buf: &'a B, loc: usize) -> Self::Inner {
+    let b = unsafe { flatbuffers::read_scalar_at::<u8, B>(buf, loc) };
     Self(b)
   }
 }
@@ -102,16 +124,93 @@ impl<'a> flatbuffers::Verifiable for GameMessage {
 }
 
 impl flatbuffers::SimpleToVerifyInSlice for GameMessage {}
-pub struct GameMessageUnionTableOffset {}
+
+impl From<GameMessage> for u8 {
+  #[inline]
+  fn from(v: GameMessage) -> u8 {
+    v.0
+  }
+}
+
+impl<'a: 'b, 'b> flatbuffers::BuildVector<'a, 'b> for GameMessage {
+  type VectorBuilder = GameMessageVectorBuilder<'a, 'b>;
+}
+
+pub struct GameMessageVectorBuilder<'a: 'b, 'b> {
+  fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>,
+  num_items: usize,
+}
+
+impl<'a: 'b, 'b> GameMessageVectorBuilder<'a, 'b> {
+  #[inline]
+  pub fn new(fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>, num_items: usize) -> Self {
+    fbb.start_union_vector::<GameMessageUnionValue>(num_items);
+    Self { fbb, num_items }
+  }
+
+  #[inline]
+  pub fn finish(&mut self) -> flatbuffers::UnionVectorWIPOffsets<'a, GameMessageUnionValue> {
+    self.fbb.end_union_vector(self.num_items)
+  }
+
+  #[inline]
+  pub fn push_as_player_stat_event(&mut self, o: flatbuffers::WIPOffset<PlayerStatEvent>) {
+    self.fbb.push_union_vector_item(GameMessage::tag_as_player_stat_event(o));
+  }
+
+  #[inline]
+  pub fn push_as_player_spectate(&mut self, o: flatbuffers::WIPOffset<PlayerSpectate>) {
+    self.fbb.push_union_vector_item(GameMessage::tag_as_player_spectate(o));
+  }
+
+  #[inline]
+  pub fn push_as_player_input_change(&mut self, o: flatbuffers::WIPOffset<PlayerInputChange>) {
+    self.fbb.push_union_vector_item(GameMessage::tag_as_player_input_change(o));
+  }
+
+}
+
+pub struct GameMessageUnionValue {}
+
+impl flatbuffers::TaggedUnion for GameMessageUnionValue {
+  type Tag = GameMessage;
+}
+
+impl<'a> flatbuffers::UnionVerifiable<'a> for GameMessageUnionValue {
+  fn run_union_verifier(
+    v: &mut flatbuffers::Verifier,
+    tag: <<Self as flatbuffers::TaggedUnion>::Tag as flatbuffers::Follow<'a>>::Inner,
+    pos: usize,
+  ) -> Result<(), flatbuffers::InvalidFlatbuffer> {
+    match tag {
+      GameMessage::PlayerStatEvent => v
+        .verify_union_variant::<flatbuffers::ForwardsUOffset<PlayerStatEvent>>(
+          "GameMessage::PlayerStatEvent",
+          pos,
+        ),
+      GameMessage::PlayerSpectate => v
+        .verify_union_variant::<flatbuffers::ForwardsUOffset<PlayerSpectate>>(
+          "GameMessage::PlayerSpectate",
+          pos,
+        ),
+      GameMessage::PlayerInputChange => v
+        .verify_union_variant::<flatbuffers::ForwardsUOffset<PlayerInputChange>>(
+          "GameMessage::PlayerInputChange",
+          pos,
+        ),
+      _ => Ok(()),
+    }
+  }
+}
 
 #[allow(clippy::upper_case_acronyms)]
 #[non_exhaustive]
 #[derive(Debug, Clone, PartialEq)]
 pub enum GameMessageT {
   NONE,
-  PlayerStatEvent(Box<PlayerStatEventT>),
-  PlayerSpectate(Box<PlayerSpectateT>),
-  PlayerInputChange(Box<PlayerInputChangeT>),
+    PlayerStatEvent(Box<PlayerStatEventT>),
+    PlayerSpectate(Box<PlayerSpectateT>),
+    PlayerInputChange(Box<PlayerInputChangeT>),
 }
 impl Default for GameMessageT {
   fn default() -> Self {
@@ -127,12 +226,12 @@ impl GameMessageT {
       Self::PlayerInputChange(_) => GameMessage::PlayerInputChange,
     }
   }
-  pub fn pack<'b, A: flatbuffers::Allocator + 'b>(&self, fbb: &mut flatbuffers::FlatBufferBuilder<'b, A>) -> Option<flatbuffers::WIPOffset<flatbuffers::UnionWIPOffset>> {
+  pub fn pack<'b, A: flatbuffers::Allocator + 'b>(&self, fbb: &mut flatbuffers::FlatBufferBuilder<'b, A>) -> Option<flatbuffers::WIPOffset<GameMessageUnionValue>> {
     match self {
       Self::NONE => None,
-      Self::PlayerStatEvent(v) => Some(v.pack(fbb).as_union_value()),
-      Self::PlayerSpectate(v) => Some(v.pack(fbb).as_union_value()),
-      Self::PlayerInputChange(v) => Some(v.pack(fbb).as_union_value()),
+        Self::PlayerStatEvent(v) => Some(GameMessage::tag_as_player_stat_event(v.pack(fbb)).value_offset()),
+        Self::PlayerSpectate(v) => Some(GameMessage::tag_as_player_spectate(v.pack(fbb)).value_offset()),
+        Self::PlayerInputChange(v) => Some(GameMessage::tag_as_player_input_change(v.pack(fbb)).value_offset()),
     }
   }
   /// If the union variant matches, return the owned PlayerStatEventT, setting the union to NONE.

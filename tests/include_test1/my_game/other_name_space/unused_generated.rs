@@ -27,18 +27,18 @@ impl core::fmt::Debug for Unused {
 }
 
 impl flatbuffers::SimpleToVerifyInSlice for Unused {}
-impl<'a> flatbuffers::Follow<'a> for Unused {
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'a, B> for Unused {
   type Inner = &'a Unused;
   #[inline]
-  unsafe fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+  unsafe fn follow(buf: &'a B, loc: usize) -> Self::Inner {
     unsafe { <&'a Unused>::follow(buf, loc) }
   }
 }
-impl<'a> flatbuffers::Follow<'a> for &'a Unused {
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'a, B> for &'a Unused {
   type Inner = &'a Unused;
   #[inline]
-  unsafe fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
-    unsafe { flatbuffers::follow_cast_ref::<Unused>(buf, loc) }
+  unsafe fn follow(buf: &'a B, loc: usize) -> Self::Inner {
+    unsafe { flatbuffers::follow_cast_ref::<Unused, B>(buf, loc) }
   }
 }
 impl<'b> flatbuffers::Push for Unused {

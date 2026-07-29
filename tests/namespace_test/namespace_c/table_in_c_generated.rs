@@ -12,19 +12,19 @@ use super::*;
 pub enum TableInCOffset {}
 #[derive(Copy, Clone, PartialEq)]
 
-pub struct TableInC<'a> {
-  pub _tab: flatbuffers::Table<'a>,
+pub struct TableInC<'a, B: flatbuffers::ReadBuffer + ?Sized = [u8]> {
+  pub _tab: flatbuffers::Table<'a, B>,
 }
 
-impl<'a> flatbuffers::Follow<'a> for TableInC<'a> {
-  type Inner = TableInC<'a>;
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'a, B> for TableInC<'a, B> {
+  type Inner = TableInC<'a, B>;
   #[inline]
-  unsafe fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+  unsafe fn follow(buf: &'a B, loc: usize) -> Self::Inner {
     Self { _tab: unsafe { flatbuffers::Table::new(buf, loc) } }
   }
 }
 
-impl<'a> TableInC<'a> {
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> TableInC<'a, B> {
   pub const VT_REFER_TO_A1: flatbuffers::VOffsetT = 4;
   pub const VT_REFER_TO_A2: flatbuffers::VOffsetT = 6;
 
@@ -33,7 +33,7 @@ impl<'a> TableInC<'a> {
   }
 
   #[inline]
-  pub unsafe fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
     TableInC { _tab: table }
   }
   #[allow(unused_mut)]
@@ -61,22 +61,22 @@ impl<'a> TableInC<'a> {
   }
 
   #[inline]
-  pub fn refer_to_a1(&self) -> Option<super::namespace_a::TableInFirstNS<'a>> {
+  pub fn refer_to_a1(&self) -> Option<super::namespace_a::TableInFirstNS<'a, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<super::namespace_a::TableInFirstNS>>(TableInC::VT_REFER_TO_A1, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<super::namespace_a::TableInFirstNS<'a, B>>>(TableInC::VT_REFER_TO_A1, None)}
   }
   #[inline]
-  pub fn refer_to_a2(&self) -> Option<super::namespace_a::SecondTableInA<'a>> {
+  pub fn refer_to_a2(&self) -> Option<super::namespace_a::SecondTableInA<'a, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<super::namespace_a::SecondTableInA>>(TableInC::VT_REFER_TO_A2, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<super::namespace_a::SecondTableInA<'a, B>>>(TableInC::VT_REFER_TO_A2, None)}
   }
 }
 
-impl flatbuffers::Verifiable for TableInC<'_> {
+impl<B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Verifiable for TableInC<'_, B> {
   #[inline]
   fn run_verifier(
     v: &mut flatbuffers::Verifier, pos: usize

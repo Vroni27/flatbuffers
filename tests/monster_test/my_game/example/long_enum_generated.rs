@@ -22,11 +22,11 @@ mod bitflags_long_enum {
 }
 pub use self::bitflags_long_enum::LongEnum;
 
-impl<'a> flatbuffers::Follow<'a> for LongEnum {
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'a, B> for LongEnum {
   type Inner = Self;
   #[inline]
-  unsafe fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
-    let b = unsafe { flatbuffers::read_scalar_at::<u64>(buf, loc) };
+  unsafe fn follow(buf: &'a B, loc: usize) -> Self::Inner {
+    let b = unsafe { flatbuffers::read_scalar_at::<u64, B>(buf, loc) };
     Self::from_bits_retain(b)
   }
 }
@@ -64,3 +64,4 @@ impl<'a> flatbuffers::Verifiable for LongEnum {
 }
 
 impl flatbuffers::SimpleToVerifyInSlice for LongEnum {}
+

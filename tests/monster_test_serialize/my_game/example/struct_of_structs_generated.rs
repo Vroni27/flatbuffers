@@ -31,18 +31,18 @@ impl core::fmt::Debug for StructOfStructs {
 }
 
 impl flatbuffers::SimpleToVerifyInSlice for StructOfStructs {}
-impl<'a> flatbuffers::Follow<'a> for StructOfStructs {
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'a, B> for StructOfStructs {
   type Inner = &'a StructOfStructs;
   #[inline]
-  unsafe fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+  unsafe fn follow(buf: &'a B, loc: usize) -> Self::Inner {
     unsafe { <&'a StructOfStructs>::follow(buf, loc) }
   }
 }
-impl<'a> flatbuffers::Follow<'a> for &'a StructOfStructs {
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'a, B> for &'a StructOfStructs {
   type Inner = &'a StructOfStructs;
   #[inline]
-  unsafe fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
-    unsafe { flatbuffers::follow_cast_ref::<StructOfStructs>(buf, loc) }
+  unsafe fn follow(buf: &'a B, loc: usize) -> Self::Inner {
+    unsafe { flatbuffers::follow_cast_ref::<StructOfStructs, B>(buf, loc) }
   }
 }
 impl<'b> flatbuffers::Push for StructOfStructs {

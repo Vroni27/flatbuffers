@@ -14,19 +14,19 @@ use super::*;
 pub enum ReferrableOffset {}
 #[derive(Copy, Clone, PartialEq)]
 
-pub struct Referrable<'a> {
-  pub _tab: flatbuffers::Table<'a>,
+pub struct Referrable<'a, B: flatbuffers::ReadBuffer + ?Sized = [u8]> {
+  pub _tab: flatbuffers::Table<'a, B>,
 }
 
-impl<'a> flatbuffers::Follow<'a> for Referrable<'a> {
-  type Inner = Referrable<'a>;
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'a, B> for Referrable<'a, B> {
+  type Inner = Referrable<'a, B>;
   #[inline]
-  unsafe fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+  unsafe fn follow(buf: &'a B, loc: usize) -> Self::Inner {
     Self { _tab: unsafe { flatbuffers::Table::new(buf, loc) } }
   }
 }
 
-impl<'a> Referrable<'a> {
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Referrable<'a, B> {
   pub const VT_ID: flatbuffers::VOffsetT = 4;
 
   pub const fn get_fully_qualified_name() -> &'static str {
@@ -34,7 +34,7 @@ impl<'a> Referrable<'a> {
   }
 
   #[inline]
-  pub unsafe fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
     Referrable { _tab: table }
   }
   #[allow(unused_mut)]
@@ -73,7 +73,7 @@ impl<'a> Referrable<'a> {
   }
 }
 
-impl flatbuffers::Verifiable for Referrable<'_> {
+impl<B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Verifiable for Referrable<'_, B> {
   #[inline]
   fn run_verifier(
     v: &mut flatbuffers::Verifier, pos: usize

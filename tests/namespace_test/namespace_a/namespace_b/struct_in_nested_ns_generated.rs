@@ -28,18 +28,18 @@ impl core::fmt::Debug for StructInNestedNS {
 }
 
 impl flatbuffers::SimpleToVerifyInSlice for StructInNestedNS {}
-impl<'a> flatbuffers::Follow<'a> for StructInNestedNS {
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'a, B> for StructInNestedNS {
   type Inner = &'a StructInNestedNS;
   #[inline]
-  unsafe fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+  unsafe fn follow(buf: &'a B, loc: usize) -> Self::Inner {
     unsafe { <&'a StructInNestedNS>::follow(buf, loc) }
   }
 }
-impl<'a> flatbuffers::Follow<'a> for &'a StructInNestedNS {
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'a, B> for &'a StructInNestedNS {
   type Inner = &'a StructInNestedNS;
   #[inline]
-  unsafe fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
-    unsafe { flatbuffers::follow_cast_ref::<StructInNestedNS>(buf, loc) }
+  unsafe fn follow(buf: &'a B, loc: usize) -> Self::Inner {
+    unsafe { flatbuffers::follow_cast_ref::<StructInNestedNS, B>(buf, loc) }
   }
 }
 impl<'b> flatbuffers::Push for StructInNestedNS {

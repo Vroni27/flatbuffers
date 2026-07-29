@@ -13,19 +13,19 @@ pub enum MonsterOffset {}
 #[derive(Copy, Clone, PartialEq)]
 
 /// an example documentation comment: "monster object"
-pub struct Monster<'a> {
-  pub _tab: flatbuffers::Table<'a>,
+pub struct Monster<'a, B: flatbuffers::ReadBuffer + ?Sized = [u8]> {
+  pub _tab: flatbuffers::Table<'a, B>,
 }
 
-impl<'a> flatbuffers::Follow<'a> for Monster<'a> {
-  type Inner = Monster<'a>;
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'a, B> for Monster<'a, B> {
+  type Inner = Monster<'a, B>;
   #[inline]
-  unsafe fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+  unsafe fn follow(buf: &'a B, loc: usize) -> Self::Inner {
     Self { _tab: unsafe { flatbuffers::Table::new(buf, loc) } }
   }
 }
 
-impl<'a> Monster<'a> {
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Monster<'a, B> {
   pub const VT_POS: flatbuffers::VOffsetT = 4;
   pub const VT_MANA: flatbuffers::VOffsetT = 6;
   pub const VT_HP: flatbuffers::VOffsetT = 8;
@@ -93,7 +93,7 @@ impl<'a> Monster<'a> {
   }
 
   #[inline]
-  pub unsafe fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
     Monster { _tab: table }
   }
   #[allow(unused_mut)]
@@ -185,17 +185,17 @@ impl<'a> Monster<'a> {
       Any::Monster => AnyT::Monster(Box::new(
         self.test_as_monster()
             .expect("Invalid union table, expected `Any::Monster`.")
-            .unpack()
+     .unpack()
       )),
       Any::TestSimpleTableWithEnum => AnyT::TestSimpleTableWithEnum(Box::new(
         self.test_as_test_simple_table_with_enum()
             .expect("Invalid union table, expected `Any::TestSimpleTableWithEnum`.")
-            .unpack()
+     .unpack()
       )),
       Any::MyGame_Example2_Monster => AnyT::MyGameExample2Monster(Box::new(
         self.test_as_my_game_example_2_monster()
             .expect("Invalid union table, expected `Any::MyGame_Example2_Monster`.")
-            .unpack()
+     .unpack()
       )),
       _ => AnyT::NONE,
     };
@@ -276,17 +276,17 @@ impl<'a> Monster<'a> {
       AnyUniqueAliases::M => AnyUniqueAliasesT::M(Box::new(
         self.any_unique_as_m()
             .expect("Invalid union table, expected `AnyUniqueAliases::M`.")
-            .unpack()
+     .unpack()
       )),
       AnyUniqueAliases::TS => AnyUniqueAliasesT::TS(Box::new(
         self.any_unique_as_ts()
             .expect("Invalid union table, expected `AnyUniqueAliases::TS`.")
-            .unpack()
+     .unpack()
       )),
       AnyUniqueAliases::M2 => AnyUniqueAliasesT::M2(Box::new(
         self.any_unique_as_m2()
             .expect("Invalid union table, expected `AnyUniqueAliases::M2`.")
-            .unpack()
+     .unpack()
       )),
       _ => AnyUniqueAliasesT::NONE,
     };
@@ -295,17 +295,17 @@ impl<'a> Monster<'a> {
       AnyAmbiguousAliases::M1 => AnyAmbiguousAliasesT::M1(Box::new(
         self.any_ambiguous_as_m1()
             .expect("Invalid union table, expected `AnyAmbiguousAliases::M1`.")
-            .unpack()
+     .unpack()
       )),
       AnyAmbiguousAliases::M2 => AnyAmbiguousAliasesT::M2(Box::new(
         self.any_ambiguous_as_m2()
             .expect("Invalid union table, expected `AnyAmbiguousAliases::M2`.")
-            .unpack()
+     .unpack()
       )),
       AnyAmbiguousAliases::M3 => AnyAmbiguousAliasesT::M3(Box::new(
         self.any_ambiguous_as_m3()
             .expect("Invalid union table, expected `AnyAmbiguousAliases::M3`.")
-            .unpack()
+     .unpack()
       )),
       _ => AnyAmbiguousAliasesT::NONE,
     };
@@ -454,11 +454,11 @@ impl<'a> Monster<'a> {
     unsafe { self._tab.get::<Any>(Monster::VT_TEST_TYPE, Some(Any::NONE)).unwrap()}
   }
   #[inline]
-  pub fn test(&self) -> Option<flatbuffers::Table<'a>> {
+  pub fn test(&self) -> Option<flatbuffers::Table<'a, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Table<'a>>>(Monster::VT_TEST, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Table<'a, B>>>(Monster::VT_TEST, None)}
   }
   #[inline]
   pub fn test4(&self) -> Option<flatbuffers::Vector<'a, Test>> {
@@ -477,18 +477,18 @@ impl<'a> Monster<'a> {
   /// an example documentation comment: this will end up in the generated code
   /// multiline too
   #[inline]
-  pub fn testarrayoftables(&self) -> Option<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<Monster<'a>>>> {
+  pub fn testarrayoftables(&self) -> Option<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<Monster<'a, B>>>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<Monster>>>>(Monster::VT_TESTARRAYOFTABLES, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<Monster<'a, B>>>>>(Monster::VT_TESTARRAYOFTABLES, None)}
   }
   #[inline]
-  pub fn enemy(&self) -> Option<Monster<'a>> {
+  pub fn enemy(&self) -> Option<Monster<'a, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<Monster>>(Monster::VT_ENEMY, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<Monster<'a, B>>>(Monster::VT_ENEMY, None)}
   }
   #[inline]
   pub fn testnestedflatbuffer(&self) -> Option<flatbuffers::Vector<'a, u8>> {
@@ -507,11 +507,11 @@ impl<'a> Monster<'a> {
     })
   }
   #[inline]
-  pub fn testempty(&self) -> Option<Stat<'a>> {
+  pub fn testempty(&self) -> Option<Stat<'a, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<Stat>>(Monster::VT_TESTEMPTY, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<Stat<'a, B>>>(Monster::VT_TESTEMPTY, None)}
   }
   #[inline]
   pub fn testbool(&self) -> bool {
@@ -647,18 +647,18 @@ impl<'a> Monster<'a> {
     unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, f64>>>(Monster::VT_VECTOR_OF_DOUBLES, None)}
   }
   #[inline]
-  pub fn parent_namespace_test(&self) -> Option<super::InParentNamespace<'a>> {
+  pub fn parent_namespace_test(&self) -> Option<super::InParentNamespace<'a, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<super::InParentNamespace>>(Monster::VT_PARENT_NAMESPACE_TEST, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<super::InParentNamespace<'a, B>>>(Monster::VT_PARENT_NAMESPACE_TEST, None)}
   }
   #[inline]
-  pub fn vector_of_referrables(&self) -> Option<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<Referrable<'a>>>> {
+  pub fn vector_of_referrables(&self) -> Option<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<Referrable<'a, B>>>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<Referrable>>>>(Monster::VT_VECTOR_OF_REFERRABLES, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<Referrable<'a, B>>>>>(Monster::VT_VECTOR_OF_REFERRABLES, None)}
   }
   #[inline]
   pub fn single_weak_reference(&self) -> u64 {
@@ -675,11 +675,11 @@ impl<'a> Monster<'a> {
     unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, u64>>>(Monster::VT_VECTOR_OF_WEAK_REFERENCES, None)}
   }
   #[inline]
-  pub fn vector_of_strong_referrables(&self) -> Option<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<Referrable<'a>>>> {
+  pub fn vector_of_strong_referrables(&self) -> Option<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<Referrable<'a, B>>>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<Referrable>>>>(Monster::VT_VECTOR_OF_STRONG_REFERRABLES, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<Referrable<'a, B>>>>>(Monster::VT_VECTOR_OF_STRONG_REFERRABLES, None)}
   }
   #[inline]
   pub fn co_owning_reference(&self) -> u64 {
@@ -717,11 +717,11 @@ impl<'a> Monster<'a> {
     unsafe { self._tab.get::<AnyUniqueAliases>(Monster::VT_ANY_UNIQUE_TYPE, Some(AnyUniqueAliases::NONE)).unwrap()}
   }
   #[inline]
-  pub fn any_unique(&self) -> Option<flatbuffers::Table<'a>> {
+  pub fn any_unique(&self) -> Option<flatbuffers::Table<'a, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Table<'a>>>(Monster::VT_ANY_UNIQUE, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Table<'a, B>>>(Monster::VT_ANY_UNIQUE, None)}
   }
   #[inline]
   pub fn any_ambiguous_type(&self) -> AnyAmbiguousAliases {
@@ -731,11 +731,11 @@ impl<'a> Monster<'a> {
     unsafe { self._tab.get::<AnyAmbiguousAliases>(Monster::VT_ANY_AMBIGUOUS_TYPE, Some(AnyAmbiguousAliases::NONE)).unwrap()}
   }
   #[inline]
-  pub fn any_ambiguous(&self) -> Option<flatbuffers::Table<'a>> {
+  pub fn any_ambiguous(&self) -> Option<flatbuffers::Table<'a, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Table<'a>>>(Monster::VT_ANY_AMBIGUOUS, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Table<'a, B>>>(Monster::VT_ANY_AMBIGUOUS, None)}
   }
   #[inline]
   pub fn vector_of_enums(&self) -> Option<flatbuffers::Vector<'a, Color>> {
@@ -768,11 +768,11 @@ impl<'a> Monster<'a> {
     })
   }
   #[inline]
-  pub fn scalar_key_sorted_tables(&self) -> Option<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<Stat<'a>>>> {
+  pub fn scalar_key_sorted_tables(&self) -> Option<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<Stat<'a, B>>>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<Stat>>>>(Monster::VT_SCALAR_KEY_SORTED_TABLES, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<Stat<'a, B>>>>>(Monster::VT_SCALAR_KEY_SORTED_TABLES, None)}
   }
   #[inline]
   pub fn native_inline(&self) -> Option<&'a Test> {
@@ -853,7 +853,7 @@ impl<'a> Monster<'a> {
   }
   #[inline]
   #[allow(non_snake_case)]
-  pub fn test_as_monster(&self) -> Option<Monster<'a>> {
+  pub fn test_as_monster(&self) -> Option<Monster<'a, B>> {
     if self.test_type() == Any::Monster {
       self.test().map(|t| {
        // Safety:
@@ -868,7 +868,7 @@ impl<'a> Monster<'a> {
 
   #[inline]
   #[allow(non_snake_case)]
-  pub fn test_as_test_simple_table_with_enum(&self) -> Option<TestSimpleTableWithEnum<'a>> {
+  pub fn test_as_test_simple_table_with_enum(&self) -> Option<TestSimpleTableWithEnum<'a, B>> {
     if self.test_type() == Any::TestSimpleTableWithEnum {
       self.test().map(|t| {
        // Safety:
@@ -883,7 +883,7 @@ impl<'a> Monster<'a> {
 
   #[inline]
   #[allow(non_snake_case)]
-  pub fn test_as_my_game_example_2_monster(&self) -> Option<super::example_2::Monster<'a>> {
+  pub fn test_as_my_game_example_2_monster(&self) -> Option<super::example_2::Monster<'a, B>> {
     if self.test_type() == Any::MyGame_Example2_Monster {
       self.test().map(|t| {
        // Safety:
@@ -898,7 +898,7 @@ impl<'a> Monster<'a> {
 
   #[inline]
   #[allow(non_snake_case)]
-  pub fn any_unique_as_m(&self) -> Option<Monster<'a>> {
+  pub fn any_unique_as_m(&self) -> Option<Monster<'a, B>> {
     if self.any_unique_type() == AnyUniqueAliases::M {
       self.any_unique().map(|t| {
        // Safety:
@@ -913,7 +913,7 @@ impl<'a> Monster<'a> {
 
   #[inline]
   #[allow(non_snake_case)]
-  pub fn any_unique_as_ts(&self) -> Option<TestSimpleTableWithEnum<'a>> {
+  pub fn any_unique_as_ts(&self) -> Option<TestSimpleTableWithEnum<'a, B>> {
     if self.any_unique_type() == AnyUniqueAliases::TS {
       self.any_unique().map(|t| {
        // Safety:
@@ -928,7 +928,7 @@ impl<'a> Monster<'a> {
 
   #[inline]
   #[allow(non_snake_case)]
-  pub fn any_unique_as_m2(&self) -> Option<super::example_2::Monster<'a>> {
+  pub fn any_unique_as_m2(&self) -> Option<super::example_2::Monster<'a, B>> {
     if self.any_unique_type() == AnyUniqueAliases::M2 {
       self.any_unique().map(|t| {
        // Safety:
@@ -943,7 +943,7 @@ impl<'a> Monster<'a> {
 
   #[inline]
   #[allow(non_snake_case)]
-  pub fn any_ambiguous_as_m1(&self) -> Option<Monster<'a>> {
+  pub fn any_ambiguous_as_m1(&self) -> Option<Monster<'a, B>> {
     if self.any_ambiguous_type() == AnyAmbiguousAliases::M1 {
       self.any_ambiguous().map(|t| {
        // Safety:
@@ -958,7 +958,7 @@ impl<'a> Monster<'a> {
 
   #[inline]
   #[allow(non_snake_case)]
-  pub fn any_ambiguous_as_m2(&self) -> Option<Monster<'a>> {
+  pub fn any_ambiguous_as_m2(&self) -> Option<Monster<'a, B>> {
     if self.any_ambiguous_type() == AnyAmbiguousAliases::M2 {
       self.any_ambiguous().map(|t| {
        // Safety:
@@ -973,7 +973,7 @@ impl<'a> Monster<'a> {
 
   #[inline]
   #[allow(non_snake_case)]
-  pub fn any_ambiguous_as_m3(&self) -> Option<Monster<'a>> {
+  pub fn any_ambiguous_as_m3(&self) -> Option<Monster<'a, B>> {
     if self.any_ambiguous_type() == AnyAmbiguousAliases::M3 {
       self.any_ambiguous().map(|t| {
        // Safety:
@@ -988,7 +988,7 @@ impl<'a> Monster<'a> {
 
 }
 
-impl flatbuffers::Verifiable for Monster<'_> {
+impl<B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Verifiable for Monster<'_, B> {
   #[inline]
   fn run_verifier(
     v: &mut flatbuffers::Verifier, pos: usize
@@ -1001,14 +1001,7 @@ impl flatbuffers::Verifiable for Monster<'_> {
      .visit_field::<flatbuffers::ForwardsUOffset<&str>>("name", Self::VT_NAME, true)?
      .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, u8>>>("inventory", Self::VT_INVENTORY, false)?
      .visit_field::<Color>("color", Self::VT_COLOR, false)?
-     .visit_union::<Any, _>("test_type", Self::VT_TEST_TYPE, "test", Self::VT_TEST, false, |key, v, pos| {
-        match key {
-          Any::Monster => v.verify_union_variant::<flatbuffers::ForwardsUOffset<Monster>>("Any::Monster", pos),
-          Any::TestSimpleTableWithEnum => v.verify_union_variant::<flatbuffers::ForwardsUOffset<TestSimpleTableWithEnum>>("Any::TestSimpleTableWithEnum", pos),
-          Any::MyGame_Example2_Monster => v.verify_union_variant::<flatbuffers::ForwardsUOffset<super::example_2::Monster>>("Any::MyGame_Example2_Monster", pos),
-          _ => Ok(()),
-        }
-     })?
+     .visit_union::<AnyUnionValue>("test_type", Self::VT_TEST_TYPE, "test", Self::VT_TEST, false)?
      .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, Test>>>("test4", Self::VT_TEST4, false)?
      .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<&'_ str>>>>("testarrayofstring", Self::VT_TESTARRAYOFSTRING, false)?
      .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<Monster>>>>("testarrayoftables", Self::VT_TESTARRAYOFTABLES, false)?
@@ -1043,22 +1036,8 @@ impl flatbuffers::Verifiable for Monster<'_> {
      .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, u64>>>("vector_of_co_owning_references", Self::VT_VECTOR_OF_CO_OWNING_REFERENCES, false)?
      .visit_field::<u64>("non_owning_reference", Self::VT_NON_OWNING_REFERENCE, false)?
      .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, u64>>>("vector_of_non_owning_references", Self::VT_VECTOR_OF_NON_OWNING_REFERENCES, false)?
-     .visit_union::<AnyUniqueAliases, _>("any_unique_type", Self::VT_ANY_UNIQUE_TYPE, "any_unique", Self::VT_ANY_UNIQUE, false, |key, v, pos| {
-        match key {
-          AnyUniqueAliases::M => v.verify_union_variant::<flatbuffers::ForwardsUOffset<Monster>>("AnyUniqueAliases::M", pos),
-          AnyUniqueAliases::TS => v.verify_union_variant::<flatbuffers::ForwardsUOffset<TestSimpleTableWithEnum>>("AnyUniqueAliases::TS", pos),
-          AnyUniqueAliases::M2 => v.verify_union_variant::<flatbuffers::ForwardsUOffset<super::example_2::Monster>>("AnyUniqueAliases::M2", pos),
-          _ => Ok(()),
-        }
-     })?
-     .visit_union::<AnyAmbiguousAliases, _>("any_ambiguous_type", Self::VT_ANY_AMBIGUOUS_TYPE, "any_ambiguous", Self::VT_ANY_AMBIGUOUS, false, |key, v, pos| {
-        match key {
-          AnyAmbiguousAliases::M1 => v.verify_union_variant::<flatbuffers::ForwardsUOffset<Monster>>("AnyAmbiguousAliases::M1", pos),
-          AnyAmbiguousAliases::M2 => v.verify_union_variant::<flatbuffers::ForwardsUOffset<Monster>>("AnyAmbiguousAliases::M2", pos),
-          AnyAmbiguousAliases::M3 => v.verify_union_variant::<flatbuffers::ForwardsUOffset<Monster>>("AnyAmbiguousAliases::M3", pos),
-          _ => Ok(()),
-        }
-     })?
+     .visit_union::<AnyUniqueAliasesUnionValue>("any_unique_type", Self::VT_ANY_UNIQUE_TYPE, "any_unique", Self::VT_ANY_UNIQUE, false)?
+     .visit_union::<AnyAmbiguousAliasesUnionValue>("any_ambiguous_type", Self::VT_ANY_AMBIGUOUS_TYPE, "any_ambiguous", Self::VT_ANY_AMBIGUOUS, false)?
      .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, Color>>>("vector_of_enums", Self::VT_VECTOR_OF_ENUMS, false)?
      .visit_field::<Race>("signed_enum", Self::VT_SIGNED_ENUM, false)?
      .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, u8>>>("testrequirednestedflatbuffer", Self::VT_TESTREQUIREDNESTEDFLATBUFFER, false)?
@@ -1086,7 +1065,7 @@ pub struct MonsterArgs<'a> {
     pub inventory: Option<flatbuffers::WIPOffset<flatbuffers::Vector<'a, u8>>>,
     pub color: Color,
     pub test_type: Any,
-    pub test: Option<flatbuffers::WIPOffset<flatbuffers::UnionWIPOffset>>,
+    pub test: Option<flatbuffers::WIPOffset<AnyUnionValue>>,
     pub test4: Option<flatbuffers::WIPOffset<flatbuffers::Vector<'a, Test>>>,
     pub testarrayofstring: Option<flatbuffers::WIPOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<&'a str>>>>,
     pub testarrayoftables: Option<flatbuffers::WIPOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<Monster<'a>>>>>,
@@ -1122,9 +1101,9 @@ pub struct MonsterArgs<'a> {
     pub non_owning_reference: u64,
     pub vector_of_non_owning_references: Option<flatbuffers::WIPOffset<flatbuffers::Vector<'a, u64>>>,
     pub any_unique_type: AnyUniqueAliases,
-    pub any_unique: Option<flatbuffers::WIPOffset<flatbuffers::UnionWIPOffset>>,
+    pub any_unique: Option<flatbuffers::WIPOffset<AnyUniqueAliasesUnionValue>>,
     pub any_ambiguous_type: AnyAmbiguousAliases,
-    pub any_ambiguous: Option<flatbuffers::WIPOffset<flatbuffers::UnionWIPOffset>>,
+    pub any_ambiguous: Option<flatbuffers::WIPOffset<AnyAmbiguousAliasesUnionValue>>,
     pub vector_of_enums: Option<flatbuffers::WIPOffset<flatbuffers::Vector<'a, Color>>>,
     pub signed_enum: Race,
     pub testrequirednestedflatbuffer: Option<flatbuffers::WIPOffset<flatbuffers::Vector<'a, u8>>>,
@@ -1244,7 +1223,7 @@ impl<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> MonsterBuilder<'a, 'b, A> {
     self.fbb_.push_slot::<Any>(Monster::VT_TEST_TYPE, test_type, Any::NONE);
   }
   #[inline]
-  pub fn add_test(&mut self, test: flatbuffers::WIPOffset<flatbuffers::UnionWIPOffset>) {
+  pub fn add_test(&mut self, test: flatbuffers::WIPOffset<AnyUnionValue>) {
     self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(Monster::VT_TEST, test);
   }
   #[inline]
@@ -1388,7 +1367,7 @@ impl<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> MonsterBuilder<'a, 'b, A> {
     self.fbb_.push_slot::<AnyUniqueAliases>(Monster::VT_ANY_UNIQUE_TYPE, any_unique_type, AnyUniqueAliases::NONE);
   }
   #[inline]
-  pub fn add_any_unique(&mut self, any_unique: flatbuffers::WIPOffset<flatbuffers::UnionWIPOffset>) {
+  pub fn add_any_unique(&mut self, any_unique: flatbuffers::WIPOffset<AnyUniqueAliasesUnionValue>) {
     self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(Monster::VT_ANY_UNIQUE, any_unique);
   }
   #[inline]
@@ -1396,7 +1375,7 @@ impl<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> MonsterBuilder<'a, 'b, A> {
     self.fbb_.push_slot::<AnyAmbiguousAliases>(Monster::VT_ANY_AMBIGUOUS_TYPE, any_ambiguous_type, AnyAmbiguousAliases::NONE);
   }
   #[inline]
-  pub fn add_any_ambiguous(&mut self, any_ambiguous: flatbuffers::WIPOffset<flatbuffers::UnionWIPOffset>) {
+  pub fn add_any_ambiguous(&mut self, any_ambiguous: flatbuffers::WIPOffset<AnyAmbiguousAliasesUnionValue>) {
     self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(Monster::VT_ANY_AMBIGUOUS, any_ambiguous);
   }
   #[inline]
@@ -1935,8 +1914,8 @@ impl MonsterT {
 /// catch every error, or be maximally performant. For the
 /// previous, unchecked, behavior use
 /// `root_as_monster_unchecked`.
-pub fn root_as_monster(buf: &[u8]) -> Result<Monster, flatbuffers::InvalidFlatbuffer> {
-  flatbuffers::root::<Monster>(buf)
+pub fn root_as_monster<B: flatbuffers::ReadBuffer + ?Sized>(buf: &B) -> Result<Monster<'_, B>, flatbuffers::InvalidFlatbuffer> {
+  flatbuffers::root_with_buffer::<Monster<'_, B>, B>(buf)
 }
 #[inline]
 /// Verifies that a buffer of bytes contains a size prefixed
@@ -1945,8 +1924,8 @@ pub fn root_as_monster(buf: &[u8]) -> Result<Monster, flatbuffers::InvalidFlatbu
 /// catch every error, or be maximally performant. For the
 /// previous, unchecked, behavior use
 /// `size_prefixed_root_as_monster_unchecked`.
-pub fn size_prefixed_root_as_monster(buf: &[u8]) -> Result<Monster, flatbuffers::InvalidFlatbuffer> {
-  flatbuffers::size_prefixed_root::<Monster>(buf)
+pub fn size_prefixed_root_as_monster<B: flatbuffers::ReadBuffer + ?Sized>(buf: &B) -> Result<Monster<'_, B>, flatbuffers::InvalidFlatbuffer> {
+  flatbuffers::size_prefixed_root_with_buffer::<Monster<'_, B>, B>(buf)
 }
 #[inline]
 /// Verifies, with the given options, that a buffer of bytes
@@ -1955,11 +1934,11 @@ pub fn size_prefixed_root_as_monster(buf: &[u8]) -> Result<Monster, flatbuffers:
 /// catch every error, or be maximally performant. For the
 /// previous, unchecked, behavior use
 /// `root_as_monster_unchecked`.
-pub fn root_as_monster_with_opts<'b, 'o>(
+pub fn root_as_monster_with_opts<'b, 'o, B: flatbuffers::ReadBuffer + ?Sized>(
   opts: &'o flatbuffers::VerifierOptions,
-  buf: &'b [u8],
-) -> Result<Monster<'b>, flatbuffers::InvalidFlatbuffer> {
-  flatbuffers::root_with_opts::<Monster<'b>>(opts, buf)
+  buf: &'b B,
+) -> Result<Monster<'b, B>, flatbuffers::InvalidFlatbuffer> {
+  flatbuffers::root_with_buffer_and_opts::<Monster<'b, B>, B>(opts, buf)
 }
 #[inline]
 /// Verifies, with the given verifier options, that a buffer of
@@ -1968,25 +1947,25 @@ pub fn root_as_monster_with_opts<'b, 'o>(
 /// catch every error, or be maximally performant. For the
 /// previous, unchecked, behavior use
 /// `root_as_monster_unchecked`.
-pub fn size_prefixed_root_as_monster_with_opts<'b, 'o>(
+pub fn size_prefixed_root_as_monster_with_opts<'b, 'o, B: flatbuffers::ReadBuffer + ?Sized>(
   opts: &'o flatbuffers::VerifierOptions,
-  buf: &'b [u8],
-) -> Result<Monster<'b>, flatbuffers::InvalidFlatbuffer> {
-  flatbuffers::size_prefixed_root_with_opts::<Monster<'b>>(opts, buf)
+  buf: &'b B,
+) -> Result<Monster<'b, B>, flatbuffers::InvalidFlatbuffer> {
+  flatbuffers::size_prefixed_root_with_buffer_and_opts::<Monster<'b, B>, B>(opts, buf)
 }
 #[inline]
 /// Assumes, without verification, that a buffer of bytes contains a Monster and returns it.
 /// # Safety
 /// Callers must trust the given bytes do indeed contain a valid `Monster`.
-pub unsafe fn root_as_monster_unchecked(buf: &[u8]) -> Monster {
-  unsafe { flatbuffers::root_unchecked::<Monster>(buf) }
+pub unsafe fn root_as_monster_unchecked<B: flatbuffers::ReadBuffer + ?Sized>(buf: &B) -> Monster<'_, B> {
+  unsafe { flatbuffers::root_unchecked::<Monster<'_, B>, B>(buf) }
 }
 #[inline]
 /// Assumes, without verification, that a buffer of bytes contains a size prefixed Monster and returns it.
 /// # Safety
 /// Callers must trust the given bytes do indeed contain a valid size prefixed `Monster`.
-pub unsafe fn size_prefixed_root_as_monster_unchecked(buf: &[u8]) -> Monster {
-  unsafe { flatbuffers::size_prefixed_root_unchecked::<Monster>(buf) }
+pub unsafe fn size_prefixed_root_as_monster_unchecked<B: flatbuffers::ReadBuffer + ?Sized>(buf: &B) -> Monster<'_, B> {
+  unsafe { flatbuffers::size_prefixed_root_unchecked::<Monster<'_, B>, B>(buf) }
 }
 pub const MONSTER_IDENTIFIER: &str = "MONS";
 

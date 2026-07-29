@@ -12,19 +12,19 @@ use super::*;
 pub enum RootTableOffset {}
 #[derive(Copy, Clone, PartialEq)]
 
-pub struct RootTable<'a> {
-  pub _tab: flatbuffers::Table<'a>,
+pub struct RootTable<'a, B: flatbuffers::ReadBuffer + ?Sized = [u8]> {
+  pub _tab: flatbuffers::Table<'a, B>,
 }
 
-impl<'a> flatbuffers::Follow<'a> for RootTable<'a> {
-  type Inner = RootTable<'a>;
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'a, B> for RootTable<'a, B> {
+  type Inner = RootTable<'a, B>;
   #[inline]
-  unsafe fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+  unsafe fn follow(buf: &'a B, loc: usize) -> Self::Inner {
     Self { _tab: unsafe { flatbuffers::Table::new(buf, loc) } }
   }
 }
 
-impl<'a> RootTable<'a> {
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> RootTable<'a, B> {
   pub const VT_FIELD42_TYPE: flatbuffers::VOffsetT = 4;
   pub const VT_FIELD42: flatbuffers::VOffsetT = 6;
 
@@ -33,7 +33,7 @@ impl<'a> RootTable<'a> {
   }
 
   #[inline]
-  pub unsafe fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
     RootTable { _tab: table }
   }
   #[allow(unused_mut)]
@@ -53,7 +53,7 @@ impl<'a> RootTable<'a> {
       FieldUnion::f => FieldUnionT::F(Box::new(
         self.field42_as_f()
             .expect("Invalid union table, expected `FieldUnion::f`.")
-            .unpack()
+     .unpack()
       )),
       _ => FieldUnionT::NONE,
     };
@@ -70,15 +70,15 @@ impl<'a> RootTable<'a> {
     unsafe { self._tab.get::<FieldUnion>(RootTable::VT_FIELD42_TYPE, Some(FieldUnion::NONE)).unwrap()}
   }
   #[inline]
-  pub fn field42(&self) -> Option<flatbuffers::Table<'a>> {
+  pub fn field42(&self) -> Option<flatbuffers::Table<'a, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Table<'a>>>(RootTable::VT_FIELD42, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Table<'a, B>>>(RootTable::VT_FIELD42, None)}
   }
   #[inline]
   #[allow(non_snake_case)]
-  pub fn field42_as_f(&self) -> Option<FieldTable<'a>> {
+  pub fn field42_as_f(&self) -> Option<FieldTable<'a, B>> {
     if self.field42_type() == FieldUnion::f {
       self.field42().map(|t| {
        // Safety:
@@ -93,26 +93,21 @@ impl<'a> RootTable<'a> {
 
 }
 
-impl flatbuffers::Verifiable for RootTable<'_> {
+impl<B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Verifiable for RootTable<'_, B> {
   #[inline]
   fn run_verifier(
     v: &mut flatbuffers::Verifier, pos: usize
   ) -> Result<(), flatbuffers::InvalidFlatbuffer> {
     use self::flatbuffers::Verifiable;
     v.visit_table(pos)?
-     .visit_union::<FieldUnion, _>("field42_type", Self::VT_FIELD42_TYPE, "field42", Self::VT_FIELD42, false, |key, v, pos| {
-        match key {
-          FieldUnion::f => v.verify_union_variant::<flatbuffers::ForwardsUOffset<FieldTable>>("FieldUnion::f", pos),
-          _ => Ok(()),
-        }
-     })?
+     .visit_union::<FieldUnionUnionValue>("field42_type", Self::VT_FIELD42_TYPE, "field42", Self::VT_FIELD42, false)?
      .finish();
     Ok(())
   }
 }
 pub struct RootTableArgs {
     pub field42_type: FieldUnion,
-    pub field42: Option<flatbuffers::WIPOffset<flatbuffers::UnionWIPOffset>>,
+    pub field42: Option<flatbuffers::WIPOffset<FieldUnionUnionValue>>,
 }
 impl<'a> Default for RootTableArgs {
   #[inline]
@@ -134,7 +129,7 @@ impl<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> RootTableBuilder<'a, 'b, A> {
     self.fbb_.push_slot::<FieldUnion>(RootTable::VT_FIELD42_TYPE, field42_type, FieldUnion::NONE);
   }
   #[inline]
-  pub fn add_field42(&mut self, field42: flatbuffers::WIPOffset<flatbuffers::UnionWIPOffset>) {
+  pub fn add_field42(&mut self, field42: flatbuffers::WIPOffset<FieldUnionUnionValue>) {
     self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(RootTable::VT_FIELD42, field42);
   }
   #[inline]

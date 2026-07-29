@@ -46,6 +46,21 @@ impl Any {
       _ => None,
     }
   }
+
+  #[inline]
+  pub fn tag_as_game(
+    o: flatbuffers::WIPOffset<Game>,
+  ) -> flatbuffers::UnionWIPOffset<AnyUnionValue> {
+    flatbuffers::UnionWIPOffset::new(Self::Game, flatbuffers::WIPOffset::new(o.value()))
+  }
+
+  #[inline]
+  pub fn tag_as_annotations(
+    o: flatbuffers::WIPOffset<Annotations>,
+  ) -> flatbuffers::UnionWIPOffset<AnyUnionValue> {
+    flatbuffers::UnionWIPOffset::new(Self::Annotations, flatbuffers::WIPOffset::new(o.value()))
+  }
+
 }
 impl core::fmt::Debug for Any {
   fn fmt(&self, f: &mut core::fmt::Formatter) -> core::fmt::Result {
@@ -56,11 +71,11 @@ impl core::fmt::Debug for Any {
     }
   }
 }
-impl<'a> flatbuffers::Follow<'a> for Any {
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'a, B> for Any {
   type Inner = Self;
   #[inline]
-  unsafe fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
-    let b = unsafe { flatbuffers::read_scalar_at::<u8>(buf, loc) };
+  unsafe fn follow(buf: &'a B, loc: usize) -> Self::Inner {
+    let b = unsafe { flatbuffers::read_scalar_at::<u8, B>(buf, loc) };
     Self(b)
   }
 }
@@ -98,15 +113,82 @@ impl<'a> flatbuffers::Verifiable for Any {
 }
 
 impl flatbuffers::SimpleToVerifyInSlice for Any {}
-pub(crate) struct AnyUnionTableOffset {}
+
+impl From<Any> for u8 {
+  #[inline]
+  fn from(v: Any) -> u8 {
+    v.0
+  }
+}
+
+impl<'a: 'b, 'b> flatbuffers::BuildVector<'a, 'b> for Any {
+  type VectorBuilder = AnyVectorBuilder<'a, 'b>;
+}
+
+pub struct AnyVectorBuilder<'a: 'b, 'b> {
+  fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>,
+  num_items: usize,
+}
+
+impl<'a: 'b, 'b> AnyVectorBuilder<'a, 'b> {
+  #[inline]
+  pub fn new(fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>, num_items: usize) -> Self {
+    fbb.start_union_vector::<AnyUnionValue>(num_items);
+    Self { fbb, num_items }
+  }
+
+  #[inline]
+  pub fn finish(&mut self) -> flatbuffers::UnionVectorWIPOffsets<'a, AnyUnionValue> {
+    self.fbb.end_union_vector(self.num_items)
+  }
+
+  #[inline]
+  pub fn push_as_game(&mut self, o: flatbuffers::WIPOffset<Game>) {
+    self.fbb.push_union_vector_item(Any::tag_as_game(o));
+  }
+
+  #[inline]
+  pub fn push_as_annotations(&mut self, o: flatbuffers::WIPOffset<Annotations>) {
+    self.fbb.push_union_vector_item(Any::tag_as_annotations(o));
+  }
+
+}
+
+pub struct AnyUnionValue {}
+
+impl flatbuffers::TaggedUnion for AnyUnionValue {
+  type Tag = Any;
+}
+
+impl<'a> flatbuffers::UnionVerifiable<'a> for AnyUnionValue {
+  fn run_union_verifier(
+    v: &mut flatbuffers::Verifier,
+    tag: <<Self as flatbuffers::TaggedUnion>::Tag as flatbuffers::Follow<'a>>::Inner,
+    pos: usize,
+  ) -> Result<(), flatbuffers::InvalidFlatbuffer> {
+    match tag {
+      Any::Game => v
+        .verify_union_variant::<flatbuffers::ForwardsUOffset<Game>>(
+          "Any::Game",
+          pos,
+        ),
+      Any::Annotations => v
+        .verify_union_variant::<flatbuffers::ForwardsUOffset<Annotations>>(
+          "Any::Annotations",
+          pos,
+        ),
+      _ => Ok(()),
+    }
+  }
+}
 
 #[allow(clippy::upper_case_acronyms)]
 #[non_exhaustive]
 #[derive(Debug, Clone, PartialEq)]
 pub(crate) enum AnyT {
   NONE,
-  Game(Box<GameT>),
-  Annotations(Box<AnnotationsT>),
+    Game(Box<GameT>),
+    Annotations(Box<AnnotationsT>),
 }
 impl Default for AnyT {
   fn default() -> Self {
@@ -121,11 +203,11 @@ impl AnyT {
       Self::Annotations(_) => Any::Annotations,
     }
   }
-  pub fn pack<'b, A: flatbuffers::Allocator + 'b>(&self, fbb: &mut flatbuffers::FlatBufferBuilder<'b, A>) -> Option<flatbuffers::WIPOffset<flatbuffers::UnionWIPOffset>> {
+  pub fn pack<'b, A: flatbuffers::Allocator + 'b>(&self, fbb: &mut flatbuffers::FlatBufferBuilder<'b, A>) -> Option<flatbuffers::WIPOffset<AnyUnionValue>> {
     match self {
       Self::NONE => None,
-      Self::Game(v) => Some(v.pack(fbb).as_union_value()),
-      Self::Annotations(v) => Some(v.pack(fbb).as_union_value()),
+        Self::Game(v) => Some(Any::tag_as_game(v.pack(fbb)).value_offset()),
+        Self::Annotations(v) => Some(Any::tag_as_annotations(v.pack(fbb)).value_offset()),
     }
   }
   /// If the union variant matches, return the owned GameT, setting the union to NONE.

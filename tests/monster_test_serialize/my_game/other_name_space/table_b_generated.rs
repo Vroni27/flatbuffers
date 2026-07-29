@@ -14,19 +14,19 @@ use super::*;
 pub enum TableBOffset {}
 #[derive(Copy, Clone, PartialEq)]
 
-pub struct TableB<'a> {
-  pub _tab: flatbuffers::Table<'a>,
+pub struct TableB<'a, B: flatbuffers::ReadBuffer + ?Sized = [u8]> {
+  pub _tab: flatbuffers::Table<'a, B>,
 }
 
-impl<'a> flatbuffers::Follow<'a> for TableB<'a> {
-  type Inner = TableB<'a>;
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'a, B> for TableB<'a, B> {
+  type Inner = TableB<'a, B>;
   #[inline]
-  unsafe fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+  unsafe fn follow(buf: &'a B, loc: usize) -> Self::Inner {
     Self { _tab: unsafe { flatbuffers::Table::new(buf, loc) } }
   }
 }
 
-impl<'a> TableB<'a> {
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> TableB<'a, B> {
   pub const VT_A: flatbuffers::VOffsetT = 4;
 
   pub const fn get_fully_qualified_name() -> &'static str {
@@ -34,7 +34,7 @@ impl<'a> TableB<'a> {
   }
 
   #[inline]
-  pub unsafe fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
     TableB { _tab: table }
   }
   #[allow(unused_mut)]
@@ -57,15 +57,15 @@ impl<'a> TableB<'a> {
   }
 
   #[inline]
-  pub fn a(&self) -> Option<super::super::TableA<'a>> {
+  pub fn a(&self) -> Option<super::super::TableA<'a, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<super::super::TableA>>(TableB::VT_A, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<super::super::TableA<'a, B>>>(TableB::VT_A, None)}
   }
 }
 
-impl flatbuffers::Verifiable for TableB<'_> {
+impl<B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Verifiable for TableB<'_, B> {
   #[inline]
   fn run_verifier(
     v: &mut flatbuffers::Verifier, pos: usize

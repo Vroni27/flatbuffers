@@ -32,18 +32,18 @@ impl core::fmt::Debug for ArrayStruct {
 }
 
 impl flatbuffers::SimpleToVerifyInSlice for ArrayStruct {}
-impl<'a> flatbuffers::Follow<'a> for ArrayStruct {
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'a, B> for ArrayStruct {
   type Inner = &'a ArrayStruct;
   #[inline]
-  unsafe fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+  unsafe fn follow(buf: &'a B, loc: usize) -> Self::Inner {
     unsafe { <&'a ArrayStruct>::follow(buf, loc) }
   }
 }
-impl<'a> flatbuffers::Follow<'a> for &'a ArrayStruct {
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'a, B> for &'a ArrayStruct {
   type Inner = &'a ArrayStruct;
   #[inline]
-  unsafe fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
-    unsafe { flatbuffers::follow_cast_ref::<ArrayStruct>(buf, loc) }
+  unsafe fn follow(buf: &'a B, loc: usize) -> Self::Inner {
+    unsafe { flatbuffers::follow_cast_ref::<ArrayStruct, B>(buf, loc) }
   }
 }
 impl<'b> flatbuffers::Push for ArrayStruct {

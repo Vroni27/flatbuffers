@@ -12,19 +12,19 @@ use super::*;
 pub enum MoreDefaultsOffset {}
 #[derive(Copy, Clone, PartialEq)]
 
-pub struct MoreDefaults<'a> {
-  pub _tab: flatbuffers::Table<'a>,
+pub struct MoreDefaults<'a, B: flatbuffers::ReadBuffer + ?Sized = [u8]> {
+  pub _tab: flatbuffers::Table<'a, B>,
 }
 
-impl<'a> flatbuffers::Follow<'a> for MoreDefaults<'a> {
-  type Inner = MoreDefaults<'a>;
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'a, B> for MoreDefaults<'a, B> {
+  type Inner = MoreDefaults<'a, B>;
   #[inline]
-  unsafe fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+  unsafe fn follow(buf: &'a B, loc: usize) -> Self::Inner {
     Self { _tab: unsafe { flatbuffers::Table::new(buf, loc) } }
   }
 }
 
-impl<'a> MoreDefaults<'a> {
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> MoreDefaults<'a, B> {
   pub const VT_INTS: flatbuffers::VOffsetT = 4;
   pub const VT_FLOATS: flatbuffers::VOffsetT = 6;
   pub const VT_EMPTY_STRING: flatbuffers::VOffsetT = 8;
@@ -37,7 +37,7 @@ impl<'a> MoreDefaults<'a> {
   }
 
   #[inline]
-  pub unsafe fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
     MoreDefaults { _tab: table }
   }
   #[allow(unused_mut)]
@@ -134,7 +134,7 @@ impl<'a> MoreDefaults<'a> {
   }
 }
 
-impl flatbuffers::Verifiable for MoreDefaults<'_> {
+impl<B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Verifiable for MoreDefaults<'_, B> {
   #[inline]
   fn run_verifier(
     v: &mut flatbuffers::Verifier, pos: usize

@@ -14,19 +14,19 @@ use super::*;
 pub enum TableAOffset {}
 #[derive(Copy, Clone, PartialEq)]
 
-pub struct TableA<'a> {
-  pub _tab: flatbuffers::Table<'a>,
+pub struct TableA<'a, B: flatbuffers::ReadBuffer + ?Sized = [u8]> {
+  pub _tab: flatbuffers::Table<'a, B>,
 }
 
-impl<'a> flatbuffers::Follow<'a> for TableA<'a> {
-  type Inner = TableA<'a>;
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'a, B> for TableA<'a, B> {
+  type Inner = TableA<'a, B>;
   #[inline]
-  unsafe fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+  unsafe fn follow(buf: &'a B, loc: usize) -> Self::Inner {
     Self { _tab: unsafe { flatbuffers::Table::new(buf, loc) } }
   }
 }
 
-impl<'a> TableA<'a> {
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> TableA<'a, B> {
   pub const VT_B: flatbuffers::VOffsetT = 4;
 
   pub const fn get_fully_qualified_name() -> &'static str {
@@ -34,7 +34,7 @@ impl<'a> TableA<'a> {
   }
 
   #[inline]
-  pub unsafe fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
     TableA { _tab: table }
   }
   #[allow(unused_mut)]
@@ -57,15 +57,15 @@ impl<'a> TableA<'a> {
   }
 
   #[inline]
-  pub fn b(&self) -> Option<my_game::other_name_space::TableB<'a>> {
+  pub fn b(&self) -> Option<my_game::other_name_space::TableB<'a, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<my_game::other_name_space::TableB>>(TableA::VT_B, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<my_game::other_name_space::TableB<'a, B>>>(TableA::VT_B, None)}
   }
 }
 
-impl flatbuffers::Verifiable for TableA<'_> {
+impl<B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Verifiable for TableA<'_, B> {
   #[inline]
   fn run_verifier(
     v: &mut flatbuffers::Verifier, pos: usize

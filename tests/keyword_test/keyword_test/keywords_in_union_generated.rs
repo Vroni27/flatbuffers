@@ -46,6 +46,21 @@ impl KeywordsInUnion {
       _ => None,
     }
   }
+
+  #[inline]
+  pub fn tag_as_static_(
+    o: flatbuffers::WIPOffset<KeywordsInTable>,
+  ) -> flatbuffers::UnionWIPOffset<KeywordsInUnionUnionValue> {
+    flatbuffers::UnionWIPOffset::new(Self::static, flatbuffers::WIPOffset::new(o.value()))
+  }
+
+  #[inline]
+  pub fn tag_as_internal(
+    o: flatbuffers::WIPOffset<KeywordsInTable>,
+  ) -> flatbuffers::UnionWIPOffset<KeywordsInUnionUnionValue> {
+    flatbuffers::UnionWIPOffset::new(Self::internal, flatbuffers::WIPOffset::new(o.value()))
+  }
+
 }
 impl core::fmt::Debug for KeywordsInUnion {
   fn fmt(&self, f: &mut core::fmt::Formatter) -> core::fmt::Result {
@@ -56,11 +71,11 @@ impl core::fmt::Debug for KeywordsInUnion {
     }
   }
 }
-impl<'a> flatbuffers::Follow<'a> for KeywordsInUnion {
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'a, B> for KeywordsInUnion {
   type Inner = Self;
   #[inline]
-  unsafe fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
-    let b = unsafe { flatbuffers::read_scalar_at::<u8>(buf, loc) };
+  unsafe fn follow(buf: &'a B, loc: usize) -> Self::Inner {
+    let b = unsafe { flatbuffers::read_scalar_at::<u8, B>(buf, loc) };
     Self(b)
   }
 }
@@ -98,15 +113,82 @@ impl<'a> flatbuffers::Verifiable for KeywordsInUnion {
 }
 
 impl flatbuffers::SimpleToVerifyInSlice for KeywordsInUnion {}
-pub struct KeywordsInUnionUnionTableOffset {}
+
+impl From<KeywordsInUnion> for u8 {
+  #[inline]
+  fn from(v: KeywordsInUnion) -> u8 {
+    v.0
+  }
+}
+
+impl<'a: 'b, 'b> flatbuffers::BuildVector<'a, 'b> for KeywordsInUnion {
+  type VectorBuilder = KeywordsInUnionVectorBuilder<'a, 'b>;
+}
+
+pub struct KeywordsInUnionVectorBuilder<'a: 'b, 'b> {
+  fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>,
+  num_items: usize,
+}
+
+impl<'a: 'b, 'b> KeywordsInUnionVectorBuilder<'a, 'b> {
+  #[inline]
+  pub fn new(fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>, num_items: usize) -> Self {
+    fbb.start_union_vector::<KeywordsInUnionUnionValue>(num_items);
+    Self { fbb, num_items }
+  }
+
+  #[inline]
+  pub fn finish(&mut self) -> flatbuffers::UnionVectorWIPOffsets<'a, KeywordsInUnionUnionValue> {
+    self.fbb.end_union_vector(self.num_items)
+  }
+
+  #[inline]
+  pub fn push_as_static_(&mut self, o: flatbuffers::WIPOffset<KeywordsInTable>) {
+    self.fbb.push_union_vector_item(KeywordsInUnion::tag_as_static_(o));
+  }
+
+  #[inline]
+  pub fn push_as_internal(&mut self, o: flatbuffers::WIPOffset<KeywordsInTable>) {
+    self.fbb.push_union_vector_item(KeywordsInUnion::tag_as_internal(o));
+  }
+
+}
+
+pub struct KeywordsInUnionUnionValue {}
+
+impl flatbuffers::TaggedUnion for KeywordsInUnionUnionValue {
+  type Tag = KeywordsInUnion;
+}
+
+impl<'a> flatbuffers::UnionVerifiable<'a> for KeywordsInUnionUnionValue {
+  fn run_union_verifier(
+    v: &mut flatbuffers::Verifier,
+    tag: <<Self as flatbuffers::TaggedUnion>::Tag as flatbuffers::Follow<'a>>::Inner,
+    pos: usize,
+  ) -> Result<(), flatbuffers::InvalidFlatbuffer> {
+    match tag {
+      KeywordsInUnion::static_ => v
+        .verify_union_variant::<flatbuffers::ForwardsUOffset<KeywordsInTable>>(
+          "KeywordsInUnion::static_",
+          pos,
+        ),
+      KeywordsInUnion::internal => v
+        .verify_union_variant::<flatbuffers::ForwardsUOffset<KeywordsInTable>>(
+          "KeywordsInUnion::internal",
+          pos,
+        ),
+      _ => Ok(()),
+    }
+  }
+}
 
 #[allow(clippy::upper_case_acronyms)]
 #[non_exhaustive]
 #[derive(Debug, Clone, PartialEq)]
 pub enum KeywordsInUnionT {
   NONE,
-  Static_(Box<KeywordsInTableT>),
-  Internal(Box<KeywordsInTableT>),
+    Static_(Box<KeywordsInTableT>),
+    Internal(Box<KeywordsInTableT>),
 }
 impl Default for KeywordsInUnionT {
   fn default() -> Self {
@@ -121,11 +203,11 @@ impl KeywordsInUnionT {
       Self::Internal(_) => KeywordsInUnion::internal,
     }
   }
-  pub fn pack<'b, A: flatbuffers::Allocator + 'b>(&self, fbb: &mut flatbuffers::FlatBufferBuilder<'b, A>) -> Option<flatbuffers::WIPOffset<flatbuffers::UnionWIPOffset>> {
+  pub fn pack<'b, A: flatbuffers::Allocator + 'b>(&self, fbb: &mut flatbuffers::FlatBufferBuilder<'b, A>) -> Option<flatbuffers::WIPOffset<KeywordsInUnionUnionValue>> {
     match self {
       Self::NONE => None,
-      Self::Static_(v) => Some(v.pack(fbb).as_union_value()),
-      Self::Internal(v) => Some(v.pack(fbb).as_union_value()),
+        Self::Static_(v) => Some(KeywordsInUnion::tag_as_static_(v.pack(fbb)).value_offset()),
+        Self::Internal(v) => Some(KeywordsInUnion::tag_as_internal(v.pack(fbb)).value_offset()),
     }
   }
   /// If the union variant matches, return the owned KeywordsInTableT, setting the union to NONE.

@@ -52,6 +52,28 @@ impl AnyUniqueAliases {
       _ => None,
     }
   }
+
+  #[inline]
+  pub fn tag_as_m(
+    o: flatbuffers::WIPOffset<Monster>,
+  ) -> flatbuffers::UnionWIPOffset<AnyUniqueAliasesUnionValue> {
+    flatbuffers::UnionWIPOffset::new(Self::M, flatbuffers::WIPOffset::new(o.value()))
+  }
+
+  #[inline]
+  pub fn tag_as_ts(
+    o: flatbuffers::WIPOffset<TestSimpleTableWithEnum>,
+  ) -> flatbuffers::UnionWIPOffset<AnyUniqueAliasesUnionValue> {
+    flatbuffers::UnionWIPOffset::new(Self::TS, flatbuffers::WIPOffset::new(o.value()))
+  }
+
+  #[inline]
+  pub fn tag_as_m2(
+    o: flatbuffers::WIPOffset<super::example_2::Monster>,
+  ) -> flatbuffers::UnionWIPOffset<AnyUniqueAliasesUnionValue> {
+    flatbuffers::UnionWIPOffset::new(Self::M2, flatbuffers::WIPOffset::new(o.value()))
+  }
+
 }
 impl core::fmt::Debug for AnyUniqueAliases {
   fn fmt(&self, f: &mut core::fmt::Formatter) -> core::fmt::Result {
@@ -71,11 +93,11 @@ impl Serialize for AnyUniqueAliases {
   }
 }
 
-impl<'a> flatbuffers::Follow<'a> for AnyUniqueAliases {
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'a, B> for AnyUniqueAliases {
   type Inner = Self;
   #[inline]
-  unsafe fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
-    let b = unsafe { flatbuffers::read_scalar_at::<u8>(buf, loc) };
+  unsafe fn follow(buf: &'a B, loc: usize) -> Self::Inner {
+    let b = unsafe { flatbuffers::read_scalar_at::<u8, B>(buf, loc) };
     Self(b)
   }
 }
@@ -113,16 +135,93 @@ impl<'a> flatbuffers::Verifiable for AnyUniqueAliases {
 }
 
 impl flatbuffers::SimpleToVerifyInSlice for AnyUniqueAliases {}
-pub struct AnyUniqueAliasesUnionTableOffset {}
+
+impl From<AnyUniqueAliases> for u8 {
+  #[inline]
+  fn from(v: AnyUniqueAliases) -> u8 {
+    v.0
+  }
+}
+
+impl<'a: 'b, 'b> flatbuffers::BuildVector<'a, 'b> for AnyUniqueAliases {
+  type VectorBuilder = AnyUniqueAliasesVectorBuilder<'a, 'b>;
+}
+
+pub struct AnyUniqueAliasesVectorBuilder<'a: 'b, 'b> {
+  fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>,
+  num_items: usize,
+}
+
+impl<'a: 'b, 'b> AnyUniqueAliasesVectorBuilder<'a, 'b> {
+  #[inline]
+  pub fn new(fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>, num_items: usize) -> Self {
+    fbb.start_union_vector::<AnyUniqueAliasesUnionValue>(num_items);
+    Self { fbb, num_items }
+  }
+
+  #[inline]
+  pub fn finish(&mut self) -> flatbuffers::UnionVectorWIPOffsets<'a, AnyUniqueAliasesUnionValue> {
+    self.fbb.end_union_vector(self.num_items)
+  }
+
+  #[inline]
+  pub fn push_as_m(&mut self, o: flatbuffers::WIPOffset<Monster>) {
+    self.fbb.push_union_vector_item(AnyUniqueAliases::tag_as_m(o));
+  }
+
+  #[inline]
+  pub fn push_as_ts(&mut self, o: flatbuffers::WIPOffset<TestSimpleTableWithEnum>) {
+    self.fbb.push_union_vector_item(AnyUniqueAliases::tag_as_ts(o));
+  }
+
+  #[inline]
+  pub fn push_as_m2(&mut self, o: flatbuffers::WIPOffset<super::example_2::Monster>) {
+    self.fbb.push_union_vector_item(AnyUniqueAliases::tag_as_m2(o));
+  }
+
+}
+
+pub struct AnyUniqueAliasesUnionValue {}
+
+impl flatbuffers::TaggedUnion for AnyUniqueAliasesUnionValue {
+  type Tag = AnyUniqueAliases;
+}
+
+impl<'a> flatbuffers::UnionVerifiable<'a> for AnyUniqueAliasesUnionValue {
+  fn run_union_verifier(
+    v: &mut flatbuffers::Verifier,
+    tag: <<Self as flatbuffers::TaggedUnion>::Tag as flatbuffers::Follow<'a>>::Inner,
+    pos: usize,
+  ) -> Result<(), flatbuffers::InvalidFlatbuffer> {
+    match tag {
+      AnyUniqueAliases::M => v
+        .verify_union_variant::<flatbuffers::ForwardsUOffset<Monster>>(
+          "AnyUniqueAliases::M",
+          pos,
+        ),
+      AnyUniqueAliases::TS => v
+        .verify_union_variant::<flatbuffers::ForwardsUOffset<TestSimpleTableWithEnum>>(
+          "AnyUniqueAliases::TS",
+          pos,
+        ),
+      AnyUniqueAliases::M2 => v
+        .verify_union_variant::<flatbuffers::ForwardsUOffset<super::example_2::Monster>>(
+          "AnyUniqueAliases::M2",
+          pos,
+        ),
+      _ => Ok(()),
+    }
+  }
+}
 
 #[allow(clippy::upper_case_acronyms)]
 #[non_exhaustive]
 #[derive(Debug, Clone, PartialEq)]
 pub enum AnyUniqueAliasesT {
   NONE,
-  M(Box<MonsterT>),
-  TS(Box<TestSimpleTableWithEnumT>),
-  M2(Box<super::example_2::MonsterT>),
+    M(Box<MonsterT>),
+    TS(Box<TestSimpleTableWithEnumT>),
+    M2(Box<super::example_2::MonsterT>),
 }
 impl Default for AnyUniqueAliasesT {
   fn default() -> Self {
@@ -138,12 +237,12 @@ impl AnyUniqueAliasesT {
       Self::M2(_) => AnyUniqueAliases::M2,
     }
   }
-  pub fn pack<'b, A: flatbuffers::Allocator + 'b>(&self, fbb: &mut flatbuffers::FlatBufferBuilder<'b, A>) -> Option<flatbuffers::WIPOffset<flatbuffers::UnionWIPOffset>> {
+  pub fn pack<'b, A: flatbuffers::Allocator + 'b>(&self, fbb: &mut flatbuffers::FlatBufferBuilder<'b, A>) -> Option<flatbuffers::WIPOffset<AnyUniqueAliasesUnionValue>> {
     match self {
       Self::NONE => None,
-      Self::M(v) => Some(v.pack(fbb).as_union_value()),
-      Self::TS(v) => Some(v.pack(fbb).as_union_value()),
-      Self::M2(v) => Some(v.pack(fbb).as_union_value()),
+        Self::M(v) => Some(AnyUniqueAliases::tag_as_m(v.pack(fbb)).value_offset()),
+        Self::TS(v) => Some(AnyUniqueAliases::tag_as_ts(v.pack(fbb)).value_offset()),
+        Self::M2(v) => Some(AnyUniqueAliases::tag_as_m2(v.pack(fbb)).value_offset()),
     }
   }
   /// If the union variant matches, return the owned MonsterT, setting the union to NONE.

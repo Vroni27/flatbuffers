@@ -42,6 +42,14 @@ impl UnionInNestedNS {
       _ => None,
     }
   }
+
+  #[inline]
+  pub fn tag_as_table_in_nested_ns(
+    o: flatbuffers::WIPOffset<TableInNestedNS>,
+  ) -> flatbuffers::UnionWIPOffset<UnionInNestedNSUnionValue> {
+    flatbuffers::UnionWIPOffset::new(Self::TableInNestedNS, flatbuffers::WIPOffset::new(o.value()))
+  }
+
 }
 impl core::fmt::Debug for UnionInNestedNS {
   fn fmt(&self, f: &mut core::fmt::Formatter) -> core::fmt::Result {
@@ -52,11 +60,11 @@ impl core::fmt::Debug for UnionInNestedNS {
     }
   }
 }
-impl<'a> flatbuffers::Follow<'a> for UnionInNestedNS {
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'a, B> for UnionInNestedNS {
   type Inner = Self;
   #[inline]
-  unsafe fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
-    let b = unsafe { flatbuffers::read_scalar_at::<u8>(buf, loc) };
+  unsafe fn follow(buf: &'a B, loc: usize) -> Self::Inner {
+    let b = unsafe { flatbuffers::read_scalar_at::<u8, B>(buf, loc) };
     Self(b)
   }
 }
@@ -94,14 +102,71 @@ impl<'a> flatbuffers::Verifiable for UnionInNestedNS {
 }
 
 impl flatbuffers::SimpleToVerifyInSlice for UnionInNestedNS {}
-pub struct UnionInNestedNSUnionTableOffset {}
+
+impl From<UnionInNestedNS> for u8 {
+  #[inline]
+  fn from(v: UnionInNestedNS) -> u8 {
+    v.0
+  }
+}
+
+impl<'a: 'b, 'b> flatbuffers::BuildVector<'a, 'b> for UnionInNestedNS {
+  type VectorBuilder = UnionInNestedNSVectorBuilder<'a, 'b>;
+}
+
+pub struct UnionInNestedNSVectorBuilder<'a: 'b, 'b> {
+  fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>,
+  num_items: usize,
+}
+
+impl<'a: 'b, 'b> UnionInNestedNSVectorBuilder<'a, 'b> {
+  #[inline]
+  pub fn new(fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>, num_items: usize) -> Self {
+    fbb.start_union_vector::<UnionInNestedNSUnionValue>(num_items);
+    Self { fbb, num_items }
+  }
+
+  #[inline]
+  pub fn finish(&mut self) -> flatbuffers::UnionVectorWIPOffsets<'a, UnionInNestedNSUnionValue> {
+    self.fbb.end_union_vector(self.num_items)
+  }
+
+  #[inline]
+  pub fn push_as_table_in_nested_ns(&mut self, o: flatbuffers::WIPOffset<TableInNestedNS>) {
+    self.fbb.push_union_vector_item(UnionInNestedNS::tag_as_table_in_nested_ns(o));
+  }
+
+}
+
+pub struct UnionInNestedNSUnionValue {}
+
+impl flatbuffers::TaggedUnion for UnionInNestedNSUnionValue {
+  type Tag = UnionInNestedNS;
+}
+
+impl<'a> flatbuffers::UnionVerifiable<'a> for UnionInNestedNSUnionValue {
+  fn run_union_verifier(
+    v: &mut flatbuffers::Verifier,
+    tag: <<Self as flatbuffers::TaggedUnion>::Tag as flatbuffers::Follow<'a>>::Inner,
+    pos: usize,
+  ) -> Result<(), flatbuffers::InvalidFlatbuffer> {
+    match tag {
+      UnionInNestedNS::TableInNestedNS => v
+        .verify_union_variant::<flatbuffers::ForwardsUOffset<TableInNestedNS>>(
+          "UnionInNestedNS::TableInNestedNS",
+          pos,
+        ),
+      _ => Ok(()),
+    }
+  }
+}
 
 #[allow(clippy::upper_case_acronyms)]
 #[non_exhaustive]
 #[derive(Debug, Clone, PartialEq)]
 pub enum UnionInNestedNST {
   NONE,
-  TableInNestedNS(Box<TableInNestedNST>),
+    TableInNestedNS(Box<TableInNestedNST>),
 }
 impl Default for UnionInNestedNST {
   fn default() -> Self {
@@ -115,10 +180,10 @@ impl UnionInNestedNST {
       Self::TableInNestedNS(_) => UnionInNestedNS::TableInNestedNS,
     }
   }
-  pub fn pack<'b, A: flatbuffers::Allocator + 'b>(&self, fbb: &mut flatbuffers::FlatBufferBuilder<'b, A>) -> Option<flatbuffers::WIPOffset<flatbuffers::UnionWIPOffset>> {
+  pub fn pack<'b, A: flatbuffers::Allocator + 'b>(&self, fbb: &mut flatbuffers::FlatBufferBuilder<'b, A>) -> Option<flatbuffers::WIPOffset<UnionInNestedNSUnionValue>> {
     match self {
       Self::NONE => None,
-      Self::TableInNestedNS(v) => Some(v.pack(fbb).as_union_value()),
+        Self::TableInNestedNS(v) => Some(UnionInNestedNS::tag_as_table_in_nested_ns(v.pack(fbb)).value_offset()),
     }
   }
   /// If the union variant matches, return the owned TableInNestedNST, setting the union to NONE.

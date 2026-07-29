@@ -12,19 +12,19 @@ use super::*;
 pub enum ScalarStuffOffset {}
 #[derive(Copy, Clone, PartialEq)]
 
-pub struct ScalarStuff<'a> {
-  pub _tab: flatbuffers::Table<'a>,
+pub struct ScalarStuff<'a, B: flatbuffers::ReadBuffer + ?Sized = [u8]> {
+  pub _tab: flatbuffers::Table<'a, B>,
 }
 
-impl<'a> flatbuffers::Follow<'a> for ScalarStuff<'a> {
-  type Inner = ScalarStuff<'a>;
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'a, B> for ScalarStuff<'a, B> {
+  type Inner = ScalarStuff<'a, B>;
   #[inline]
-  unsafe fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+  unsafe fn follow(buf: &'a B, loc: usize) -> Self::Inner {
     Self { _tab: unsafe { flatbuffers::Table::new(buf, loc) } }
   }
 }
 
-impl<'a> ScalarStuff<'a> {
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> ScalarStuff<'a, B> {
   pub const VT_JUST_I8: flatbuffers::VOffsetT = 4;
   pub const VT_MAYBE_I8: flatbuffers::VOffsetT = 6;
   pub const VT_DEFAULT_I8: flatbuffers::VOffsetT = 8;
@@ -67,7 +67,7 @@ impl<'a> ScalarStuff<'a> {
   }
 
   #[inline]
-  pub unsafe fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
     ScalarStuff { _tab: table }
   }
   #[allow(unused_mut)]
@@ -446,7 +446,7 @@ impl<'a> ScalarStuff<'a> {
   }
 }
 
-impl flatbuffers::Verifiable for ScalarStuff<'_> {
+impl<B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Verifiable for ScalarStuff<'_, B> {
   #[inline]
   fn run_verifier(
     v: &mut flatbuffers::Verifier, pos: usize
@@ -951,8 +951,8 @@ impl ScalarStuffT {
 /// catch every error, or be maximally performant. For the
 /// previous, unchecked, behavior use
 /// `root_as_scalar_stuff_unchecked`.
-pub fn root_as_scalar_stuff(buf: &[u8]) -> Result<ScalarStuff, flatbuffers::InvalidFlatbuffer> {
-  flatbuffers::root::<ScalarStuff>(buf)
+pub fn root_as_scalar_stuff<B: flatbuffers::ReadBuffer + ?Sized>(buf: &B) -> Result<ScalarStuff<'_, B>, flatbuffers::InvalidFlatbuffer> {
+  flatbuffers::root_with_buffer::<ScalarStuff<'_, B>, B>(buf)
 }
 #[inline]
 /// Verifies that a buffer of bytes contains a size prefixed
@@ -961,8 +961,8 @@ pub fn root_as_scalar_stuff(buf: &[u8]) -> Result<ScalarStuff, flatbuffers::Inva
 /// catch every error, or be maximally performant. For the
 /// previous, unchecked, behavior use
 /// `size_prefixed_root_as_scalar_stuff_unchecked`.
-pub fn size_prefixed_root_as_scalar_stuff(buf: &[u8]) -> Result<ScalarStuff, flatbuffers::InvalidFlatbuffer> {
-  flatbuffers::size_prefixed_root::<ScalarStuff>(buf)
+pub fn size_prefixed_root_as_scalar_stuff<B: flatbuffers::ReadBuffer + ?Sized>(buf: &B) -> Result<ScalarStuff<'_, B>, flatbuffers::InvalidFlatbuffer> {
+  flatbuffers::size_prefixed_root_with_buffer::<ScalarStuff<'_, B>, B>(buf)
 }
 #[inline]
 /// Verifies, with the given options, that a buffer of bytes
@@ -971,11 +971,11 @@ pub fn size_prefixed_root_as_scalar_stuff(buf: &[u8]) -> Result<ScalarStuff, fla
 /// catch every error, or be maximally performant. For the
 /// previous, unchecked, behavior use
 /// `root_as_scalar_stuff_unchecked`.
-pub fn root_as_scalar_stuff_with_opts<'b, 'o>(
+pub fn root_as_scalar_stuff_with_opts<'b, 'o, B: flatbuffers::ReadBuffer + ?Sized>(
   opts: &'o flatbuffers::VerifierOptions,
-  buf: &'b [u8],
-) -> Result<ScalarStuff<'b>, flatbuffers::InvalidFlatbuffer> {
-  flatbuffers::root_with_opts::<ScalarStuff<'b>>(opts, buf)
+  buf: &'b B,
+) -> Result<ScalarStuff<'b, B>, flatbuffers::InvalidFlatbuffer> {
+  flatbuffers::root_with_buffer_and_opts::<ScalarStuff<'b, B>, B>(opts, buf)
 }
 #[inline]
 /// Verifies, with the given verifier options, that a buffer of
@@ -984,25 +984,25 @@ pub fn root_as_scalar_stuff_with_opts<'b, 'o>(
 /// catch every error, or be maximally performant. For the
 /// previous, unchecked, behavior use
 /// `root_as_scalar_stuff_unchecked`.
-pub fn size_prefixed_root_as_scalar_stuff_with_opts<'b, 'o>(
+pub fn size_prefixed_root_as_scalar_stuff_with_opts<'b, 'o, B: flatbuffers::ReadBuffer + ?Sized>(
   opts: &'o flatbuffers::VerifierOptions,
-  buf: &'b [u8],
-) -> Result<ScalarStuff<'b>, flatbuffers::InvalidFlatbuffer> {
-  flatbuffers::size_prefixed_root_with_opts::<ScalarStuff<'b>>(opts, buf)
+  buf: &'b B,
+) -> Result<ScalarStuff<'b, B>, flatbuffers::InvalidFlatbuffer> {
+  flatbuffers::size_prefixed_root_with_buffer_and_opts::<ScalarStuff<'b, B>, B>(opts, buf)
 }
 #[inline]
 /// Assumes, without verification, that a buffer of bytes contains a ScalarStuff and returns it.
 /// # Safety
 /// Callers must trust the given bytes do indeed contain a valid `ScalarStuff`.
-pub unsafe fn root_as_scalar_stuff_unchecked(buf: &[u8]) -> ScalarStuff {
-  unsafe { flatbuffers::root_unchecked::<ScalarStuff>(buf) }
+pub unsafe fn root_as_scalar_stuff_unchecked<B: flatbuffers::ReadBuffer + ?Sized>(buf: &B) -> ScalarStuff<'_, B> {
+  unsafe { flatbuffers::root_unchecked::<ScalarStuff<'_, B>, B>(buf) }
 }
 #[inline]
 /// Assumes, without verification, that a buffer of bytes contains a size prefixed ScalarStuff and returns it.
 /// # Safety
 /// Callers must trust the given bytes do indeed contain a valid size prefixed `ScalarStuff`.
-pub unsafe fn size_prefixed_root_as_scalar_stuff_unchecked(buf: &[u8]) -> ScalarStuff {
-  unsafe { flatbuffers::size_prefixed_root_unchecked::<ScalarStuff>(buf) }
+pub unsafe fn size_prefixed_root_as_scalar_stuff_unchecked<B: flatbuffers::ReadBuffer + ?Sized>(buf: &B) -> ScalarStuff<'_, B> {
+  unsafe { flatbuffers::size_prefixed_root_unchecked::<ScalarStuff<'_, B>, B>(buf) }
 }
 pub const SCALAR_STUFF_IDENTIFIER: &str = "NULL";
 

@@ -12,19 +12,19 @@ use super::*;
 pub enum TypeAliasesOffset {}
 #[derive(Copy, Clone, PartialEq)]
 
-pub struct TypeAliases<'a> {
-  pub _tab: flatbuffers::Table<'a>,
+pub struct TypeAliases<'a, B: flatbuffers::ReadBuffer + ?Sized = [u8]> {
+  pub _tab: flatbuffers::Table<'a, B>,
 }
 
-impl<'a> flatbuffers::Follow<'a> for TypeAliases<'a> {
-  type Inner = TypeAliases<'a>;
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'a, B> for TypeAliases<'a, B> {
+  type Inner = TypeAliases<'a, B>;
   #[inline]
-  unsafe fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+  unsafe fn follow(buf: &'a B, loc: usize) -> Self::Inner {
     Self { _tab: unsafe { flatbuffers::Table::new(buf, loc) } }
   }
 }
 
-impl<'a> TypeAliases<'a> {
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> TypeAliases<'a, B> {
   pub const VT_I8_: flatbuffers::VOffsetT = 4;
   pub const VT_U8_: flatbuffers::VOffsetT = 6;
   pub const VT_I16_: flatbuffers::VOffsetT = 8;
@@ -43,7 +43,7 @@ impl<'a> TypeAliases<'a> {
   }
 
   #[inline]
-  pub unsafe fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
     TypeAliases { _tab: table }
   }
   #[allow(unused_mut)]
@@ -186,7 +186,7 @@ impl<'a> TypeAliases<'a> {
   }
 }
 
-impl flatbuffers::Verifiable for TypeAliases<'_> {
+impl<B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Verifiable for TypeAliases<'_, B> {
   #[inline]
   fn run_verifier(
     v: &mut flatbuffers::Verifier, pos: usize

@@ -30,18 +30,18 @@ impl core::fmt::Debug for PossiblyReservedWords {
 }
 
 impl flatbuffers::SimpleToVerifyInSlice for PossiblyReservedWords {}
-impl<'a> flatbuffers::Follow<'a> for PossiblyReservedWords {
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'a, B> for PossiblyReservedWords {
   type Inner = &'a PossiblyReservedWords;
   #[inline]
-  unsafe fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+  unsafe fn follow(buf: &'a B, loc: usize) -> Self::Inner {
     unsafe { <&'a PossiblyReservedWords>::follow(buf, loc) }
   }
 }
-impl<'a> flatbuffers::Follow<'a> for &'a PossiblyReservedWords {
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'a, B> for &'a PossiblyReservedWords {
   type Inner = &'a PossiblyReservedWords;
   #[inline]
-  unsafe fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
-    unsafe { flatbuffers::follow_cast_ref::<PossiblyReservedWords>(buf, loc) }
+  unsafe fn follow(buf: &'a B, loc: usize) -> Self::Inner {
+    unsafe { flatbuffers::follow_cast_ref::<PossiblyReservedWords, B>(buf, loc) }
   }
 }
 impl<'b> flatbuffers::Push for PossiblyReservedWords {

@@ -56,11 +56,11 @@ impl core::fmt::Debug for Color {
     }
   }
 }
-impl<'a> flatbuffers::Follow<'a> for Color {
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'a, B> for Color {
   type Inner = Self;
   #[inline]
-  unsafe fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
-    let b = unsafe { flatbuffers::read_scalar_at::<i8>(buf, loc) };
+  unsafe fn follow(buf: &'a B, loc: usize) -> Self::Inner {
+    let b = unsafe { flatbuffers::read_scalar_at::<i8, B>(buf, loc) };
     Self(b)
   }
 }
@@ -98,3 +98,4 @@ impl<'a> flatbuffers::Verifiable for Color {
 }
 
 impl flatbuffers::SimpleToVerifyInSlice for Color {}
+

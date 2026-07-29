@@ -12,19 +12,19 @@ use super::*;
 pub enum TableInFirstNSOffset {}
 #[derive(Copy, Clone, PartialEq)]
 
-pub struct TableInFirstNS<'a> {
-  pub _tab: flatbuffers::Table<'a>,
+pub struct TableInFirstNS<'a, B: flatbuffers::ReadBuffer + ?Sized = [u8]> {
+  pub _tab: flatbuffers::Table<'a, B>,
 }
 
-impl<'a> flatbuffers::Follow<'a> for TableInFirstNS<'a> {
-  type Inner = TableInFirstNS<'a>;
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'a, B> for TableInFirstNS<'a, B> {
+  type Inner = TableInFirstNS<'a, B>;
   #[inline]
-  unsafe fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+  unsafe fn follow(buf: &'a B, loc: usize) -> Self::Inner {
     Self { _tab: unsafe { flatbuffers::Table::new(buf, loc) } }
   }
 }
 
-impl<'a> TableInFirstNS<'a> {
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> TableInFirstNS<'a, B> {
   pub const VT_FOO_TABLE: flatbuffers::VOffsetT = 4;
   pub const VT_FOO_ENUM: flatbuffers::VOffsetT = 6;
   pub const VT_FOO_UNION_TYPE: flatbuffers::VOffsetT = 8;
@@ -36,7 +36,7 @@ impl<'a> TableInFirstNS<'a> {
   }
 
   #[inline]
-  pub unsafe fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
     TableInFirstNS { _tab: table }
   }
   #[allow(unused_mut)]
@@ -63,7 +63,7 @@ impl<'a> TableInFirstNS<'a> {
       namespace_b::UnionInNestedNS::TableInNestedNS => namespace_b::UnionInNestedNST::TableInNestedNS(Box::new(
         self.foo_union_as_table_in_nested_ns()
             .expect("Invalid union table, expected `namespace_b::UnionInNestedNS::TableInNestedNS`.")
-            .unpack()
+     .unpack()
       )),
       _ => namespace_b::UnionInNestedNST::NONE,
     };
@@ -79,11 +79,11 @@ impl<'a> TableInFirstNS<'a> {
   }
 
   #[inline]
-  pub fn foo_table(&self) -> Option<namespace_b::TableInNestedNS<'a>> {
+  pub fn foo_table(&self) -> Option<namespace_b::TableInNestedNS<'a, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<namespace_b::TableInNestedNS>>(TableInFirstNS::VT_FOO_TABLE, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<namespace_b::TableInNestedNS<'a, B>>>(TableInFirstNS::VT_FOO_TABLE, None)}
   }
   #[inline]
   pub fn foo_enum(&self) -> namespace_b::EnumInNestedNS {
@@ -100,11 +100,11 @@ impl<'a> TableInFirstNS<'a> {
     unsafe { self._tab.get::<namespace_b::UnionInNestedNS>(TableInFirstNS::VT_FOO_UNION_TYPE, Some(namespace_b::UnionInNestedNS::NONE)).unwrap()}
   }
   #[inline]
-  pub fn foo_union(&self) -> Option<flatbuffers::Table<'a>> {
+  pub fn foo_union(&self) -> Option<flatbuffers::Table<'a, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Table<'a>>>(TableInFirstNS::VT_FOO_UNION, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Table<'a, B>>>(TableInFirstNS::VT_FOO_UNION, None)}
   }
   #[inline]
   pub fn foo_struct(&self) -> Option<&'a namespace_b::StructInNestedNS> {
@@ -115,7 +115,7 @@ impl<'a> TableInFirstNS<'a> {
   }
   #[inline]
   #[allow(non_snake_case)]
-  pub fn foo_union_as_table_in_nested_ns(&self) -> Option<namespace_b::TableInNestedNS<'a>> {
+  pub fn foo_union_as_table_in_nested_ns(&self) -> Option<namespace_b::TableInNestedNS<'a, B>> {
     if self.foo_union_type() == namespace_b::UnionInNestedNS::TableInNestedNS {
       self.foo_union().map(|t| {
        // Safety:
@@ -130,7 +130,7 @@ impl<'a> TableInFirstNS<'a> {
 
 }
 
-impl flatbuffers::Verifiable for TableInFirstNS<'_> {
+impl<B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Verifiable for TableInFirstNS<'_, B> {
   #[inline]
   fn run_verifier(
     v: &mut flatbuffers::Verifier, pos: usize
@@ -139,12 +139,7 @@ impl flatbuffers::Verifiable for TableInFirstNS<'_> {
     v.visit_table(pos)?
      .visit_field::<flatbuffers::ForwardsUOffset<namespace_b::TableInNestedNS>>("foo_table", Self::VT_FOO_TABLE, false)?
      .visit_field::<namespace_b::EnumInNestedNS>("foo_enum", Self::VT_FOO_ENUM, false)?
-     .visit_union::<namespace_b::UnionInNestedNS, _>("foo_union_type", Self::VT_FOO_UNION_TYPE, "foo_union", Self::VT_FOO_UNION, false, |key, v, pos| {
-        match key {
-          namespace_b::UnionInNestedNS::TableInNestedNS => v.verify_union_variant::<flatbuffers::ForwardsUOffset<namespace_b::TableInNestedNS>>("namespace_b::UnionInNestedNS::TableInNestedNS", pos),
-          _ => Ok(()),
-        }
-     })?
+     .visit_union::<namespace_b::UnionInNestedNSUnionValue>("foo_union_type", Self::VT_FOO_UNION_TYPE, "foo_union", Self::VT_FOO_UNION, false)?
      .visit_field::<namespace_b::StructInNestedNS>("foo_struct", Self::VT_FOO_STRUCT, false)?
      .finish();
     Ok(())
@@ -154,7 +149,7 @@ pub struct TableInFirstNSArgs<'a> {
     pub foo_table: Option<flatbuffers::WIPOffset<namespace_b::TableInNestedNS<'a>>>,
     pub foo_enum: namespace_b::EnumInNestedNS,
     pub foo_union_type: namespace_b::UnionInNestedNS,
-    pub foo_union: Option<flatbuffers::WIPOffset<flatbuffers::UnionWIPOffset>>,
+    pub foo_union: Option<flatbuffers::WIPOffset<namespace_b::UnionInNestedNSUnionValue>>,
     pub foo_struct: Option<&'a namespace_b::StructInNestedNS>,
 }
 impl<'a> Default for TableInFirstNSArgs<'a> {
@@ -188,7 +183,7 @@ impl<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> TableInFirstNSBuilder<'a, 'b, A
     self.fbb_.push_slot::<namespace_b::UnionInNestedNS>(TableInFirstNS::VT_FOO_UNION_TYPE, foo_union_type, namespace_b::UnionInNestedNS::NONE);
   }
   #[inline]
-  pub fn add_foo_union(&mut self, foo_union: flatbuffers::WIPOffset<flatbuffers::UnionWIPOffset>) {
+  pub fn add_foo_union(&mut self, foo_union: flatbuffers::WIPOffset<namespace_b::UnionInNestedNSUnionValue>) {
     self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(TableInFirstNS::VT_FOO_UNION, foo_union);
   }
   #[inline]

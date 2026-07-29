@@ -12,19 +12,19 @@ use super::*;
 pub enum MonsterOffset {}
 #[derive(Copy, Clone, PartialEq)]
 
-pub struct Monster<'a> {
-  pub _tab: flatbuffers::Table<'a>,
+pub struct Monster<'a, B: flatbuffers::ReadBuffer + ?Sized = [u8]> {
+  pub _tab: flatbuffers::Table<'a, B>,
 }
 
-impl<'a> flatbuffers::Follow<'a> for Monster<'a> {
-  type Inner = Monster<'a>;
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'a, B> for Monster<'a, B> {
+  type Inner = Monster<'a, B>;
   #[inline]
-  unsafe fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+  unsafe fn follow(buf: &'a B, loc: usize) -> Self::Inner {
     Self { _tab: unsafe { flatbuffers::Table::new(buf, loc) } }
   }
 }
 
-impl<'a> Monster<'a> {
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Monster<'a, B> {
   pub const VT_POS: flatbuffers::VOffsetT = 4;
   pub const VT_MANA: flatbuffers::VOffsetT = 6;
   pub const VT_HP: flatbuffers::VOffsetT = 8;
@@ -41,7 +41,7 @@ impl<'a> Monster<'a> {
   }
 
   #[inline]
-  pub unsafe fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
     Monster { _tab: table }
   }
   #[allow(unused_mut)]
@@ -84,7 +84,7 @@ impl<'a> Monster<'a> {
       Equipment::Weapon => EquipmentT::Weapon(Box::new(
         self.equipped_as_weapon()
             .expect("Invalid union table, expected `Equipment::Weapon`.")
-            .unpack()
+     .unpack()
       )),
       _ => EquipmentT::NONE,
     };
@@ -147,11 +147,11 @@ impl<'a> Monster<'a> {
     unsafe { self._tab.get::<Color>(Monster::VT_COLOR, Some(Color::Blue)).unwrap()}
   }
   #[inline]
-  pub fn weapons(&self) -> Option<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<Weapon<'a>>>> {
+  pub fn weapons(&self) -> Option<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<Weapon<'a, B>>>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<Weapon>>>>(Monster::VT_WEAPONS, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<Weapon<'a, B>>>>>(Monster::VT_WEAPONS, None)}
   }
   #[inline]
   pub fn equipped_type(&self) -> Equipment {
@@ -161,11 +161,11 @@ impl<'a> Monster<'a> {
     unsafe { self._tab.get::<Equipment>(Monster::VT_EQUIPPED_TYPE, Some(Equipment::NONE)).unwrap()}
   }
   #[inline]
-  pub fn equipped(&self) -> Option<flatbuffers::Table<'a>> {
+  pub fn equipped(&self) -> Option<flatbuffers::Table<'a, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Table<'a>>>(Monster::VT_EQUIPPED, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Table<'a, B>>>(Monster::VT_EQUIPPED, None)}
   }
   #[inline]
   pub fn path(&self) -> Option<flatbuffers::Vector<'a, Vec3>> {
@@ -176,7 +176,7 @@ impl<'a> Monster<'a> {
   }
   #[inline]
   #[allow(non_snake_case)]
-  pub fn equipped_as_weapon(&self) -> Option<Weapon<'a>> {
+  pub fn equipped_as_weapon(&self) -> Option<Weapon<'a, B>> {
     if self.equipped_type() == Equipment::Weapon {
       self.equipped().map(|t| {
        // Safety:
@@ -191,7 +191,7 @@ impl<'a> Monster<'a> {
 
 }
 
-impl flatbuffers::Verifiable for Monster<'_> {
+impl<B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Verifiable for Monster<'_, B> {
   #[inline]
   fn run_verifier(
     v: &mut flatbuffers::Verifier, pos: usize
@@ -205,12 +205,7 @@ impl flatbuffers::Verifiable for Monster<'_> {
      .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, u8>>>("inventory", Self::VT_INVENTORY, false)?
      .visit_field::<Color>("color", Self::VT_COLOR, false)?
      .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<Weapon>>>>("weapons", Self::VT_WEAPONS, false)?
-     .visit_union::<Equipment, _>("equipped_type", Self::VT_EQUIPPED_TYPE, "equipped", Self::VT_EQUIPPED, false, |key, v, pos| {
-        match key {
-          Equipment::Weapon => v.verify_union_variant::<flatbuffers::ForwardsUOffset<Weapon>>("Equipment::Weapon", pos),
-          _ => Ok(()),
-        }
-     })?
+     .visit_union::<EquipmentUnionValue>("equipped_type", Self::VT_EQUIPPED_TYPE, "equipped", Self::VT_EQUIPPED, false)?
      .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, Vec3>>>("path", Self::VT_PATH, false)?
      .finish();
     Ok(())
@@ -225,7 +220,7 @@ pub struct MonsterArgs<'a> {
     pub color: Color,
     pub weapons: Option<flatbuffers::WIPOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<Weapon<'a>>>>>,
     pub equipped_type: Equipment,
-    pub equipped: Option<flatbuffers::WIPOffset<flatbuffers::UnionWIPOffset>>,
+    pub equipped: Option<flatbuffers::WIPOffset<EquipmentUnionValue>>,
     pub path: Option<flatbuffers::WIPOffset<flatbuffers::Vector<'a, Vec3>>>,
 }
 impl<'a> Default for MonsterArgs<'a> {
@@ -284,7 +279,7 @@ impl<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> MonsterBuilder<'a, 'b, A> {
     self.fbb_.push_slot::<Equipment>(Monster::VT_EQUIPPED_TYPE, equipped_type, Equipment::NONE);
   }
   #[inline]
-  pub fn add_equipped(&mut self, equipped: flatbuffers::WIPOffset<flatbuffers::UnionWIPOffset>) {
+  pub fn add_equipped(&mut self, equipped: flatbuffers::WIPOffset<EquipmentUnionValue>) {
     self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(Monster::VT_EQUIPPED, equipped);
   }
   #[inline]
@@ -407,8 +402,8 @@ impl MonsterT {
 /// catch every error, or be maximally performant. For the
 /// previous, unchecked, behavior use
 /// `root_as_monster_unchecked`.
-pub fn root_as_monster(buf: &[u8]) -> Result<Monster, flatbuffers::InvalidFlatbuffer> {
-  flatbuffers::root::<Monster>(buf)
+pub fn root_as_monster<B: flatbuffers::ReadBuffer + ?Sized>(buf: &B) -> Result<Monster<'_, B>, flatbuffers::InvalidFlatbuffer> {
+  flatbuffers::root_with_buffer::<Monster<'_, B>, B>(buf)
 }
 #[inline]
 /// Verifies that a buffer of bytes contains a size prefixed
@@ -417,8 +412,8 @@ pub fn root_as_monster(buf: &[u8]) -> Result<Monster, flatbuffers::InvalidFlatbu
 /// catch every error, or be maximally performant. For the
 /// previous, unchecked, behavior use
 /// `size_prefixed_root_as_monster_unchecked`.
-pub fn size_prefixed_root_as_monster(buf: &[u8]) -> Result<Monster, flatbuffers::InvalidFlatbuffer> {
-  flatbuffers::size_prefixed_root::<Monster>(buf)
+pub fn size_prefixed_root_as_monster<B: flatbuffers::ReadBuffer + ?Sized>(buf: &B) -> Result<Monster<'_, B>, flatbuffers::InvalidFlatbuffer> {
+  flatbuffers::size_prefixed_root_with_buffer::<Monster<'_, B>, B>(buf)
 }
 #[inline]
 /// Verifies, with the given options, that a buffer of bytes
@@ -427,11 +422,11 @@ pub fn size_prefixed_root_as_monster(buf: &[u8]) -> Result<Monster, flatbuffers:
 /// catch every error, or be maximally performant. For the
 /// previous, unchecked, behavior use
 /// `root_as_monster_unchecked`.
-pub fn root_as_monster_with_opts<'b, 'o>(
+pub fn root_as_monster_with_opts<'b, 'o, B: flatbuffers::ReadBuffer + ?Sized>(
   opts: &'o flatbuffers::VerifierOptions,
-  buf: &'b [u8],
-) -> Result<Monster<'b>, flatbuffers::InvalidFlatbuffer> {
-  flatbuffers::root_with_opts::<Monster<'b>>(opts, buf)
+  buf: &'b B,
+) -> Result<Monster<'b, B>, flatbuffers::InvalidFlatbuffer> {
+  flatbuffers::root_with_buffer_and_opts::<Monster<'b, B>, B>(opts, buf)
 }
 #[inline]
 /// Verifies, with the given verifier options, that a buffer of
@@ -440,25 +435,25 @@ pub fn root_as_monster_with_opts<'b, 'o>(
 /// catch every error, or be maximally performant. For the
 /// previous, unchecked, behavior use
 /// `root_as_monster_unchecked`.
-pub fn size_prefixed_root_as_monster_with_opts<'b, 'o>(
+pub fn size_prefixed_root_as_monster_with_opts<'b, 'o, B: flatbuffers::ReadBuffer + ?Sized>(
   opts: &'o flatbuffers::VerifierOptions,
-  buf: &'b [u8],
-) -> Result<Monster<'b>, flatbuffers::InvalidFlatbuffer> {
-  flatbuffers::size_prefixed_root_with_opts::<Monster<'b>>(opts, buf)
+  buf: &'b B,
+) -> Result<Monster<'b, B>, flatbuffers::InvalidFlatbuffer> {
+  flatbuffers::size_prefixed_root_with_buffer_and_opts::<Monster<'b, B>, B>(opts, buf)
 }
 #[inline]
 /// Assumes, without verification, that a buffer of bytes contains a Monster and returns it.
 /// # Safety
 /// Callers must trust the given bytes do indeed contain a valid `Monster`.
-pub unsafe fn root_as_monster_unchecked(buf: &[u8]) -> Monster {
-  unsafe { flatbuffers::root_unchecked::<Monster>(buf) }
+pub unsafe fn root_as_monster_unchecked<B: flatbuffers::ReadBuffer + ?Sized>(buf: &B) -> Monster<'_, B> {
+  unsafe { flatbuffers::root_unchecked::<Monster<'_, B>, B>(buf) }
 }
 #[inline]
 /// Assumes, without verification, that a buffer of bytes contains a size prefixed Monster and returns it.
 /// # Safety
 /// Callers must trust the given bytes do indeed contain a valid size prefixed `Monster`.
-pub unsafe fn size_prefixed_root_as_monster_unchecked(buf: &[u8]) -> Monster {
-  unsafe { flatbuffers::size_prefixed_root_unchecked::<Monster>(buf) }
+pub unsafe fn size_prefixed_root_as_monster_unchecked<B: flatbuffers::ReadBuffer + ?Sized>(buf: &B) -> Monster<'_, B> {
+  unsafe { flatbuffers::size_prefixed_root_unchecked::<Monster<'_, B>, B>(buf) }
 }
 #[inline]
 pub fn finish_monster_buffer<'a, 'b, A: flatbuffers::Allocator + 'a>(

@@ -50,6 +50,28 @@ impl AnyAmbiguousAliases {
       _ => None,
     }
   }
+
+  #[inline]
+  pub fn tag_as_m1(
+    o: flatbuffers::WIPOffset<Monster>,
+  ) -> flatbuffers::UnionWIPOffset<AnyAmbiguousAliasesUnionValue> {
+    flatbuffers::UnionWIPOffset::new(Self::M1, flatbuffers::WIPOffset::new(o.value()))
+  }
+
+  #[inline]
+  pub fn tag_as_m2(
+    o: flatbuffers::WIPOffset<Monster>,
+  ) -> flatbuffers::UnionWIPOffset<AnyAmbiguousAliasesUnionValue> {
+    flatbuffers::UnionWIPOffset::new(Self::M2, flatbuffers::WIPOffset::new(o.value()))
+  }
+
+  #[inline]
+  pub fn tag_as_m3(
+    o: flatbuffers::WIPOffset<Monster>,
+  ) -> flatbuffers::UnionWIPOffset<AnyAmbiguousAliasesUnionValue> {
+    flatbuffers::UnionWIPOffset::new(Self::M3, flatbuffers::WIPOffset::new(o.value()))
+  }
+
 }
 impl core::fmt::Debug for AnyAmbiguousAliases {
   fn fmt(&self, f: &mut core::fmt::Formatter) -> core::fmt::Result {
@@ -60,11 +82,11 @@ impl core::fmt::Debug for AnyAmbiguousAliases {
     }
   }
 }
-impl<'a> flatbuffers::Follow<'a> for AnyAmbiguousAliases {
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'a, B> for AnyAmbiguousAliases {
   type Inner = Self;
   #[inline]
-  unsafe fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
-    let b = unsafe { flatbuffers::read_scalar_at::<u8>(buf, loc) };
+  unsafe fn follow(buf: &'a B, loc: usize) -> Self::Inner {
+    let b = unsafe { flatbuffers::read_scalar_at::<u8, B>(buf, loc) };
     Self(b)
   }
 }
@@ -102,16 +124,93 @@ impl<'a> flatbuffers::Verifiable for AnyAmbiguousAliases {
 }
 
 impl flatbuffers::SimpleToVerifyInSlice for AnyAmbiguousAliases {}
-pub struct AnyAmbiguousAliasesUnionTableOffset {}
+
+impl From<AnyAmbiguousAliases> for u8 {
+  #[inline]
+  fn from(v: AnyAmbiguousAliases) -> u8 {
+    v.0
+  }
+}
+
+impl<'a: 'b, 'b> flatbuffers::BuildVector<'a, 'b> for AnyAmbiguousAliases {
+  type VectorBuilder = AnyAmbiguousAliasesVectorBuilder<'a, 'b>;
+}
+
+pub struct AnyAmbiguousAliasesVectorBuilder<'a: 'b, 'b> {
+  fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>,
+  num_items: usize,
+}
+
+impl<'a: 'b, 'b> AnyAmbiguousAliasesVectorBuilder<'a, 'b> {
+  #[inline]
+  pub fn new(fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>, num_items: usize) -> Self {
+    fbb.start_union_vector::<AnyAmbiguousAliasesUnionValue>(num_items);
+    Self { fbb, num_items }
+  }
+
+  #[inline]
+  pub fn finish(&mut self) -> flatbuffers::UnionVectorWIPOffsets<'a, AnyAmbiguousAliasesUnionValue> {
+    self.fbb.end_union_vector(self.num_items)
+  }
+
+  #[inline]
+  pub fn push_as_m1(&mut self, o: flatbuffers::WIPOffset<Monster>) {
+    self.fbb.push_union_vector_item(AnyAmbiguousAliases::tag_as_m1(o));
+  }
+
+  #[inline]
+  pub fn push_as_m2(&mut self, o: flatbuffers::WIPOffset<Monster>) {
+    self.fbb.push_union_vector_item(AnyAmbiguousAliases::tag_as_m2(o));
+  }
+
+  #[inline]
+  pub fn push_as_m3(&mut self, o: flatbuffers::WIPOffset<Monster>) {
+    self.fbb.push_union_vector_item(AnyAmbiguousAliases::tag_as_m3(o));
+  }
+
+}
+
+pub struct AnyAmbiguousAliasesUnionValue {}
+
+impl flatbuffers::TaggedUnion for AnyAmbiguousAliasesUnionValue {
+  type Tag = AnyAmbiguousAliases;
+}
+
+impl<'a> flatbuffers::UnionVerifiable<'a> for AnyAmbiguousAliasesUnionValue {
+  fn run_union_verifier(
+    v: &mut flatbuffers::Verifier,
+    tag: <<Self as flatbuffers::TaggedUnion>::Tag as flatbuffers::Follow<'a>>::Inner,
+    pos: usize,
+  ) -> Result<(), flatbuffers::InvalidFlatbuffer> {
+    match tag {
+      AnyAmbiguousAliases::M1 => v
+        .verify_union_variant::<flatbuffers::ForwardsUOffset<Monster>>(
+          "AnyAmbiguousAliases::M1",
+          pos,
+        ),
+      AnyAmbiguousAliases::M2 => v
+        .verify_union_variant::<flatbuffers::ForwardsUOffset<Monster>>(
+          "AnyAmbiguousAliases::M2",
+          pos,
+        ),
+      AnyAmbiguousAliases::M3 => v
+        .verify_union_variant::<flatbuffers::ForwardsUOffset<Monster>>(
+          "AnyAmbiguousAliases::M3",
+          pos,
+        ),
+      _ => Ok(()),
+    }
+  }
+}
 
 #[allow(clippy::upper_case_acronyms)]
 #[non_exhaustive]
 #[derive(Debug, Clone, PartialEq)]
 pub enum AnyAmbiguousAliasesT {
   NONE,
-  M1(Box<MonsterT>),
-  M2(Box<MonsterT>),
-  M3(Box<MonsterT>),
+    M1(Box<MonsterT>),
+    M2(Box<MonsterT>),
+    M3(Box<MonsterT>),
 }
 impl Default for AnyAmbiguousAliasesT {
   fn default() -> Self {
@@ -127,12 +226,12 @@ impl AnyAmbiguousAliasesT {
       Self::M3(_) => AnyAmbiguousAliases::M3,
     }
   }
-  pub fn pack<'b, A: flatbuffers::Allocator + 'b>(&self, fbb: &mut flatbuffers::FlatBufferBuilder<'b, A>) -> Option<flatbuffers::WIPOffset<flatbuffers::UnionWIPOffset>> {
+  pub fn pack<'b, A: flatbuffers::Allocator + 'b>(&self, fbb: &mut flatbuffers::FlatBufferBuilder<'b, A>) -> Option<flatbuffers::WIPOffset<AnyAmbiguousAliasesUnionValue>> {
     match self {
       Self::NONE => None,
-      Self::M1(v) => Some(v.pack(fbb).as_union_value()),
-      Self::M2(v) => Some(v.pack(fbb).as_union_value()),
-      Self::M3(v) => Some(v.pack(fbb).as_union_value()),
+        Self::M1(v) => Some(AnyAmbiguousAliases::tag_as_m1(v.pack(fbb)).value_offset()),
+        Self::M2(v) => Some(AnyAmbiguousAliases::tag_as_m2(v.pack(fbb)).value_offset()),
+        Self::M3(v) => Some(AnyAmbiguousAliases::tag_as_m3(v.pack(fbb)).value_offset()),
     }
   }
   /// If the union variant matches, return the owned MonsterT, setting the union to NONE.
