@@ -721,7 +721,7 @@ impl SimpleToVerifyInSlice for u64 {}
 
 impl SimpleToVerifyInSlice for f64 {}
 
-impl<T: SimpleToVerifyInSlice> Verifiable for Vector<'_, T> {
+impl<T: SimpleToVerifyInSlice, B: ReadBuffer + ?Sized> Verifiable for Vector<'_, T, B> {
     fn run_verifier(v: &mut Verifier, pos: usize) -> Result<()> {
         verify_vector_range::<T>(v, pos)?;
         Ok(())
@@ -735,7 +735,7 @@ impl<T: Verifiable> Verifiable for SkipSizePrefix<T> {
     }
 }
 
-impl<T: Verifiable> Verifiable for Vector<'_, ForwardsUOffset<T>> {
+impl<T: Verifiable, B: ReadBuffer + ?Sized> Verifiable for Vector<'_, ForwardsUOffset<T>, B> {
     #[inline]
     fn run_verifier(v: &mut Verifier, pos: usize) -> Result<()> {
         let range = verify_vector_range::<ForwardsUOffset<T>>(v, pos)?;

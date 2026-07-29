@@ -26,9 +26,9 @@ use crate::follow::Follow;
 use crate::primitives::*;
 use crate::read_buffer::ReadBuffer;
 
-pub struct Vector<'a, T: 'a>(&'a [u8], usize, PhantomData<T>);
+pub struct Vector<'a, T: 'a, B: ReadBuffer + ?Sized = [u8]>(&'a B, usize, PhantomData<T>);
 
-impl<'a, T: 'a> Default for Vector<'a, T> {
+impl<'a, T: 'a> Default for Vector<'a, T, [u8]> {
     fn default() -> Self {
         // Static, length 0 vector.
         // Note that derived default causes UB due to issues in read_scalar_at /facepalm.
@@ -36,10 +36,10 @@ impl<'a, T: 'a> Default for Vector<'a, T> {
     }
 }
 
-impl<'a, T> Debug for Vector<'a, T>
+impl<'a, T, B: ReadBuffer + ?Sized> Debug for Vector<'a, T, B>
 where
-    T: 'a + Follow<'a>,
-    <T as Follow<'a>>::Inner: Debug,
+    T: 'a + Follow<'a, B>,
+    <T as Follow<'a, B>>::Inner: Debug,
 {
     fn fmt(&self, f: &mut Formatter) -> Result {
         f.debug_list().entries(self.iter()).finish()
@@ -49,15 +49,15 @@ where
 // We cannot use derive for these two impls, as it would only implement Copy
 // and Clone for `T: Copy` and `T: Clone` respectively. However `Vector<'a, T>`
 // can always be copied, no matter that `T` you have.
-impl<'a, T> Copy for Vector<'a, T> {}
+impl<'a, T, B: ReadBuffer + ?Sized> Copy for Vector<'a, T, B> {}
 
-impl<'a, T> Clone for Vector<'a, T> {
+impl<'a, T, B: ReadBuffer + ?Sized> Clone for Vector<'a, T, B> {
     fn clone(&self) -> Self {
         *self
     }
 }
 
-impl<'a, T: 'a> Vector<'a, T> {
+impl<'a, T: 'a, B: ReadBuffer + ?Sized> Vector<'a, T, B> {
     /// # Safety
     ///
     /// `buf` contains a valid vector at `loc` consisting of
@@ -65,7 +65,7 @@ impl<'a, T: 'a> Vector<'a, T> {
     /// - UOffsetT element count
     /// - Consecutive list of `T` elements
     #[inline(always)]
-    pub unsafe fn new(buf: &'a [u8], loc: usize) -> Self {
+    pub unsafe fn new(buf: &'a B, loc: usize) -> Self {
         Vector(buf, loc, PhantomData)
     }
 
@@ -73,14 +73,16 @@ impl<'a, T: 'a> Vector<'a, T> {
     pub fn len(&self) -> usize {
         // Safety:
         // Valid vector at time of construction starting with UOffsetT element count
-        unsafe { read_scalar_at::<UOffsetT, [u8]>(self.0, self.1) as usize }
+        unsafe { read_scalar_at::<UOffsetT, B>(self.0, self.1) as usize }
     }
 
     #[inline(always)]
     pub fn is_empty(&self) -> bool {
         self.len() == 0
     }
+}
 
+impl<'a, T: 'a> Vector<'a, T, [u8]> {
     #[inline(always)]
     pub fn bytes(&self) -> &'a [u8] {
         let sz = size_of::<T>();
@@ -89,9 +91,9 @@ impl<'a, T: 'a> Vector<'a, T> {
     }
 }
 
-impl<'a, T: Follow<'a> + 'a> Vector<'a, T> {
+impl<'a, T: Follow<'a, B> + 'a, B: ReadBuffer + ?Sized> Vector<'a, T, B> {
     #[inline(always)]
-    pub fn get(&self, idx: usize) -> T::Inner {
+    pub fn get(&self, idx: usize) -> <T as Follow<'a, B>>::Inner {
         assert!(idx < self.len());
         let sz = size_of::<T>();
         debug_assert!(sz > 0);
@@ -104,8 +106,8 @@ impl<'a, T: Follow<'a> + 'a> Vector<'a, T> {
     pub fn lookup_by_key<K: Ord>(
         &self,
         key: K,
-        f: fn(&<T as Follow<'a>>::Inner, &K) -> Ordering,
-    ) -> Option<T::Inner> {
+        f: fn(&<T as Follow<'a, B>>::Inner, &K) -> Ordering,
+    ) -> Option<<T as Follow<'a, B>>::Inner> {
         if self.is_empty() {
             return None;
         }
@@ -132,7 +134,7 @@ impl<'a, T: Follow<'a> + 'a> Vector<'a, T> {
     }
 
     #[inline(always)]
-    pub fn iter(&self) -> VectorIter<'a, T> {
+    pub fn iter(&self) -> VectorIter<'a, T, B> {
         VectorIter::from_vector(*self)
     }
 }
@@ -140,33 +142,34 @@ impl<'a, T: Follow<'a> + 'a> Vector<'a, T> {
 /// # Safety
 ///
 /// `buf` must contain a value of T at `loc` and have alignment of 1.
-/// For any `B: ReadBuffer`, `buf.bytes(loc, size_of::<T>())` must be valid.
-pub unsafe fn follow_cast_ref<'a, T: Sized + 'a, B: ReadBuffer + ?Sized>(buf: &'a B, loc: usize) -> &'a T {
+/// For a pager, the page must remain pinned for the lifetime `'a`.
+pub unsafe fn follow_cast_ref<'a, T: Sized + 'a, B: ReadBuffer + ?Sized>(
+    buf: &'a B,
+    loc: usize,
+) -> &'a T {
     assert_eq!(align_of::<T>(), 1);
     let sz = size_of::<T>();
-    // SAFETY: caller guarantees valid data; bytes() ties lifetime to 'a.
+    // Safety: caller guarantees T is at loc with alignment 1; bytes() ties lifetime to 'a.
     let slice = unsafe { buf.bytes(loc, sz) };
     let ptr = slice.as_ptr() as *const T;
-    // SAFETY
-    // buf contains a value at loc of type T and T has no alignment requirements
-    unsafe { &*ptr }
+    // SAFETY: buf contains a value at loc of type T; T has alignment 1.
+    &*ptr
 }
 
 impl<'a, B: ReadBuffer + ?Sized> Follow<'a, B> for &'a str {
     type Inner = &'a str;
     unsafe fn follow(buf: &'a B, loc: usize) -> Self::Inner {
-        let len = unsafe { read_scalar_at::<UOffsetT, B>(buf, loc) } as usize;
-        // SAFETY: caller guarantees valid UTF-8 bytes at this location.
-        let bytes = unsafe { buf.bytes(loc + SIZE_UOFFSET, len) };
-        unsafe { from_utf8_unchecked(bytes) }
+        let len = read_scalar_at::<UOffsetT, B>(buf, loc) as usize;
+        let slice = buf.bytes(loc + SIZE_UOFFSET, len);
+        from_utf8_unchecked(slice)
     }
 }
 
 impl<'a, B: ReadBuffer + ?Sized> Follow<'a, B> for &'a [u8] {
     type Inner = &'a [u8];
     unsafe fn follow(buf: &'a B, loc: usize) -> Self::Inner {
-        let len = unsafe { read_scalar_at::<UOffsetT, B>(buf, loc) } as usize;
-        unsafe { buf.bytes(loc + SIZE_UOFFSET, len) }
+        let len = read_scalar_at::<UOffsetT, B>(buf, loc) as usize;
+        buf.bytes(loc + SIZE_UOFFSET, len)
     }
 }
 
@@ -175,29 +178,25 @@ impl<'a, B: ReadBuffer + ?Sized> Follow<'a, B> for &'a [u8] {
 /// The vector struct itself stores `&'a [u8]` (obtained via
 /// [`ReadBuffer::bytes`]) so that its internal element accessors keep working
 /// unchanged regardless of the backing buffer type.
-impl<'a, T: Follow<'a> + 'a, B: ReadBuffer + ?Sized> Follow<'a, B> for Vector<'a, T> {
-    type Inner = Vector<'a, T>;
+impl<'a, T: Follow<'a, B> + 'a, B: ReadBuffer + ?Sized> Follow<'a, B> for Vector<'a, T, B> {
+    type Inner = Vector<'a, T, B>;
     unsafe fn follow(buf: &'a B, loc: usize) -> Self::Inner {
-        // Pin the full buffer as a contiguous slice tied to 'a.
-        // For plain [u8] this is a zero-cost sub-slice; for a pager it
-        // commits those pages to stay resident for 'a.
-        let full = buf.bytes(0, buf.len());
-        Vector::new(full, loc)
+        Vector::new(buf, loc)
     }
 }
 
 /// An iterator over a `Vector`.
 #[derive(Debug)]
-pub struct VectorIter<'a, T: 'a> {
-    buf: &'a [u8],
+pub struct VectorIter<'a, T: 'a, B: ReadBuffer + ?Sized = [u8]> {
+    buf: &'a B,
     loc: usize,
     remaining: usize,
     phantom: PhantomData<T>,
 }
 
-impl<'a, T: 'a> VectorIter<'a, T> {
+impl<'a, T: 'a, B: ReadBuffer + ?Sized> VectorIter<'a, T, B> {
     #[inline]
-    pub fn from_vector(inner: Vector<'a, T>) -> Self {
+    pub fn from_vector(inner: Vector<'a, T, B>) -> Self {
         VectorIter {
             buf: inner.0,
             // inner.1 is the location of the data for the vector.
@@ -208,7 +207,9 @@ impl<'a, T: 'a> VectorIter<'a, T> {
             phantom: PhantomData,
         }
     }
+}
 
+impl<'a, T: 'a> VectorIter<'a, T, [u8]> {
     /// Creates a new `VectorIter` from the provided slice
     ///
     /// # Safety
@@ -221,7 +222,7 @@ impl<'a, T: 'a> VectorIter<'a, T> {
     }
 }
 
-impl<'a, T: Follow<'a> + 'a> Clone for VectorIter<'a, T> {
+impl<'a, T: Follow<'a, B> + 'a, B: ReadBuffer + ?Sized> Clone for VectorIter<'a, T, B> {
     #[inline]
     fn clone(&self) -> Self {
         VectorIter {
@@ -233,11 +234,11 @@ impl<'a, T: Follow<'a> + 'a> Clone for VectorIter<'a, T> {
     }
 }
 
-impl<'a, T: Follow<'a> + 'a> Iterator for VectorIter<'a, T> {
-    type Item = T::Inner;
+impl<'a, T: Follow<'a, B> + 'a, B: ReadBuffer + ?Sized> Iterator for VectorIter<'a, T, B> {
+    type Item = <T as Follow<'a, B>>::Inner;
 
     #[inline]
-    fn next(&mut self) -> Option<T::Inner> {
+    fn next(&mut self) -> Option<<T as Follow<'a, B>>::Inner> {
         let sz = size_of::<T>();
         debug_assert!(sz > 0);
 
@@ -255,7 +256,7 @@ impl<'a, T: Follow<'a> + 'a> Iterator for VectorIter<'a, T> {
     }
 
     #[inline]
-    fn nth(&mut self, n: usize) -> Option<T::Inner> {
+    fn nth(&mut self, n: usize) -> Option<<T as Follow<'a, B>>::Inner> {
         let sz = size_of::<T>();
         debug_assert!(sz > 0);
 
@@ -274,9 +275,9 @@ impl<'a, T: Follow<'a> + 'a> Iterator for VectorIter<'a, T> {
     }
 }
 
-impl<'a, T: Follow<'a> + 'a> DoubleEndedIterator for VectorIter<'a, T> {
+impl<'a, T: Follow<'a, B> + 'a, B: ReadBuffer + ?Sized> DoubleEndedIterator for VectorIter<'a, T, B> {
     #[inline]
-    fn next_back(&mut self) -> Option<T::Inner> {
+    fn next_back(&mut self) -> Option<<T as Follow<'a, B>>::Inner> {
         let sz = size_of::<T>();
         debug_assert!(sz > 0);
 
@@ -292,43 +293,43 @@ impl<'a, T: Follow<'a> + 'a> DoubleEndedIterator for VectorIter<'a, T> {
     }
 
     #[inline]
-    fn nth_back(&mut self, n: usize) -> Option<T::Inner> {
+    fn nth_back(&mut self, n: usize) -> Option<<T as Follow<'a, B>>::Inner> {
         self.remaining = self.remaining.saturating_sub(n);
         self.next_back()
     }
 }
 
-impl<'a, T: 'a + Follow<'a>> ExactSizeIterator for VectorIter<'a, T> {
+impl<'a, T: 'a + Follow<'a, B>, B: ReadBuffer + ?Sized> ExactSizeIterator for VectorIter<'a, T, B> {
     #[inline]
     fn len(&self) -> usize {
         self.remaining
     }
 }
 
-impl<'a, T: 'a + Follow<'a>> FusedIterator for VectorIter<'a, T> {}
+impl<'a, T: 'a + Follow<'a, B>, B: ReadBuffer + ?Sized> FusedIterator for VectorIter<'a, T, B> {}
 
-impl<'a, T: Follow<'a> + 'a> IntoIterator for Vector<'a, T> {
-    type Item = T::Inner;
-    type IntoIter = VectorIter<'a, T>;
+impl<'a, T: Follow<'a, B> + 'a, B: ReadBuffer + ?Sized> IntoIterator for Vector<'a, T, B> {
+    type Item = <T as Follow<'a, B>>::Inner;
+    type IntoIter = VectorIter<'a, T, B>;
     #[inline]
     fn into_iter(self) -> Self::IntoIter {
         self.iter()
     }
 }
 
-impl<'a, 'b, T: Follow<'a> + 'a> IntoIterator for &'b Vector<'a, T> {
-    type Item = T::Inner;
-    type IntoIter = VectorIter<'a, T>;
+impl<'a, 'b, T: Follow<'a, B> + 'a, B: ReadBuffer + ?Sized> IntoIterator for &'b Vector<'a, T, B> {
+    type Item = <T as Follow<'a, B>>::Inner;
+    type IntoIter = VectorIter<'a, T, B>;
     fn into_iter(self) -> Self::IntoIter {
         self.iter()
     }
 }
 
 #[cfg(feature = "serialize")]
-impl<'a, T> serde::ser::Serialize for Vector<'a, T>
+impl<'a, T, B: ReadBuffer + ?Sized> serde::ser::Serialize for Vector<'a, T, B>
 where
-    T: 'a + Follow<'a>,
-    <T as Follow<'a>>::Inner: serde::ser::Serialize,
+    T: 'a + Follow<'a, B>,
+    <T as Follow<'a, B>>::Inner: serde::ser::Serialize,
 {
     fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
     where
