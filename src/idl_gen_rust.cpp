@@ -1609,18 +1609,18 @@ class RustGenerator : public BaseGenerator {
       case ftVectorOfFloat: {
         const auto typname = GetTypeBasic(type.VectorType());
         return WrapOption("flatbuffers::Vector<" + lifetime + ", " + typname +
-                          ">");
+                          ", B>");
       }
       case ftVectorOfUnionKey:
       case ftVectorOfEnumKey: {
         const auto typname = WrapInNameSpace(*type.enum_def);
         return WrapOption("flatbuffers::Vector<" + lifetime + ", " + typname +
-                          ">");
+                          ", B>");
       }
       case ftVectorOfStruct: {
         const auto typname = WrapInNameSpace(*type.struct_def);
         return WrapOption("flatbuffers::Vector<" + lifetime + ", " + typname +
-                          ">");
+                          ", B>");
       }
       case ftVectorOfTable: {
         const auto typname = WrapInNameSpace(*type.struct_def);
@@ -1631,7 +1631,7 @@ class RustGenerator : public BaseGenerator {
       case ftVectorOfString: {
         return WrapOption("flatbuffers::Vector<" + lifetime +
                           ", flatbuffers::ForwardsUOffset<&" + lifetime +
-                          " str>>");
+                          " str>, B>");
       }
       case ftVectorOfUnionValue: {
         // TODO(rw): we should consider using the
@@ -1656,9 +1656,9 @@ class RustGenerator : public BaseGenerator {
     const auto WrapForwardsUOffset = [](std::string ty) -> std::string {
       return "flatbuffers::ForwardsUOffset<" + ty + ">";
     };
-    const auto WrapVector = [&](std::string ty) -> std::string {
-      return "flatbuffers::Vector<" + lifetime + ", " + ty + ">";
-    };
+     const auto WrapVector = [&](std::string ty) -> std::string {
+       return "flatbuffers::Vector<" + lifetime + ", " + ty + ", B>";
+     };
     const auto WrapArray = [&](std::string ty, uint16_t length) -> std::string {
       return "flatbuffers::Array<" + lifetime + ", " + ty + ", " +
              NumToString(length) + ">";
@@ -1845,7 +1845,7 @@ class RustGenerator : public BaseGenerator {
     code_ += "  pub _tab: flatbuffers::Table<'a, B>,";
     code_ += "}";
     code_ += "";
-    code_ += "impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'buf, B> for {{STRUCT_TY}}<'a, B> {";
+     code_ += "impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'buf, B> for {{STRUCT_TY}}<'a, B> {";
     code_ += "  type Inner = {{STRUCT_TY}}<'buf, B>;";
     code_ += "  #[inline]";
     code_ += "  unsafe fn follow(buf: &'buf B, loc: usize) -> Self::Inner {";
@@ -2141,11 +2141,17 @@ class RustGenerator : public BaseGenerator {
               code_.SetValue("RETURN_TYPE",
                              "&'a " + code_.GetValue("U_ELEMENT_TABLE_TYPE"));
             } else {
-              code_.SetValue("CLOSURE", "");
-              code_.SetValue("INIT_FUNCTION_CALL", "init_from_table");
-              code_.SetValue("RETURN_TYPE",
-                             code_.GetValue("U_ELEMENT_TABLE_TYPE") + "<'a>");
-            }
+               code_.SetValue("CLOSURE", "");
+               code_.SetValue("INIT_FUNCTION_CALL", "init_from_table");
+               // For tables, include the B parameter; for structs, just 'a
+               if (IsStruct(ev.union_type)) {
+                 code_.SetValue("RETURN_TYPE",
+                                code_.GetValue("U_ELEMENT_TABLE_TYPE") + "<'a>");
+               } else {
+                 code_.SetValue("RETURN_TYPE",
+                                code_.GetValue("U_ELEMENT_TABLE_TYPE") + "<'a, B>");
+               }
+             }
             code_ += "#[inline]";
             code_ += "#[allow(non_snake_case)]";
             code_ +=
@@ -2213,11 +2219,13 @@ class RustGenerator : public BaseGenerator {
                              "follow(table.buf(), table.loc())");
               code_.SetValue("RETURN_TYPE",
                              "&'a " + code_.GetValue("U_ELEMENT_TABLE_TYPE"));
-            } else {
-              code_.SetValue("INIT_FUNCTION_CALL", "init_from_table(table)");
-              code_.SetValue("RETURN_TYPE",
-                             code_.GetValue("U_ELEMENT_TABLE_TYPE") + "<'a>");
-            }
+               } else {
+                 const auto typname = code_.GetValue("U_ELEMENT_TABLE_TYPE");
+                 code_.SetValue("INIT_FUNCTION_CALL", 
+                                "<" + typname + "<'a, B>>::init_from_table(table)");
+                 code_.SetValue("RETURN_TYPE",
+                                typname + "<'a, B>");
+               }
             code_ += "  #[inline]";
             code_ += "  #[allow(non_snake_case)]";
             code_ +=
@@ -2229,11 +2237,11 @@ class RustGenerator : public BaseGenerator {
             code_ +=
                 "        if let Some((tag, table)) = "
                 "tags.iter().zip(tables.iter()).nth(idx) {";
-            code_ += "          if tag == {{U_ELEMENT_ENUM_TYPE}} {";
-            code_ +=
-                "            return "
-                "Some(unsafe { <{{U_ELEMENT_TABLE_TYPE}}>::{{INIT_FUNCTION_CALL}} });";
-            code_ += "          }";
+             code_ += "          if tag == {{U_ELEMENT_ENUM_TYPE}} {";
+             code_ +=
+                 "            return "
+                 "Some(unsafe { {{INIT_FUNCTION_CALL}} });";
+             code_ += "          }";
             code_ += "        }";
             code_ += "      }";
             code_ += "    }";
