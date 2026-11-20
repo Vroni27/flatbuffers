@@ -578,7 +578,7 @@ impl<'ver, 'opts, 'buf> TableVerifier<'ver, 'opts, 'buf> {
                 let keys_pos = keys_offset.saturating_add(k);
                 let keys_range = trace_field(
                     verify_vector_range::<T::Tag>(self.verifier, keys_pos),
-                    std::borrow::Cow::Borrowed(keys_vec_field_name),
+                    Cow::Borrowed(keys_vec_field_name),
                     keys_pos,
                 )?;
 
@@ -586,12 +586,12 @@ impl<'ver, 'opts, 'buf> TableVerifier<'ver, 'opts, 'buf> {
                 let vals_pos = vals_offset.saturating_add(v);
                 let vals_range = trace_field(
                     verify_vector_range::<ForwardsUOffset<T>>(self.verifier, vals_pos),
-                    std::borrow::Cow::Borrowed(vals_vec_field_name),
+                    Cow::Borrowed(vals_vec_field_name),
                     vals_pos,
                 )?;
 
-                let key_size = std::mem::size_of::<T::Tag>();
-                let val_size = std::mem::size_of::<ForwardsUOffset<T>>();
+                let key_size = core::mem::size_of::<T::Tag>();
+                let val_size = core::mem::size_of::<ForwardsUOffset<T>>();
 
                 let keys_count = keys_range.len() / key_size;
                 let vals_count = vals_range.len() / val_size;
@@ -729,8 +729,7 @@ impl<'a> Verifiable for &'a str {
     #[inline]
     fn run_verifier(v: &mut Verifier, pos: usize) -> Result<()> {
         let range = verify_vector_range::<u8>(v, pos)?;
-        let has_null_terminator =
-            v.buffer.get(range.end).map(|&b| b == 0).unwrap_or(false);
+        let has_null_terminator = v.buffer.get(range.end).map(|&b| b == 0).unwrap_or(false);
         let s = core::str::from_utf8(&v.buffer[range.clone()]);
         if let Err(error) = s {
             return Err(InvalidFlatbuffer::Utf8Error {

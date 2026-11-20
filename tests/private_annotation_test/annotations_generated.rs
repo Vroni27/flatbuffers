@@ -9,10 +9,6 @@ use core::mem;
 use core::cmp::Ordering;
 use self::flatbuffers::{EndianScalar, Follow};
 use super::*;
-pub(crate) enum AnnotationsOffset {}
-impl AnnotationsOffset {
-    pub const VT_VALUE: flatbuffers::VOffsetT = 4;
-}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Copy for Annotations<'a, B> {}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Clone for Annotations<'a, B> {
   fn clone(&self) -> Self { *self }
@@ -33,16 +29,13 @@ impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'
   }
 }
 
-impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Annotations<'a, B> {
+impl<'a> Annotations<'a> {
+  pub const VT_VALUE: flatbuffers::VOffsetT = 4;
 
   pub const fn get_fully_qualified_name() -> &'static str {
     "Annotations"
   }
 
-  #[inline]
-  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
-    Annotations { _tab: table }
-  }
   #[allow(unused_mut)]
   pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr, A: flatbuffers::Allocator + 'bldr>(
     _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr, A>,
@@ -51,6 +44,13 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Annotations<'a, B> {
     let mut builder = AnnotationsBuilder::new(_fbb);
     builder.add_value(args.value);
     builder.finish()
+  }
+}
+
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Annotations<'a, B> {
+  #[inline]
+  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
+    Annotations { _tab: table }
   }
 
   pub fn unpack(&self) -> AnnotationsT {
@@ -65,7 +65,7 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Annotations<'a, B> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<i32>(AnnotationsOffset::VT_VALUE, Some(0)).unwrap()}
+    unsafe { self._tab.get::<i32>(Annotations::VT_VALUE, Some(0)).unwrap()}
   }
 }
 
@@ -76,7 +76,7 @@ impl<B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Verifiable for Annotation
   ) -> Result<(), flatbuffers::InvalidFlatbuffer> {
     use self::flatbuffers::Verifiable;
     v.visit_table(pos)?
-     .visit_field::<i32>("value", AnnotationsOffset::VT_VALUE, false)?
+     .visit_field::<i32>("value", Annotations::VT_VALUE, false)?
      .finish();
     Ok(())
   }
@@ -100,7 +100,7 @@ pub(crate) struct AnnotationsBuilder<'a: 'b, 'b, A: flatbuffers::Allocator + 'a>
 impl<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> AnnotationsBuilder<'a, 'b, A> {
   #[inline]
   pub fn add_value(&mut self, value: i32) {
-    self.fbb_.push_slot::<i32>(AnnotationsOffset::VT_VALUE, value, 0);
+    self.fbb_.push_slot::<i32>(Annotations::VT_VALUE, value, 0);
   }
   #[inline]
   pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a, A>) -> AnnotationsBuilder<'a, 'b, A> {

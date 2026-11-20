@@ -9,9 +9,6 @@ use core::mem;
 use core::cmp::Ordering;
 use self::flatbuffers::{EndianScalar, Follow};
 use super::*;
-pub enum FieldTableOffset {}
-impl FieldTableOffset {
-}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Copy for FieldTable<'a, B> {}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Clone for FieldTable<'a, B> {
   fn clone(&self) -> Self { *self }
@@ -32,16 +29,12 @@ impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'
   }
 }
 
-impl<'a, B: flatbuffers::ReadBuffer + ?Sized> FieldTable<'a, B> {
+impl<'a> FieldTable<'a> {
 
   pub const fn get_fully_qualified_name() -> &'static str {
     "RustNamerTest.FieldTable"
   }
 
-  #[inline]
-  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
-    FieldTable { _tab: table }
-  }
   #[allow(unused_mut)]
   pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr, A: flatbuffers::Allocator + 'bldr>(
     _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr, A>,
@@ -49,6 +42,13 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> FieldTable<'a, B> {
   ) -> flatbuffers::WIPOffset<FieldTable<'bldr>> {
     let mut builder = FieldTableBuilder::new(_fbb);
     builder.finish()
+  }
+}
+
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> FieldTable<'a, B> {
+  #[inline]
+  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
+    FieldTable { _tab: table }
   }
 
   pub fn unpack(&self) -> FieldTableT {

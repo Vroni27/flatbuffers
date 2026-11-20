@@ -444,7 +444,7 @@ pub unsafe fn set_string(
         ));
     }
 
-    let table = Table::follow(buf, table_loc);
+    let table = Table::follow(&buf[..], table_loc);
 
     let Some(field_loc) = get_field_loc(&table, field) else {
         return Err(FlatbufferError::SetValueNotSupported);

@@ -50,15 +50,15 @@ impl Any {
   #[inline]
   pub fn tag_as_game(
     o: flatbuffers::WIPOffset<Game>,
-  ) -> flatbuffers::UnionWIPOffset<AnyUnionValue> {
-    flatbuffers::UnionWIPOffset::new(Self::Game, flatbuffers::WIPOffset::new(o.value()))
+  ) -> flatbuffers::TaggedUnionWIPOffset<AnyUnionValue> {
+    flatbuffers::TaggedUnionWIPOffset::new(Any::Game, flatbuffers::WIPOffset::new(o.value()))
   }
 
   #[inline]
   pub fn tag_as_annotations(
     o: flatbuffers::WIPOffset<Annotations>,
-  ) -> flatbuffers::UnionWIPOffset<AnyUnionValue> {
-    flatbuffers::UnionWIPOffset::new(Self::Annotations, flatbuffers::WIPOffset::new(o.value()))
+  ) -> flatbuffers::TaggedUnionWIPOffset<AnyUnionValue> {
+    flatbuffers::TaggedUnionWIPOffset::new(Any::Annotations, flatbuffers::WIPOffset::new(o.value()))
   }
 
 }
@@ -75,7 +75,7 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'a, B> for Any
   type Inner = Self;
   #[inline]
   unsafe fn follow(buf: &'a B, loc: usize) -> Self::Inner {
-    let b = unsafe { flatbuffers::read_scalar_at::<u8, B>(buf, loc) };
+    let b = unsafe { flatbuffers::read_scalar_from::<u8, B>(buf, loc) };
     Self(b)
   }
 }
@@ -203,11 +203,11 @@ impl AnyT {
       Self::Annotations(_) => Any::Annotations,
     }
   }
-  pub fn pack<'b, A: flatbuffers::Allocator + 'b>(&self, fbb: &mut flatbuffers::FlatBufferBuilder<'b, A>) -> Option<flatbuffers::WIPOffset<AnyUnionValue>> {
+  pub fn pack<'b, A: flatbuffers::Allocator + 'b>(&self, fbb: &mut flatbuffers::FlatBufferBuilder<'b, A>) -> Option<flatbuffers::WIPOffset<flatbuffers::UnionWIPOffset>> {
     match self {
       Self::NONE => None,
-        Self::Game(v) => Some(Any::tag_as_game(v.pack(fbb)).value_offset()),
-        Self::Annotations(v) => Some(Any::tag_as_annotations(v.pack(fbb)).value_offset()),
+        Self::Game(v) => Some(Any::tag_as_game(v.pack(fbb)).value_offset().as_union_value()),
+        Self::Annotations(v) => Some(Any::tag_as_annotations(v.pack(fbb)).value_offset().as_union_value()),
     }
   }
   /// If the union variant matches, return the owned GameT, setting the union to NONE.

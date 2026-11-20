@@ -9,9 +9,6 @@ use core::mem;
 use core::cmp::Ordering;
 use self::flatbuffers::{EndianScalar, Follow};
 use super::*;
-pub enum InParentNamespaceOffset {}
-impl InParentNamespaceOffset {
-}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Copy for InParentNamespace<'a, B> {}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Clone for InParentNamespace<'a, B> {
   fn clone(&self) -> Self { *self }
@@ -32,16 +29,12 @@ impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'
   }
 }
 
-impl<'a, B: flatbuffers::ReadBuffer + ?Sized> InParentNamespace<'a, B> {
+impl<'a> InParentNamespace<'a> {
 
   pub const fn get_fully_qualified_name() -> &'static str {
     "MyGame.InParentNamespace"
   }
 
-  #[inline]
-  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
-    InParentNamespace { _tab: table }
-  }
   #[allow(unused_mut)]
   pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr, A: flatbuffers::Allocator + 'bldr>(
     _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr, A>,
@@ -49,6 +42,13 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> InParentNamespace<'a, B> {
   ) -> flatbuffers::WIPOffset<InParentNamespace<'bldr>> {
     let mut builder = InParentNamespaceBuilder::new(_fbb);
     builder.finish()
+  }
+}
+
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> InParentNamespace<'a, B> {
+  #[inline]
+  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
+    InParentNamespace { _tab: table }
   }
 
   pub fn unpack(&self) -> InParentNamespaceT {

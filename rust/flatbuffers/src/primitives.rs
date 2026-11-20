@@ -18,7 +18,7 @@ use core::marker::PhantomData;
 use core::mem::size_of;
 use core::ops::Deref;
 
-use crate::endian_scalar::{emplace_scalar, read_scalar, read_scalar_at};
+use crate::endian_scalar::{emplace_scalar, read_scalar, read_scalar_from};
 use crate::follow::Follow;
 use crate::push::Push;
 use crate::read_buffer::ReadBuffer;
@@ -67,6 +67,10 @@ pub struct TableFinishedWIPOffset {}
 #[derive(Clone, Copy)]
 pub struct TableUnfinishedWIPOffset {}
 
+/// UnionWIPOffset marks a WIPOffset as being for a union value.
+#[derive(Clone, Copy)]
+pub struct UnionWIPOffset {}
+
 /// VTableWIPOffset marks a WIPOffset as being for a vtable.
 #[derive(Clone, Copy)]
 pub struct VTableWIPOffset {}
@@ -112,6 +116,12 @@ impl<'a, T: 'a> WIPOffset<T> {
         WIPOffset(o, PhantomData)
     }
 
+    /// Return a wrapped value that brings its meaning as a union WIPOffset
+    /// into the type system.
+    #[inline(always)]
+    pub fn as_union_value(self) -> WIPOffset<UnionWIPOffset> {
+        WIPOffset::new(self.0)
+    }
     /// Get the underlying value.
     #[inline(always)]
     pub fn value(self) -> UOffsetT {
@@ -282,7 +292,7 @@ impl<'a, B: ReadBuffer + ?Sized> Follow<'a, B> for bool {
     type Inner = bool;
     #[inline(always)]
     unsafe fn follow(buf: &'a B, loc: usize) -> Self::Inner {
-        read_scalar_at::<u8, B>(buf, loc) != 0
+        read_scalar_from::<u8, B>(buf, loc) != 0
     }
 }
 
@@ -297,7 +307,7 @@ macro_rules! impl_follow_for_endian_scalar {
             type Inner = $ty;
             #[inline(always)]
             unsafe fn follow(buf: &'a B, loc: usize) -> Self::Inner {
-                read_scalar_at::<$ty, B>(buf, loc)
+                read_scalar_from::<$ty, B>(buf, loc)
             }
         }
     };

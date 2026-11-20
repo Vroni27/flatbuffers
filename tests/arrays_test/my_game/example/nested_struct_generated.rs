@@ -41,7 +41,7 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'a, B> for &'a
   type Inner = &'a NestedStruct;
   #[inline]
   unsafe fn follow(buf: &'a B, loc: usize) -> Self::Inner {
-    unsafe { flatbuffers::follow_cast_ref::<NestedStruct, B>(buf, loc) }
+    unsafe { flatbuffers::follow_cast_ref_from::<NestedStruct, B>(buf, loc) }
   }
 }
 impl<'b> flatbuffers::Push for NestedStruct {

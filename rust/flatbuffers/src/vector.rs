@@ -21,18 +21,26 @@ use core::marker::PhantomData;
 use core::mem::{align_of, size_of};
 use core::str::from_utf8_unchecked;
 
-use crate::endian_scalar::read_scalar_at;
+use crate::endian_scalar::read_scalar_from;
 use crate::follow::Follow;
 use crate::primitives::*;
 use crate::read_buffer::ReadBuffer;
 
 pub struct Vector<'a, T: 'a, B: ReadBuffer + ?Sized = [u8]>(&'a B, usize, PhantomData<T>);
 
-impl<'a, T: 'a> Default for Vector<'a, T, [u8]> {
+impl<'a, T: 'a, B: ReadBuffer + ?Sized + 'a> Default for Vector<'a, T, B> {
+    /// Static, length 0 vector backed by [`ReadBuffer::empty_vector`].
+    ///
+    /// # Panics
+    ///
+    /// Panics if `B` does not provide [`ReadBuffer::empty_vector`]. `[u8]`
+    /// always does.
+    #[inline]
     fn default() -> Self {
-        // Static, length 0 vector.
         // Note that derived default causes UB due to issues in read_scalar_at /facepalm.
-        Self(&[0; core::mem::size_of::<UOffsetT>()], 0, Default::default())
+        let buf = B::empty_vector()
+            .expect("ReadBuffer::empty_vector is required for default vector values");
+        Self(buf, 0, PhantomData)
     }
 }
 
@@ -73,21 +81,35 @@ impl<'a, T: 'a, B: ReadBuffer + ?Sized> Vector<'a, T, B> {
     pub fn len(&self) -> usize {
         // Safety:
         // Valid vector at time of construction starting with UOffsetT element count
-        unsafe { read_scalar_at::<UOffsetT, B>(self.0, self.1) as usize }
+        unsafe { read_scalar_from::<UOffsetT, B>(self.0, self.1) as usize }
     }
 
     #[inline(always)]
     pub fn is_empty(&self) -> bool {
         self.len() == 0
     }
-}
 
-impl<'a, T: 'a> Vector<'a, T, [u8]> {
+    /// Returns the raw element bytes. This is a single [`ReadBuffer::bytes`]
+    /// call; later reads through the slice are not observed by `B`.
     #[inline(always)]
     pub fn bytes(&self) -> &'a [u8] {
         let sz = size_of::<T>();
         let len = self.len();
-        &self.0[self.1 + SIZE_UOFFSET..self.1 + SIZE_UOFFSET + sz * len]
+        // Safety:
+        // Valid vector at time of construction with `len` elements of size `sz`
+        unsafe { self.0.bytes(self.data_loc(), sz * len) }
+    }
+
+    /// The backing buffer of this vector.
+    #[inline(always)]
+    pub fn buf(&self) -> &'a B {
+        self.0
+    }
+
+    /// Position of the first element in [`buf`][Self::buf].
+    #[inline(always)]
+    pub fn data_loc(&self) -> usize {
+        self.1 + SIZE_UOFFSET
     }
 }
 
@@ -141,8 +163,17 @@ impl<'a, T: Follow<'a, B> + 'a, B: ReadBuffer + ?Sized> Vector<'a, T, B> {
 
 /// # Safety
 ///
+/// `buf` must contain a value of T at `loc` and have alignment of 1
+pub unsafe fn follow_cast_ref<'a, T: Sized + 'a>(buf: &'a [u8], loc: usize) -> &'a T {
+    follow_cast_ref_from::<T, [u8]>(buf, loc)
+}
+
+/// Like [`follow_cast_ref`], for any [`ReadBuffer`].
+///
+/// # Safety
+///
 /// `buf` must contain a value of T at `loc` and have alignment of 1.
-pub unsafe fn follow_cast_ref<'a, T: Sized + 'a, B: ReadBuffer + ?Sized>(
+pub unsafe fn follow_cast_ref_from<'a, T: Sized + 'a, B: ReadBuffer + ?Sized>(
     buf: &'a B,
     loc: usize,
 ) -> &'a T {
@@ -158,7 +189,7 @@ pub unsafe fn follow_cast_ref<'a, T: Sized + 'a, B: ReadBuffer + ?Sized>(
 impl<'a, B: ReadBuffer + ?Sized> Follow<'a, B> for &'a str {
     type Inner = &'a str;
     unsafe fn follow(buf: &'a B, loc: usize) -> Self::Inner {
-        let len = read_scalar_at::<UOffsetT, B>(buf, loc) as usize;
+        let len = read_scalar_from::<UOffsetT, B>(buf, loc) as usize;
         let slice = buf.bytes(loc + SIZE_UOFFSET, len);
         from_utf8_unchecked(slice)
     }
@@ -167,7 +198,7 @@ impl<'a, B: ReadBuffer + ?Sized> Follow<'a, B> for &'a str {
 impl<'a, B: ReadBuffer + ?Sized> Follow<'a, B> for &'a [u8] {
     type Inner = &'a [u8];
     unsafe fn follow(buf: &'a B, loc: usize) -> Self::Inner {
-        let len = read_scalar_at::<UOffsetT, B>(buf, loc) as usize;
+        let len = read_scalar_from::<UOffsetT, B>(buf, loc) as usize;
         buf.bytes(loc + SIZE_UOFFSET, len)
     }
 }
@@ -185,12 +216,20 @@ impl<'a, T: Follow<'a, B> + 'a, B: ReadBuffer + ?Sized> Follow<'a, B> for Vector
 }
 
 /// An iterator over a `Vector`.
-#[derive(Debug)]
 pub struct VectorIter<'a, T: 'a, B: ReadBuffer + ?Sized = [u8]> {
     buf: &'a B,
     loc: usize,
     remaining: usize,
     phantom: PhantomData<T>,
+}
+
+impl<'a, T: 'a, B: ReadBuffer + ?Sized> Debug for VectorIter<'a, T, B> {
+    fn fmt(&self, f: &mut Formatter) -> Result {
+        f.debug_struct("VectorIter")
+            .field("loc", &self.loc)
+            .field("remaining", &self.remaining)
+            .finish()
+    }
 }
 
 impl<'a, T: 'a, B: ReadBuffer + ?Sized> VectorIter<'a, T, B> {

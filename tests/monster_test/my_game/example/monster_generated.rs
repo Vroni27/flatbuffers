@@ -9,70 +9,6 @@ use core::mem;
 use core::cmp::Ordering;
 use self::flatbuffers::{EndianScalar, Follow};
 use super::*;
-pub enum MonsterOffset {}
-impl MonsterOffset {
-    pub const VT_POS: flatbuffers::VOffsetT = 4;
-    pub const VT_MANA: flatbuffers::VOffsetT = 6;
-    pub const VT_HP: flatbuffers::VOffsetT = 8;
-    pub const VT_NAME: flatbuffers::VOffsetT = 10;
-    pub const VT_INVENTORY: flatbuffers::VOffsetT = 14;
-    pub const VT_COLOR: flatbuffers::VOffsetT = 16;
-    pub const VT_TEST_TYPE: flatbuffers::VOffsetT = 18;
-    pub const VT_TEST: flatbuffers::VOffsetT = 20;
-    pub const VT_TEST4: flatbuffers::VOffsetT = 22;
-    pub const VT_TESTARRAYOFSTRING: flatbuffers::VOffsetT = 24;
-    pub const VT_TESTARRAYOFTABLES: flatbuffers::VOffsetT = 26;
-    pub const VT_ENEMY: flatbuffers::VOffsetT = 28;
-    pub const VT_TESTNESTEDFLATBUFFER: flatbuffers::VOffsetT = 30;
-    pub const VT_TESTEMPTY: flatbuffers::VOffsetT = 32;
-    pub const VT_TESTBOOL: flatbuffers::VOffsetT = 34;
-    pub const VT_TESTHASHS32_FNV1: flatbuffers::VOffsetT = 36;
-    pub const VT_TESTHASHU32_FNV1: flatbuffers::VOffsetT = 38;
-    pub const VT_TESTHASHS64_FNV1: flatbuffers::VOffsetT = 40;
-    pub const VT_TESTHASHU64_FNV1: flatbuffers::VOffsetT = 42;
-    pub const VT_TESTHASHS32_FNV1A: flatbuffers::VOffsetT = 44;
-    pub const VT_TESTHASHU32_FNV1A: flatbuffers::VOffsetT = 46;
-    pub const VT_TESTHASHS64_FNV1A: flatbuffers::VOffsetT = 48;
-    pub const VT_TESTHASHU64_FNV1A: flatbuffers::VOffsetT = 50;
-    pub const VT_TESTARRAYOFBOOLS: flatbuffers::VOffsetT = 52;
-    pub const VT_TESTF: flatbuffers::VOffsetT = 54;
-    pub const VT_TESTF2: flatbuffers::VOffsetT = 56;
-    pub const VT_TESTF3: flatbuffers::VOffsetT = 58;
-    pub const VT_TESTARRAYOFSTRING2: flatbuffers::VOffsetT = 60;
-    pub const VT_TESTARRAYOFSORTEDSTRUCT: flatbuffers::VOffsetT = 62;
-    pub const VT_FLEX: flatbuffers::VOffsetT = 64;
-    pub const VT_TEST5: flatbuffers::VOffsetT = 66;
-    pub const VT_VECTOR_OF_LONGS: flatbuffers::VOffsetT = 68;
-    pub const VT_VECTOR_OF_DOUBLES: flatbuffers::VOffsetT = 70;
-    pub const VT_PARENT_NAMESPACE_TEST: flatbuffers::VOffsetT = 72;
-    pub const VT_VECTOR_OF_REFERRABLES: flatbuffers::VOffsetT = 74;
-    pub const VT_SINGLE_WEAK_REFERENCE: flatbuffers::VOffsetT = 76;
-    pub const VT_VECTOR_OF_WEAK_REFERENCES: flatbuffers::VOffsetT = 78;
-    pub const VT_VECTOR_OF_STRONG_REFERRABLES: flatbuffers::VOffsetT = 80;
-    pub const VT_CO_OWNING_REFERENCE: flatbuffers::VOffsetT = 82;
-    pub const VT_VECTOR_OF_CO_OWNING_REFERENCES: flatbuffers::VOffsetT = 84;
-    pub const VT_NON_OWNING_REFERENCE: flatbuffers::VOffsetT = 86;
-    pub const VT_VECTOR_OF_NON_OWNING_REFERENCES: flatbuffers::VOffsetT = 88;
-    pub const VT_ANY_UNIQUE_TYPE: flatbuffers::VOffsetT = 90;
-    pub const VT_ANY_UNIQUE: flatbuffers::VOffsetT = 92;
-    pub const VT_ANY_AMBIGUOUS_TYPE: flatbuffers::VOffsetT = 94;
-    pub const VT_ANY_AMBIGUOUS: flatbuffers::VOffsetT = 96;
-    pub const VT_VECTOR_OF_ENUMS: flatbuffers::VOffsetT = 98;
-    pub const VT_SIGNED_ENUM: flatbuffers::VOffsetT = 100;
-    pub const VT_TESTREQUIREDNESTEDFLATBUFFER: flatbuffers::VOffsetT = 102;
-    pub const VT_SCALAR_KEY_SORTED_TABLES: flatbuffers::VOffsetT = 104;
-    pub const VT_NATIVE_INLINE: flatbuffers::VOffsetT = 106;
-    pub const VT_LONG_ENUM_NON_ENUM_DEFAULT: flatbuffers::VOffsetT = 108;
-    pub const VT_LONG_ENUM_NORMAL_DEFAULT: flatbuffers::VOffsetT = 110;
-    pub const VT_NAN_DEFAULT: flatbuffers::VOffsetT = 112;
-    pub const VT_INF_DEFAULT: flatbuffers::VOffsetT = 114;
-    pub const VT_POSITIVE_INF_DEFAULT: flatbuffers::VOffsetT = 116;
-    pub const VT_INFINITY_DEFAULT: flatbuffers::VOffsetT = 118;
-    pub const VT_POSITIVE_INFINITY_DEFAULT: flatbuffers::VOffsetT = 120;
-    pub const VT_NEGATIVE_INF_DEFAULT: flatbuffers::VOffsetT = 122;
-    pub const VT_NEGATIVE_INFINITY_DEFAULT: flatbuffers::VOffsetT = 124;
-    pub const VT_DOUBLE_INF_DEFAULT: flatbuffers::VOffsetT = 126;
-}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Copy for Monster<'a, B> {}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Clone for Monster<'a, B> {
   fn clone(&self) -> Self { *self }
@@ -94,16 +30,73 @@ impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'
   }
 }
 
-impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Monster<'a, B> {
+impl<'a> Monster<'a> {
+  pub const VT_POS: flatbuffers::VOffsetT = 4;
+  pub const VT_MANA: flatbuffers::VOffsetT = 6;
+  pub const VT_HP: flatbuffers::VOffsetT = 8;
+  pub const VT_NAME: flatbuffers::VOffsetT = 10;
+  pub const VT_INVENTORY: flatbuffers::VOffsetT = 14;
+  pub const VT_COLOR: flatbuffers::VOffsetT = 16;
+  pub const VT_TEST_TYPE: flatbuffers::VOffsetT = 18;
+  pub const VT_TEST: flatbuffers::VOffsetT = 20;
+  pub const VT_TEST4: flatbuffers::VOffsetT = 22;
+  pub const VT_TESTARRAYOFSTRING: flatbuffers::VOffsetT = 24;
+  pub const VT_TESTARRAYOFTABLES: flatbuffers::VOffsetT = 26;
+  pub const VT_ENEMY: flatbuffers::VOffsetT = 28;
+  pub const VT_TESTNESTEDFLATBUFFER: flatbuffers::VOffsetT = 30;
+  pub const VT_TESTEMPTY: flatbuffers::VOffsetT = 32;
+  pub const VT_TESTBOOL: flatbuffers::VOffsetT = 34;
+  pub const VT_TESTHASHS32_FNV1: flatbuffers::VOffsetT = 36;
+  pub const VT_TESTHASHU32_FNV1: flatbuffers::VOffsetT = 38;
+  pub const VT_TESTHASHS64_FNV1: flatbuffers::VOffsetT = 40;
+  pub const VT_TESTHASHU64_FNV1: flatbuffers::VOffsetT = 42;
+  pub const VT_TESTHASHS32_FNV1A: flatbuffers::VOffsetT = 44;
+  pub const VT_TESTHASHU32_FNV1A: flatbuffers::VOffsetT = 46;
+  pub const VT_TESTHASHS64_FNV1A: flatbuffers::VOffsetT = 48;
+  pub const VT_TESTHASHU64_FNV1A: flatbuffers::VOffsetT = 50;
+  pub const VT_TESTARRAYOFBOOLS: flatbuffers::VOffsetT = 52;
+  pub const VT_TESTF: flatbuffers::VOffsetT = 54;
+  pub const VT_TESTF2: flatbuffers::VOffsetT = 56;
+  pub const VT_TESTF3: flatbuffers::VOffsetT = 58;
+  pub const VT_TESTARRAYOFSTRING2: flatbuffers::VOffsetT = 60;
+  pub const VT_TESTARRAYOFSORTEDSTRUCT: flatbuffers::VOffsetT = 62;
+  pub const VT_FLEX: flatbuffers::VOffsetT = 64;
+  pub const VT_TEST5: flatbuffers::VOffsetT = 66;
+  pub const VT_VECTOR_OF_LONGS: flatbuffers::VOffsetT = 68;
+  pub const VT_VECTOR_OF_DOUBLES: flatbuffers::VOffsetT = 70;
+  pub const VT_PARENT_NAMESPACE_TEST: flatbuffers::VOffsetT = 72;
+  pub const VT_VECTOR_OF_REFERRABLES: flatbuffers::VOffsetT = 74;
+  pub const VT_SINGLE_WEAK_REFERENCE: flatbuffers::VOffsetT = 76;
+  pub const VT_VECTOR_OF_WEAK_REFERENCES: flatbuffers::VOffsetT = 78;
+  pub const VT_VECTOR_OF_STRONG_REFERRABLES: flatbuffers::VOffsetT = 80;
+  pub const VT_CO_OWNING_REFERENCE: flatbuffers::VOffsetT = 82;
+  pub const VT_VECTOR_OF_CO_OWNING_REFERENCES: flatbuffers::VOffsetT = 84;
+  pub const VT_NON_OWNING_REFERENCE: flatbuffers::VOffsetT = 86;
+  pub const VT_VECTOR_OF_NON_OWNING_REFERENCES: flatbuffers::VOffsetT = 88;
+  pub const VT_ANY_UNIQUE_TYPE: flatbuffers::VOffsetT = 90;
+  pub const VT_ANY_UNIQUE: flatbuffers::VOffsetT = 92;
+  pub const VT_ANY_AMBIGUOUS_TYPE: flatbuffers::VOffsetT = 94;
+  pub const VT_ANY_AMBIGUOUS: flatbuffers::VOffsetT = 96;
+  pub const VT_VECTOR_OF_ENUMS: flatbuffers::VOffsetT = 98;
+  pub const VT_SIGNED_ENUM: flatbuffers::VOffsetT = 100;
+  pub const VT_TESTREQUIREDNESTEDFLATBUFFER: flatbuffers::VOffsetT = 102;
+  pub const VT_SCALAR_KEY_SORTED_TABLES: flatbuffers::VOffsetT = 104;
+  pub const VT_NATIVE_INLINE: flatbuffers::VOffsetT = 106;
+  pub const VT_LONG_ENUM_NON_ENUM_DEFAULT: flatbuffers::VOffsetT = 108;
+  pub const VT_LONG_ENUM_NORMAL_DEFAULT: flatbuffers::VOffsetT = 110;
+  pub const VT_NAN_DEFAULT: flatbuffers::VOffsetT = 112;
+  pub const VT_INF_DEFAULT: flatbuffers::VOffsetT = 114;
+  pub const VT_POSITIVE_INF_DEFAULT: flatbuffers::VOffsetT = 116;
+  pub const VT_INFINITY_DEFAULT: flatbuffers::VOffsetT = 118;
+  pub const VT_POSITIVE_INFINITY_DEFAULT: flatbuffers::VOffsetT = 120;
+  pub const VT_NEGATIVE_INF_DEFAULT: flatbuffers::VOffsetT = 122;
+  pub const VT_NEGATIVE_INFINITY_DEFAULT: flatbuffers::VOffsetT = 124;
+  pub const VT_DOUBLE_INF_DEFAULT: flatbuffers::VOffsetT = 126;
 
   pub const fn get_fully_qualified_name() -> &'static str {
     "MyGame.Example.Monster"
   }
 
-  #[inline]
-  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
-    Monster { _tab: table }
-  }
   #[allow(unused_mut)]
   pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr, A: flatbuffers::Allocator + 'bldr>(
     _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr, A>,
@@ -172,6 +165,13 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Monster<'a, B> {
     builder.add_test_type(args.test_type);
     builder.add_color(args.color);
     builder.finish()
+  }
+}
+
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Monster<'a, B> {
+  #[inline]
+  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
+    Monster { _tab: table }
   }
 
   pub fn unpack(&self) -> MonsterT {
@@ -407,31 +407,31 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Monster<'a, B> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<Vec3>(MonsterOffset::VT_POS, None)}
+    unsafe { self._tab.get::<Vec3>(Monster::VT_POS, None)}
   }
   #[inline]
   pub fn mana(&self) -> i16 {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<i16>(MonsterOffset::VT_MANA, Some(150)).unwrap()}
+    unsafe { self._tab.get::<i16>(Monster::VT_MANA, Some(150)).unwrap()}
   }
   #[inline]
   pub fn hp(&self) -> i16 {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<i16>(MonsterOffset::VT_HP, Some(100)).unwrap()}
+    unsafe { self._tab.get::<i16>(Monster::VT_HP, Some(100)).unwrap()}
   }
   #[inline]
   pub fn name(&self) -> &'a str {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(MonsterOffset::VT_NAME, None).unwrap()}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(Monster::VT_NAME, None).unwrap()}
   }
   #[inline]
-  pub fn key_compare_less_than(&self, o: &Monster) -> bool {
+  pub fn key_compare_less_than(&self, o: &Monster<'_, B>) -> bool {
     self.name() < o.name()
   }
 
@@ -445,42 +445,42 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Monster<'a, B> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, u8, B>>>(MonsterOffset::VT_INVENTORY, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, u8, B>>>(Monster::VT_INVENTORY, None)}
   }
   #[inline]
   pub fn color(&self) -> Color {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<Color>(MonsterOffset::VT_COLOR, Some(Color::Blue)).unwrap()}
+    unsafe { self._tab.get::<Color>(Monster::VT_COLOR, Some(Color::Blue)).unwrap()}
   }
   #[inline]
   pub fn test_type(&self) -> Any {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<Any>(MonsterOffset::VT_TEST_TYPE, Some(Any::NONE)).unwrap()}
+    unsafe { self._tab.get::<Any>(Monster::VT_TEST_TYPE, Some(Any::NONE)).unwrap()}
   }
   #[inline]
   pub fn test(&self) -> Option<flatbuffers::Table<'a, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Table<'a, B>>>(MonsterOffset::VT_TEST, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Table<'a, B>>>(Monster::VT_TEST, None)}
   }
   #[inline]
   pub fn test4(&self) -> Option<flatbuffers::Vector<'a, Test, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, Test, B>>>(MonsterOffset::VT_TEST4, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, Test, B>>>(Monster::VT_TEST4, None)}
   }
   #[inline]
   pub fn testarrayofstring(&self) -> Option<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<&'a str>, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<&'a str>, B>>>(MonsterOffset::VT_TESTARRAYOFSTRING, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<&'a str>, B>>>(Monster::VT_TESTARRAYOFSTRING, None)}
   }
   /// an example documentation comment: this will end up in the generated code
   /// multiline too
@@ -489,29 +489,29 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Monster<'a, B> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<Monster<'a, B>>, B>>>(MonsterOffset::VT_TESTARRAYOFTABLES, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<Monster<'a, B>>, B>>>(Monster::VT_TESTARRAYOFTABLES, None)}
   }
   #[inline]
   pub fn enemy(&self) -> Option<Monster<'a, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<Monster<'a, B>>>(MonsterOffset::VT_ENEMY, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<Monster<'a, B>>>(Monster::VT_ENEMY, None)}
   }
   #[inline]
   pub fn testnestedflatbuffer(&self) -> Option<flatbuffers::Vector<'a, u8, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, u8, B>>>(MonsterOffset::VT_TESTNESTEDFLATBUFFER, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, u8, B>>>(Monster::VT_TESTNESTEDFLATBUFFER, None)}
   }
-  pub fn testnestedflatbuffer_nested_flatbuffer(&'a self) -> Option<Monster<'a>> {
+  pub fn testnestedflatbuffer_nested_flatbuffer(&'a self) -> Option<Monster<'a, B>> {
     self.testnestedflatbuffer().map(|data| {
       use flatbuffers::Follow;
       // Safety:
       // Created from a valid Table for this object
       // Which contains a valid flatbuffer in this slot
-      unsafe { <flatbuffers::ForwardsUOffset<Monster<'a>>>::follow(data.bytes(), 0) }
+      unsafe { <flatbuffers::ForwardsUOffset<Monster<'a, B>>>::follow(data.buf(), data.data_loc()) }
     })
   }
   #[inline]
@@ -519,260 +519,260 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Monster<'a, B> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<Stat<'a, B>>>(MonsterOffset::VT_TESTEMPTY, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<Stat<'a, B>>>(Monster::VT_TESTEMPTY, None)}
   }
   #[inline]
   pub fn testbool(&self) -> bool {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<bool>(MonsterOffset::VT_TESTBOOL, Some(false)).unwrap()}
+    unsafe { self._tab.get::<bool>(Monster::VT_TESTBOOL, Some(false)).unwrap()}
   }
   #[inline]
   pub fn testhashs32_fnv1(&self) -> i32 {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<i32>(MonsterOffset::VT_TESTHASHS32_FNV1, Some(0)).unwrap()}
+    unsafe { self._tab.get::<i32>(Monster::VT_TESTHASHS32_FNV1, Some(0)).unwrap()}
   }
   #[inline]
   pub fn testhashu32_fnv1(&self) -> u32 {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<u32>(MonsterOffset::VT_TESTHASHU32_FNV1, Some(0)).unwrap()}
+    unsafe { self._tab.get::<u32>(Monster::VT_TESTHASHU32_FNV1, Some(0)).unwrap()}
   }
   #[inline]
   pub fn testhashs64_fnv1(&self) -> i64 {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<i64>(MonsterOffset::VT_TESTHASHS64_FNV1, Some(0)).unwrap()}
+    unsafe { self._tab.get::<i64>(Monster::VT_TESTHASHS64_FNV1, Some(0)).unwrap()}
   }
   #[inline]
   pub fn testhashu64_fnv1(&self) -> u64 {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<u64>(MonsterOffset::VT_TESTHASHU64_FNV1, Some(0)).unwrap()}
+    unsafe { self._tab.get::<u64>(Monster::VT_TESTHASHU64_FNV1, Some(0)).unwrap()}
   }
   #[inline]
   pub fn testhashs32_fnv1a(&self) -> i32 {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<i32>(MonsterOffset::VT_TESTHASHS32_FNV1A, Some(0)).unwrap()}
+    unsafe { self._tab.get::<i32>(Monster::VT_TESTHASHS32_FNV1A, Some(0)).unwrap()}
   }
   #[inline]
   pub fn testhashu32_fnv1a(&self) -> u32 {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<u32>(MonsterOffset::VT_TESTHASHU32_FNV1A, Some(0)).unwrap()}
+    unsafe { self._tab.get::<u32>(Monster::VT_TESTHASHU32_FNV1A, Some(0)).unwrap()}
   }
   #[inline]
   pub fn testhashs64_fnv1a(&self) -> i64 {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<i64>(MonsterOffset::VT_TESTHASHS64_FNV1A, Some(0)).unwrap()}
+    unsafe { self._tab.get::<i64>(Monster::VT_TESTHASHS64_FNV1A, Some(0)).unwrap()}
   }
   #[inline]
   pub fn testhashu64_fnv1a(&self) -> u64 {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<u64>(MonsterOffset::VT_TESTHASHU64_FNV1A, Some(0)).unwrap()}
+    unsafe { self._tab.get::<u64>(Monster::VT_TESTHASHU64_FNV1A, Some(0)).unwrap()}
   }
   #[inline]
   pub fn testarrayofbools(&self) -> Option<flatbuffers::Vector<'a, bool, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, bool, B>>>(MonsterOffset::VT_TESTARRAYOFBOOLS, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, bool, B>>>(Monster::VT_TESTARRAYOFBOOLS, None)}
   }
   #[inline]
   pub fn testf(&self) -> f32 {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<f32>(MonsterOffset::VT_TESTF, Some(3.14159)).unwrap()}
+    unsafe { self._tab.get::<f32>(Monster::VT_TESTF, Some(3.14159)).unwrap()}
   }
   #[inline]
   pub fn testf2(&self) -> f32 {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<f32>(MonsterOffset::VT_TESTF2, Some(3.0)).unwrap()}
+    unsafe { self._tab.get::<f32>(Monster::VT_TESTF2, Some(3.0)).unwrap()}
   }
   #[inline]
   pub fn testf3(&self) -> f32 {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<f32>(MonsterOffset::VT_TESTF3, Some(0.0)).unwrap()}
+    unsafe { self._tab.get::<f32>(Monster::VT_TESTF3, Some(0.0)).unwrap()}
   }
   #[inline]
   pub fn testarrayofstring2(&self) -> Option<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<&'a str>, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<&'a str>, B>>>(MonsterOffset::VT_TESTARRAYOFSTRING2, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<&'a str>, B>>>(Monster::VT_TESTARRAYOFSTRING2, None)}
   }
   #[inline]
   pub fn testarrayofsortedstruct(&self) -> Option<flatbuffers::Vector<'a, Ability, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, Ability, B>>>(MonsterOffset::VT_TESTARRAYOFSORTEDSTRUCT, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, Ability, B>>>(Monster::VT_TESTARRAYOFSORTEDSTRUCT, None)}
   }
   #[inline]
   pub fn flex(&self) -> Option<flatbuffers::Vector<'a, u8, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, u8, B>>>(MonsterOffset::VT_FLEX, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, u8, B>>>(Monster::VT_FLEX, None)}
   }
   #[inline]
   pub fn test5(&self) -> Option<flatbuffers::Vector<'a, Test, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, Test, B>>>(MonsterOffset::VT_TEST5, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, Test, B>>>(Monster::VT_TEST5, None)}
   }
   #[inline]
   pub fn vector_of_longs(&self) -> Option<flatbuffers::Vector<'a, i64, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, i64, B>>>(MonsterOffset::VT_VECTOR_OF_LONGS, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, i64, B>>>(Monster::VT_VECTOR_OF_LONGS, None)}
   }
   #[inline]
   pub fn vector_of_doubles(&self) -> Option<flatbuffers::Vector<'a, f64, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, f64, B>>>(MonsterOffset::VT_VECTOR_OF_DOUBLES, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, f64, B>>>(Monster::VT_VECTOR_OF_DOUBLES, None)}
   }
   #[inline]
   pub fn parent_namespace_test(&self) -> Option<super::InParentNamespace<'a, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<super::InParentNamespace<'a, B>>>(MonsterOffset::VT_PARENT_NAMESPACE_TEST, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<super::InParentNamespace<'a, B>>>(Monster::VT_PARENT_NAMESPACE_TEST, None)}
   }
   #[inline]
   pub fn vector_of_referrables(&self) -> Option<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<Referrable<'a, B>>, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<Referrable<'a, B>>, B>>>(MonsterOffset::VT_VECTOR_OF_REFERRABLES, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<Referrable<'a, B>>, B>>>(Monster::VT_VECTOR_OF_REFERRABLES, None)}
   }
   #[inline]
   pub fn single_weak_reference(&self) -> u64 {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<u64>(MonsterOffset::VT_SINGLE_WEAK_REFERENCE, Some(0)).unwrap()}
+    unsafe { self._tab.get::<u64>(Monster::VT_SINGLE_WEAK_REFERENCE, Some(0)).unwrap()}
   }
   #[inline]
   pub fn vector_of_weak_references(&self) -> Option<flatbuffers::Vector<'a, u64, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, u64, B>>>(MonsterOffset::VT_VECTOR_OF_WEAK_REFERENCES, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, u64, B>>>(Monster::VT_VECTOR_OF_WEAK_REFERENCES, None)}
   }
   #[inline]
   pub fn vector_of_strong_referrables(&self) -> Option<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<Referrable<'a, B>>, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<Referrable<'a, B>>, B>>>(MonsterOffset::VT_VECTOR_OF_STRONG_REFERRABLES, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<Referrable<'a, B>>, B>>>(Monster::VT_VECTOR_OF_STRONG_REFERRABLES, None)}
   }
   #[inline]
   pub fn co_owning_reference(&self) -> u64 {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<u64>(MonsterOffset::VT_CO_OWNING_REFERENCE, Some(0)).unwrap()}
+    unsafe { self._tab.get::<u64>(Monster::VT_CO_OWNING_REFERENCE, Some(0)).unwrap()}
   }
   #[inline]
   pub fn vector_of_co_owning_references(&self) -> Option<flatbuffers::Vector<'a, u64, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, u64, B>>>(MonsterOffset::VT_VECTOR_OF_CO_OWNING_REFERENCES, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, u64, B>>>(Monster::VT_VECTOR_OF_CO_OWNING_REFERENCES, None)}
   }
   #[inline]
   pub fn non_owning_reference(&self) -> u64 {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<u64>(MonsterOffset::VT_NON_OWNING_REFERENCE, Some(0)).unwrap()}
+    unsafe { self._tab.get::<u64>(Monster::VT_NON_OWNING_REFERENCE, Some(0)).unwrap()}
   }
   #[inline]
   pub fn vector_of_non_owning_references(&self) -> Option<flatbuffers::Vector<'a, u64, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, u64, B>>>(MonsterOffset::VT_VECTOR_OF_NON_OWNING_REFERENCES, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, u64, B>>>(Monster::VT_VECTOR_OF_NON_OWNING_REFERENCES, None)}
   }
   #[inline]
   pub fn any_unique_type(&self) -> AnyUniqueAliases {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<AnyUniqueAliases>(MonsterOffset::VT_ANY_UNIQUE_TYPE, Some(AnyUniqueAliases::NONE)).unwrap()}
+    unsafe { self._tab.get::<AnyUniqueAliases>(Monster::VT_ANY_UNIQUE_TYPE, Some(AnyUniqueAliases::NONE)).unwrap()}
   }
   #[inline]
   pub fn any_unique(&self) -> Option<flatbuffers::Table<'a, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Table<'a, B>>>(MonsterOffset::VT_ANY_UNIQUE, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Table<'a, B>>>(Monster::VT_ANY_UNIQUE, None)}
   }
   #[inline]
   pub fn any_ambiguous_type(&self) -> AnyAmbiguousAliases {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<AnyAmbiguousAliases>(MonsterOffset::VT_ANY_AMBIGUOUS_TYPE, Some(AnyAmbiguousAliases::NONE)).unwrap()}
+    unsafe { self._tab.get::<AnyAmbiguousAliases>(Monster::VT_ANY_AMBIGUOUS_TYPE, Some(AnyAmbiguousAliases::NONE)).unwrap()}
   }
   #[inline]
   pub fn any_ambiguous(&self) -> Option<flatbuffers::Table<'a, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Table<'a, B>>>(MonsterOffset::VT_ANY_AMBIGUOUS, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Table<'a, B>>>(Monster::VT_ANY_AMBIGUOUS, None)}
   }
   #[inline]
   pub fn vector_of_enums(&self) -> Option<flatbuffers::Vector<'a, Color, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, Color, B>>>(MonsterOffset::VT_VECTOR_OF_ENUMS, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, Color, B>>>(Monster::VT_VECTOR_OF_ENUMS, None)}
   }
   #[inline]
   pub fn signed_enum(&self) -> Race {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<Race>(MonsterOffset::VT_SIGNED_ENUM, Some(Race::None)).unwrap()}
+    unsafe { self._tab.get::<Race>(Monster::VT_SIGNED_ENUM, Some(Race::None)).unwrap()}
   }
   #[inline]
   pub fn testrequirednestedflatbuffer(&self) -> Option<flatbuffers::Vector<'a, u8, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, u8, B>>>(MonsterOffset::VT_TESTREQUIREDNESTEDFLATBUFFER, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, u8, B>>>(Monster::VT_TESTREQUIREDNESTEDFLATBUFFER, None)}
   }
-  pub fn testrequirednestedflatbuffer_nested_flatbuffer(&'a self) -> Option<Monster<'a>> {
+  pub fn testrequirednestedflatbuffer_nested_flatbuffer(&'a self) -> Option<Monster<'a, B>> {
     self.testrequirednestedflatbuffer().map(|data| {
       use flatbuffers::Follow;
       // Safety:
       // Created from a valid Table for this object
       // Which contains a valid flatbuffer in this slot
-      unsafe { <flatbuffers::ForwardsUOffset<Monster<'a>>>::follow(data.bytes(), 0) }
+      unsafe { <flatbuffers::ForwardsUOffset<Monster<'a, B>>>::follow(data.buf(), data.data_loc()) }
     })
   }
   #[inline]
@@ -780,84 +780,84 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Monster<'a, B> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<Stat<'a, B>>, B>>>(MonsterOffset::VT_SCALAR_KEY_SORTED_TABLES, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<Stat<'a, B>>, B>>>(Monster::VT_SCALAR_KEY_SORTED_TABLES, None)}
   }
   #[inline]
   pub fn native_inline(&self) -> Option<&'a Test> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<Test>(MonsterOffset::VT_NATIVE_INLINE, None)}
+    unsafe { self._tab.get::<Test>(Monster::VT_NATIVE_INLINE, None)}
   }
   #[inline]
   pub fn long_enum_non_enum_default(&self) -> LongEnum {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<LongEnum>(MonsterOffset::VT_LONG_ENUM_NON_ENUM_DEFAULT, Some(Default::default())).unwrap()}
+    unsafe { self._tab.get::<LongEnum>(Monster::VT_LONG_ENUM_NON_ENUM_DEFAULT, Some(Default::default())).unwrap()}
   }
   #[inline]
   pub fn long_enum_normal_default(&self) -> LongEnum {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<LongEnum>(MonsterOffset::VT_LONG_ENUM_NORMAL_DEFAULT, Some(LongEnum::LongOne)).unwrap()}
+    unsafe { self._tab.get::<LongEnum>(Monster::VT_LONG_ENUM_NORMAL_DEFAULT, Some(LongEnum::LongOne)).unwrap()}
   }
   #[inline]
   pub fn nan_default(&self) -> f32 {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<f32>(MonsterOffset::VT_NAN_DEFAULT, Some(f32::NAN)).unwrap()}
+    unsafe { self._tab.get::<f32>(Monster::VT_NAN_DEFAULT, Some(f32::NAN)).unwrap()}
   }
   #[inline]
   pub fn inf_default(&self) -> f32 {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<f32>(MonsterOffset::VT_INF_DEFAULT, Some(f32::INFINITY)).unwrap()}
+    unsafe { self._tab.get::<f32>(Monster::VT_INF_DEFAULT, Some(f32::INFINITY)).unwrap()}
   }
   #[inline]
   pub fn positive_inf_default(&self) -> f32 {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<f32>(MonsterOffset::VT_POSITIVE_INF_DEFAULT, Some(f32::INFINITY)).unwrap()}
+    unsafe { self._tab.get::<f32>(Monster::VT_POSITIVE_INF_DEFAULT, Some(f32::INFINITY)).unwrap()}
   }
   #[inline]
   pub fn infinity_default(&self) -> f32 {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<f32>(MonsterOffset::VT_INFINITY_DEFAULT, Some(f32::INFINITY)).unwrap()}
+    unsafe { self._tab.get::<f32>(Monster::VT_INFINITY_DEFAULT, Some(f32::INFINITY)).unwrap()}
   }
   #[inline]
   pub fn positive_infinity_default(&self) -> f32 {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<f32>(MonsterOffset::VT_POSITIVE_INFINITY_DEFAULT, Some(f32::INFINITY)).unwrap()}
+    unsafe { self._tab.get::<f32>(Monster::VT_POSITIVE_INFINITY_DEFAULT, Some(f32::INFINITY)).unwrap()}
   }
   #[inline]
   pub fn negative_inf_default(&self) -> f32 {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<f32>(MonsterOffset::VT_NEGATIVE_INF_DEFAULT, Some(f32::NEG_INFINITY)).unwrap()}
+    unsafe { self._tab.get::<f32>(Monster::VT_NEGATIVE_INF_DEFAULT, Some(f32::NEG_INFINITY)).unwrap()}
   }
   #[inline]
   pub fn negative_infinity_default(&self) -> f32 {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<f32>(MonsterOffset::VT_NEGATIVE_INFINITY_DEFAULT, Some(f32::NEG_INFINITY)).unwrap()}
+    unsafe { self._tab.get::<f32>(Monster::VT_NEGATIVE_INFINITY_DEFAULT, Some(f32::NEG_INFINITY)).unwrap()}
   }
   #[inline]
   pub fn double_inf_default(&self) -> f64 {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<f64>(MonsterOffset::VT_DOUBLE_INF_DEFAULT, Some(f64::INFINITY)).unwrap()}
+    unsafe { self._tab.get::<f64>(Monster::VT_DOUBLE_INF_DEFAULT, Some(f64::INFINITY)).unwrap()}
   }
   #[inline]
   #[allow(non_snake_case)]
@@ -1003,64 +1003,64 @@ impl<B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Verifiable for Monster<'_
   ) -> Result<(), flatbuffers::InvalidFlatbuffer> {
     use self::flatbuffers::Verifiable;
     v.visit_table(pos)?
-     .visit_field::<Vec3>("pos", MonsterOffset::VT_POS, false)?
-     .visit_field::<i16>("mana", MonsterOffset::VT_MANA, false)?
-     .visit_field::<i16>("hp", MonsterOffset::VT_HP, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("name", MonsterOffset::VT_NAME, true)?
-     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, u8, B>>>("inventory", MonsterOffset::VT_INVENTORY, false)?
-     .visit_field::<Color>("color", MonsterOffset::VT_COLOR, false)?
-     .visit_union::<AnyUnionValue>("test_type", MonsterOffset::VT_TEST_TYPE, "test", MonsterOffset::VT_TEST, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, Test, B>>>("test4", MonsterOffset::VT_TEST4, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<&'_ str>, B>>>("testarrayofstring", MonsterOffset::VT_TESTARRAYOFSTRING, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<Monster<'_, B>>, B>>>("testarrayoftables", MonsterOffset::VT_TESTARRAYOFTABLES, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<Monster<'_, B>>>("enemy", MonsterOffset::VT_ENEMY, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, u8, B>>>("testnestedflatbuffer", MonsterOffset::VT_TESTNESTEDFLATBUFFER, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<Stat<'_, B>>>("testempty", MonsterOffset::VT_TESTEMPTY, false)?
-     .visit_field::<bool>("testbool", MonsterOffset::VT_TESTBOOL, false)?
-     .visit_field::<i32>("testhashs32_fnv1", MonsterOffset::VT_TESTHASHS32_FNV1, false)?
-     .visit_field::<u32>("testhashu32_fnv1", MonsterOffset::VT_TESTHASHU32_FNV1, false)?
-     .visit_field::<i64>("testhashs64_fnv1", MonsterOffset::VT_TESTHASHS64_FNV1, false)?
-     .visit_field::<u64>("testhashu64_fnv1", MonsterOffset::VT_TESTHASHU64_FNV1, false)?
-     .visit_field::<i32>("testhashs32_fnv1a", MonsterOffset::VT_TESTHASHS32_FNV1A, false)?
-     .visit_field::<u32>("testhashu32_fnv1a", MonsterOffset::VT_TESTHASHU32_FNV1A, false)?
-     .visit_field::<i64>("testhashs64_fnv1a", MonsterOffset::VT_TESTHASHS64_FNV1A, false)?
-     .visit_field::<u64>("testhashu64_fnv1a", MonsterOffset::VT_TESTHASHU64_FNV1A, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, bool, B>>>("testarrayofbools", MonsterOffset::VT_TESTARRAYOFBOOLS, false)?
-     .visit_field::<f32>("testf", MonsterOffset::VT_TESTF, false)?
-     .visit_field::<f32>("testf2", MonsterOffset::VT_TESTF2, false)?
-     .visit_field::<f32>("testf3", MonsterOffset::VT_TESTF3, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<&'_ str>, B>>>("testarrayofstring2", MonsterOffset::VT_TESTARRAYOFSTRING2, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, Ability, B>>>("testarrayofsortedstruct", MonsterOffset::VT_TESTARRAYOFSORTEDSTRUCT, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, u8, B>>>("flex", MonsterOffset::VT_FLEX, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, Test, B>>>("test5", MonsterOffset::VT_TEST5, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, i64, B>>>("vector_of_longs", MonsterOffset::VT_VECTOR_OF_LONGS, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, f64, B>>>("vector_of_doubles", MonsterOffset::VT_VECTOR_OF_DOUBLES, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<super::InParentNamespace<'_, B>>>("parent_namespace_test", MonsterOffset::VT_PARENT_NAMESPACE_TEST, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<Referrable<'_, B>>, B>>>("vector_of_referrables", MonsterOffset::VT_VECTOR_OF_REFERRABLES, false)?
-     .visit_field::<u64>("single_weak_reference", MonsterOffset::VT_SINGLE_WEAK_REFERENCE, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, u64, B>>>("vector_of_weak_references", MonsterOffset::VT_VECTOR_OF_WEAK_REFERENCES, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<Referrable<'_, B>>, B>>>("vector_of_strong_referrables", MonsterOffset::VT_VECTOR_OF_STRONG_REFERRABLES, false)?
-     .visit_field::<u64>("co_owning_reference", MonsterOffset::VT_CO_OWNING_REFERENCE, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, u64, B>>>("vector_of_co_owning_references", MonsterOffset::VT_VECTOR_OF_CO_OWNING_REFERENCES, false)?
-     .visit_field::<u64>("non_owning_reference", MonsterOffset::VT_NON_OWNING_REFERENCE, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, u64, B>>>("vector_of_non_owning_references", MonsterOffset::VT_VECTOR_OF_NON_OWNING_REFERENCES, false)?
-     .visit_union::<AnyUniqueAliasesUnionValue>("any_unique_type", MonsterOffset::VT_ANY_UNIQUE_TYPE, "any_unique", MonsterOffset::VT_ANY_UNIQUE, false)?
-     .visit_union::<AnyAmbiguousAliasesUnionValue>("any_ambiguous_type", MonsterOffset::VT_ANY_AMBIGUOUS_TYPE, "any_ambiguous", MonsterOffset::VT_ANY_AMBIGUOUS, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, Color, B>>>("vector_of_enums", MonsterOffset::VT_VECTOR_OF_ENUMS, false)?
-     .visit_field::<Race>("signed_enum", MonsterOffset::VT_SIGNED_ENUM, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, u8, B>>>("testrequirednestedflatbuffer", MonsterOffset::VT_TESTREQUIREDNESTEDFLATBUFFER, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<Stat<'_, B>>, B>>>("scalar_key_sorted_tables", MonsterOffset::VT_SCALAR_KEY_SORTED_TABLES, false)?
-     .visit_field::<Test>("native_inline", MonsterOffset::VT_NATIVE_INLINE, false)?
-     .visit_field::<LongEnum>("long_enum_non_enum_default", MonsterOffset::VT_LONG_ENUM_NON_ENUM_DEFAULT, false)?
-     .visit_field::<LongEnum>("long_enum_normal_default", MonsterOffset::VT_LONG_ENUM_NORMAL_DEFAULT, false)?
-     .visit_field::<f32>("nan_default", MonsterOffset::VT_NAN_DEFAULT, false)?
-     .visit_field::<f32>("inf_default", MonsterOffset::VT_INF_DEFAULT, false)?
-     .visit_field::<f32>("positive_inf_default", MonsterOffset::VT_POSITIVE_INF_DEFAULT, false)?
-     .visit_field::<f32>("infinity_default", MonsterOffset::VT_INFINITY_DEFAULT, false)?
-     .visit_field::<f32>("positive_infinity_default", MonsterOffset::VT_POSITIVE_INFINITY_DEFAULT, false)?
-     .visit_field::<f32>("negative_inf_default", MonsterOffset::VT_NEGATIVE_INF_DEFAULT, false)?
-     .visit_field::<f32>("negative_infinity_default", MonsterOffset::VT_NEGATIVE_INFINITY_DEFAULT, false)?
-     .visit_field::<f64>("double_inf_default", MonsterOffset::VT_DOUBLE_INF_DEFAULT, false)?
+     .visit_field::<Vec3>("pos", Monster::VT_POS, false)?
+     .visit_field::<i16>("mana", Monster::VT_MANA, false)?
+     .visit_field::<i16>("hp", Monster::VT_HP, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("name", Monster::VT_NAME, true)?
+     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, u8, B>>>("inventory", Monster::VT_INVENTORY, false)?
+     .visit_field::<Color>("color", Monster::VT_COLOR, false)?
+     .visit_union::<AnyUnionValue>("test_type", Monster::VT_TEST_TYPE, "test", Monster::VT_TEST, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, Test, B>>>("test4", Monster::VT_TEST4, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<&'_ str>, B>>>("testarrayofstring", Monster::VT_TESTARRAYOFSTRING, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<Monster<'_, B>>, B>>>("testarrayoftables", Monster::VT_TESTARRAYOFTABLES, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<Monster<'_, B>>>("enemy", Monster::VT_ENEMY, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, u8, B>>>("testnestedflatbuffer", Monster::VT_TESTNESTEDFLATBUFFER, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<Stat<'_, B>>>("testempty", Monster::VT_TESTEMPTY, false)?
+     .visit_field::<bool>("testbool", Monster::VT_TESTBOOL, false)?
+     .visit_field::<i32>("testhashs32_fnv1", Monster::VT_TESTHASHS32_FNV1, false)?
+     .visit_field::<u32>("testhashu32_fnv1", Monster::VT_TESTHASHU32_FNV1, false)?
+     .visit_field::<i64>("testhashs64_fnv1", Monster::VT_TESTHASHS64_FNV1, false)?
+     .visit_field::<u64>("testhashu64_fnv1", Monster::VT_TESTHASHU64_FNV1, false)?
+     .visit_field::<i32>("testhashs32_fnv1a", Monster::VT_TESTHASHS32_FNV1A, false)?
+     .visit_field::<u32>("testhashu32_fnv1a", Monster::VT_TESTHASHU32_FNV1A, false)?
+     .visit_field::<i64>("testhashs64_fnv1a", Monster::VT_TESTHASHS64_FNV1A, false)?
+     .visit_field::<u64>("testhashu64_fnv1a", Monster::VT_TESTHASHU64_FNV1A, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, bool, B>>>("testarrayofbools", Monster::VT_TESTARRAYOFBOOLS, false)?
+     .visit_field::<f32>("testf", Monster::VT_TESTF, false)?
+     .visit_field::<f32>("testf2", Monster::VT_TESTF2, false)?
+     .visit_field::<f32>("testf3", Monster::VT_TESTF3, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<&'_ str>, B>>>("testarrayofstring2", Monster::VT_TESTARRAYOFSTRING2, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, Ability, B>>>("testarrayofsortedstruct", Monster::VT_TESTARRAYOFSORTEDSTRUCT, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, u8, B>>>("flex", Monster::VT_FLEX, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, Test, B>>>("test5", Monster::VT_TEST5, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, i64, B>>>("vector_of_longs", Monster::VT_VECTOR_OF_LONGS, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, f64, B>>>("vector_of_doubles", Monster::VT_VECTOR_OF_DOUBLES, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<super::InParentNamespace<'_, B>>>("parent_namespace_test", Monster::VT_PARENT_NAMESPACE_TEST, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<Referrable<'_, B>>, B>>>("vector_of_referrables", Monster::VT_VECTOR_OF_REFERRABLES, false)?
+     .visit_field::<u64>("single_weak_reference", Monster::VT_SINGLE_WEAK_REFERENCE, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, u64, B>>>("vector_of_weak_references", Monster::VT_VECTOR_OF_WEAK_REFERENCES, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<Referrable<'_, B>>, B>>>("vector_of_strong_referrables", Monster::VT_VECTOR_OF_STRONG_REFERRABLES, false)?
+     .visit_field::<u64>("co_owning_reference", Monster::VT_CO_OWNING_REFERENCE, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, u64, B>>>("vector_of_co_owning_references", Monster::VT_VECTOR_OF_CO_OWNING_REFERENCES, false)?
+     .visit_field::<u64>("non_owning_reference", Monster::VT_NON_OWNING_REFERENCE, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, u64, B>>>("vector_of_non_owning_references", Monster::VT_VECTOR_OF_NON_OWNING_REFERENCES, false)?
+     .visit_union::<AnyUniqueAliasesUnionValue>("any_unique_type", Monster::VT_ANY_UNIQUE_TYPE, "any_unique", Monster::VT_ANY_UNIQUE, false)?
+     .visit_union::<AnyAmbiguousAliasesUnionValue>("any_ambiguous_type", Monster::VT_ANY_AMBIGUOUS_TYPE, "any_ambiguous", Monster::VT_ANY_AMBIGUOUS, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, Color, B>>>("vector_of_enums", Monster::VT_VECTOR_OF_ENUMS, false)?
+     .visit_field::<Race>("signed_enum", Monster::VT_SIGNED_ENUM, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, u8, B>>>("testrequirednestedflatbuffer", Monster::VT_TESTREQUIREDNESTEDFLATBUFFER, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<Stat<'_, B>>, B>>>("scalar_key_sorted_tables", Monster::VT_SCALAR_KEY_SORTED_TABLES, false)?
+     .visit_field::<Test>("native_inline", Monster::VT_NATIVE_INLINE, false)?
+     .visit_field::<LongEnum>("long_enum_non_enum_default", Monster::VT_LONG_ENUM_NON_ENUM_DEFAULT, false)?
+     .visit_field::<LongEnum>("long_enum_normal_default", Monster::VT_LONG_ENUM_NORMAL_DEFAULT, false)?
+     .visit_field::<f32>("nan_default", Monster::VT_NAN_DEFAULT, false)?
+     .visit_field::<f32>("inf_default", Monster::VT_INF_DEFAULT, false)?
+     .visit_field::<f32>("positive_inf_default", Monster::VT_POSITIVE_INF_DEFAULT, false)?
+     .visit_field::<f32>("infinity_default", Monster::VT_INFINITY_DEFAULT, false)?
+     .visit_field::<f32>("positive_infinity_default", Monster::VT_POSITIVE_INFINITY_DEFAULT, false)?
+     .visit_field::<f32>("negative_inf_default", Monster::VT_NEGATIVE_INF_DEFAULT, false)?
+     .visit_field::<f32>("negative_infinity_default", Monster::VT_NEGATIVE_INFINITY_DEFAULT, false)?
+     .visit_field::<f64>("double_inf_default", Monster::VT_DOUBLE_INF_DEFAULT, false)?
      .finish();
     Ok(())
   }
@@ -1073,7 +1073,7 @@ pub struct MonsterArgs<'a> {
     pub inventory: Option<flatbuffers::WIPOffset<flatbuffers::Vector<'a, u8>>>,
     pub color: Color,
     pub test_type: Any,
-    pub test: Option<flatbuffers::WIPOffset<AnyUnionValue>>,
+    pub test: Option<flatbuffers::WIPOffset<flatbuffers::UnionWIPOffset>>,
     pub test4: Option<flatbuffers::WIPOffset<flatbuffers::Vector<'a, Test>>>,
     pub testarrayofstring: Option<flatbuffers::WIPOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<&'a str>>>>,
     pub testarrayoftables: Option<flatbuffers::WIPOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<Monster<'a>>>>>,
@@ -1109,9 +1109,9 @@ pub struct MonsterArgs<'a> {
     pub non_owning_reference: u64,
     pub vector_of_non_owning_references: Option<flatbuffers::WIPOffset<flatbuffers::Vector<'a, u64>>>,
     pub any_unique_type: AnyUniqueAliases,
-    pub any_unique: Option<flatbuffers::WIPOffset<AnyUniqueAliasesUnionValue>>,
+    pub any_unique: Option<flatbuffers::WIPOffset<flatbuffers::UnionWIPOffset>>,
     pub any_ambiguous_type: AnyAmbiguousAliases,
-    pub any_ambiguous: Option<flatbuffers::WIPOffset<AnyAmbiguousAliasesUnionValue>>,
+    pub any_ambiguous: Option<flatbuffers::WIPOffset<flatbuffers::UnionWIPOffset>>,
     pub vector_of_enums: Option<flatbuffers::WIPOffset<flatbuffers::Vector<'a, Color>>>,
     pub signed_enum: Race,
     pub testrequirednestedflatbuffer: Option<flatbuffers::WIPOffset<flatbuffers::Vector<'a, u8>>>,
@@ -1204,247 +1204,247 @@ pub struct MonsterBuilder<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> {
 impl<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> MonsterBuilder<'a, 'b, A> {
   #[inline]
   pub fn add_pos(&mut self, pos: &Vec3) {
-    self.fbb_.push_slot_always::<&Vec3>(MonsterOffset::VT_POS, pos);
+    self.fbb_.push_slot_always::<&Vec3>(Monster::VT_POS, pos);
   }
   #[inline]
   pub fn add_mana(&mut self, mana: i16) {
-    self.fbb_.push_slot::<i16>(MonsterOffset::VT_MANA, mana, 150);
+    self.fbb_.push_slot::<i16>(Monster::VT_MANA, mana, 150);
   }
   #[inline]
   pub fn add_hp(&mut self, hp: i16) {
-    self.fbb_.push_slot::<i16>(MonsterOffset::VT_HP, hp, 100);
+    self.fbb_.push_slot::<i16>(Monster::VT_HP, hp, 100);
   }
   #[inline]
   pub fn add_name(&mut self, name: flatbuffers::WIPOffset<&'b  str>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(MonsterOffset::VT_NAME, name);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(Monster::VT_NAME, name);
   }
   #[inline]
   pub fn add_inventory(&mut self, inventory: flatbuffers::WIPOffset<flatbuffers::Vector<'b , u8>>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(MonsterOffset::VT_INVENTORY, inventory);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(Monster::VT_INVENTORY, inventory);
   }
   #[inline]
   pub fn add_color(&mut self, color: Color) {
-    self.fbb_.push_slot::<Color>(MonsterOffset::VT_COLOR, color, Color::Blue);
+    self.fbb_.push_slot::<Color>(Monster::VT_COLOR, color, Color::Blue);
   }
   #[inline]
   pub fn add_test_type(&mut self, test_type: Any) {
-    self.fbb_.push_slot::<Any>(MonsterOffset::VT_TEST_TYPE, test_type, Any::NONE);
+    self.fbb_.push_slot::<Any>(Monster::VT_TEST_TYPE, test_type, Any::NONE);
   }
   #[inline]
-  pub fn add_test(&mut self, test: flatbuffers::WIPOffset<AnyUnionValue>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(MonsterOffset::VT_TEST, test);
+  pub fn add_test(&mut self, test: flatbuffers::WIPOffset<flatbuffers::UnionWIPOffset>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(Monster::VT_TEST, test);
   }
   #[inline]
   pub fn add_test4(&mut self, test4: flatbuffers::WIPOffset<flatbuffers::Vector<'b , Test>>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(MonsterOffset::VT_TEST4, test4);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(Monster::VT_TEST4, test4);
   }
   #[inline]
   pub fn add_testarrayofstring(&mut self, testarrayofstring: flatbuffers::WIPOffset<flatbuffers::Vector<'b , flatbuffers::ForwardsUOffset<&'b  str>>>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(MonsterOffset::VT_TESTARRAYOFSTRING, testarrayofstring);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(Monster::VT_TESTARRAYOFSTRING, testarrayofstring);
   }
   #[inline]
   pub fn add_testarrayoftables(&mut self, testarrayoftables: flatbuffers::WIPOffset<flatbuffers::Vector<'b , flatbuffers::ForwardsUOffset<Monster<'b >>>>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(MonsterOffset::VT_TESTARRAYOFTABLES, testarrayoftables);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(Monster::VT_TESTARRAYOFTABLES, testarrayoftables);
   }
   #[inline]
   pub fn add_enemy(&mut self, enemy: flatbuffers::WIPOffset<Monster<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Monster>>(MonsterOffset::VT_ENEMY, enemy);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Monster>>(Monster::VT_ENEMY, enemy);
   }
   #[inline]
   pub fn add_testnestedflatbuffer(&mut self, testnestedflatbuffer: flatbuffers::WIPOffset<flatbuffers::Vector<'b , u8>>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(MonsterOffset::VT_TESTNESTEDFLATBUFFER, testnestedflatbuffer);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(Monster::VT_TESTNESTEDFLATBUFFER, testnestedflatbuffer);
   }
   #[inline]
   pub fn add_testempty(&mut self, testempty: flatbuffers::WIPOffset<Stat<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Stat>>(MonsterOffset::VT_TESTEMPTY, testempty);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Stat>>(Monster::VT_TESTEMPTY, testempty);
   }
   #[inline]
   pub fn add_testbool(&mut self, testbool: bool) {
-    self.fbb_.push_slot::<bool>(MonsterOffset::VT_TESTBOOL, testbool, false);
+    self.fbb_.push_slot::<bool>(Monster::VT_TESTBOOL, testbool, false);
   }
   #[inline]
   pub fn add_testhashs32_fnv1(&mut self, testhashs32_fnv1: i32) {
-    self.fbb_.push_slot::<i32>(MonsterOffset::VT_TESTHASHS32_FNV1, testhashs32_fnv1, 0);
+    self.fbb_.push_slot::<i32>(Monster::VT_TESTHASHS32_FNV1, testhashs32_fnv1, 0);
   }
   #[inline]
   pub fn add_testhashu32_fnv1(&mut self, testhashu32_fnv1: u32) {
-    self.fbb_.push_slot::<u32>(MonsterOffset::VT_TESTHASHU32_FNV1, testhashu32_fnv1, 0);
+    self.fbb_.push_slot::<u32>(Monster::VT_TESTHASHU32_FNV1, testhashu32_fnv1, 0);
   }
   #[inline]
   pub fn add_testhashs64_fnv1(&mut self, testhashs64_fnv1: i64) {
-    self.fbb_.push_slot::<i64>(MonsterOffset::VT_TESTHASHS64_FNV1, testhashs64_fnv1, 0);
+    self.fbb_.push_slot::<i64>(Monster::VT_TESTHASHS64_FNV1, testhashs64_fnv1, 0);
   }
   #[inline]
   pub fn add_testhashu64_fnv1(&mut self, testhashu64_fnv1: u64) {
-    self.fbb_.push_slot::<u64>(MonsterOffset::VT_TESTHASHU64_FNV1, testhashu64_fnv1, 0);
+    self.fbb_.push_slot::<u64>(Monster::VT_TESTHASHU64_FNV1, testhashu64_fnv1, 0);
   }
   #[inline]
   pub fn add_testhashs32_fnv1a(&mut self, testhashs32_fnv1a: i32) {
-    self.fbb_.push_slot::<i32>(MonsterOffset::VT_TESTHASHS32_FNV1A, testhashs32_fnv1a, 0);
+    self.fbb_.push_slot::<i32>(Monster::VT_TESTHASHS32_FNV1A, testhashs32_fnv1a, 0);
   }
   #[inline]
   pub fn add_testhashu32_fnv1a(&mut self, testhashu32_fnv1a: u32) {
-    self.fbb_.push_slot::<u32>(MonsterOffset::VT_TESTHASHU32_FNV1A, testhashu32_fnv1a, 0);
+    self.fbb_.push_slot::<u32>(Monster::VT_TESTHASHU32_FNV1A, testhashu32_fnv1a, 0);
   }
   #[inline]
   pub fn add_testhashs64_fnv1a(&mut self, testhashs64_fnv1a: i64) {
-    self.fbb_.push_slot::<i64>(MonsterOffset::VT_TESTHASHS64_FNV1A, testhashs64_fnv1a, 0);
+    self.fbb_.push_slot::<i64>(Monster::VT_TESTHASHS64_FNV1A, testhashs64_fnv1a, 0);
   }
   #[inline]
   pub fn add_testhashu64_fnv1a(&mut self, testhashu64_fnv1a: u64) {
-    self.fbb_.push_slot::<u64>(MonsterOffset::VT_TESTHASHU64_FNV1A, testhashu64_fnv1a, 0);
+    self.fbb_.push_slot::<u64>(Monster::VT_TESTHASHU64_FNV1A, testhashu64_fnv1a, 0);
   }
   #[inline]
   pub fn add_testarrayofbools(&mut self, testarrayofbools: flatbuffers::WIPOffset<flatbuffers::Vector<'b , bool>>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(MonsterOffset::VT_TESTARRAYOFBOOLS, testarrayofbools);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(Monster::VT_TESTARRAYOFBOOLS, testarrayofbools);
   }
   #[inline]
   pub fn add_testf(&mut self, testf: f32) {
-    self.fbb_.push_slot::<f32>(MonsterOffset::VT_TESTF, testf, 3.14159);
+    self.fbb_.push_slot::<f32>(Monster::VT_TESTF, testf, 3.14159);
   }
   #[inline]
   pub fn add_testf2(&mut self, testf2: f32) {
-    self.fbb_.push_slot::<f32>(MonsterOffset::VT_TESTF2, testf2, 3.0);
+    self.fbb_.push_slot::<f32>(Monster::VT_TESTF2, testf2, 3.0);
   }
   #[inline]
   pub fn add_testf3(&mut self, testf3: f32) {
-    self.fbb_.push_slot::<f32>(MonsterOffset::VT_TESTF3, testf3, 0.0);
+    self.fbb_.push_slot::<f32>(Monster::VT_TESTF3, testf3, 0.0);
   }
   #[inline]
   pub fn add_testarrayofstring2(&mut self, testarrayofstring2: flatbuffers::WIPOffset<flatbuffers::Vector<'b , flatbuffers::ForwardsUOffset<&'b  str>>>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(MonsterOffset::VT_TESTARRAYOFSTRING2, testarrayofstring2);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(Monster::VT_TESTARRAYOFSTRING2, testarrayofstring2);
   }
   #[inline]
   pub fn add_testarrayofsortedstruct(&mut self, testarrayofsortedstruct: flatbuffers::WIPOffset<flatbuffers::Vector<'b , Ability>>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(MonsterOffset::VT_TESTARRAYOFSORTEDSTRUCT, testarrayofsortedstruct);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(Monster::VT_TESTARRAYOFSORTEDSTRUCT, testarrayofsortedstruct);
   }
   #[inline]
   pub fn add_flex(&mut self, flex: flatbuffers::WIPOffset<flatbuffers::Vector<'b , u8>>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(MonsterOffset::VT_FLEX, flex);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(Monster::VT_FLEX, flex);
   }
   #[inline]
   pub fn add_test5(&mut self, test5: flatbuffers::WIPOffset<flatbuffers::Vector<'b , Test>>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(MonsterOffset::VT_TEST5, test5);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(Monster::VT_TEST5, test5);
   }
   #[inline]
   pub fn add_vector_of_longs(&mut self, vector_of_longs: flatbuffers::WIPOffset<flatbuffers::Vector<'b , i64>>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(MonsterOffset::VT_VECTOR_OF_LONGS, vector_of_longs);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(Monster::VT_VECTOR_OF_LONGS, vector_of_longs);
   }
   #[inline]
   pub fn add_vector_of_doubles(&mut self, vector_of_doubles: flatbuffers::WIPOffset<flatbuffers::Vector<'b , f64>>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(MonsterOffset::VT_VECTOR_OF_DOUBLES, vector_of_doubles);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(Monster::VT_VECTOR_OF_DOUBLES, vector_of_doubles);
   }
   #[inline]
   pub fn add_parent_namespace_test(&mut self, parent_namespace_test: flatbuffers::WIPOffset<super::InParentNamespace<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<super::InParentNamespace>>(MonsterOffset::VT_PARENT_NAMESPACE_TEST, parent_namespace_test);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<super::InParentNamespace>>(Monster::VT_PARENT_NAMESPACE_TEST, parent_namespace_test);
   }
   #[inline]
   pub fn add_vector_of_referrables(&mut self, vector_of_referrables: flatbuffers::WIPOffset<flatbuffers::Vector<'b , flatbuffers::ForwardsUOffset<Referrable<'b >>>>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(MonsterOffset::VT_VECTOR_OF_REFERRABLES, vector_of_referrables);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(Monster::VT_VECTOR_OF_REFERRABLES, vector_of_referrables);
   }
   #[inline]
   pub fn add_single_weak_reference(&mut self, single_weak_reference: u64) {
-    self.fbb_.push_slot::<u64>(MonsterOffset::VT_SINGLE_WEAK_REFERENCE, single_weak_reference, 0);
+    self.fbb_.push_slot::<u64>(Monster::VT_SINGLE_WEAK_REFERENCE, single_weak_reference, 0);
   }
   #[inline]
   pub fn add_vector_of_weak_references(&mut self, vector_of_weak_references: flatbuffers::WIPOffset<flatbuffers::Vector<'b , u64>>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(MonsterOffset::VT_VECTOR_OF_WEAK_REFERENCES, vector_of_weak_references);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(Monster::VT_VECTOR_OF_WEAK_REFERENCES, vector_of_weak_references);
   }
   #[inline]
   pub fn add_vector_of_strong_referrables(&mut self, vector_of_strong_referrables: flatbuffers::WIPOffset<flatbuffers::Vector<'b , flatbuffers::ForwardsUOffset<Referrable<'b >>>>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(MonsterOffset::VT_VECTOR_OF_STRONG_REFERRABLES, vector_of_strong_referrables);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(Monster::VT_VECTOR_OF_STRONG_REFERRABLES, vector_of_strong_referrables);
   }
   #[inline]
   pub fn add_co_owning_reference(&mut self, co_owning_reference: u64) {
-    self.fbb_.push_slot::<u64>(MonsterOffset::VT_CO_OWNING_REFERENCE, co_owning_reference, 0);
+    self.fbb_.push_slot::<u64>(Monster::VT_CO_OWNING_REFERENCE, co_owning_reference, 0);
   }
   #[inline]
   pub fn add_vector_of_co_owning_references(&mut self, vector_of_co_owning_references: flatbuffers::WIPOffset<flatbuffers::Vector<'b , u64>>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(MonsterOffset::VT_VECTOR_OF_CO_OWNING_REFERENCES, vector_of_co_owning_references);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(Monster::VT_VECTOR_OF_CO_OWNING_REFERENCES, vector_of_co_owning_references);
   }
   #[inline]
   pub fn add_non_owning_reference(&mut self, non_owning_reference: u64) {
-    self.fbb_.push_slot::<u64>(MonsterOffset::VT_NON_OWNING_REFERENCE, non_owning_reference, 0);
+    self.fbb_.push_slot::<u64>(Monster::VT_NON_OWNING_REFERENCE, non_owning_reference, 0);
   }
   #[inline]
   pub fn add_vector_of_non_owning_references(&mut self, vector_of_non_owning_references: flatbuffers::WIPOffset<flatbuffers::Vector<'b , u64>>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(MonsterOffset::VT_VECTOR_OF_NON_OWNING_REFERENCES, vector_of_non_owning_references);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(Monster::VT_VECTOR_OF_NON_OWNING_REFERENCES, vector_of_non_owning_references);
   }
   #[inline]
   pub fn add_any_unique_type(&mut self, any_unique_type: AnyUniqueAliases) {
-    self.fbb_.push_slot::<AnyUniqueAliases>(MonsterOffset::VT_ANY_UNIQUE_TYPE, any_unique_type, AnyUniqueAliases::NONE);
+    self.fbb_.push_slot::<AnyUniqueAliases>(Monster::VT_ANY_UNIQUE_TYPE, any_unique_type, AnyUniqueAliases::NONE);
   }
   #[inline]
-  pub fn add_any_unique(&mut self, any_unique: flatbuffers::WIPOffset<AnyUniqueAliasesUnionValue>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(MonsterOffset::VT_ANY_UNIQUE, any_unique);
+  pub fn add_any_unique(&mut self, any_unique: flatbuffers::WIPOffset<flatbuffers::UnionWIPOffset>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(Monster::VT_ANY_UNIQUE, any_unique);
   }
   #[inline]
   pub fn add_any_ambiguous_type(&mut self, any_ambiguous_type: AnyAmbiguousAliases) {
-    self.fbb_.push_slot::<AnyAmbiguousAliases>(MonsterOffset::VT_ANY_AMBIGUOUS_TYPE, any_ambiguous_type, AnyAmbiguousAliases::NONE);
+    self.fbb_.push_slot::<AnyAmbiguousAliases>(Monster::VT_ANY_AMBIGUOUS_TYPE, any_ambiguous_type, AnyAmbiguousAliases::NONE);
   }
   #[inline]
-  pub fn add_any_ambiguous(&mut self, any_ambiguous: flatbuffers::WIPOffset<AnyAmbiguousAliasesUnionValue>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(MonsterOffset::VT_ANY_AMBIGUOUS, any_ambiguous);
+  pub fn add_any_ambiguous(&mut self, any_ambiguous: flatbuffers::WIPOffset<flatbuffers::UnionWIPOffset>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(Monster::VT_ANY_AMBIGUOUS, any_ambiguous);
   }
   #[inline]
   pub fn add_vector_of_enums(&mut self, vector_of_enums: flatbuffers::WIPOffset<flatbuffers::Vector<'b , Color>>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(MonsterOffset::VT_VECTOR_OF_ENUMS, vector_of_enums);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(Monster::VT_VECTOR_OF_ENUMS, vector_of_enums);
   }
   #[inline]
   pub fn add_signed_enum(&mut self, signed_enum: Race) {
-    self.fbb_.push_slot::<Race>(MonsterOffset::VT_SIGNED_ENUM, signed_enum, Race::None);
+    self.fbb_.push_slot::<Race>(Monster::VT_SIGNED_ENUM, signed_enum, Race::None);
   }
   #[inline]
   pub fn add_testrequirednestedflatbuffer(&mut self, testrequirednestedflatbuffer: flatbuffers::WIPOffset<flatbuffers::Vector<'b , u8>>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(MonsterOffset::VT_TESTREQUIREDNESTEDFLATBUFFER, testrequirednestedflatbuffer);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(Monster::VT_TESTREQUIREDNESTEDFLATBUFFER, testrequirednestedflatbuffer);
   }
   #[inline]
   pub fn add_scalar_key_sorted_tables(&mut self, scalar_key_sorted_tables: flatbuffers::WIPOffset<flatbuffers::Vector<'b , flatbuffers::ForwardsUOffset<Stat<'b >>>>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(MonsterOffset::VT_SCALAR_KEY_SORTED_TABLES, scalar_key_sorted_tables);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(Monster::VT_SCALAR_KEY_SORTED_TABLES, scalar_key_sorted_tables);
   }
   #[inline]
   pub fn add_native_inline(&mut self, native_inline: &Test) {
-    self.fbb_.push_slot_always::<&Test>(MonsterOffset::VT_NATIVE_INLINE, native_inline);
+    self.fbb_.push_slot_always::<&Test>(Monster::VT_NATIVE_INLINE, native_inline);
   }
   #[inline]
   pub fn add_long_enum_non_enum_default(&mut self, long_enum_non_enum_default: LongEnum) {
-    self.fbb_.push_slot::<LongEnum>(MonsterOffset::VT_LONG_ENUM_NON_ENUM_DEFAULT, long_enum_non_enum_default, Default::default());
+    self.fbb_.push_slot::<LongEnum>(Monster::VT_LONG_ENUM_NON_ENUM_DEFAULT, long_enum_non_enum_default, Default::default());
   }
   #[inline]
   pub fn add_long_enum_normal_default(&mut self, long_enum_normal_default: LongEnum) {
-    self.fbb_.push_slot::<LongEnum>(MonsterOffset::VT_LONG_ENUM_NORMAL_DEFAULT, long_enum_normal_default, LongEnum::LongOne);
+    self.fbb_.push_slot::<LongEnum>(Monster::VT_LONG_ENUM_NORMAL_DEFAULT, long_enum_normal_default, LongEnum::LongOne);
   }
   #[inline]
   pub fn add_nan_default(&mut self, nan_default: f32) {
-    self.fbb_.push_slot::<f32>(MonsterOffset::VT_NAN_DEFAULT, nan_default, f32::NAN);
+    self.fbb_.push_slot::<f32>(Monster::VT_NAN_DEFAULT, nan_default, f32::NAN);
   }
   #[inline]
   pub fn add_inf_default(&mut self, inf_default: f32) {
-    self.fbb_.push_slot::<f32>(MonsterOffset::VT_INF_DEFAULT, inf_default, f32::INFINITY);
+    self.fbb_.push_slot::<f32>(Monster::VT_INF_DEFAULT, inf_default, f32::INFINITY);
   }
   #[inline]
   pub fn add_positive_inf_default(&mut self, positive_inf_default: f32) {
-    self.fbb_.push_slot::<f32>(MonsterOffset::VT_POSITIVE_INF_DEFAULT, positive_inf_default, f32::INFINITY);
+    self.fbb_.push_slot::<f32>(Monster::VT_POSITIVE_INF_DEFAULT, positive_inf_default, f32::INFINITY);
   }
   #[inline]
   pub fn add_infinity_default(&mut self, infinity_default: f32) {
-    self.fbb_.push_slot::<f32>(MonsterOffset::VT_INFINITY_DEFAULT, infinity_default, f32::INFINITY);
+    self.fbb_.push_slot::<f32>(Monster::VT_INFINITY_DEFAULT, infinity_default, f32::INFINITY);
   }
   #[inline]
   pub fn add_positive_infinity_default(&mut self, positive_infinity_default: f32) {
-    self.fbb_.push_slot::<f32>(MonsterOffset::VT_POSITIVE_INFINITY_DEFAULT, positive_infinity_default, f32::INFINITY);
+    self.fbb_.push_slot::<f32>(Monster::VT_POSITIVE_INFINITY_DEFAULT, positive_infinity_default, f32::INFINITY);
   }
   #[inline]
   pub fn add_negative_inf_default(&mut self, negative_inf_default: f32) {
-    self.fbb_.push_slot::<f32>(MonsterOffset::VT_NEGATIVE_INF_DEFAULT, negative_inf_default, f32::NEG_INFINITY);
+    self.fbb_.push_slot::<f32>(Monster::VT_NEGATIVE_INF_DEFAULT, negative_inf_default, f32::NEG_INFINITY);
   }
   #[inline]
   pub fn add_negative_infinity_default(&mut self, negative_infinity_default: f32) {
-    self.fbb_.push_slot::<f32>(MonsterOffset::VT_NEGATIVE_INFINITY_DEFAULT, negative_infinity_default, f32::NEG_INFINITY);
+    self.fbb_.push_slot::<f32>(Monster::VT_NEGATIVE_INFINITY_DEFAULT, negative_infinity_default, f32::NEG_INFINITY);
   }
   #[inline]
   pub fn add_double_inf_default(&mut self, double_inf_default: f64) {
-    self.fbb_.push_slot::<f64>(MonsterOffset::VT_DOUBLE_INF_DEFAULT, double_inf_default, f64::INFINITY);
+    self.fbb_.push_slot::<f64>(Monster::VT_DOUBLE_INF_DEFAULT, double_inf_default, f64::INFINITY);
   }
   #[inline]
   pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a, A>) -> MonsterBuilder<'a, 'b, A> {
@@ -1457,7 +1457,7 @@ impl<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> MonsterBuilder<'a, 'b, A> {
   #[inline]
   pub fn finish(self) -> flatbuffers::WIPOffset<Monster<'a>> {
     let o = self.fbb_.end_table(self.start_);
-    self.fbb_.required(o, MonsterOffset::VT_NAME,"name");
+    self.fbb_.required(o, Monster::VT_NAME,"name");
     flatbuffers::WIPOffset::new(o.value())
   }
 }
@@ -1965,15 +1965,29 @@ pub fn size_prefixed_root_as_monster_with_opts<'b, 'o>(
 /// Assumes, without verification, that a buffer of bytes contains a Monster and returns it.
 /// # Safety
 /// Callers must trust the given bytes do indeed contain a valid `Monster`.
-pub unsafe fn root_as_monster_unchecked<B: flatbuffers::ReadBuffer + ?Sized>(buf: &B) -> Monster<'_, B> {
-  unsafe { flatbuffers::root_unchecked::<Monster<'_, B>, B>(buf) }
+pub unsafe fn root_as_monster_unchecked(buf: &[u8]) -> Monster {
+  unsafe { flatbuffers::root_unchecked::<Monster>(buf) }
+}
+#[inline]
+/// Like `root_as_monster_unchecked`, for any `flatbuffers::ReadBuffer`.
+/// # Safety
+/// Callers must trust the given buffer does indeed contain a valid `Monster` and that it upholds the `ReadBuffer` contract.
+pub unsafe fn root_as_monster_unchecked_from<B: flatbuffers::ReadBuffer + ?Sized>(buf: &B) -> Monster<'_, B> {
+  unsafe { flatbuffers::root_unchecked_from::<Monster<'_, B>, B>(buf) }
 }
 #[inline]
 /// Assumes, without verification, that a buffer of bytes contains a size prefixed Monster and returns it.
 /// # Safety
 /// Callers must trust the given bytes do indeed contain a valid size prefixed `Monster`.
-pub unsafe fn size_prefixed_root_as_monster_unchecked<B: flatbuffers::ReadBuffer + ?Sized>(buf: &B) -> Monster<'_, B> {
-  unsafe { flatbuffers::size_prefixed_root_unchecked::<Monster<'_, B>, B>(buf) }
+pub unsafe fn size_prefixed_root_as_monster_unchecked(buf: &[u8]) -> Monster {
+  unsafe { flatbuffers::size_prefixed_root_unchecked::<Monster>(buf) }
+}
+#[inline]
+/// Like `size_prefixed_root_as_monster_unchecked`, for any `flatbuffers::ReadBuffer`.
+/// # Safety
+/// Callers must trust the given buffer does indeed contain a valid size prefixed `Monster` and that it upholds the `ReadBuffer` contract.
+pub unsafe fn size_prefixed_root_as_monster_unchecked_from<B: flatbuffers::ReadBuffer + ?Sized>(buf: &B) -> Monster<'_, B> {
+  unsafe { flatbuffers::size_prefixed_root_unchecked_from::<Monster<'_, B>, B>(buf) }
 }
 pub const MONSTER_IDENTIFIER: &str = "MONS";
 

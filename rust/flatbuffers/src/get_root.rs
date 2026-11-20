@@ -47,7 +47,7 @@ where
     <ForwardsUOffset<T>>::run_verifier(&mut v, 0)?;
     // Safety:
     // Run verifier above
-    Ok(unsafe { root_unchecked::<T, [u8]>(data) })
+    Ok(unsafe { root_unchecked::<T>(data) })
 }
 
 #[inline]
@@ -79,7 +79,7 @@ where
     <SkipSizePrefix<ForwardsUOffset<T>>>::run_verifier(&mut v, 0)?;
     // Safety:
     // Run verifier above
-    Ok(unsafe { size_prefixed_root_unchecked::<T, [u8]>(data) })
+    Ok(unsafe { size_prefixed_root_unchecked::<T>(data) })
 }
 
 #[inline]
@@ -89,7 +89,20 @@ where
 /// `root` functions, this does not validate the flatbuffer before returning the accessor. Users
 /// must trust `data` contains a valid flatbuffer (e.g. b/c it was built by your software). Reading
 /// unchecked buffers may cause panics or even UB.
-pub unsafe fn root_unchecked<'buf, T, B: ReadBuffer + ?Sized>(data: &'buf B) -> T::Inner
+pub unsafe fn root_unchecked<'buf, T>(data: &'buf [u8]) -> T::Inner
+where
+    T: Follow<'buf> + 'buf,
+{
+    <ForwardsUOffset<T>>::follow(data, 0)
+}
+
+#[inline]
+/// Like [`root_unchecked`], for any [`ReadBuffer`].
+///
+/// # Safety
+/// Same as [`root_unchecked`]. In addition `data` must uphold the
+/// [`ReadBuffer`] contract; verify the same bytes with [`root`] first.
+pub unsafe fn root_unchecked_from<'buf, T, B: ReadBuffer + ?Sized>(data: &'buf B) -> T::Inner
 where
     T: Follow<'buf, B> + 'buf,
 {
@@ -103,7 +116,23 @@ where
 /// `root` functions, this does not validate the flatbuffer before returning the accessor. Users
 /// must trust `data` contains a valid flatbuffer (e.g. b/c it was built by your software). Reading
 /// unchecked buffers may cause panics or even UB.
-pub unsafe fn size_prefixed_root_unchecked<'buf, T, B: ReadBuffer + ?Sized>(data: &'buf B) -> T::Inner
+pub unsafe fn size_prefixed_root_unchecked<'buf, T>(data: &'buf [u8]) -> T::Inner
+where
+    T: Follow<'buf> + 'buf,
+{
+    <SkipSizePrefix<ForwardsUOffset<T>>>::follow(data, 0)
+}
+
+#[inline]
+/// Like [`size_prefixed_root_unchecked`], for any [`ReadBuffer`].
+///
+/// # Safety
+/// Same as [`size_prefixed_root_unchecked`]. In addition `data` must uphold
+/// the [`ReadBuffer`] contract; verify the same bytes with
+/// [`size_prefixed_root`] first.
+pub unsafe fn size_prefixed_root_unchecked_from<'buf, T, B: ReadBuffer + ?Sized>(
+    data: &'buf B,
+) -> T::Inner
 where
     T: Follow<'buf, B> + 'buf,
 {

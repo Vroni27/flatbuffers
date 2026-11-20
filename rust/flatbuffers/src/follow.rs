@@ -31,9 +31,13 @@ use crate::read_buffer::ReadBuffer;
 /// continue traversing the FlatBuffer.
 ///
 /// The generic parameter `B` is the backing buffer type. It defaults to
-/// `[u8]` so that all existing call-sites continue to compile unchanged.
+/// `[u8]`, so existing `impl Follow<'a> for X` blocks keep compiling.
 /// Custom buffer types (e.g. a user-space pager) implement [`ReadBuffer`] and
 /// can then be used as `B`.
+///
+/// When calling `follow` directly, `B` is inferred from the argument, so
+/// pass a slice (`&buf[..]`) if a `[u8]`-based result type is expected; a
+/// `&Vec<u8>` argument yields e.g. `Table<'_, Vec<u8>>`.
 pub trait Follow<'buf, B: ReadBuffer + ?Sized = [u8]> {
     type Inner;
     /// # Safety

@@ -46,8 +46,8 @@ impl Equipment {
   #[inline]
   pub fn tag_as_weapon(
     o: flatbuffers::WIPOffset<Weapon>,
-  ) -> flatbuffers::UnionWIPOffset<EquipmentUnionValue> {
-    flatbuffers::UnionWIPOffset::new(Self::Weapon, flatbuffers::WIPOffset::new(o.value()))
+  ) -> flatbuffers::TaggedUnionWIPOffset<EquipmentUnionValue> {
+    flatbuffers::TaggedUnionWIPOffset::new(Equipment::Weapon, flatbuffers::WIPOffset::new(o.value()))
   }
 
 }
@@ -64,7 +64,7 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'a, B> for Equ
   type Inner = Self;
   #[inline]
   unsafe fn follow(buf: &'a B, loc: usize) -> Self::Inner {
-    let b = unsafe { flatbuffers::read_scalar_at::<u8, B>(buf, loc) };
+    let b = unsafe { flatbuffers::read_scalar_from::<u8, B>(buf, loc) };
     Self(b)
   }
 }
@@ -180,10 +180,10 @@ impl EquipmentT {
       Self::Weapon(_) => Equipment::Weapon,
     }
   }
-  pub fn pack<'b, A: flatbuffers::Allocator + 'b>(&self, fbb: &mut flatbuffers::FlatBufferBuilder<'b, A>) -> Option<flatbuffers::WIPOffset<EquipmentUnionValue>> {
+  pub fn pack<'b, A: flatbuffers::Allocator + 'b>(&self, fbb: &mut flatbuffers::FlatBufferBuilder<'b, A>) -> Option<flatbuffers::WIPOffset<flatbuffers::UnionWIPOffset>> {
     match self {
       Self::NONE => None,
-        Self::Weapon(v) => Some(Equipment::tag_as_weapon(v.pack(fbb)).value_offset()),
+        Self::Weapon(v) => Some(Equipment::tag_as_weapon(v.pack(fbb)).value_offset().as_union_value()),
     }
   }
   /// If the union variant matches, return the owned WeaponT, setting the union to NONE.

@@ -9,12 +9,6 @@ use core::mem;
 use core::cmp::Ordering;
 use self::flatbuffers::{EndianScalar, Follow};
 use super::*;
-pub enum StatOffset {}
-impl StatOffset {
-    pub const VT_ID: flatbuffers::VOffsetT = 4;
-    pub const VT_VAL: flatbuffers::VOffsetT = 6;
-    pub const VT_COUNT: flatbuffers::VOffsetT = 8;
-}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Copy for Stat<'a, B> {}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Clone for Stat<'a, B> {
   fn clone(&self) -> Self { *self }
@@ -35,16 +29,15 @@ impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'
   }
 }
 
-impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Stat<'a, B> {
+impl<'a> Stat<'a> {
+  pub const VT_ID: flatbuffers::VOffsetT = 4;
+  pub const VT_VAL: flatbuffers::VOffsetT = 6;
+  pub const VT_COUNT: flatbuffers::VOffsetT = 8;
 
   pub const fn get_fully_qualified_name() -> &'static str {
     "MyGame.Example.Stat"
   }
 
-  #[inline]
-  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
-    Stat { _tab: table }
-  }
   #[allow(unused_mut)]
   pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr, A: flatbuffers::Allocator + 'bldr>(
     _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr, A>,
@@ -55,6 +48,13 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Stat<'a, B> {
     if let Some(x) = args.id { builder.add_id(x); }
     builder.add_count(args.count);
     builder.finish()
+  }
+}
+
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Stat<'a, B> {
+  #[inline]
+  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
+    Stat { _tab: table }
   }
 
   pub fn unpack(&self) -> StatT {
@@ -75,24 +75,24 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Stat<'a, B> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(StatOffset::VT_ID, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(Stat::VT_ID, None)}
   }
   #[inline]
   pub fn val(&self) -> i64 {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<i64>(StatOffset::VT_VAL, Some(0)).unwrap()}
+    unsafe { self._tab.get::<i64>(Stat::VT_VAL, Some(0)).unwrap()}
   }
   #[inline]
   pub fn count(&self) -> u16 {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<u16>(StatOffset::VT_COUNT, Some(0)).unwrap()}
+    unsafe { self._tab.get::<u16>(Stat::VT_COUNT, Some(0)).unwrap()}
   }
   #[inline]
-  pub fn key_compare_less_than(&self, o: &Stat) -> bool {
+  pub fn key_compare_less_than(&self, o: &Stat<'_, B>) -> bool {
     self.count() < o.count()
   }
 
@@ -110,9 +110,9 @@ impl<B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Verifiable for Stat<'_, B
   ) -> Result<(), flatbuffers::InvalidFlatbuffer> {
     use self::flatbuffers::Verifiable;
     v.visit_table(pos)?
-     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("id", StatOffset::VT_ID, false)?
-     .visit_field::<i64>("val", StatOffset::VT_VAL, false)?
-     .visit_field::<u16>("count", StatOffset::VT_COUNT, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("id", Stat::VT_ID, false)?
+     .visit_field::<i64>("val", Stat::VT_VAL, false)?
+     .visit_field::<u16>("count", Stat::VT_COUNT, false)?
      .finish();
     Ok(())
   }
@@ -140,15 +140,15 @@ pub struct StatBuilder<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> {
 impl<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> StatBuilder<'a, 'b, A> {
   #[inline]
   pub fn add_id(&mut self, id: flatbuffers::WIPOffset<&'b  str>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(StatOffset::VT_ID, id);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(Stat::VT_ID, id);
   }
   #[inline]
   pub fn add_val(&mut self, val: i64) {
-    self.fbb_.push_slot::<i64>(StatOffset::VT_VAL, val, 0);
+    self.fbb_.push_slot::<i64>(Stat::VT_VAL, val, 0);
   }
   #[inline]
   pub fn add_count(&mut self, count: u16) {
-    self.fbb_.push_slot::<u16>(StatOffset::VT_COUNT, count, 0);
+    self.fbb_.push_slot::<u16>(Stat::VT_COUNT, count, 0);
   }
   #[inline]
   pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a, A>) -> StatBuilder<'a, 'b, A> {

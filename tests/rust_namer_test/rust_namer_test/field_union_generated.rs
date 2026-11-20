@@ -46,8 +46,8 @@ impl FieldUnion {
   #[inline]
   pub fn tag_as_f(
     o: flatbuffers::WIPOffset<FieldTable>,
-  ) -> flatbuffers::UnionWIPOffset<FieldUnionUnionValue> {
-    flatbuffers::UnionWIPOffset::new(Self::f, flatbuffers::WIPOffset::new(o.value()))
+  ) -> flatbuffers::TaggedUnionWIPOffset<FieldUnionUnionValue> {
+    flatbuffers::TaggedUnionWIPOffset::new(FieldUnion::f, flatbuffers::WIPOffset::new(o.value()))
   }
 
 }
@@ -64,7 +64,7 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'a, B> for Fie
   type Inner = Self;
   #[inline]
   unsafe fn follow(buf: &'a B, loc: usize) -> Self::Inner {
-    let b = unsafe { flatbuffers::read_scalar_at::<u8, B>(buf, loc) };
+    let b = unsafe { flatbuffers::read_scalar_from::<u8, B>(buf, loc) };
     Self(b)
   }
 }
@@ -180,10 +180,10 @@ impl FieldUnionT {
       Self::F(_) => FieldUnion::f,
     }
   }
-  pub fn pack<'b, A: flatbuffers::Allocator + 'b>(&self, fbb: &mut flatbuffers::FlatBufferBuilder<'b, A>) -> Option<flatbuffers::WIPOffset<FieldUnionUnionValue>> {
+  pub fn pack<'b, A: flatbuffers::Allocator + 'b>(&self, fbb: &mut flatbuffers::FlatBufferBuilder<'b, A>) -> Option<flatbuffers::WIPOffset<flatbuffers::UnionWIPOffset>> {
     match self {
       Self::NONE => None,
-        Self::F(v) => Some(FieldUnion::tag_as_f(v.pack(fbb)).value_offset()),
+        Self::F(v) => Some(FieldUnion::tag_as_f(v.pack(fbb)).value_offset().as_union_value()),
     }
   }
   /// If the union variant matches, return the owned FieldTableT, setting the union to NONE.

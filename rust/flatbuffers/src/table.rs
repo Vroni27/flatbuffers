@@ -22,7 +22,7 @@ use crate::vtable::VTable;
 /// A FlatBuffers table accessor.
 ///
 /// The generic parameter `B` is the backing buffer type (defaults to `[u8]`).
-/// All existing call-sites using `Table<'a>` continue to work unchanged.
+/// `Table<'a>` keeps meaning `Table<'a, [u8]>`.
 pub struct Table<'a, B: ReadBuffer + ?Sized = [u8]> {
     buf: &'a B,
     loc: usize,

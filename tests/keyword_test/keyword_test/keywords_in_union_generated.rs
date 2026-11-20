@@ -50,15 +50,15 @@ impl KeywordsInUnion {
   #[inline]
   pub fn tag_as_static_(
     o: flatbuffers::WIPOffset<KeywordsInTable>,
-  ) -> flatbuffers::UnionWIPOffset<KeywordsInUnionUnionValue> {
-    flatbuffers::UnionWIPOffset::new(Self::static, flatbuffers::WIPOffset::new(o.value()))
+  ) -> flatbuffers::TaggedUnionWIPOffset<KeywordsInUnionUnionValue> {
+    flatbuffers::TaggedUnionWIPOffset::new(KeywordsInUnion::static_, flatbuffers::WIPOffset::new(o.value()))
   }
 
   #[inline]
   pub fn tag_as_internal(
     o: flatbuffers::WIPOffset<KeywordsInTable>,
-  ) -> flatbuffers::UnionWIPOffset<KeywordsInUnionUnionValue> {
-    flatbuffers::UnionWIPOffset::new(Self::internal, flatbuffers::WIPOffset::new(o.value()))
+  ) -> flatbuffers::TaggedUnionWIPOffset<KeywordsInUnionUnionValue> {
+    flatbuffers::TaggedUnionWIPOffset::new(KeywordsInUnion::internal, flatbuffers::WIPOffset::new(o.value()))
   }
 
 }
@@ -75,7 +75,7 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'a, B> for Key
   type Inner = Self;
   #[inline]
   unsafe fn follow(buf: &'a B, loc: usize) -> Self::Inner {
-    let b = unsafe { flatbuffers::read_scalar_at::<u8, B>(buf, loc) };
+    let b = unsafe { flatbuffers::read_scalar_from::<u8, B>(buf, loc) };
     Self(b)
   }
 }
@@ -203,11 +203,11 @@ impl KeywordsInUnionT {
       Self::Internal(_) => KeywordsInUnion::internal,
     }
   }
-  pub fn pack<'b, A: flatbuffers::Allocator + 'b>(&self, fbb: &mut flatbuffers::FlatBufferBuilder<'b, A>) -> Option<flatbuffers::WIPOffset<KeywordsInUnionUnionValue>> {
+  pub fn pack<'b, A: flatbuffers::Allocator + 'b>(&self, fbb: &mut flatbuffers::FlatBufferBuilder<'b, A>) -> Option<flatbuffers::WIPOffset<flatbuffers::UnionWIPOffset>> {
     match self {
       Self::NONE => None,
-        Self::Static_(v) => Some(KeywordsInUnion::tag_as_static_(v.pack(fbb)).value_offset()),
-        Self::Internal(v) => Some(KeywordsInUnion::tag_as_internal(v.pack(fbb)).value_offset()),
+        Self::Static_(v) => Some(KeywordsInUnion::tag_as_static_(v.pack(fbb)).value_offset().as_union_value()),
+        Self::Internal(v) => Some(KeywordsInUnion::tag_as_internal(v.pack(fbb)).value_offset().as_union_value()),
     }
   }
   /// If the union variant matches, return the owned KeywordsInTableT, setting the union to NONE.

@@ -9,11 +9,6 @@ use core::mem;
 use core::cmp::Ordering;
 use self::flatbuffers::{EndianScalar, Follow};
 use super::*;
-pub enum Table2Offset {}
-impl Table2Offset {
-    pub const VT_TYPE_TYPE: flatbuffers::VOffsetT = 4;
-    pub const VT_TYPE_: flatbuffers::VOffsetT = 6;
-}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Copy for Table2<'a, B> {}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Clone for Table2<'a, B> {
   fn clone(&self) -> Self { *self }
@@ -34,16 +29,14 @@ impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'
   }
 }
 
-impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Table2<'a, B> {
+impl<'a> Table2<'a> {
+  pub const VT_TYPE_TYPE: flatbuffers::VOffsetT = 4;
+  pub const VT_TYPE_: flatbuffers::VOffsetT = 6;
 
   pub const fn get_fully_qualified_name() -> &'static str {
     "KeywordTest.Table2"
   }
 
-  #[inline]
-  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
-    Table2 { _tab: table }
-  }
   #[allow(unused_mut)]
   pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr, A: flatbuffers::Allocator + 'bldr>(
     _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr, A>,
@@ -53,6 +46,13 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Table2<'a, B> {
     if let Some(x) = args.type_ { builder.add_type_(x); }
     builder.add_type_type(args.type_type);
     builder.finish()
+  }
+}
+
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Table2<'a, B> {
+  #[inline]
+  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
+    Table2 { _tab: table }
   }
 
   pub fn unpack(&self) -> Table2T {
@@ -80,14 +80,14 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Table2<'a, B> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<KeywordsInUnion>(Table2Offset::VT_TYPE_TYPE, Some(KeywordsInUnion::NONE)).unwrap()}
+    unsafe { self._tab.get::<KeywordsInUnion>(Table2::VT_TYPE_TYPE, Some(KeywordsInUnion::NONE)).unwrap()}
   }
   #[inline]
   pub fn type_(&self) -> Option<flatbuffers::Table<'a, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Table<'a, B>>>(Table2Offset::VT_TYPE_, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Table<'a, B>>>(Table2::VT_TYPE_, None)}
   }
   #[inline]
   #[allow(non_snake_case)]
@@ -128,14 +128,14 @@ impl<B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Verifiable for Table2<'_,
   ) -> Result<(), flatbuffers::InvalidFlatbuffer> {
     use self::flatbuffers::Verifiable;
     v.visit_table(pos)?
-     .visit_union::<KeywordsInUnionUnionValue>("type_type", Table2Offset::VT_TYPE_TYPE, "type_", Table2Offset::VT_TYPE_, false)?
+     .visit_union::<KeywordsInUnionUnionValue>("type_type", Table2::VT_TYPE_TYPE, "type_", Table2::VT_TYPE_, false)?
      .finish();
     Ok(())
   }
 }
 pub struct Table2Args {
     pub type_type: KeywordsInUnion,
-    pub type_: Option<flatbuffers::WIPOffset<KeywordsInUnionUnionValue>>,
+    pub type_: Option<flatbuffers::WIPOffset<flatbuffers::UnionWIPOffset>>,
 }
 impl<'a> Default for Table2Args {
   #[inline]
@@ -154,11 +154,11 @@ pub struct Table2Builder<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> {
 impl<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> Table2Builder<'a, 'b, A> {
   #[inline]
   pub fn add_type_type(&mut self, type_type: KeywordsInUnion) {
-    self.fbb_.push_slot::<KeywordsInUnion>(Table2Offset::VT_TYPE_TYPE, type_type, KeywordsInUnion::NONE);
+    self.fbb_.push_slot::<KeywordsInUnion>(Table2::VT_TYPE_TYPE, type_type, KeywordsInUnion::NONE);
   }
   #[inline]
-  pub fn add_type_(&mut self, type_: flatbuffers::WIPOffset<KeywordsInUnionUnionValue>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(Table2Offset::VT_TYPE_, type_);
+  pub fn add_type_(&mut self, type_: flatbuffers::WIPOffset<flatbuffers::UnionWIPOffset>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(Table2::VT_TYPE_, type_);
   }
   #[inline]
   pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a, A>) -> Table2Builder<'a, 'b, A> {

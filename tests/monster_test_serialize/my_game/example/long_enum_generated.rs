@@ -37,7 +37,7 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'a, B> for Lon
   type Inner = Self;
   #[inline]
   unsafe fn follow(buf: &'a B, loc: usize) -> Self::Inner {
-    let b = unsafe { flatbuffers::read_scalar_at::<u64, B>(buf, loc) };
+    let b = unsafe { flatbuffers::read_scalar_from::<u64, B>(buf, loc) };
     Self::from_bits_retain(b)
   }
 }

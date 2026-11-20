@@ -22,13 +22,14 @@ pub trait TaggedUnion {
     type Tag: Push<Output = Self::Tag> + Clone + Copy + Into<u8>;
 }
 
-/// UnionWIPOffset marks a `WIPOffset` as being for a union value.
-pub struct UnionWIPOffset<T: TaggedUnion> {
+/// A union value offset together with its tag (discriminant), used to build
+/// vectors of unions.
+pub struct TaggedUnionWIPOffset<T: TaggedUnion> {
     tag: T::Tag,
     value_offset: WIPOffset<T>,
 }
 
-impl<T: TaggedUnion> UnionWIPOffset<T> {
+impl<T: TaggedUnion> TaggedUnionWIPOffset<T> {
     #[inline]
     pub fn new(tag: T::Tag, value_offset: WIPOffset<T>) -> Self {
         Self { tag, value_offset }

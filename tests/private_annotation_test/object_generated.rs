@@ -38,7 +38,7 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'a, B> for &'a
   type Inner = &'a Object;
   #[inline]
   unsafe fn follow(buf: &'a B, loc: usize) -> Self::Inner {
-    unsafe { flatbuffers::follow_cast_ref::<Object, B>(buf, loc) }
+    unsafe { flatbuffers::follow_cast_ref_from::<Object, B>(buf, loc) }
   }
 }
 impl<'b> flatbuffers::Push for Object {

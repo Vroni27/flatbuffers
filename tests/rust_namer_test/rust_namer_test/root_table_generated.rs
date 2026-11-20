@@ -9,11 +9,6 @@ use core::mem;
 use core::cmp::Ordering;
 use self::flatbuffers::{EndianScalar, Follow};
 use super::*;
-pub enum RootTableOffset {}
-impl RootTableOffset {
-    pub const VT_FIELD42_TYPE: flatbuffers::VOffsetT = 4;
-    pub const VT_FIELD42: flatbuffers::VOffsetT = 6;
-}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Copy for RootTable<'a, B> {}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Clone for RootTable<'a, B> {
   fn clone(&self) -> Self { *self }
@@ -34,16 +29,14 @@ impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'
   }
 }
 
-impl<'a, B: flatbuffers::ReadBuffer + ?Sized> RootTable<'a, B> {
+impl<'a> RootTable<'a> {
+  pub const VT_FIELD42_TYPE: flatbuffers::VOffsetT = 4;
+  pub const VT_FIELD42: flatbuffers::VOffsetT = 6;
 
   pub const fn get_fully_qualified_name() -> &'static str {
     "RustNamerTest.RootTable"
   }
 
-  #[inline]
-  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
-    RootTable { _tab: table }
-  }
   #[allow(unused_mut)]
   pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr, A: flatbuffers::Allocator + 'bldr>(
     _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr, A>,
@@ -53,6 +46,13 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> RootTable<'a, B> {
     if let Some(x) = args.field42 { builder.add_field42(x); }
     builder.add_field42_type(args.field42_type);
     builder.finish()
+  }
+}
+
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> RootTable<'a, B> {
+  #[inline]
+  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
+    RootTable { _tab: table }
   }
 
   pub fn unpack(&self) -> RootTableT {
@@ -75,14 +75,14 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> RootTable<'a, B> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<FieldUnion>(RootTableOffset::VT_FIELD42_TYPE, Some(FieldUnion::NONE)).unwrap()}
+    unsafe { self._tab.get::<FieldUnion>(RootTable::VT_FIELD42_TYPE, Some(FieldUnion::NONE)).unwrap()}
   }
   #[inline]
   pub fn field42(&self) -> Option<flatbuffers::Table<'a, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Table<'a, B>>>(RootTableOffset::VT_FIELD42, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Table<'a, B>>>(RootTable::VT_FIELD42, None)}
   }
   #[inline]
   #[allow(non_snake_case)]
@@ -108,14 +108,14 @@ impl<B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Verifiable for RootTable<
   ) -> Result<(), flatbuffers::InvalidFlatbuffer> {
     use self::flatbuffers::Verifiable;
     v.visit_table(pos)?
-     .visit_union::<FieldUnionUnionValue>("field42_type", RootTableOffset::VT_FIELD42_TYPE, "field42", RootTableOffset::VT_FIELD42, false)?
+     .visit_union::<FieldUnionUnionValue>("field42_type", RootTable::VT_FIELD42_TYPE, "field42", RootTable::VT_FIELD42, false)?
      .finish();
     Ok(())
   }
 }
 pub struct RootTableArgs {
     pub field42_type: FieldUnion,
-    pub field42: Option<flatbuffers::WIPOffset<FieldUnionUnionValue>>,
+    pub field42: Option<flatbuffers::WIPOffset<flatbuffers::UnionWIPOffset>>,
 }
 impl<'a> Default for RootTableArgs {
   #[inline]
@@ -134,11 +134,11 @@ pub struct RootTableBuilder<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> {
 impl<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> RootTableBuilder<'a, 'b, A> {
   #[inline]
   pub fn add_field42_type(&mut self, field42_type: FieldUnion) {
-    self.fbb_.push_slot::<FieldUnion>(RootTableOffset::VT_FIELD42_TYPE, field42_type, FieldUnion::NONE);
+    self.fbb_.push_slot::<FieldUnion>(RootTable::VT_FIELD42_TYPE, field42_type, FieldUnion::NONE);
   }
   #[inline]
-  pub fn add_field42(&mut self, field42: flatbuffers::WIPOffset<FieldUnionUnionValue>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(RootTableOffset::VT_FIELD42, field42);
+  pub fn add_field42(&mut self, field42: flatbuffers::WIPOffset<flatbuffers::UnionWIPOffset>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(RootTable::VT_FIELD42, field42);
   }
   #[inline]
   pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a, A>) -> RootTableBuilder<'a, 'b, A> {

@@ -9,10 +9,6 @@ use core::mem;
 use core::cmp::Ordering;
 use self::flatbuffers::{EndianScalar, Follow};
 use super::*;
-pub(crate) enum GameOffset {}
-impl GameOffset {
-    pub const VT_VALUE: flatbuffers::VOffsetT = 4;
-}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Copy for Game<'a, B> {}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Clone for Game<'a, B> {
   fn clone(&self) -> Self { *self }
@@ -33,16 +29,13 @@ impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'
   }
 }
 
-impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Game<'a, B> {
+impl<'a> Game<'a> {
+  pub const VT_VALUE: flatbuffers::VOffsetT = 4;
 
   pub const fn get_fully_qualified_name() -> &'static str {
     "Game"
   }
 
-  #[inline]
-  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
-    Game { _tab: table }
-  }
   #[allow(unused_mut)]
   pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr, A: flatbuffers::Allocator + 'bldr>(
     _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr, A>,
@@ -51,6 +44,13 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Game<'a, B> {
     let mut builder = GameBuilder::new(_fbb);
     builder.add_value(args.value);
     builder.finish()
+  }
+}
+
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Game<'a, B> {
+  #[inline]
+  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
+    Game { _tab: table }
   }
 
   pub fn unpack(&self) -> GameT {
@@ -65,7 +65,7 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Game<'a, B> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<i32>(GameOffset::VT_VALUE, Some(0)).unwrap()}
+    unsafe { self._tab.get::<i32>(Game::VT_VALUE, Some(0)).unwrap()}
   }
 }
 
@@ -76,7 +76,7 @@ impl<B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Verifiable for Game<'_, B
   ) -> Result<(), flatbuffers::InvalidFlatbuffer> {
     use self::flatbuffers::Verifiable;
     v.visit_table(pos)?
-     .visit_field::<i32>("value", GameOffset::VT_VALUE, false)?
+     .visit_field::<i32>("value", Game::VT_VALUE, false)?
      .finish();
     Ok(())
   }
@@ -100,7 +100,7 @@ pub(crate) struct GameBuilder<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> {
 impl<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> GameBuilder<'a, 'b, A> {
   #[inline]
   pub fn add_value(&mut self, value: i32) {
-    self.fbb_.push_slot::<i32>(GameOffset::VT_VALUE, value, 0);
+    self.fbb_.push_slot::<i32>(Game::VT_VALUE, value, 0);
   }
   #[inline]
   pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a, A>) -> GameBuilder<'a, 'b, A> {

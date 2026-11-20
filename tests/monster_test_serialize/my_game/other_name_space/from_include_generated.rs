@@ -63,7 +63,7 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'a, B> for Fro
   type Inner = Self;
   #[inline]
   unsafe fn follow(buf: &'a B, loc: usize) -> Self::Inner {
-    let b = unsafe { flatbuffers::read_scalar_at::<i64, B>(buf, loc) };
+    let b = unsafe { flatbuffers::read_scalar_from::<i64, B>(buf, loc) };
     Self(b)
   }
 }

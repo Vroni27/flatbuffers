@@ -9,10 +9,6 @@ use core::mem;
 use core::cmp::Ordering;
 use self::flatbuffers::{EndianScalar, Follow};
 use super::*;
-pub enum ArrayTableOffset {}
-impl ArrayTableOffset {
-    pub const VT_A: flatbuffers::VOffsetT = 4;
-}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Copy for ArrayTable<'a, B> {}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Clone for ArrayTable<'a, B> {
   fn clone(&self) -> Self { *self }
@@ -33,16 +29,13 @@ impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'
   }
 }
 
-impl<'a, B: flatbuffers::ReadBuffer + ?Sized> ArrayTable<'a, B> {
+impl<'a> ArrayTable<'a> {
+  pub const VT_A: flatbuffers::VOffsetT = 4;
 
   pub const fn get_fully_qualified_name() -> &'static str {
     "MyGame.Example.ArrayTable"
   }
 
-  #[inline]
-  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
-    ArrayTable { _tab: table }
-  }
   #[allow(unused_mut)]
   pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr, A: flatbuffers::Allocator + 'bldr>(
     _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr, A>,
@@ -51,6 +44,13 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> ArrayTable<'a, B> {
     let mut builder = ArrayTableBuilder::new(_fbb);
     if let Some(x) = args.a { builder.add_a(x); }
     builder.finish()
+  }
+}
+
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> ArrayTable<'a, B> {
+  #[inline]
+  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
+    ArrayTable { _tab: table }
   }
 
   pub fn unpack(&self) -> ArrayTableT {
@@ -67,7 +67,7 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> ArrayTable<'a, B> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<ArrayStruct>(ArrayTableOffset::VT_A, None)}
+    unsafe { self._tab.get::<ArrayStruct>(ArrayTable::VT_A, None)}
   }
 }
 
@@ -78,7 +78,7 @@ impl<B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Verifiable for ArrayTable
   ) -> Result<(), flatbuffers::InvalidFlatbuffer> {
     use self::flatbuffers::Verifiable;
     v.visit_table(pos)?
-     .visit_field::<ArrayStruct>("a", ArrayTableOffset::VT_A, false)?
+     .visit_field::<ArrayStruct>("a", ArrayTable::VT_A, false)?
      .finish();
     Ok(())
   }
@@ -102,7 +102,7 @@ pub struct ArrayTableBuilder<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> {
 impl<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> ArrayTableBuilder<'a, 'b, A> {
   #[inline]
   pub fn add_a(&mut self, a: &ArrayStruct) {
-    self.fbb_.push_slot_always::<&ArrayStruct>(ArrayTableOffset::VT_A, a);
+    self.fbb_.push_slot_always::<&ArrayStruct>(ArrayTable::VT_A, a);
   }
   #[inline]
   pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a, A>) -> ArrayTableBuilder<'a, 'b, A> {
@@ -200,15 +200,29 @@ pub fn size_prefixed_root_as_array_table_with_opts<'b, 'o>(
 /// Assumes, without verification, that a buffer of bytes contains a ArrayTable and returns it.
 /// # Safety
 /// Callers must trust the given bytes do indeed contain a valid `ArrayTable`.
-pub unsafe fn root_as_array_table_unchecked<B: flatbuffers::ReadBuffer + ?Sized>(buf: &B) -> ArrayTable<'_, B> {
-  unsafe { flatbuffers::root_unchecked::<ArrayTable<'_, B>, B>(buf) }
+pub unsafe fn root_as_array_table_unchecked(buf: &[u8]) -> ArrayTable {
+  unsafe { flatbuffers::root_unchecked::<ArrayTable>(buf) }
+}
+#[inline]
+/// Like `root_as_array_table_unchecked`, for any `flatbuffers::ReadBuffer`.
+/// # Safety
+/// Callers must trust the given buffer does indeed contain a valid `ArrayTable` and that it upholds the `ReadBuffer` contract.
+pub unsafe fn root_as_array_table_unchecked_from<B: flatbuffers::ReadBuffer + ?Sized>(buf: &B) -> ArrayTable<'_, B> {
+  unsafe { flatbuffers::root_unchecked_from::<ArrayTable<'_, B>, B>(buf) }
 }
 #[inline]
 /// Assumes, without verification, that a buffer of bytes contains a size prefixed ArrayTable and returns it.
 /// # Safety
 /// Callers must trust the given bytes do indeed contain a valid size prefixed `ArrayTable`.
-pub unsafe fn size_prefixed_root_as_array_table_unchecked<B: flatbuffers::ReadBuffer + ?Sized>(buf: &B) -> ArrayTable<'_, B> {
-  unsafe { flatbuffers::size_prefixed_root_unchecked::<ArrayTable<'_, B>, B>(buf) }
+pub unsafe fn size_prefixed_root_as_array_table_unchecked(buf: &[u8]) -> ArrayTable {
+  unsafe { flatbuffers::size_prefixed_root_unchecked::<ArrayTable>(buf) }
+}
+#[inline]
+/// Like `size_prefixed_root_as_array_table_unchecked`, for any `flatbuffers::ReadBuffer`.
+/// # Safety
+/// Callers must trust the given buffer does indeed contain a valid size prefixed `ArrayTable` and that it upholds the `ReadBuffer` contract.
+pub unsafe fn size_prefixed_root_as_array_table_unchecked_from<B: flatbuffers::ReadBuffer + ?Sized>(buf: &B) -> ArrayTable<'_, B> {
+  unsafe { flatbuffers::size_prefixed_root_unchecked_from::<ArrayTable<'_, B>, B>(buf) }
 }
 pub const ARRAY_TABLE_IDENTIFIER: &str = "ARRT";
 

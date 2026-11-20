@@ -9,10 +9,6 @@ use core::mem;
 use core::cmp::Ordering;
 use self::flatbuffers::{EndianScalar, Follow};
 use super::*;
-pub enum TestSimpleTableWithEnumOffset {}
-impl TestSimpleTableWithEnumOffset {
-    pub const VT_COLOR: flatbuffers::VOffsetT = 4;
-}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Copy for TestSimpleTableWithEnum<'a, B> {}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Clone for TestSimpleTableWithEnum<'a, B> {
   fn clone(&self) -> Self { *self }
@@ -33,16 +29,13 @@ impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'
   }
 }
 
-impl<'a, B: flatbuffers::ReadBuffer + ?Sized> TestSimpleTableWithEnum<'a, B> {
+impl<'a> TestSimpleTableWithEnum<'a> {
+  pub const VT_COLOR: flatbuffers::VOffsetT = 4;
 
   pub const fn get_fully_qualified_name() -> &'static str {
     "MyGame.Example.TestSimpleTableWithEnum"
   }
 
-  #[inline]
-  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
-    TestSimpleTableWithEnum { _tab: table }
-  }
   #[allow(unused_mut)]
   pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr, A: flatbuffers::Allocator + 'bldr>(
     _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr, A>,
@@ -51,6 +44,13 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> TestSimpleTableWithEnum<'a, B> {
     let mut builder = TestSimpleTableWithEnumBuilder::new(_fbb);
     builder.add_color(args.color);
     builder.finish()
+  }
+}
+
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> TestSimpleTableWithEnum<'a, B> {
+  #[inline]
+  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
+    TestSimpleTableWithEnum { _tab: table }
   }
 
   pub fn unpack(&self) -> TestSimpleTableWithEnumT {
@@ -65,7 +65,7 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> TestSimpleTableWithEnum<'a, B> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<Color>(TestSimpleTableWithEnumOffset::VT_COLOR, Some(Color::Green)).unwrap()}
+    unsafe { self._tab.get::<Color>(TestSimpleTableWithEnum::VT_COLOR, Some(Color::Green)).unwrap()}
   }
 }
 
@@ -76,7 +76,7 @@ impl<B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Verifiable for TestSimple
   ) -> Result<(), flatbuffers::InvalidFlatbuffer> {
     use self::flatbuffers::Verifiable;
     v.visit_table(pos)?
-     .visit_field::<Color>("color", TestSimpleTableWithEnumOffset::VT_COLOR, false)?
+     .visit_field::<Color>("color", TestSimpleTableWithEnum::VT_COLOR, false)?
      .finish();
     Ok(())
   }
@@ -100,7 +100,7 @@ pub struct TestSimpleTableWithEnumBuilder<'a: 'b, 'b, A: flatbuffers::Allocator 
 impl<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> TestSimpleTableWithEnumBuilder<'a, 'b, A> {
   #[inline]
   pub fn add_color(&mut self, color: Color) {
-    self.fbb_.push_slot::<Color>(TestSimpleTableWithEnumOffset::VT_COLOR, color, Color::Green);
+    self.fbb_.push_slot::<Color>(TestSimpleTableWithEnum::VT_COLOR, color, Color::Green);
   }
   #[inline]
   pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a, A>) -> TestSimpleTableWithEnumBuilder<'a, 'b, A> {

@@ -56,22 +56,22 @@ impl Any {
   #[inline]
   pub fn tag_as_monster(
     o: flatbuffers::WIPOffset<Monster>,
-  ) -> flatbuffers::UnionWIPOffset<AnyUnionValue> {
-    flatbuffers::UnionWIPOffset::new(Self::Monster, flatbuffers::WIPOffset::new(o.value()))
+  ) -> flatbuffers::TaggedUnionWIPOffset<AnyUnionValue> {
+    flatbuffers::TaggedUnionWIPOffset::new(Any::Monster, flatbuffers::WIPOffset::new(o.value()))
   }
 
   #[inline]
   pub fn tag_as_test_simple_table_with_enum(
     o: flatbuffers::WIPOffset<TestSimpleTableWithEnum>,
-  ) -> flatbuffers::UnionWIPOffset<AnyUnionValue> {
-    flatbuffers::UnionWIPOffset::new(Self::TestSimpleTableWithEnum, flatbuffers::WIPOffset::new(o.value()))
+  ) -> flatbuffers::TaggedUnionWIPOffset<AnyUnionValue> {
+    flatbuffers::TaggedUnionWIPOffset::new(Any::TestSimpleTableWithEnum, flatbuffers::WIPOffset::new(o.value()))
   }
 
   #[inline]
   pub fn tag_as_my_game_example_2_monster(
     o: flatbuffers::WIPOffset<super::example_2::Monster>,
-  ) -> flatbuffers::UnionWIPOffset<AnyUnionValue> {
-    flatbuffers::UnionWIPOffset::new(Self::MyGame_Example2_Monster, flatbuffers::WIPOffset::new(o.value()))
+  ) -> flatbuffers::TaggedUnionWIPOffset<AnyUnionValue> {
+    flatbuffers::TaggedUnionWIPOffset::new(Any::MyGame_Example2_Monster, flatbuffers::WIPOffset::new(o.value()))
   }
 
 }
@@ -97,7 +97,7 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'a, B> for Any
   type Inner = Self;
   #[inline]
   unsafe fn follow(buf: &'a B, loc: usize) -> Self::Inner {
-    let b = unsafe { flatbuffers::read_scalar_at::<u8, B>(buf, loc) };
+    let b = unsafe { flatbuffers::read_scalar_from::<u8, B>(buf, loc) };
     Self(b)
   }
 }
@@ -237,12 +237,12 @@ impl AnyT {
       Self::MyGameExample2Monster(_) => Any::MyGame_Example2_Monster,
     }
   }
-  pub fn pack<'b, A: flatbuffers::Allocator + 'b>(&self, fbb: &mut flatbuffers::FlatBufferBuilder<'b, A>) -> Option<flatbuffers::WIPOffset<AnyUnionValue>> {
+  pub fn pack<'b, A: flatbuffers::Allocator + 'b>(&self, fbb: &mut flatbuffers::FlatBufferBuilder<'b, A>) -> Option<flatbuffers::WIPOffset<flatbuffers::UnionWIPOffset>> {
     match self {
       Self::NONE => None,
-        Self::Monster(v) => Some(Any::tag_as_monster(v.pack(fbb)).value_offset()),
-        Self::TestSimpleTableWithEnum(v) => Some(Any::tag_as_test_simple_table_with_enum(v.pack(fbb)).value_offset()),
-        Self::MyGameExample2Monster(v) => Some(Any::tag_as_my_game_example_2_monster(v.pack(fbb)).value_offset()),
+        Self::Monster(v) => Some(Any::tag_as_monster(v.pack(fbb)).value_offset().as_union_value()),
+        Self::TestSimpleTableWithEnum(v) => Some(Any::tag_as_test_simple_table_with_enum(v.pack(fbb)).value_offset().as_union_value()),
+        Self::MyGameExample2Monster(v) => Some(Any::tag_as_my_game_example_2_monster(v.pack(fbb)).value_offset().as_union_value()),
     }
   }
   /// If the union variant matches, return the owned MonsterT, setting the union to NONE.

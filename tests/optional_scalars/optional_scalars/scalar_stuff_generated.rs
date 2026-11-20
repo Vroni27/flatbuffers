@@ -9,45 +9,6 @@ use core::mem;
 use core::cmp::Ordering;
 use self::flatbuffers::{EndianScalar, Follow};
 use super::*;
-pub enum ScalarStuffOffset {}
-impl ScalarStuffOffset {
-    pub const VT_JUST_I8: flatbuffers::VOffsetT = 4;
-    pub const VT_MAYBE_I8: flatbuffers::VOffsetT = 6;
-    pub const VT_DEFAULT_I8: flatbuffers::VOffsetT = 8;
-    pub const VT_JUST_U8: flatbuffers::VOffsetT = 10;
-    pub const VT_MAYBE_U8: flatbuffers::VOffsetT = 12;
-    pub const VT_DEFAULT_U8: flatbuffers::VOffsetT = 14;
-    pub const VT_JUST_I16: flatbuffers::VOffsetT = 16;
-    pub const VT_MAYBE_I16: flatbuffers::VOffsetT = 18;
-    pub const VT_DEFAULT_I16: flatbuffers::VOffsetT = 20;
-    pub const VT_JUST_U16: flatbuffers::VOffsetT = 22;
-    pub const VT_MAYBE_U16: flatbuffers::VOffsetT = 24;
-    pub const VT_DEFAULT_U16: flatbuffers::VOffsetT = 26;
-    pub const VT_JUST_I32: flatbuffers::VOffsetT = 28;
-    pub const VT_MAYBE_I32: flatbuffers::VOffsetT = 30;
-    pub const VT_DEFAULT_I32: flatbuffers::VOffsetT = 32;
-    pub const VT_JUST_U32: flatbuffers::VOffsetT = 34;
-    pub const VT_MAYBE_U32: flatbuffers::VOffsetT = 36;
-    pub const VT_DEFAULT_U32: flatbuffers::VOffsetT = 38;
-    pub const VT_JUST_I64: flatbuffers::VOffsetT = 40;
-    pub const VT_MAYBE_I64: flatbuffers::VOffsetT = 42;
-    pub const VT_DEFAULT_I64: flatbuffers::VOffsetT = 44;
-    pub const VT_JUST_U64: flatbuffers::VOffsetT = 46;
-    pub const VT_MAYBE_U64: flatbuffers::VOffsetT = 48;
-    pub const VT_DEFAULT_U64: flatbuffers::VOffsetT = 50;
-    pub const VT_JUST_F32: flatbuffers::VOffsetT = 52;
-    pub const VT_MAYBE_F32: flatbuffers::VOffsetT = 54;
-    pub const VT_DEFAULT_F32: flatbuffers::VOffsetT = 56;
-    pub const VT_JUST_F64: flatbuffers::VOffsetT = 58;
-    pub const VT_MAYBE_F64: flatbuffers::VOffsetT = 60;
-    pub const VT_DEFAULT_F64: flatbuffers::VOffsetT = 62;
-    pub const VT_JUST_BOOL: flatbuffers::VOffsetT = 64;
-    pub const VT_MAYBE_BOOL: flatbuffers::VOffsetT = 66;
-    pub const VT_DEFAULT_BOOL: flatbuffers::VOffsetT = 68;
-    pub const VT_JUST_ENUM: flatbuffers::VOffsetT = 70;
-    pub const VT_MAYBE_ENUM: flatbuffers::VOffsetT = 72;
-    pub const VT_DEFAULT_ENUM: flatbuffers::VOffsetT = 74;
-}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Copy for ScalarStuff<'a, B> {}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Clone for ScalarStuff<'a, B> {
   fn clone(&self) -> Self { *self }
@@ -68,16 +29,48 @@ impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'
   }
 }
 
-impl<'a, B: flatbuffers::ReadBuffer + ?Sized> ScalarStuff<'a, B> {
+impl<'a> ScalarStuff<'a> {
+  pub const VT_JUST_I8: flatbuffers::VOffsetT = 4;
+  pub const VT_MAYBE_I8: flatbuffers::VOffsetT = 6;
+  pub const VT_DEFAULT_I8: flatbuffers::VOffsetT = 8;
+  pub const VT_JUST_U8: flatbuffers::VOffsetT = 10;
+  pub const VT_MAYBE_U8: flatbuffers::VOffsetT = 12;
+  pub const VT_DEFAULT_U8: flatbuffers::VOffsetT = 14;
+  pub const VT_JUST_I16: flatbuffers::VOffsetT = 16;
+  pub const VT_MAYBE_I16: flatbuffers::VOffsetT = 18;
+  pub const VT_DEFAULT_I16: flatbuffers::VOffsetT = 20;
+  pub const VT_JUST_U16: flatbuffers::VOffsetT = 22;
+  pub const VT_MAYBE_U16: flatbuffers::VOffsetT = 24;
+  pub const VT_DEFAULT_U16: flatbuffers::VOffsetT = 26;
+  pub const VT_JUST_I32: flatbuffers::VOffsetT = 28;
+  pub const VT_MAYBE_I32: flatbuffers::VOffsetT = 30;
+  pub const VT_DEFAULT_I32: flatbuffers::VOffsetT = 32;
+  pub const VT_JUST_U32: flatbuffers::VOffsetT = 34;
+  pub const VT_MAYBE_U32: flatbuffers::VOffsetT = 36;
+  pub const VT_DEFAULT_U32: flatbuffers::VOffsetT = 38;
+  pub const VT_JUST_I64: flatbuffers::VOffsetT = 40;
+  pub const VT_MAYBE_I64: flatbuffers::VOffsetT = 42;
+  pub const VT_DEFAULT_I64: flatbuffers::VOffsetT = 44;
+  pub const VT_JUST_U64: flatbuffers::VOffsetT = 46;
+  pub const VT_MAYBE_U64: flatbuffers::VOffsetT = 48;
+  pub const VT_DEFAULT_U64: flatbuffers::VOffsetT = 50;
+  pub const VT_JUST_F32: flatbuffers::VOffsetT = 52;
+  pub const VT_MAYBE_F32: flatbuffers::VOffsetT = 54;
+  pub const VT_DEFAULT_F32: flatbuffers::VOffsetT = 56;
+  pub const VT_JUST_F64: flatbuffers::VOffsetT = 58;
+  pub const VT_MAYBE_F64: flatbuffers::VOffsetT = 60;
+  pub const VT_DEFAULT_F64: flatbuffers::VOffsetT = 62;
+  pub const VT_JUST_BOOL: flatbuffers::VOffsetT = 64;
+  pub const VT_MAYBE_BOOL: flatbuffers::VOffsetT = 66;
+  pub const VT_DEFAULT_BOOL: flatbuffers::VOffsetT = 68;
+  pub const VT_JUST_ENUM: flatbuffers::VOffsetT = 70;
+  pub const VT_MAYBE_ENUM: flatbuffers::VOffsetT = 72;
+  pub const VT_DEFAULT_ENUM: flatbuffers::VOffsetT = 74;
 
   pub const fn get_fully_qualified_name() -> &'static str {
     "optional_scalars.ScalarStuff"
   }
 
-  #[inline]
-  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
-    ScalarStuff { _tab: table }
-  }
   #[allow(unused_mut)]
   pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr, A: flatbuffers::Allocator + 'bldr>(
     _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr, A>,
@@ -121,6 +114,13 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> ScalarStuff<'a, B> {
     if let Some(x) = args.maybe_i8 { builder.add_maybe_i8(x); }
     builder.add_just_i8(args.just_i8);
     builder.finish()
+  }
+}
+
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> ScalarStuff<'a, B> {
+  #[inline]
+  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
+    ScalarStuff { _tab: table }
   }
 
   pub fn unpack(&self) -> ScalarStuffT {
@@ -205,252 +205,252 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> ScalarStuff<'a, B> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<i8>(ScalarStuffOffset::VT_JUST_I8, Some(0)).unwrap()}
+    unsafe { self._tab.get::<i8>(ScalarStuff::VT_JUST_I8, Some(0)).unwrap()}
   }
   #[inline]
   pub fn maybe_i8(&self) -> Option<i8> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<i8>(ScalarStuffOffset::VT_MAYBE_I8, None)}
+    unsafe { self._tab.get::<i8>(ScalarStuff::VT_MAYBE_I8, None)}
   }
   #[inline]
   pub fn default_i8(&self) -> i8 {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<i8>(ScalarStuffOffset::VT_DEFAULT_I8, Some(42)).unwrap()}
+    unsafe { self._tab.get::<i8>(ScalarStuff::VT_DEFAULT_I8, Some(42)).unwrap()}
   }
   #[inline]
   pub fn just_u8(&self) -> u8 {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<u8>(ScalarStuffOffset::VT_JUST_U8, Some(0)).unwrap()}
+    unsafe { self._tab.get::<u8>(ScalarStuff::VT_JUST_U8, Some(0)).unwrap()}
   }
   #[inline]
   pub fn maybe_u8(&self) -> Option<u8> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<u8>(ScalarStuffOffset::VT_MAYBE_U8, None)}
+    unsafe { self._tab.get::<u8>(ScalarStuff::VT_MAYBE_U8, None)}
   }
   #[inline]
   pub fn default_u8(&self) -> u8 {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<u8>(ScalarStuffOffset::VT_DEFAULT_U8, Some(42)).unwrap()}
+    unsafe { self._tab.get::<u8>(ScalarStuff::VT_DEFAULT_U8, Some(42)).unwrap()}
   }
   #[inline]
   pub fn just_i16(&self) -> i16 {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<i16>(ScalarStuffOffset::VT_JUST_I16, Some(0)).unwrap()}
+    unsafe { self._tab.get::<i16>(ScalarStuff::VT_JUST_I16, Some(0)).unwrap()}
   }
   #[inline]
   pub fn maybe_i16(&self) -> Option<i16> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<i16>(ScalarStuffOffset::VT_MAYBE_I16, None)}
+    unsafe { self._tab.get::<i16>(ScalarStuff::VT_MAYBE_I16, None)}
   }
   #[inline]
   pub fn default_i16(&self) -> i16 {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<i16>(ScalarStuffOffset::VT_DEFAULT_I16, Some(42)).unwrap()}
+    unsafe { self._tab.get::<i16>(ScalarStuff::VT_DEFAULT_I16, Some(42)).unwrap()}
   }
   #[inline]
   pub fn just_u16(&self) -> u16 {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<u16>(ScalarStuffOffset::VT_JUST_U16, Some(0)).unwrap()}
+    unsafe { self._tab.get::<u16>(ScalarStuff::VT_JUST_U16, Some(0)).unwrap()}
   }
   #[inline]
   pub fn maybe_u16(&self) -> Option<u16> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<u16>(ScalarStuffOffset::VT_MAYBE_U16, None)}
+    unsafe { self._tab.get::<u16>(ScalarStuff::VT_MAYBE_U16, None)}
   }
   #[inline]
   pub fn default_u16(&self) -> u16 {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<u16>(ScalarStuffOffset::VT_DEFAULT_U16, Some(42)).unwrap()}
+    unsafe { self._tab.get::<u16>(ScalarStuff::VT_DEFAULT_U16, Some(42)).unwrap()}
   }
   #[inline]
   pub fn just_i32(&self) -> i32 {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<i32>(ScalarStuffOffset::VT_JUST_I32, Some(0)).unwrap()}
+    unsafe { self._tab.get::<i32>(ScalarStuff::VT_JUST_I32, Some(0)).unwrap()}
   }
   #[inline]
   pub fn maybe_i32(&self) -> Option<i32> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<i32>(ScalarStuffOffset::VT_MAYBE_I32, None)}
+    unsafe { self._tab.get::<i32>(ScalarStuff::VT_MAYBE_I32, None)}
   }
   #[inline]
   pub fn default_i32(&self) -> i32 {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<i32>(ScalarStuffOffset::VT_DEFAULT_I32, Some(42)).unwrap()}
+    unsafe { self._tab.get::<i32>(ScalarStuff::VT_DEFAULT_I32, Some(42)).unwrap()}
   }
   #[inline]
   pub fn just_u32(&self) -> u32 {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<u32>(ScalarStuffOffset::VT_JUST_U32, Some(0)).unwrap()}
+    unsafe { self._tab.get::<u32>(ScalarStuff::VT_JUST_U32, Some(0)).unwrap()}
   }
   #[inline]
   pub fn maybe_u32(&self) -> Option<u32> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<u32>(ScalarStuffOffset::VT_MAYBE_U32, None)}
+    unsafe { self._tab.get::<u32>(ScalarStuff::VT_MAYBE_U32, None)}
   }
   #[inline]
   pub fn default_u32(&self) -> u32 {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<u32>(ScalarStuffOffset::VT_DEFAULT_U32, Some(42)).unwrap()}
+    unsafe { self._tab.get::<u32>(ScalarStuff::VT_DEFAULT_U32, Some(42)).unwrap()}
   }
   #[inline]
   pub fn just_i64(&self) -> i64 {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<i64>(ScalarStuffOffset::VT_JUST_I64, Some(0)).unwrap()}
+    unsafe { self._tab.get::<i64>(ScalarStuff::VT_JUST_I64, Some(0)).unwrap()}
   }
   #[inline]
   pub fn maybe_i64(&self) -> Option<i64> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<i64>(ScalarStuffOffset::VT_MAYBE_I64, None)}
+    unsafe { self._tab.get::<i64>(ScalarStuff::VT_MAYBE_I64, None)}
   }
   #[inline]
   pub fn default_i64(&self) -> i64 {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<i64>(ScalarStuffOffset::VT_DEFAULT_I64, Some(42)).unwrap()}
+    unsafe { self._tab.get::<i64>(ScalarStuff::VT_DEFAULT_I64, Some(42)).unwrap()}
   }
   #[inline]
   pub fn just_u64(&self) -> u64 {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<u64>(ScalarStuffOffset::VT_JUST_U64, Some(0)).unwrap()}
+    unsafe { self._tab.get::<u64>(ScalarStuff::VT_JUST_U64, Some(0)).unwrap()}
   }
   #[inline]
   pub fn maybe_u64(&self) -> Option<u64> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<u64>(ScalarStuffOffset::VT_MAYBE_U64, None)}
+    unsafe { self._tab.get::<u64>(ScalarStuff::VT_MAYBE_U64, None)}
   }
   #[inline]
   pub fn default_u64(&self) -> u64 {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<u64>(ScalarStuffOffset::VT_DEFAULT_U64, Some(42)).unwrap()}
+    unsafe { self._tab.get::<u64>(ScalarStuff::VT_DEFAULT_U64, Some(42)).unwrap()}
   }
   #[inline]
   pub fn just_f32(&self) -> f32 {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<f32>(ScalarStuffOffset::VT_JUST_F32, Some(0.0)).unwrap()}
+    unsafe { self._tab.get::<f32>(ScalarStuff::VT_JUST_F32, Some(0.0)).unwrap()}
   }
   #[inline]
   pub fn maybe_f32(&self) -> Option<f32> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<f32>(ScalarStuffOffset::VT_MAYBE_F32, None)}
+    unsafe { self._tab.get::<f32>(ScalarStuff::VT_MAYBE_F32, None)}
   }
   #[inline]
   pub fn default_f32(&self) -> f32 {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<f32>(ScalarStuffOffset::VT_DEFAULT_F32, Some(42.0)).unwrap()}
+    unsafe { self._tab.get::<f32>(ScalarStuff::VT_DEFAULT_F32, Some(42.0)).unwrap()}
   }
   #[inline]
   pub fn just_f64(&self) -> f64 {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<f64>(ScalarStuffOffset::VT_JUST_F64, Some(0.0)).unwrap()}
+    unsafe { self._tab.get::<f64>(ScalarStuff::VT_JUST_F64, Some(0.0)).unwrap()}
   }
   #[inline]
   pub fn maybe_f64(&self) -> Option<f64> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<f64>(ScalarStuffOffset::VT_MAYBE_F64, None)}
+    unsafe { self._tab.get::<f64>(ScalarStuff::VT_MAYBE_F64, None)}
   }
   #[inline]
   pub fn default_f64(&self) -> f64 {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<f64>(ScalarStuffOffset::VT_DEFAULT_F64, Some(42.0)).unwrap()}
+    unsafe { self._tab.get::<f64>(ScalarStuff::VT_DEFAULT_F64, Some(42.0)).unwrap()}
   }
   #[inline]
   pub fn just_bool(&self) -> bool {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<bool>(ScalarStuffOffset::VT_JUST_BOOL, Some(false)).unwrap()}
+    unsafe { self._tab.get::<bool>(ScalarStuff::VT_JUST_BOOL, Some(false)).unwrap()}
   }
   #[inline]
   pub fn maybe_bool(&self) -> Option<bool> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<bool>(ScalarStuffOffset::VT_MAYBE_BOOL, None)}
+    unsafe { self._tab.get::<bool>(ScalarStuff::VT_MAYBE_BOOL, None)}
   }
   #[inline]
   pub fn default_bool(&self) -> bool {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<bool>(ScalarStuffOffset::VT_DEFAULT_BOOL, Some(true)).unwrap()}
+    unsafe { self._tab.get::<bool>(ScalarStuff::VT_DEFAULT_BOOL, Some(true)).unwrap()}
   }
   #[inline]
   pub fn just_enum(&self) -> OptionalByte {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<OptionalByte>(ScalarStuffOffset::VT_JUST_ENUM, Some(OptionalByte::None)).unwrap()}
+    unsafe { self._tab.get::<OptionalByte>(ScalarStuff::VT_JUST_ENUM, Some(OptionalByte::None)).unwrap()}
   }
   #[inline]
   pub fn maybe_enum(&self) -> Option<OptionalByte> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<OptionalByte>(ScalarStuffOffset::VT_MAYBE_ENUM, None)}
+    unsafe { self._tab.get::<OptionalByte>(ScalarStuff::VT_MAYBE_ENUM, None)}
   }
   #[inline]
   pub fn default_enum(&self) -> OptionalByte {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<OptionalByte>(ScalarStuffOffset::VT_DEFAULT_ENUM, Some(OptionalByte::One)).unwrap()}
+    unsafe { self._tab.get::<OptionalByte>(ScalarStuff::VT_DEFAULT_ENUM, Some(OptionalByte::One)).unwrap()}
   }
 }
 
@@ -461,42 +461,42 @@ impl<B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Verifiable for ScalarStuf
   ) -> Result<(), flatbuffers::InvalidFlatbuffer> {
     use self::flatbuffers::Verifiable;
     v.visit_table(pos)?
-     .visit_field::<i8>("just_i8", ScalarStuffOffset::VT_JUST_I8, false)?
-     .visit_field::<i8>("maybe_i8", ScalarStuffOffset::VT_MAYBE_I8, false)?
-     .visit_field::<i8>("default_i8", ScalarStuffOffset::VT_DEFAULT_I8, false)?
-     .visit_field::<u8>("just_u8", ScalarStuffOffset::VT_JUST_U8, false)?
-     .visit_field::<u8>("maybe_u8", ScalarStuffOffset::VT_MAYBE_U8, false)?
-     .visit_field::<u8>("default_u8", ScalarStuffOffset::VT_DEFAULT_U8, false)?
-     .visit_field::<i16>("just_i16", ScalarStuffOffset::VT_JUST_I16, false)?
-     .visit_field::<i16>("maybe_i16", ScalarStuffOffset::VT_MAYBE_I16, false)?
-     .visit_field::<i16>("default_i16", ScalarStuffOffset::VT_DEFAULT_I16, false)?
-     .visit_field::<u16>("just_u16", ScalarStuffOffset::VT_JUST_U16, false)?
-     .visit_field::<u16>("maybe_u16", ScalarStuffOffset::VT_MAYBE_U16, false)?
-     .visit_field::<u16>("default_u16", ScalarStuffOffset::VT_DEFAULT_U16, false)?
-     .visit_field::<i32>("just_i32", ScalarStuffOffset::VT_JUST_I32, false)?
-     .visit_field::<i32>("maybe_i32", ScalarStuffOffset::VT_MAYBE_I32, false)?
-     .visit_field::<i32>("default_i32", ScalarStuffOffset::VT_DEFAULT_I32, false)?
-     .visit_field::<u32>("just_u32", ScalarStuffOffset::VT_JUST_U32, false)?
-     .visit_field::<u32>("maybe_u32", ScalarStuffOffset::VT_MAYBE_U32, false)?
-     .visit_field::<u32>("default_u32", ScalarStuffOffset::VT_DEFAULT_U32, false)?
-     .visit_field::<i64>("just_i64", ScalarStuffOffset::VT_JUST_I64, false)?
-     .visit_field::<i64>("maybe_i64", ScalarStuffOffset::VT_MAYBE_I64, false)?
-     .visit_field::<i64>("default_i64", ScalarStuffOffset::VT_DEFAULT_I64, false)?
-     .visit_field::<u64>("just_u64", ScalarStuffOffset::VT_JUST_U64, false)?
-     .visit_field::<u64>("maybe_u64", ScalarStuffOffset::VT_MAYBE_U64, false)?
-     .visit_field::<u64>("default_u64", ScalarStuffOffset::VT_DEFAULT_U64, false)?
-     .visit_field::<f32>("just_f32", ScalarStuffOffset::VT_JUST_F32, false)?
-     .visit_field::<f32>("maybe_f32", ScalarStuffOffset::VT_MAYBE_F32, false)?
-     .visit_field::<f32>("default_f32", ScalarStuffOffset::VT_DEFAULT_F32, false)?
-     .visit_field::<f64>("just_f64", ScalarStuffOffset::VT_JUST_F64, false)?
-     .visit_field::<f64>("maybe_f64", ScalarStuffOffset::VT_MAYBE_F64, false)?
-     .visit_field::<f64>("default_f64", ScalarStuffOffset::VT_DEFAULT_F64, false)?
-     .visit_field::<bool>("just_bool", ScalarStuffOffset::VT_JUST_BOOL, false)?
-     .visit_field::<bool>("maybe_bool", ScalarStuffOffset::VT_MAYBE_BOOL, false)?
-     .visit_field::<bool>("default_bool", ScalarStuffOffset::VT_DEFAULT_BOOL, false)?
-     .visit_field::<OptionalByte>("just_enum", ScalarStuffOffset::VT_JUST_ENUM, false)?
-     .visit_field::<OptionalByte>("maybe_enum", ScalarStuffOffset::VT_MAYBE_ENUM, false)?
-     .visit_field::<OptionalByte>("default_enum", ScalarStuffOffset::VT_DEFAULT_ENUM, false)?
+     .visit_field::<i8>("just_i8", ScalarStuff::VT_JUST_I8, false)?
+     .visit_field::<i8>("maybe_i8", ScalarStuff::VT_MAYBE_I8, false)?
+     .visit_field::<i8>("default_i8", ScalarStuff::VT_DEFAULT_I8, false)?
+     .visit_field::<u8>("just_u8", ScalarStuff::VT_JUST_U8, false)?
+     .visit_field::<u8>("maybe_u8", ScalarStuff::VT_MAYBE_U8, false)?
+     .visit_field::<u8>("default_u8", ScalarStuff::VT_DEFAULT_U8, false)?
+     .visit_field::<i16>("just_i16", ScalarStuff::VT_JUST_I16, false)?
+     .visit_field::<i16>("maybe_i16", ScalarStuff::VT_MAYBE_I16, false)?
+     .visit_field::<i16>("default_i16", ScalarStuff::VT_DEFAULT_I16, false)?
+     .visit_field::<u16>("just_u16", ScalarStuff::VT_JUST_U16, false)?
+     .visit_field::<u16>("maybe_u16", ScalarStuff::VT_MAYBE_U16, false)?
+     .visit_field::<u16>("default_u16", ScalarStuff::VT_DEFAULT_U16, false)?
+     .visit_field::<i32>("just_i32", ScalarStuff::VT_JUST_I32, false)?
+     .visit_field::<i32>("maybe_i32", ScalarStuff::VT_MAYBE_I32, false)?
+     .visit_field::<i32>("default_i32", ScalarStuff::VT_DEFAULT_I32, false)?
+     .visit_field::<u32>("just_u32", ScalarStuff::VT_JUST_U32, false)?
+     .visit_field::<u32>("maybe_u32", ScalarStuff::VT_MAYBE_U32, false)?
+     .visit_field::<u32>("default_u32", ScalarStuff::VT_DEFAULT_U32, false)?
+     .visit_field::<i64>("just_i64", ScalarStuff::VT_JUST_I64, false)?
+     .visit_field::<i64>("maybe_i64", ScalarStuff::VT_MAYBE_I64, false)?
+     .visit_field::<i64>("default_i64", ScalarStuff::VT_DEFAULT_I64, false)?
+     .visit_field::<u64>("just_u64", ScalarStuff::VT_JUST_U64, false)?
+     .visit_field::<u64>("maybe_u64", ScalarStuff::VT_MAYBE_U64, false)?
+     .visit_field::<u64>("default_u64", ScalarStuff::VT_DEFAULT_U64, false)?
+     .visit_field::<f32>("just_f32", ScalarStuff::VT_JUST_F32, false)?
+     .visit_field::<f32>("maybe_f32", ScalarStuff::VT_MAYBE_F32, false)?
+     .visit_field::<f32>("default_f32", ScalarStuff::VT_DEFAULT_F32, false)?
+     .visit_field::<f64>("just_f64", ScalarStuff::VT_JUST_F64, false)?
+     .visit_field::<f64>("maybe_f64", ScalarStuff::VT_MAYBE_F64, false)?
+     .visit_field::<f64>("default_f64", ScalarStuff::VT_DEFAULT_F64, false)?
+     .visit_field::<bool>("just_bool", ScalarStuff::VT_JUST_BOOL, false)?
+     .visit_field::<bool>("maybe_bool", ScalarStuff::VT_MAYBE_BOOL, false)?
+     .visit_field::<bool>("default_bool", ScalarStuff::VT_DEFAULT_BOOL, false)?
+     .visit_field::<OptionalByte>("just_enum", ScalarStuff::VT_JUST_ENUM, false)?
+     .visit_field::<OptionalByte>("maybe_enum", ScalarStuff::VT_MAYBE_ENUM, false)?
+     .visit_field::<OptionalByte>("default_enum", ScalarStuff::VT_DEFAULT_ENUM, false)?
      .finish();
     Ok(())
   }
@@ -590,147 +590,147 @@ pub struct ScalarStuffBuilder<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> {
 impl<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> ScalarStuffBuilder<'a, 'b, A> {
   #[inline]
   pub fn add_just_i8(&mut self, just_i8: i8) {
-    self.fbb_.push_slot::<i8>(ScalarStuffOffset::VT_JUST_I8, just_i8, 0);
+    self.fbb_.push_slot::<i8>(ScalarStuff::VT_JUST_I8, just_i8, 0);
   }
   #[inline]
   pub fn add_maybe_i8(&mut self, maybe_i8: i8) {
-    self.fbb_.push_slot_always::<i8>(ScalarStuffOffset::VT_MAYBE_I8, maybe_i8);
+    self.fbb_.push_slot_always::<i8>(ScalarStuff::VT_MAYBE_I8, maybe_i8);
   }
   #[inline]
   pub fn add_default_i8(&mut self, default_i8: i8) {
-    self.fbb_.push_slot::<i8>(ScalarStuffOffset::VT_DEFAULT_I8, default_i8, 42);
+    self.fbb_.push_slot::<i8>(ScalarStuff::VT_DEFAULT_I8, default_i8, 42);
   }
   #[inline]
   pub fn add_just_u8(&mut self, just_u8: u8) {
-    self.fbb_.push_slot::<u8>(ScalarStuffOffset::VT_JUST_U8, just_u8, 0);
+    self.fbb_.push_slot::<u8>(ScalarStuff::VT_JUST_U8, just_u8, 0);
   }
   #[inline]
   pub fn add_maybe_u8(&mut self, maybe_u8: u8) {
-    self.fbb_.push_slot_always::<u8>(ScalarStuffOffset::VT_MAYBE_U8, maybe_u8);
+    self.fbb_.push_slot_always::<u8>(ScalarStuff::VT_MAYBE_U8, maybe_u8);
   }
   #[inline]
   pub fn add_default_u8(&mut self, default_u8: u8) {
-    self.fbb_.push_slot::<u8>(ScalarStuffOffset::VT_DEFAULT_U8, default_u8, 42);
+    self.fbb_.push_slot::<u8>(ScalarStuff::VT_DEFAULT_U8, default_u8, 42);
   }
   #[inline]
   pub fn add_just_i16(&mut self, just_i16: i16) {
-    self.fbb_.push_slot::<i16>(ScalarStuffOffset::VT_JUST_I16, just_i16, 0);
+    self.fbb_.push_slot::<i16>(ScalarStuff::VT_JUST_I16, just_i16, 0);
   }
   #[inline]
   pub fn add_maybe_i16(&mut self, maybe_i16: i16) {
-    self.fbb_.push_slot_always::<i16>(ScalarStuffOffset::VT_MAYBE_I16, maybe_i16);
+    self.fbb_.push_slot_always::<i16>(ScalarStuff::VT_MAYBE_I16, maybe_i16);
   }
   #[inline]
   pub fn add_default_i16(&mut self, default_i16: i16) {
-    self.fbb_.push_slot::<i16>(ScalarStuffOffset::VT_DEFAULT_I16, default_i16, 42);
+    self.fbb_.push_slot::<i16>(ScalarStuff::VT_DEFAULT_I16, default_i16, 42);
   }
   #[inline]
   pub fn add_just_u16(&mut self, just_u16: u16) {
-    self.fbb_.push_slot::<u16>(ScalarStuffOffset::VT_JUST_U16, just_u16, 0);
+    self.fbb_.push_slot::<u16>(ScalarStuff::VT_JUST_U16, just_u16, 0);
   }
   #[inline]
   pub fn add_maybe_u16(&mut self, maybe_u16: u16) {
-    self.fbb_.push_slot_always::<u16>(ScalarStuffOffset::VT_MAYBE_U16, maybe_u16);
+    self.fbb_.push_slot_always::<u16>(ScalarStuff::VT_MAYBE_U16, maybe_u16);
   }
   #[inline]
   pub fn add_default_u16(&mut self, default_u16: u16) {
-    self.fbb_.push_slot::<u16>(ScalarStuffOffset::VT_DEFAULT_U16, default_u16, 42);
+    self.fbb_.push_slot::<u16>(ScalarStuff::VT_DEFAULT_U16, default_u16, 42);
   }
   #[inline]
   pub fn add_just_i32(&mut self, just_i32: i32) {
-    self.fbb_.push_slot::<i32>(ScalarStuffOffset::VT_JUST_I32, just_i32, 0);
+    self.fbb_.push_slot::<i32>(ScalarStuff::VT_JUST_I32, just_i32, 0);
   }
   #[inline]
   pub fn add_maybe_i32(&mut self, maybe_i32: i32) {
-    self.fbb_.push_slot_always::<i32>(ScalarStuffOffset::VT_MAYBE_I32, maybe_i32);
+    self.fbb_.push_slot_always::<i32>(ScalarStuff::VT_MAYBE_I32, maybe_i32);
   }
   #[inline]
   pub fn add_default_i32(&mut self, default_i32: i32) {
-    self.fbb_.push_slot::<i32>(ScalarStuffOffset::VT_DEFAULT_I32, default_i32, 42);
+    self.fbb_.push_slot::<i32>(ScalarStuff::VT_DEFAULT_I32, default_i32, 42);
   }
   #[inline]
   pub fn add_just_u32(&mut self, just_u32: u32) {
-    self.fbb_.push_slot::<u32>(ScalarStuffOffset::VT_JUST_U32, just_u32, 0);
+    self.fbb_.push_slot::<u32>(ScalarStuff::VT_JUST_U32, just_u32, 0);
   }
   #[inline]
   pub fn add_maybe_u32(&mut self, maybe_u32: u32) {
-    self.fbb_.push_slot_always::<u32>(ScalarStuffOffset::VT_MAYBE_U32, maybe_u32);
+    self.fbb_.push_slot_always::<u32>(ScalarStuff::VT_MAYBE_U32, maybe_u32);
   }
   #[inline]
   pub fn add_default_u32(&mut self, default_u32: u32) {
-    self.fbb_.push_slot::<u32>(ScalarStuffOffset::VT_DEFAULT_U32, default_u32, 42);
+    self.fbb_.push_slot::<u32>(ScalarStuff::VT_DEFAULT_U32, default_u32, 42);
   }
   #[inline]
   pub fn add_just_i64(&mut self, just_i64: i64) {
-    self.fbb_.push_slot::<i64>(ScalarStuffOffset::VT_JUST_I64, just_i64, 0);
+    self.fbb_.push_slot::<i64>(ScalarStuff::VT_JUST_I64, just_i64, 0);
   }
   #[inline]
   pub fn add_maybe_i64(&mut self, maybe_i64: i64) {
-    self.fbb_.push_slot_always::<i64>(ScalarStuffOffset::VT_MAYBE_I64, maybe_i64);
+    self.fbb_.push_slot_always::<i64>(ScalarStuff::VT_MAYBE_I64, maybe_i64);
   }
   #[inline]
   pub fn add_default_i64(&mut self, default_i64: i64) {
-    self.fbb_.push_slot::<i64>(ScalarStuffOffset::VT_DEFAULT_I64, default_i64, 42);
+    self.fbb_.push_slot::<i64>(ScalarStuff::VT_DEFAULT_I64, default_i64, 42);
   }
   #[inline]
   pub fn add_just_u64(&mut self, just_u64: u64) {
-    self.fbb_.push_slot::<u64>(ScalarStuffOffset::VT_JUST_U64, just_u64, 0);
+    self.fbb_.push_slot::<u64>(ScalarStuff::VT_JUST_U64, just_u64, 0);
   }
   #[inline]
   pub fn add_maybe_u64(&mut self, maybe_u64: u64) {
-    self.fbb_.push_slot_always::<u64>(ScalarStuffOffset::VT_MAYBE_U64, maybe_u64);
+    self.fbb_.push_slot_always::<u64>(ScalarStuff::VT_MAYBE_U64, maybe_u64);
   }
   #[inline]
   pub fn add_default_u64(&mut self, default_u64: u64) {
-    self.fbb_.push_slot::<u64>(ScalarStuffOffset::VT_DEFAULT_U64, default_u64, 42);
+    self.fbb_.push_slot::<u64>(ScalarStuff::VT_DEFAULT_U64, default_u64, 42);
   }
   #[inline]
   pub fn add_just_f32(&mut self, just_f32: f32) {
-    self.fbb_.push_slot::<f32>(ScalarStuffOffset::VT_JUST_F32, just_f32, 0.0);
+    self.fbb_.push_slot::<f32>(ScalarStuff::VT_JUST_F32, just_f32, 0.0);
   }
   #[inline]
   pub fn add_maybe_f32(&mut self, maybe_f32: f32) {
-    self.fbb_.push_slot_always::<f32>(ScalarStuffOffset::VT_MAYBE_F32, maybe_f32);
+    self.fbb_.push_slot_always::<f32>(ScalarStuff::VT_MAYBE_F32, maybe_f32);
   }
   #[inline]
   pub fn add_default_f32(&mut self, default_f32: f32) {
-    self.fbb_.push_slot::<f32>(ScalarStuffOffset::VT_DEFAULT_F32, default_f32, 42.0);
+    self.fbb_.push_slot::<f32>(ScalarStuff::VT_DEFAULT_F32, default_f32, 42.0);
   }
   #[inline]
   pub fn add_just_f64(&mut self, just_f64: f64) {
-    self.fbb_.push_slot::<f64>(ScalarStuffOffset::VT_JUST_F64, just_f64, 0.0);
+    self.fbb_.push_slot::<f64>(ScalarStuff::VT_JUST_F64, just_f64, 0.0);
   }
   #[inline]
   pub fn add_maybe_f64(&mut self, maybe_f64: f64) {
-    self.fbb_.push_slot_always::<f64>(ScalarStuffOffset::VT_MAYBE_F64, maybe_f64);
+    self.fbb_.push_slot_always::<f64>(ScalarStuff::VT_MAYBE_F64, maybe_f64);
   }
   #[inline]
   pub fn add_default_f64(&mut self, default_f64: f64) {
-    self.fbb_.push_slot::<f64>(ScalarStuffOffset::VT_DEFAULT_F64, default_f64, 42.0);
+    self.fbb_.push_slot::<f64>(ScalarStuff::VT_DEFAULT_F64, default_f64, 42.0);
   }
   #[inline]
   pub fn add_just_bool(&mut self, just_bool: bool) {
-    self.fbb_.push_slot::<bool>(ScalarStuffOffset::VT_JUST_BOOL, just_bool, false);
+    self.fbb_.push_slot::<bool>(ScalarStuff::VT_JUST_BOOL, just_bool, false);
   }
   #[inline]
   pub fn add_maybe_bool(&mut self, maybe_bool: bool) {
-    self.fbb_.push_slot_always::<bool>(ScalarStuffOffset::VT_MAYBE_BOOL, maybe_bool);
+    self.fbb_.push_slot_always::<bool>(ScalarStuff::VT_MAYBE_BOOL, maybe_bool);
   }
   #[inline]
   pub fn add_default_bool(&mut self, default_bool: bool) {
-    self.fbb_.push_slot::<bool>(ScalarStuffOffset::VT_DEFAULT_BOOL, default_bool, true);
+    self.fbb_.push_slot::<bool>(ScalarStuff::VT_DEFAULT_BOOL, default_bool, true);
   }
   #[inline]
   pub fn add_just_enum(&mut self, just_enum: OptionalByte) {
-    self.fbb_.push_slot::<OptionalByte>(ScalarStuffOffset::VT_JUST_ENUM, just_enum, OptionalByte::None);
+    self.fbb_.push_slot::<OptionalByte>(ScalarStuff::VT_JUST_ENUM, just_enum, OptionalByte::None);
   }
   #[inline]
   pub fn add_maybe_enum(&mut self, maybe_enum: OptionalByte) {
-    self.fbb_.push_slot_always::<OptionalByte>(ScalarStuffOffset::VT_MAYBE_ENUM, maybe_enum);
+    self.fbb_.push_slot_always::<OptionalByte>(ScalarStuff::VT_MAYBE_ENUM, maybe_enum);
   }
   #[inline]
   pub fn add_default_enum(&mut self, default_enum: OptionalByte) {
-    self.fbb_.push_slot::<OptionalByte>(ScalarStuffOffset::VT_DEFAULT_ENUM, default_enum, OptionalByte::One);
+    self.fbb_.push_slot::<OptionalByte>(ScalarStuff::VT_DEFAULT_ENUM, default_enum, OptionalByte::One);
   }
   #[inline]
   pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a, A>) -> ScalarStuffBuilder<'a, 'b, A> {
@@ -1002,15 +1002,29 @@ pub fn size_prefixed_root_as_scalar_stuff_with_opts<'b, 'o>(
 /// Assumes, without verification, that a buffer of bytes contains a ScalarStuff and returns it.
 /// # Safety
 /// Callers must trust the given bytes do indeed contain a valid `ScalarStuff`.
-pub unsafe fn root_as_scalar_stuff_unchecked<B: flatbuffers::ReadBuffer + ?Sized>(buf: &B) -> ScalarStuff<'_, B> {
-  unsafe { flatbuffers::root_unchecked::<ScalarStuff<'_, B>, B>(buf) }
+pub unsafe fn root_as_scalar_stuff_unchecked(buf: &[u8]) -> ScalarStuff {
+  unsafe { flatbuffers::root_unchecked::<ScalarStuff>(buf) }
+}
+#[inline]
+/// Like `root_as_scalar_stuff_unchecked`, for any `flatbuffers::ReadBuffer`.
+/// # Safety
+/// Callers must trust the given buffer does indeed contain a valid `ScalarStuff` and that it upholds the `ReadBuffer` contract.
+pub unsafe fn root_as_scalar_stuff_unchecked_from<B: flatbuffers::ReadBuffer + ?Sized>(buf: &B) -> ScalarStuff<'_, B> {
+  unsafe { flatbuffers::root_unchecked_from::<ScalarStuff<'_, B>, B>(buf) }
 }
 #[inline]
 /// Assumes, without verification, that a buffer of bytes contains a size prefixed ScalarStuff and returns it.
 /// # Safety
 /// Callers must trust the given bytes do indeed contain a valid size prefixed `ScalarStuff`.
-pub unsafe fn size_prefixed_root_as_scalar_stuff_unchecked<B: flatbuffers::ReadBuffer + ?Sized>(buf: &B) -> ScalarStuff<'_, B> {
-  unsafe { flatbuffers::size_prefixed_root_unchecked::<ScalarStuff<'_, B>, B>(buf) }
+pub unsafe fn size_prefixed_root_as_scalar_stuff_unchecked(buf: &[u8]) -> ScalarStuff {
+  unsafe { flatbuffers::size_prefixed_root_unchecked::<ScalarStuff>(buf) }
+}
+#[inline]
+/// Like `size_prefixed_root_as_scalar_stuff_unchecked`, for any `flatbuffers::ReadBuffer`.
+/// # Safety
+/// Callers must trust the given buffer does indeed contain a valid size prefixed `ScalarStuff` and that it upholds the `ReadBuffer` contract.
+pub unsafe fn size_prefixed_root_as_scalar_stuff_unchecked_from<B: flatbuffers::ReadBuffer + ?Sized>(buf: &B) -> ScalarStuff<'_, B> {
+  unsafe { flatbuffers::size_prefixed_root_unchecked_from::<ScalarStuff<'_, B>, B>(buf) }
 }
 pub const SCALAR_STUFF_IDENTIFIER: &str = "NULL";
 

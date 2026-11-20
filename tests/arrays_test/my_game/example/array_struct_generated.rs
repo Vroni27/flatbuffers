@@ -43,7 +43,7 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'a, B> for &'a
   type Inner = &'a ArrayStruct;
   #[inline]
   unsafe fn follow(buf: &'a B, loc: usize) -> Self::Inner {
-    unsafe { flatbuffers::follow_cast_ref::<ArrayStruct, B>(buf, loc) }
+    unsafe { flatbuffers::follow_cast_ref_from::<ArrayStruct, B>(buf, loc) }
   }
 }
 impl<'b> flatbuffers::Push for ArrayStruct {

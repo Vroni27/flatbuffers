@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-use crate::endian_scalar::read_scalar_at;
+use crate::endian_scalar::read_scalar_from;
 use crate::follow::Follow;
 use crate::primitives::*;
 use crate::read_buffer::ReadBuffer;
@@ -61,12 +61,12 @@ impl<'a, B: ReadBuffer + ?Sized> VTable<'a, B> {
 
     pub fn num_bytes(&self) -> usize {
         // Safety: Valid VTable at time of construction
-        unsafe { read_scalar_at::<VOffsetT, B>(self.buf, self.loc) as usize }
+        unsafe { read_scalar_from::<VOffsetT, B>(self.buf, self.loc) as usize }
     }
 
     pub fn object_inline_num_bytes(&self) -> usize {
         // Safety: Valid VTable at time of construction
-        let n = unsafe { read_scalar_at::<VOffsetT, B>(self.buf, self.loc + SIZE_VOFFSET) };
+        let n = unsafe { read_scalar_from::<VOffsetT, B>(self.buf, self.loc + SIZE_VOFFSET) };
         n as usize
     }
 
@@ -76,7 +76,7 @@ impl<'a, B: ReadBuffer + ?Sized> VTable<'a, B> {
         }
         // Safety: Valid VTable at time of construction
         unsafe {
-            read_scalar_at::<VOffsetT, B>(
+            read_scalar_from::<VOffsetT, B>(
                 self.buf,
                 self.loc + SIZE_VOFFSET + SIZE_VOFFSET + SIZE_VOFFSET * idx,
             )
@@ -88,7 +88,7 @@ impl<'a, B: ReadBuffer + ?Sized> VTable<'a, B> {
             return 0;
         }
         // Safety: byte_loc is within bounds of vtable
-        unsafe { read_scalar_at::<VOffsetT, B>(self.buf, self.loc + byte_loc as usize) }
+        unsafe { read_scalar_from::<VOffsetT, B>(self.buf, self.loc + byte_loc as usize) }
     }
 
     pub fn as_bytes(&self) -> &'a [u8] {

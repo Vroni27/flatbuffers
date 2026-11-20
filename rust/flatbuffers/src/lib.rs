@@ -51,14 +51,14 @@ mod vtable_writer;
 
 pub use crate::array::{array_init, emplace_scalar_array, Array};
 pub use crate::builder::{Allocator, BuildVector, DefaultAllocator, FlatBufferBuilder};
-pub use crate::endian_scalar::{emplace_scalar, read_scalar, read_scalar_at, EndianScalar};
+pub use crate::endian_scalar::{emplace_scalar, read_scalar, read_scalar_at, read_scalar_from, EndianScalar};
 pub use crate::follow::{Follow, FollowStart};
 pub use crate::read_buffer::ReadBuffer;
 pub use crate::primitives::*;
 pub use crate::push::{Push, PushAlignment};
 pub use crate::table::{buffer_has_identifier, Table};
-pub use crate::union::{TaggedUnion, UnionVectorWIPOffsets, UnionWIPOffset};
-pub use crate::vector::{follow_cast_ref, Vector, VectorIter};
+pub use crate::union::{TaggedUnion, TaggedUnionWIPOffset, UnionVectorWIPOffsets};
+pub use crate::vector::{follow_cast_ref, follow_cast_ref_from, Vector, VectorIter};
 pub use crate::verifier::{
     ErrorTraceDetail, InvalidFlatbuffer, SimpleToVerifyInSlice, TableVerifier, UnionVerifiable,
     Verifiable, Verifier, VerifierOptions,

@@ -54,22 +54,22 @@ impl AnyUniqueAliases {
   #[inline]
   pub fn tag_as_m(
     o: flatbuffers::WIPOffset<Monster>,
-  ) -> flatbuffers::UnionWIPOffset<AnyUniqueAliasesUnionValue> {
-    flatbuffers::UnionWIPOffset::new(Self::M, flatbuffers::WIPOffset::new(o.value()))
+  ) -> flatbuffers::TaggedUnionWIPOffset<AnyUniqueAliasesUnionValue> {
+    flatbuffers::TaggedUnionWIPOffset::new(AnyUniqueAliases::M, flatbuffers::WIPOffset::new(o.value()))
   }
 
   #[inline]
   pub fn tag_as_ts(
     o: flatbuffers::WIPOffset<TestSimpleTableWithEnum>,
-  ) -> flatbuffers::UnionWIPOffset<AnyUniqueAliasesUnionValue> {
-    flatbuffers::UnionWIPOffset::new(Self::TS, flatbuffers::WIPOffset::new(o.value()))
+  ) -> flatbuffers::TaggedUnionWIPOffset<AnyUniqueAliasesUnionValue> {
+    flatbuffers::TaggedUnionWIPOffset::new(AnyUniqueAliases::TS, flatbuffers::WIPOffset::new(o.value()))
   }
 
   #[inline]
   pub fn tag_as_m2(
     o: flatbuffers::WIPOffset<super::example_2::Monster>,
-  ) -> flatbuffers::UnionWIPOffset<AnyUniqueAliasesUnionValue> {
-    flatbuffers::UnionWIPOffset::new(Self::M2, flatbuffers::WIPOffset::new(o.value()))
+  ) -> flatbuffers::TaggedUnionWIPOffset<AnyUniqueAliasesUnionValue> {
+    flatbuffers::TaggedUnionWIPOffset::new(AnyUniqueAliases::M2, flatbuffers::WIPOffset::new(o.value()))
   }
 
 }
@@ -86,7 +86,7 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'a, B> for Any
   type Inner = Self;
   #[inline]
   unsafe fn follow(buf: &'a B, loc: usize) -> Self::Inner {
-    let b = unsafe { flatbuffers::read_scalar_at::<u8, B>(buf, loc) };
+    let b = unsafe { flatbuffers::read_scalar_from::<u8, B>(buf, loc) };
     Self(b)
   }
 }
@@ -226,12 +226,12 @@ impl AnyUniqueAliasesT {
       Self::M2(_) => AnyUniqueAliases::M2,
     }
   }
-  pub fn pack<'b, A: flatbuffers::Allocator + 'b>(&self, fbb: &mut flatbuffers::FlatBufferBuilder<'b, A>) -> Option<flatbuffers::WIPOffset<AnyUniqueAliasesUnionValue>> {
+  pub fn pack<'b, A: flatbuffers::Allocator + 'b>(&self, fbb: &mut flatbuffers::FlatBufferBuilder<'b, A>) -> Option<flatbuffers::WIPOffset<flatbuffers::UnionWIPOffset>> {
     match self {
       Self::NONE => None,
-        Self::M(v) => Some(AnyUniqueAliases::tag_as_m(v.pack(fbb)).value_offset()),
-        Self::TS(v) => Some(AnyUniqueAliases::tag_as_ts(v.pack(fbb)).value_offset()),
-        Self::M2(v) => Some(AnyUniqueAliases::tag_as_m2(v.pack(fbb)).value_offset()),
+        Self::M(v) => Some(AnyUniqueAliases::tag_as_m(v.pack(fbb)).value_offset().as_union_value()),
+        Self::TS(v) => Some(AnyUniqueAliases::tag_as_ts(v.pack(fbb)).value_offset().as_union_value()),
+        Self::M2(v) => Some(AnyUniqueAliases::tag_as_m2(v.pack(fbb)).value_offset().as_union_value()),
     }
   }
   /// If the union variant matches, return the owned MonsterT, setting the union to NONE.

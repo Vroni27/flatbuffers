@@ -46,8 +46,8 @@ impl UnionInNestedNS {
   #[inline]
   pub fn tag_as_table_in_nested_ns(
     o: flatbuffers::WIPOffset<TableInNestedNS>,
-  ) -> flatbuffers::UnionWIPOffset<UnionInNestedNSUnionValue> {
-    flatbuffers::UnionWIPOffset::new(Self::TableInNestedNS, flatbuffers::WIPOffset::new(o.value()))
+  ) -> flatbuffers::TaggedUnionWIPOffset<UnionInNestedNSUnionValue> {
+    flatbuffers::TaggedUnionWIPOffset::new(UnionInNestedNS::TableInNestedNS, flatbuffers::WIPOffset::new(o.value()))
   }
 
 }
@@ -64,7 +64,7 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'a, B> for Uni
   type Inner = Self;
   #[inline]
   unsafe fn follow(buf: &'a B, loc: usize) -> Self::Inner {
-    let b = unsafe { flatbuffers::read_scalar_at::<u8, B>(buf, loc) };
+    let b = unsafe { flatbuffers::read_scalar_from::<u8, B>(buf, loc) };
     Self(b)
   }
 }
@@ -180,10 +180,10 @@ impl UnionInNestedNST {
       Self::TableInNestedNS(_) => UnionInNestedNS::TableInNestedNS,
     }
   }
-  pub fn pack<'b, A: flatbuffers::Allocator + 'b>(&self, fbb: &mut flatbuffers::FlatBufferBuilder<'b, A>) -> Option<flatbuffers::WIPOffset<UnionInNestedNSUnionValue>> {
+  pub fn pack<'b, A: flatbuffers::Allocator + 'b>(&self, fbb: &mut flatbuffers::FlatBufferBuilder<'b, A>) -> Option<flatbuffers::WIPOffset<flatbuffers::UnionWIPOffset>> {
     match self {
       Self::NONE => None,
-        Self::TableInNestedNS(v) => Some(UnionInNestedNS::tag_as_table_in_nested_ns(v.pack(fbb)).value_offset()),
+        Self::TableInNestedNS(v) => Some(UnionInNestedNS::tag_as_table_in_nested_ns(v.pack(fbb)).value_offset().as_union_value()),
     }
   }
   /// If the union variant matches, return the owned TableInNestedNST, setting the union to NONE.

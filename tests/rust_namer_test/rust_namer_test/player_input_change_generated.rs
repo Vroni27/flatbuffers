@@ -9,9 +9,6 @@ use core::mem;
 use core::cmp::Ordering;
 use self::flatbuffers::{EndianScalar, Follow};
 use super::*;
-pub enum PlayerInputChangeOffset {}
-impl PlayerInputChangeOffset {
-}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Copy for PlayerInputChange<'a, B> {}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Clone for PlayerInputChange<'a, B> {
   fn clone(&self) -> Self { *self }
@@ -32,16 +29,12 @@ impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'
   }
 }
 
-impl<'a, B: flatbuffers::ReadBuffer + ?Sized> PlayerInputChange<'a, B> {
+impl<'a> PlayerInputChange<'a> {
 
   pub const fn get_fully_qualified_name() -> &'static str {
     "RustNamerTest.PlayerInputChange"
   }
 
-  #[inline]
-  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
-    PlayerInputChange { _tab: table }
-  }
   #[allow(unused_mut)]
   pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr, A: flatbuffers::Allocator + 'bldr>(
     _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr, A>,
@@ -49,6 +42,13 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> PlayerInputChange<'a, B> {
   ) -> flatbuffers::WIPOffset<PlayerInputChange<'bldr>> {
     let mut builder = PlayerInputChangeBuilder::new(_fbb);
     builder.finish()
+  }
+}
+
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> PlayerInputChange<'a, B> {
+  #[inline]
+  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
+    PlayerInputChange { _tab: table }
   }
 
   pub fn unpack(&self) -> PlayerInputChangeT {

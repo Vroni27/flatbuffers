@@ -23,14 +23,13 @@ use core::iter::{DoubleEndedIterator, ExactSizeIterator};
 use core::marker::PhantomData;
 use core::ops::{Add, AddAssign, Deref, DerefMut, Index, IndexMut, Sub, SubAssign};
 use core::ptr::write_bytes;
-use core::slice::from_raw_parts;
 
 use crate::endian_scalar::emplace_scalar;
 use crate::primitives::*;
 use crate::push::{Push, PushAlignment};
 use crate::read_scalar;
 use crate::table::Table;
-use crate::union::{TaggedUnion, UnionVectorWIPOffsets, UnionWIPOffset};
+use crate::union::{TaggedUnion, TaggedUnionWIPOffset, UnionVectorWIPOffsets};
 use crate::vector::Vector;
 use crate::vtable::{field_index_to_field_offset, VTable};
 use crate::vtable_writer::VTableWriter;
@@ -239,9 +238,7 @@ impl<'fbb, A: Allocator> FlatBufferBuilder<'fbb, A> {
     /// new object.
     pub fn reset(&mut self) {
         // memset only the part of the buffer that could be dirty:
-        self.allocator[self.head.range_to_end()]
-            .iter_mut()
-            .for_each(|x| *x = 0);
+        self.allocator[self.head.range_to_end()].iter_mut().for_each(|x| *x = 0);
 
         self.head = ReverseIndex::end();
         self.written_vtable_revpos.clear();
@@ -285,10 +282,21 @@ impl<'fbb, A: Allocator> FlatBufferBuilder<'fbb, A> {
         }
     }
 
-    /// Push a `UnionWIPOffset` into a started vector.
+    /// Push a `TaggedUnionWIPOffset` into a vector started with
+    /// `start_union_vector`. Items are pushed in reverse order, like
+    /// `start_vector`.
+    ///
+    /// # Panics
+    ///
+    /// Panics if more items are pushed than were announced in
+    /// `start_union_vector`.
     #[inline]
-    pub fn push_union_vector_item<T: TaggedUnion>(&mut self, x: UnionWIPOffset<T>) {
+    pub fn push_union_vector_item<T: TaggedUnion>(&mut self, x: TaggedUnionWIPOffset<T>) {
         self.assert_nested("push_union_vector_item");
+        assert!(
+            self.pending_tags_count > 0,
+            "push_union_vector_item: more items pushed than announced in start_union_vector"
+        );
         self.pending_tags_count -= 1;
         let tag_value = x.tag().into();
         self.pending_tags[self.pending_tags_count] = tag_value;
@@ -416,11 +424,11 @@ impl<'fbb, A: Allocator> FlatBufferBuilder<'fbb, A> {
         let tags_len = num_elems * u8::size();
         self.align(tags_len, u8::alignment().max_of(SIZE_UOFFSET));
 
-        let bytes = {
-            let ptr = self.pending_tags.as_ptr();
-            unsafe { from_raw_parts(ptr, tags_len) }
-        };
-        self.push_bytes_unprefixed(bytes);
+        let mut tags = core::mem::take(&mut self.pending_tags);
+        self.push_bytes_unprefixed(&tags);
+        // Keep the allocation for the next union vector.
+        tags.clear();
+        self.pending_tags = tags;
         let t = self.push::<UOffsetT>(num_elems as UOffsetT);
         UnionVectorWIPOffsets::new(WIPOffset::new(t.value()), WIPOffset::new(o.value()))
     }
@@ -490,7 +498,7 @@ impl<'fbb, A: Allocator> FlatBufferBuilder<'fbb, A> {
     #[inline]
     pub fn create_vector_of_unions<'a: 'b, 'b, T: TaggedUnion + 'b>(
         &'a mut self,
-        items: &'b [UnionWIPOffset<T>],
+        items: &'b [TaggedUnionWIPOffset<T>],
     ) -> UnionVectorWIPOffsets<'fbb, T> {
         self.assert_not_nested("create_vector_of_unions can not be called when a table or vector is under construction");
         let item_size = WIPOffset::<T>::size();
@@ -738,15 +746,13 @@ impl<'fbb, A: Allocator> FlatBufferBuilder<'fbb, A> {
             }
         }
         let new_vt_bytes = &self.allocator[vt_start_pos.range_to(vt_end_pos)];
-        let found = self
-            .written_vtable_revpos
-            .binary_search_by(|old_vtable_revpos: &UOffsetT| {
-                let old_vtable_pos = self.allocator.len() - *old_vtable_revpos as usize;
-                // Safety:
-                // Already written vtables are valid by construction
-                let old_vtable = unsafe { VTable::init(&*self.allocator, old_vtable_pos) };
-                new_vt_bytes.cmp(old_vtable.as_bytes())
-            });
+        let found = self.written_vtable_revpos.binary_search_by(|old_vtable_revpos: &UOffsetT| {
+            let old_vtable_pos = self.allocator.len() - *old_vtable_revpos as usize;
+            // Safety:
+            // Already written vtables are valid by construction
+            let old_vtable = unsafe { VTable::init(&*self.allocator, old_vtable_pos) };
+            new_vt_bytes.cmp(old_vtable.as_bytes())
+        });
         let final_vtable_revpos = match found {
             Ok(i) => {
                 // The new vtable is a duplicate so clear it.
@@ -791,9 +797,7 @@ impl<'fbb, A: Allocator> FlatBufferBuilder<'fbb, A> {
     #[inline]
     fn grow_allocator(&mut self) {
         let starting_active_size = self.used_space();
-        self.allocator
-            .grow_downwards()
-            .expect("Flatbuffer allocation failure");
+        self.allocator.grow_downwards().expect("Flatbuffer allocation failure");
 
         let ending_active_size = self.used_space();
         debug_assert_eq!(starting_active_size, ending_active_size);
@@ -819,11 +823,7 @@ impl<'fbb, A: Allocator> FlatBufferBuilder<'fbb, A> {
             // for the size prefix:
             let b = if size_prefixed { SIZE_UOFFSET } else { 0 };
             // for the file identifier (a string that is not zero-terminated):
-            let c = if file_identifier.is_some() {
-                FILE_IDENTIFIER_LENGTH
-            } else {
-                0
-            };
+            let c = if file_identifier.is_some() { FILE_IDENTIFIER_LENGTH } else { 0 };
             a + b + c
         };
 
@@ -896,10 +896,7 @@ impl<'fbb, A: Allocator> FlatBufferBuilder<'fbb, A> {
         if self.unused_ready_space() >= want {
             return want;
         }
-        assert!(
-            want <= FLATBUFFERS_MAX_BUFFER_SIZE,
-            "cannot grow buffer beyond 2 gigabytes"
-        );
+        assert!(want <= FLATBUFFERS_MAX_BUFFER_SIZE, "cannot grow buffer beyond 2 gigabytes");
 
         while self.unused_ready_space() < want {
             self.grow_allocator();
