@@ -200,7 +200,7 @@ pub fn size_prefixed_root_as_array_table_with_opts<'b, 'o>(
 /// Assumes, without verification, that a buffer of bytes contains a ArrayTable and returns it.
 /// # Safety
 /// Callers must trust the given bytes do indeed contain a valid `ArrayTable`.
-pub unsafe fn root_as_array_table_unchecked(buf: &[u8]) -> ArrayTable {
+pub unsafe fn root_as_array_table_unchecked(buf: &[u8]) -> ArrayTable<'_> {
   unsafe { flatbuffers::root_unchecked::<ArrayTable>(buf) }
 }
 #[inline]
@@ -214,7 +214,7 @@ pub unsafe fn root_as_array_table_unchecked_from<B: flatbuffers::ReadBuffer + ?S
 /// Assumes, without verification, that a buffer of bytes contains a size prefixed ArrayTable and returns it.
 /// # Safety
 /// Callers must trust the given bytes do indeed contain a valid size prefixed `ArrayTable`.
-pub unsafe fn size_prefixed_root_as_array_table_unchecked(buf: &[u8]) -> ArrayTable {
+pub unsafe fn size_prefixed_root_as_array_table_unchecked(buf: &[u8]) -> ArrayTable<'_> {
   unsafe { flatbuffers::size_prefixed_root_unchecked::<ArrayTable>(buf) }
 }
 #[inline]

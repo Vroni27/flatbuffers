@@ -453,7 +453,7 @@ pub fn size_prefixed_root_as_monster_with_opts<'b, 'o>(
 /// Assumes, without verification, that a buffer of bytes contains a Monster and returns it.
 /// # Safety
 /// Callers must trust the given bytes do indeed contain a valid `Monster`.
-pub unsafe fn root_as_monster_unchecked(buf: &[u8]) -> Monster {
+pub unsafe fn root_as_monster_unchecked(buf: &[u8]) -> Monster<'_> {
   unsafe { flatbuffers::root_unchecked::<Monster>(buf) }
 }
 #[inline]
@@ -467,7 +467,7 @@ pub unsafe fn root_as_monster_unchecked_from<B: flatbuffers::ReadBuffer + ?Sized
 /// Assumes, without verification, that a buffer of bytes contains a size prefixed Monster and returns it.
 /// # Safety
 /// Callers must trust the given bytes do indeed contain a valid size prefixed `Monster`.
-pub unsafe fn size_prefixed_root_as_monster_unchecked(buf: &[u8]) -> Monster {
+pub unsafe fn size_prefixed_root_as_monster_unchecked(buf: &[u8]) -> Monster<'_> {
   unsafe { flatbuffers::size_prefixed_root_unchecked::<Monster>(buf) }
 }
 #[inline]

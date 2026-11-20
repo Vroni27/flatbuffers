@@ -59,15 +59,15 @@ impl SDxorSDG {
   #[inline]
   pub fn tag_as_sd(
     o: flatbuffers::WIPOffset<SD>,
-  ) -> flatbuffers::UnionWIPOffset<SDxorSDGUnionValue> {
-    flatbuffers::UnionWIPOffset::new(Self::SD, flatbuffers::WIPOffset::new(o.value()))
+  ) -> flatbuffers::TaggedUnionWIPOffset<SDxorSDGUnionValue> {
+    flatbuffers::TaggedUnionWIPOffset::new(SDxorSDG::SD, flatbuffers::WIPOffset::new(o.value()))
   }
 
   #[inline]
   pub fn tag_as_sdg(
     o: flatbuffers::WIPOffset<SDG>,
-  ) -> flatbuffers::UnionWIPOffset<SDxorSDGUnionValue> {
-    flatbuffers::UnionWIPOffset::new(Self::SDG, flatbuffers::WIPOffset::new(o.value()))
+  ) -> flatbuffers::TaggedUnionWIPOffset<SDxorSDGUnionValue> {
+    flatbuffers::TaggedUnionWIPOffset::new(SDxorSDG::SDG, flatbuffers::WIPOffset::new(o.value()))
   }
 
 }
@@ -84,7 +84,7 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'a, B> for SDx
   type Inner = Self;
   #[inline]
   unsafe fn follow(buf: &'a B, loc: usize) -> Self::Inner {
-    let b = unsafe { flatbuffers::read_scalar_at::<u8, B>(buf, loc) };
+    let b = unsafe { flatbuffers::read_scalar_from::<u8, B>(buf, loc) };
     Self(b)
   }
 }
@@ -246,7 +246,7 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'a, B> for Dia
   type Inner = Self;
   #[inline]
   unsafe fn follow(buf: &'a B, loc: usize) -> Self::Inner {
-    let b = unsafe { flatbuffers::read_scalar_at::<i8, B>(buf, loc) };
+    let b = unsafe { flatbuffers::read_scalar_from::<i8, B>(buf, loc) };
     Self(b)
   }
 }
@@ -336,7 +336,7 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'a, B> for Ter
   type Inner = Self;
   #[inline]
   unsafe fn follow(buf: &'a B, loc: usize) -> Self::Inner {
-    let b = unsafe { flatbuffers::read_scalar_at::<i8, B>(buf, loc) };
+    let b = unsafe { flatbuffers::read_scalar_from::<i8, B>(buf, loc) };
     Self(b)
   }
 }
@@ -446,7 +446,7 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'a, B> for Dat
   type Inner = Self;
   #[inline]
   unsafe fn follow(buf: &'a B, loc: usize) -> Self::Inner {
-    let b = unsafe { flatbuffers::read_scalar_at::<i8, B>(buf, loc) };
+    let b = unsafe { flatbuffers::read_scalar_from::<i8, B>(buf, loc) };
     Self(b)
   }
 }
@@ -534,29 +534,29 @@ impl SpecificDataType {
   #[inline]
   pub fn tag_as_leading_length_info_type(
     o: flatbuffers::WIPOffset<LeadingLengthInfoType>,
-  ) -> flatbuffers::UnionWIPOffset<SpecificDataTypeUnionValue> {
-    flatbuffers::UnionWIPOffset::new(Self::LeadingLengthInfoType, flatbuffers::WIPOffset::new(o.value()))
+  ) -> flatbuffers::TaggedUnionWIPOffset<SpecificDataTypeUnionValue> {
+    flatbuffers::TaggedUnionWIPOffset::new(SpecificDataType::LeadingLengthInfoType, flatbuffers::WIPOffset::new(o.value()))
   }
 
   #[inline]
   pub fn tag_as_min_max_length_type(
     o: flatbuffers::WIPOffset<MinMaxLengthType>,
-  ) -> flatbuffers::UnionWIPOffset<SpecificDataTypeUnionValue> {
-    flatbuffers::UnionWIPOffset::new(Self::MinMaxLengthType, flatbuffers::WIPOffset::new(o.value()))
+  ) -> flatbuffers::TaggedUnionWIPOffset<SpecificDataTypeUnionValue> {
+    flatbuffers::TaggedUnionWIPOffset::new(SpecificDataType::MinMaxLengthType, flatbuffers::WIPOffset::new(o.value()))
   }
 
   #[inline]
   pub fn tag_as_param_length_info_type(
     o: flatbuffers::WIPOffset<ParamLengthInfoType>,
-  ) -> flatbuffers::UnionWIPOffset<SpecificDataTypeUnionValue> {
-    flatbuffers::UnionWIPOffset::new(Self::ParamLengthInfoType, flatbuffers::WIPOffset::new(o.value()))
+  ) -> flatbuffers::TaggedUnionWIPOffset<SpecificDataTypeUnionValue> {
+    flatbuffers::TaggedUnionWIPOffset::new(SpecificDataType::ParamLengthInfoType, flatbuffers::WIPOffset::new(o.value()))
   }
 
   #[inline]
   pub fn tag_as_standard_length_type(
     o: flatbuffers::WIPOffset<StandardLengthType>,
-  ) -> flatbuffers::UnionWIPOffset<SpecificDataTypeUnionValue> {
-    flatbuffers::UnionWIPOffset::new(Self::StandardLengthType, flatbuffers::WIPOffset::new(o.value()))
+  ) -> flatbuffers::TaggedUnionWIPOffset<SpecificDataTypeUnionValue> {
+    flatbuffers::TaggedUnionWIPOffset::new(SpecificDataType::StandardLengthType, flatbuffers::WIPOffset::new(o.value()))
   }
 
 }
@@ -573,7 +573,7 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'a, B> for Spe
   type Inner = Self;
   #[inline]
   unsafe fn follow(buf: &'a B, loc: usize) -> Self::Inner {
-    let b = unsafe { flatbuffers::read_scalar_at::<u8, B>(buf, loc) };
+    let b = unsafe { flatbuffers::read_scalar_from::<u8, B>(buf, loc) };
     Self(b)
   }
 }
@@ -751,7 +751,7 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'a, B> for Int
   type Inner = Self;
   #[inline]
   unsafe fn follow(buf: &'a B, loc: usize) -> Self::Inner {
-    let b = unsafe { flatbuffers::read_scalar_at::<i8, B>(buf, loc) };
+    let b = unsafe { flatbuffers::read_scalar_from::<i8, B>(buf, loc) };
     Self(b)
   }
 }
@@ -861,7 +861,7 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'a, B> for Com
   type Inner = Self;
   #[inline]
   unsafe fn follow(buf: &'a B, loc: usize) -> Self::Inner {
-    let b = unsafe { flatbuffers::read_scalar_at::<i8, B>(buf, loc) };
+    let b = unsafe { flatbuffers::read_scalar_from::<i8, B>(buf, loc) };
     Self(b)
   }
 }
@@ -971,7 +971,7 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'a, B> for Phy
   type Inner = Self;
   #[inline]
   unsafe fn follow(buf: &'a B, loc: usize) -> Self::Inner {
-    let b = unsafe { flatbuffers::read_scalar_at::<i8, B>(buf, loc) };
+    let b = unsafe { flatbuffers::read_scalar_from::<i8, B>(buf, loc) };
     Self(b)
   }
 }
@@ -1065,7 +1065,7 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'a, B> for Rad
   type Inner = Self;
   #[inline]
   unsafe fn follow(buf: &'a B, loc: usize) -> Self::Inner {
-    let b = unsafe { flatbuffers::read_scalar_at::<i8, B>(buf, loc) };
+    let b = unsafe { flatbuffers::read_scalar_from::<i8, B>(buf, loc) };
     Self(b)
   }
 }
@@ -1159,7 +1159,7 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'a, B> for Val
   type Inner = Self;
   #[inline]
   unsafe fn follow(buf: &'a B, loc: usize) -> Self::Inner {
-    let b = unsafe { flatbuffers::read_scalar_at::<i8, B>(buf, loc) };
+    let b = unsafe { flatbuffers::read_scalar_from::<i8, B>(buf, loc) };
     Self(b)
   }
 }
@@ -1277,7 +1277,7 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'a, B> for DOP
   type Inner = Self;
   #[inline]
   unsafe fn follow(buf: &'a B, loc: usize) -> Self::Inner {
-    let b = unsafe { flatbuffers::read_scalar_at::<i8, B>(buf, loc) };
+    let b = unsafe { flatbuffers::read_scalar_from::<i8, B>(buf, loc) };
     Self(b)
   }
 }
@@ -1385,64 +1385,64 @@ impl SpecificDOPData {
   #[inline]
   pub fn tag_as_normal_dop(
     o: flatbuffers::WIPOffset<NormalDOP>,
-  ) -> flatbuffers::UnionWIPOffset<SpecificDOPDataUnionValue> {
-    flatbuffers::UnionWIPOffset::new(Self::NormalDOP, flatbuffers::WIPOffset::new(o.value()))
+  ) -> flatbuffers::TaggedUnionWIPOffset<SpecificDOPDataUnionValue> {
+    flatbuffers::TaggedUnionWIPOffset::new(SpecificDOPData::NormalDOP, flatbuffers::WIPOffset::new(o.value()))
   }
 
   #[inline]
   pub fn tag_as_end_of_pdu_field(
     o: flatbuffers::WIPOffset<EndOfPduField>,
-  ) -> flatbuffers::UnionWIPOffset<SpecificDOPDataUnionValue> {
-    flatbuffers::UnionWIPOffset::new(Self::EndOfPduField, flatbuffers::WIPOffset::new(o.value()))
+  ) -> flatbuffers::TaggedUnionWIPOffset<SpecificDOPDataUnionValue> {
+    flatbuffers::TaggedUnionWIPOffset::new(SpecificDOPData::EndOfPduField, flatbuffers::WIPOffset::new(o.value()))
   }
 
   #[inline]
   pub fn tag_as_static_field(
     o: flatbuffers::WIPOffset<StaticField>,
-  ) -> flatbuffers::UnionWIPOffset<SpecificDOPDataUnionValue> {
-    flatbuffers::UnionWIPOffset::new(Self::StaticField, flatbuffers::WIPOffset::new(o.value()))
+  ) -> flatbuffers::TaggedUnionWIPOffset<SpecificDOPDataUnionValue> {
+    flatbuffers::TaggedUnionWIPOffset::new(SpecificDOPData::StaticField, flatbuffers::WIPOffset::new(o.value()))
   }
 
   #[inline]
   pub fn tag_as_env_data_desc(
     o: flatbuffers::WIPOffset<EnvDataDesc>,
-  ) -> flatbuffers::UnionWIPOffset<SpecificDOPDataUnionValue> {
-    flatbuffers::UnionWIPOffset::new(Self::EnvDataDesc, flatbuffers::WIPOffset::new(o.value()))
+  ) -> flatbuffers::TaggedUnionWIPOffset<SpecificDOPDataUnionValue> {
+    flatbuffers::TaggedUnionWIPOffset::new(SpecificDOPData::EnvDataDesc, flatbuffers::WIPOffset::new(o.value()))
   }
 
   #[inline]
   pub fn tag_as_env_data(
     o: flatbuffers::WIPOffset<EnvData>,
-  ) -> flatbuffers::UnionWIPOffset<SpecificDOPDataUnionValue> {
-    flatbuffers::UnionWIPOffset::new(Self::EnvData, flatbuffers::WIPOffset::new(o.value()))
+  ) -> flatbuffers::TaggedUnionWIPOffset<SpecificDOPDataUnionValue> {
+    flatbuffers::TaggedUnionWIPOffset::new(SpecificDOPData::EnvData, flatbuffers::WIPOffset::new(o.value()))
   }
 
   #[inline]
   pub fn tag_as_dtcdop(
     o: flatbuffers::WIPOffset<DTCDOP>,
-  ) -> flatbuffers::UnionWIPOffset<SpecificDOPDataUnionValue> {
-    flatbuffers::UnionWIPOffset::new(Self::DTCDOP, flatbuffers::WIPOffset::new(o.value()))
+  ) -> flatbuffers::TaggedUnionWIPOffset<SpecificDOPDataUnionValue> {
+    flatbuffers::TaggedUnionWIPOffset::new(SpecificDOPData::DTCDOP, flatbuffers::WIPOffset::new(o.value()))
   }
 
   #[inline]
   pub fn tag_as_structure(
     o: flatbuffers::WIPOffset<Structure>,
-  ) -> flatbuffers::UnionWIPOffset<SpecificDOPDataUnionValue> {
-    flatbuffers::UnionWIPOffset::new(Self::Structure, flatbuffers::WIPOffset::new(o.value()))
+  ) -> flatbuffers::TaggedUnionWIPOffset<SpecificDOPDataUnionValue> {
+    flatbuffers::TaggedUnionWIPOffset::new(SpecificDOPData::Structure, flatbuffers::WIPOffset::new(o.value()))
   }
 
   #[inline]
   pub fn tag_as_muxdop(
     o: flatbuffers::WIPOffset<MUXDOP>,
-  ) -> flatbuffers::UnionWIPOffset<SpecificDOPDataUnionValue> {
-    flatbuffers::UnionWIPOffset::new(Self::MUXDOP, flatbuffers::WIPOffset::new(o.value()))
+  ) -> flatbuffers::TaggedUnionWIPOffset<SpecificDOPDataUnionValue> {
+    flatbuffers::TaggedUnionWIPOffset::new(SpecificDOPData::MUXDOP, flatbuffers::WIPOffset::new(o.value()))
   }
 
   #[inline]
   pub fn tag_as_dynamic_length_field(
     o: flatbuffers::WIPOffset<DynamicLengthField>,
-  ) -> flatbuffers::UnionWIPOffset<SpecificDOPDataUnionValue> {
-    flatbuffers::UnionWIPOffset::new(Self::DynamicLengthField, flatbuffers::WIPOffset::new(o.value()))
+  ) -> flatbuffers::TaggedUnionWIPOffset<SpecificDOPDataUnionValue> {
+    flatbuffers::TaggedUnionWIPOffset::new(SpecificDOPData::DynamicLengthField, flatbuffers::WIPOffset::new(o.value()))
   }
 
 }
@@ -1459,7 +1459,7 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'a, B> for Spe
   type Inner = Self;
   #[inline]
   unsafe fn follow(buf: &'a B, loc: usize) -> Self::Inner {
-    let b = unsafe { flatbuffers::read_scalar_at::<u8, B>(buf, loc) };
+    let b = unsafe { flatbuffers::read_scalar_from::<u8, B>(buf, loc) };
     Self(b)
   }
 }
@@ -1677,15 +1677,15 @@ impl DiagServiceOrJob {
   #[inline]
   pub fn tag_as_diag_service(
     o: flatbuffers::WIPOffset<DiagService>,
-  ) -> flatbuffers::UnionWIPOffset<DiagServiceOrJobUnionValue> {
-    flatbuffers::UnionWIPOffset::new(Self::DiagService, flatbuffers::WIPOffset::new(o.value()))
+  ) -> flatbuffers::TaggedUnionWIPOffset<DiagServiceOrJobUnionValue> {
+    flatbuffers::TaggedUnionWIPOffset::new(DiagServiceOrJob::DiagService, flatbuffers::WIPOffset::new(o.value()))
   }
 
   #[inline]
   pub fn tag_as_single_ecu_job(
     o: flatbuffers::WIPOffset<SingleEcuJob>,
-  ) -> flatbuffers::UnionWIPOffset<DiagServiceOrJobUnionValue> {
-    flatbuffers::UnionWIPOffset::new(Self::SingleEcuJob, flatbuffers::WIPOffset::new(o.value()))
+  ) -> flatbuffers::TaggedUnionWIPOffset<DiagServiceOrJobUnionValue> {
+    flatbuffers::TaggedUnionWIPOffset::new(DiagServiceOrJob::SingleEcuJob, flatbuffers::WIPOffset::new(o.value()))
   }
 
 }
@@ -1702,7 +1702,7 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'a, B> for Dia
   type Inner = Self;
   #[inline]
   unsafe fn follow(buf: &'a B, loc: usize) -> Self::Inner {
-    let b = unsafe { flatbuffers::read_scalar_at::<u8, B>(buf, loc) };
+    let b = unsafe { flatbuffers::read_scalar_from::<u8, B>(buf, loc) };
     Self(b)
   }
 }
@@ -1896,7 +1896,7 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'a, B> for Par
   type Inner = Self;
   #[inline]
   unsafe fn follow(buf: &'a B, loc: usize) -> Self::Inner {
-    let b = unsafe { flatbuffers::read_scalar_at::<i8, B>(buf, loc) };
+    let b = unsafe { flatbuffers::read_scalar_from::<i8, B>(buf, loc) };
     Self(b)
   }
 }
@@ -1982,7 +1982,7 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'a, B> for Tab
   type Inner = Self;
   #[inline]
   unsafe fn follow(buf: &'a B, loc: usize) -> Self::Inner {
-    let b = unsafe { flatbuffers::read_scalar_at::<i8, B>(buf, loc) };
+    let b = unsafe { flatbuffers::read_scalar_from::<i8, B>(buf, loc) };
     Self(b)
   }
 }
@@ -2062,15 +2062,15 @@ impl TableKeyReference {
   #[inline]
   pub fn tag_as_table_dop(
     o: flatbuffers::WIPOffset<TableDop>,
-  ) -> flatbuffers::UnionWIPOffset<TableKeyReferenceUnionValue> {
-    flatbuffers::UnionWIPOffset::new(Self::TableDop, flatbuffers::WIPOffset::new(o.value()))
+  ) -> flatbuffers::TaggedUnionWIPOffset<TableKeyReferenceUnionValue> {
+    flatbuffers::TaggedUnionWIPOffset::new(TableKeyReference::TableDop, flatbuffers::WIPOffset::new(o.value()))
   }
 
   #[inline]
   pub fn tag_as_table_row(
     o: flatbuffers::WIPOffset<TableRow>,
-  ) -> flatbuffers::UnionWIPOffset<TableKeyReferenceUnionValue> {
-    flatbuffers::UnionWIPOffset::new(Self::TableRow, flatbuffers::WIPOffset::new(o.value()))
+  ) -> flatbuffers::TaggedUnionWIPOffset<TableKeyReferenceUnionValue> {
+    flatbuffers::TaggedUnionWIPOffset::new(TableKeyReference::TableRow, flatbuffers::WIPOffset::new(o.value()))
   }
 
 }
@@ -2087,7 +2087,7 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'a, B> for Tab
   type Inner = Self;
   #[inline]
   unsafe fn follow(buf: &'a B, loc: usize) -> Self::Inner {
-    let b = unsafe { flatbuffers::read_scalar_at::<u8, B>(buf, loc) };
+    let b = unsafe { flatbuffers::read_scalar_from::<u8, B>(buf, loc) };
     Self(b)
   }
 }
@@ -2275,85 +2275,85 @@ impl ParamSpecificData {
   #[inline]
   pub fn tag_as_coded_const(
     o: flatbuffers::WIPOffset<CodedConst>,
-  ) -> flatbuffers::UnionWIPOffset<ParamSpecificDataUnionValue> {
-    flatbuffers::UnionWIPOffset::new(Self::CodedConst, flatbuffers::WIPOffset::new(o.value()))
+  ) -> flatbuffers::TaggedUnionWIPOffset<ParamSpecificDataUnionValue> {
+    flatbuffers::TaggedUnionWIPOffset::new(ParamSpecificData::CodedConst, flatbuffers::WIPOffset::new(o.value()))
   }
 
   #[inline]
   pub fn tag_as_dynamic(
     o: flatbuffers::WIPOffset<Dynamic>,
-  ) -> flatbuffers::UnionWIPOffset<ParamSpecificDataUnionValue> {
-    flatbuffers::UnionWIPOffset::new(Self::Dynamic, flatbuffers::WIPOffset::new(o.value()))
+  ) -> flatbuffers::TaggedUnionWIPOffset<ParamSpecificDataUnionValue> {
+    flatbuffers::TaggedUnionWIPOffset::new(ParamSpecificData::Dynamic, flatbuffers::WIPOffset::new(o.value()))
   }
 
   #[inline]
   pub fn tag_as_matching_request_param(
     o: flatbuffers::WIPOffset<MatchingRequestParam>,
-  ) -> flatbuffers::UnionWIPOffset<ParamSpecificDataUnionValue> {
-    flatbuffers::UnionWIPOffset::new(Self::MatchingRequestParam, flatbuffers::WIPOffset::new(o.value()))
+  ) -> flatbuffers::TaggedUnionWIPOffset<ParamSpecificDataUnionValue> {
+    flatbuffers::TaggedUnionWIPOffset::new(ParamSpecificData::MatchingRequestParam, flatbuffers::WIPOffset::new(o.value()))
   }
 
   #[inline]
   pub fn tag_as_nrc_const(
     o: flatbuffers::WIPOffset<NrcConst>,
-  ) -> flatbuffers::UnionWIPOffset<ParamSpecificDataUnionValue> {
-    flatbuffers::UnionWIPOffset::new(Self::NrcConst, flatbuffers::WIPOffset::new(o.value()))
+  ) -> flatbuffers::TaggedUnionWIPOffset<ParamSpecificDataUnionValue> {
+    flatbuffers::TaggedUnionWIPOffset::new(ParamSpecificData::NrcConst, flatbuffers::WIPOffset::new(o.value()))
   }
 
   #[inline]
   pub fn tag_as_phys_const(
     o: flatbuffers::WIPOffset<PhysConst>,
-  ) -> flatbuffers::UnionWIPOffset<ParamSpecificDataUnionValue> {
-    flatbuffers::UnionWIPOffset::new(Self::PhysConst, flatbuffers::WIPOffset::new(o.value()))
+  ) -> flatbuffers::TaggedUnionWIPOffset<ParamSpecificDataUnionValue> {
+    flatbuffers::TaggedUnionWIPOffset::new(ParamSpecificData::PhysConst, flatbuffers::WIPOffset::new(o.value()))
   }
 
   #[inline]
   pub fn tag_as_reserved(
     o: flatbuffers::WIPOffset<Reserved>,
-  ) -> flatbuffers::UnionWIPOffset<ParamSpecificDataUnionValue> {
-    flatbuffers::UnionWIPOffset::new(Self::Reserved, flatbuffers::WIPOffset::new(o.value()))
+  ) -> flatbuffers::TaggedUnionWIPOffset<ParamSpecificDataUnionValue> {
+    flatbuffers::TaggedUnionWIPOffset::new(ParamSpecificData::Reserved, flatbuffers::WIPOffset::new(o.value()))
   }
 
   #[inline]
   pub fn tag_as_value(
     o: flatbuffers::WIPOffset<Value>,
-  ) -> flatbuffers::UnionWIPOffset<ParamSpecificDataUnionValue> {
-    flatbuffers::UnionWIPOffset::new(Self::Value, flatbuffers::WIPOffset::new(o.value()))
+  ) -> flatbuffers::TaggedUnionWIPOffset<ParamSpecificDataUnionValue> {
+    flatbuffers::TaggedUnionWIPOffset::new(ParamSpecificData::Value, flatbuffers::WIPOffset::new(o.value()))
   }
 
   #[inline]
   pub fn tag_as_table_entry(
     o: flatbuffers::WIPOffset<TableEntry>,
-  ) -> flatbuffers::UnionWIPOffset<ParamSpecificDataUnionValue> {
-    flatbuffers::UnionWIPOffset::new(Self::TableEntry, flatbuffers::WIPOffset::new(o.value()))
+  ) -> flatbuffers::TaggedUnionWIPOffset<ParamSpecificDataUnionValue> {
+    flatbuffers::TaggedUnionWIPOffset::new(ParamSpecificData::TableEntry, flatbuffers::WIPOffset::new(o.value()))
   }
 
   #[inline]
   pub fn tag_as_table_key(
     o: flatbuffers::WIPOffset<TableKey>,
-  ) -> flatbuffers::UnionWIPOffset<ParamSpecificDataUnionValue> {
-    flatbuffers::UnionWIPOffset::new(Self::TableKey, flatbuffers::WIPOffset::new(o.value()))
+  ) -> flatbuffers::TaggedUnionWIPOffset<ParamSpecificDataUnionValue> {
+    flatbuffers::TaggedUnionWIPOffset::new(ParamSpecificData::TableKey, flatbuffers::WIPOffset::new(o.value()))
   }
 
   #[inline]
   pub fn tag_as_table_struct(
     o: flatbuffers::WIPOffset<TableStruct>,
-  ) -> flatbuffers::UnionWIPOffset<ParamSpecificDataUnionValue> {
-    flatbuffers::UnionWIPOffset::new(Self::TableStruct, flatbuffers::WIPOffset::new(o.value()))
+  ) -> flatbuffers::TaggedUnionWIPOffset<ParamSpecificDataUnionValue> {
+    flatbuffers::TaggedUnionWIPOffset::new(ParamSpecificData::TableStruct, flatbuffers::WIPOffset::new(o.value()))
   }
 
   #[inline]
   pub fn tag_as_system(
     o: flatbuffers::WIPOffset<System>,
-  ) -> flatbuffers::UnionWIPOffset<ParamSpecificDataUnionValue> {
-    flatbuffers::UnionWIPOffset::new(Self::System, flatbuffers::WIPOffset::new(o.value()))
+  ) -> flatbuffers::TaggedUnionWIPOffset<ParamSpecificDataUnionValue> {
+    flatbuffers::TaggedUnionWIPOffset::new(ParamSpecificData::System, flatbuffers::WIPOffset::new(o.value()))
   }
 
   #[inline]
   pub fn tag_as_length_key_ref(
     o: flatbuffers::WIPOffset<LengthKeyRef>,
-  ) -> flatbuffers::UnionWIPOffset<ParamSpecificDataUnionValue> {
-    flatbuffers::UnionWIPOffset::new(Self::LengthKeyRef, flatbuffers::WIPOffset::new(o.value()))
+  ) -> flatbuffers::TaggedUnionWIPOffset<ParamSpecificDataUnionValue> {
+    flatbuffers::TaggedUnionWIPOffset::new(ParamSpecificData::LengthKeyRef, flatbuffers::WIPOffset::new(o.value()))
   }
 
 }
@@ -2370,7 +2370,7 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'a, B> for Par
   type Inner = Self;
   #[inline]
   unsafe fn follow(buf: &'a B, loc: usize) -> Self::Inner {
-    let b = unsafe { flatbuffers::read_scalar_at::<u8, B>(buf, loc) };
+    let b = unsafe { flatbuffers::read_scalar_from::<u8, B>(buf, loc) };
     Self(b)
   }
 }
@@ -2628,7 +2628,7 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'a, B> for Res
   type Inner = Self;
   #[inline]
   unsafe fn follow(buf: &'a B, loc: usize) -> Self::Inner {
-    let b = unsafe { flatbuffers::read_scalar_at::<i8, B>(buf, loc) };
+    let b = unsafe { flatbuffers::read_scalar_from::<i8, B>(buf, loc) };
     Self(b)
   }
 }
@@ -2730,7 +2730,7 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'a, B> for Dia
   type Inner = Self;
   #[inline]
   unsafe fn follow(buf: &'a B, loc: usize) -> Self::Inner {
-    let b = unsafe { flatbuffers::read_scalar_at::<i8, B>(buf, loc) };
+    let b = unsafe { flatbuffers::read_scalar_from::<i8, B>(buf, loc) };
     Self(b)
   }
 }
@@ -2824,7 +2824,7 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'a, B> for Tra
   type Inner = Self;
   #[inline]
   unsafe fn follow(buf: &'a B, loc: usize) -> Self::Inner {
-    let b = unsafe { flatbuffers::read_scalar_at::<i8, B>(buf, loc) };
+    let b = unsafe { flatbuffers::read_scalar_from::<i8, B>(buf, loc) };
     Self(b)
   }
 }
@@ -2914,7 +2914,7 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'a, B> for Add
   type Inner = Self;
   #[inline]
   unsafe fn follow(buf: &'a B, loc: usize) -> Self::Inner {
-    let b = unsafe { flatbuffers::read_scalar_at::<i8, B>(buf, loc) };
+    let b = unsafe { flatbuffers::read_scalar_from::<i8, B>(buf, loc) };
     Self(b)
   }
 }
@@ -3006,36 +3006,36 @@ impl ParentRefType {
   #[inline]
   pub fn tag_as_variant(
     o: flatbuffers::WIPOffset<Variant>,
-  ) -> flatbuffers::UnionWIPOffset<ParentRefTypeUnionValue> {
-    flatbuffers::UnionWIPOffset::new(Self::Variant, flatbuffers::WIPOffset::new(o.value()))
+  ) -> flatbuffers::TaggedUnionWIPOffset<ParentRefTypeUnionValue> {
+    flatbuffers::TaggedUnionWIPOffset::new(ParentRefType::Variant, flatbuffers::WIPOffset::new(o.value()))
   }
 
   #[inline]
   pub fn tag_as_protocol(
     o: flatbuffers::WIPOffset<Protocol>,
-  ) -> flatbuffers::UnionWIPOffset<ParentRefTypeUnionValue> {
-    flatbuffers::UnionWIPOffset::new(Self::Protocol, flatbuffers::WIPOffset::new(o.value()))
+  ) -> flatbuffers::TaggedUnionWIPOffset<ParentRefTypeUnionValue> {
+    flatbuffers::TaggedUnionWIPOffset::new(ParentRefType::Protocol, flatbuffers::WIPOffset::new(o.value()))
   }
 
   #[inline]
   pub fn tag_as_functional_group(
     o: flatbuffers::WIPOffset<FunctionalGroup>,
-  ) -> flatbuffers::UnionWIPOffset<ParentRefTypeUnionValue> {
-    flatbuffers::UnionWIPOffset::new(Self::FunctionalGroup, flatbuffers::WIPOffset::new(o.value()))
+  ) -> flatbuffers::TaggedUnionWIPOffset<ParentRefTypeUnionValue> {
+    flatbuffers::TaggedUnionWIPOffset::new(ParentRefType::FunctionalGroup, flatbuffers::WIPOffset::new(o.value()))
   }
 
   #[inline]
   pub fn tag_as_table_dop(
     o: flatbuffers::WIPOffset<TableDop>,
-  ) -> flatbuffers::UnionWIPOffset<ParentRefTypeUnionValue> {
-    flatbuffers::UnionWIPOffset::new(Self::TableDop, flatbuffers::WIPOffset::new(o.value()))
+  ) -> flatbuffers::TaggedUnionWIPOffset<ParentRefTypeUnionValue> {
+    flatbuffers::TaggedUnionWIPOffset::new(ParentRefType::TableDop, flatbuffers::WIPOffset::new(o.value()))
   }
 
   #[inline]
   pub fn tag_as_ecu_shared_data(
     o: flatbuffers::WIPOffset<EcuSharedData>,
-  ) -> flatbuffers::UnionWIPOffset<ParentRefTypeUnionValue> {
-    flatbuffers::UnionWIPOffset::new(Self::EcuSharedData, flatbuffers::WIPOffset::new(o.value()))
+  ) -> flatbuffers::TaggedUnionWIPOffset<ParentRefTypeUnionValue> {
+    flatbuffers::TaggedUnionWIPOffset::new(ParentRefType::EcuSharedData, flatbuffers::WIPOffset::new(o.value()))
   }
 
 }
@@ -3052,7 +3052,7 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'a, B> for Par
   type Inner = Self;
   #[inline]
   unsafe fn follow(buf: &'a B, loc: usize) -> Self::Inner {
-    let b = unsafe { flatbuffers::read_scalar_at::<u8, B>(buf, loc) };
+    let b = unsafe { flatbuffers::read_scalar_from::<u8, B>(buf, loc) };
     Self(b)
   }
 }
@@ -3230,15 +3230,15 @@ impl SimpleOrComplexValueEntry {
   #[inline]
   pub fn tag_as_simple_value(
     o: flatbuffers::WIPOffset<SimpleValue>,
-  ) -> flatbuffers::UnionWIPOffset<SimpleOrComplexValueEntryUnionValue> {
-    flatbuffers::UnionWIPOffset::new(Self::SimpleValue, flatbuffers::WIPOffset::new(o.value()))
+  ) -> flatbuffers::TaggedUnionWIPOffset<SimpleOrComplexValueEntryUnionValue> {
+    flatbuffers::TaggedUnionWIPOffset::new(SimpleOrComplexValueEntry::SimpleValue, flatbuffers::WIPOffset::new(o.value()))
   }
 
   #[inline]
   pub fn tag_as_complex_value(
     o: flatbuffers::WIPOffset<ComplexValue>,
-  ) -> flatbuffers::UnionWIPOffset<SimpleOrComplexValueEntryUnionValue> {
-    flatbuffers::UnionWIPOffset::new(Self::ComplexValue, flatbuffers::WIPOffset::new(o.value()))
+  ) -> flatbuffers::TaggedUnionWIPOffset<SimpleOrComplexValueEntryUnionValue> {
+    flatbuffers::TaggedUnionWIPOffset::new(SimpleOrComplexValueEntry::ComplexValue, flatbuffers::WIPOffset::new(o.value()))
   }
 
 }
@@ -3255,7 +3255,7 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'a, B> for Sim
   type Inner = Self;
   #[inline]
   unsafe fn follow(buf: &'a B, loc: usize) -> Self::Inner {
-    let b = unsafe { flatbuffers::read_scalar_at::<u8, B>(buf, loc) };
+    let b = unsafe { flatbuffers::read_scalar_from::<u8, B>(buf, loc) };
     Self(b)
   }
 }
@@ -3409,7 +3409,7 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'a, B> for Com
   type Inner = Self;
   #[inline]
   unsafe fn follow(buf: &'a B, loc: usize) -> Self::Inner {
-    let b = unsafe { flatbuffers::read_scalar_at::<i8, B>(buf, loc) };
+    let b = unsafe { flatbuffers::read_scalar_from::<i8, B>(buf, loc) };
     Self(b)
   }
 }
@@ -3503,7 +3503,7 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'a, B> for Com
   type Inner = Self;
   #[inline]
   unsafe fn follow(buf: &'a B, loc: usize) -> Self::Inner {
-    let b = unsafe { flatbuffers::read_scalar_at::<i8, B>(buf, loc) };
+    let b = unsafe { flatbuffers::read_scalar_from::<i8, B>(buf, loc) };
     Self(b)
   }
 }
@@ -3597,7 +3597,7 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'a, B> for Com
   type Inner = Self;
   #[inline]
   unsafe fn follow(buf: &'a B, loc: usize) -> Self::Inner {
-    let b = unsafe { flatbuffers::read_scalar_at::<i8, B>(buf, loc) };
+    let b = unsafe { flatbuffers::read_scalar_from::<i8, B>(buf, loc) };
     Self(b)
   }
 }
@@ -3677,15 +3677,15 @@ impl ComParamSpecificData {
   #[inline]
   pub fn tag_as_regular_com_param(
     o: flatbuffers::WIPOffset<RegularComParam>,
-  ) -> flatbuffers::UnionWIPOffset<ComParamSpecificDataUnionValue> {
-    flatbuffers::UnionWIPOffset::new(Self::RegularComParam, flatbuffers::WIPOffset::new(o.value()))
+  ) -> flatbuffers::TaggedUnionWIPOffset<ComParamSpecificDataUnionValue> {
+    flatbuffers::TaggedUnionWIPOffset::new(ComParamSpecificData::RegularComParam, flatbuffers::WIPOffset::new(o.value()))
   }
 
   #[inline]
   pub fn tag_as_complex_com_param(
     o: flatbuffers::WIPOffset<ComplexComParam>,
-  ) -> flatbuffers::UnionWIPOffset<ComParamSpecificDataUnionValue> {
-    flatbuffers::UnionWIPOffset::new(Self::ComplexComParam, flatbuffers::WIPOffset::new(o.value()))
+  ) -> flatbuffers::TaggedUnionWIPOffset<ComParamSpecificDataUnionValue> {
+    flatbuffers::TaggedUnionWIPOffset::new(ComParamSpecificData::ComplexComParam, flatbuffers::WIPOffset::new(o.value()))
   }
 
 }
@@ -3702,7 +3702,7 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'a, B> for Com
   type Inner = Self;
   #[inline]
   unsafe fn follow(buf: &'a B, loc: usize) -> Self::Inner {
-    let b = unsafe { flatbuffers::read_scalar_at::<u8, B>(buf, loc) };
+    let b = unsafe { flatbuffers::read_scalar_from::<u8, B>(buf, loc) };
     Self(b)
   }
 }
@@ -3856,7 +3856,7 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'a, B> for Uni
   type Inner = Self;
   #[inline]
   unsafe fn follow(buf: &'a B, loc: usize) -> Self::Inner {
-    let b = unsafe { flatbuffers::read_scalar_at::<i8, B>(buf, loc) };
+    let b = unsafe { flatbuffers::read_scalar_from::<i8, B>(buf, loc) };
     Self(b)
   }
 }
@@ -3938,7 +3938,7 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'a, B> for Fea
   type Inner = Self;
   #[inline]
   unsafe fn follow(buf: &'a B, loc: usize) -> Self::Inner {
-    let b = unsafe { flatbuffers::read_scalar_at::<i8, B>(buf, loc) };
+    let b = unsafe { flatbuffers::read_scalar_from::<i8, B>(buf, loc) };
     Self(b)
   }
 }
@@ -3977,12 +3977,6 @@ impl<'a> flatbuffers::Verifiable for FeatureFlag {
 
 impl flatbuffers::SimpleToVerifyInSlice for FeatureFlag {}
 
-pub enum SDOffset {}
-impl SDOffset {
-    pub const VT_VALUE: flatbuffers::VOffsetT = 4;
-    pub const VT_SI: flatbuffers::VOffsetT = 6;
-    pub const VT_TI: flatbuffers::VOffsetT = 8;
-}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Copy for SD<'a, B> {}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Clone for SD<'a, B> {
   fn clone(&self) -> Self { *self }
@@ -4003,12 +3997,11 @@ impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'
   }
 }
 
-impl<'a, B: flatbuffers::ReadBuffer + ?Sized> SD<'a, B> {
+impl<'a> SD<'a> {
+  pub const VT_VALUE: flatbuffers::VOffsetT = 4;
+  pub const VT_SI: flatbuffers::VOffsetT = 6;
+  pub const VT_TI: flatbuffers::VOffsetT = 8;
 
-  #[inline]
-  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
-    SD { _tab: table }
-  }
   #[allow(unused_mut)]
   pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr, A: flatbuffers::Allocator + 'bldr>(
     _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr, A>,
@@ -4020,6 +4013,13 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> SD<'a, B> {
     if let Some(x) = args.value { builder.add_value(x); }
     builder.finish()
   }
+}
+
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> SD<'a, B> {
+  #[inline]
+  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
+    SD { _tab: table }
+  }
 
 
   #[inline]
@@ -4027,21 +4027,21 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> SD<'a, B> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(SDOffset::VT_VALUE, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(SD::VT_VALUE, None)}
   }
   #[inline]
   pub fn si(&self) -> Option<&'a str> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(SDOffset::VT_SI, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(SD::VT_SI, None)}
   }
   #[inline]
   pub fn ti(&self) -> Option<&'a str> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(SDOffset::VT_TI, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(SD::VT_TI, None)}
   }
 }
 
@@ -4052,9 +4052,9 @@ impl<B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Verifiable for SD<'_, B> 
   ) -> Result<(), flatbuffers::InvalidFlatbuffer> {
     use self::flatbuffers::Verifiable;
     v.visit_table(pos)?
-     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("value", SDOffset::VT_VALUE, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("si", SDOffset::VT_SI, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("ti", SDOffset::VT_TI, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("value", SD::VT_VALUE, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("si", SD::VT_SI, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("ti", SD::VT_TI, false)?
      .finish();
     Ok(())
   }
@@ -4082,15 +4082,15 @@ pub struct SDBuilder<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> {
 impl<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> SDBuilder<'a, 'b, A> {
   #[inline]
   pub fn add_value(&mut self, value: flatbuffers::WIPOffset<&'b  str>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(SDOffset::VT_VALUE, value);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(SD::VT_VALUE, value);
   }
   #[inline]
   pub fn add_si(&mut self, si: flatbuffers::WIPOffset<&'b  str>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(SDOffset::VT_SI, si);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(SD::VT_SI, si);
   }
   #[inline]
   pub fn add_ti(&mut self, ti: flatbuffers::WIPOffset<&'b  str>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(SDOffset::VT_TI, ti);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(SD::VT_TI, ti);
   }
   #[inline]
   pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a, A>) -> SDBuilder<'a, 'b, A> {
@@ -4116,11 +4116,6 @@ impl core::fmt::Debug for SD<'_> {
       ds.finish()
   }
 }
-pub enum SDOrSDGOffset {}
-impl SDOrSDGOffset {
-    pub const VT_SD_OR_SDG_TYPE: flatbuffers::VOffsetT = 4;
-    pub const VT_SD_OR_SDG: flatbuffers::VOffsetT = 6;
-}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Copy for SDOrSDG<'a, B> {}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Clone for SDOrSDG<'a, B> {
   fn clone(&self) -> Self { *self }
@@ -4141,12 +4136,10 @@ impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'
   }
 }
 
-impl<'a, B: flatbuffers::ReadBuffer + ?Sized> SDOrSDG<'a, B> {
+impl<'a> SDOrSDG<'a> {
+  pub const VT_SD_OR_SDG_TYPE: flatbuffers::VOffsetT = 4;
+  pub const VT_SD_OR_SDG: flatbuffers::VOffsetT = 6;
 
-  #[inline]
-  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
-    SDOrSDG { _tab: table }
-  }
   #[allow(unused_mut)]
   pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr, A: flatbuffers::Allocator + 'bldr>(
     _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr, A>,
@@ -4157,6 +4150,13 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> SDOrSDG<'a, B> {
     builder.add_sd_or_sdg_type(args.sd_or_sdg_type);
     builder.finish()
   }
+}
+
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> SDOrSDG<'a, B> {
+  #[inline]
+  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
+    SDOrSDG { _tab: table }
+  }
 
 
   #[inline]
@@ -4164,14 +4164,14 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> SDOrSDG<'a, B> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<SDxorSDG>(SDOrSDGOffset::VT_SD_OR_SDG_TYPE, Some(SDxorSDG::NONE)).unwrap()}
+    unsafe { self._tab.get::<SDxorSDG>(SDOrSDG::VT_SD_OR_SDG_TYPE, Some(SDxorSDG::NONE)).unwrap()}
   }
   #[inline]
   pub fn sd_or_sdg(&self) -> Option<flatbuffers::Table<'a, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Table<'a, B>>>(SDOrSDGOffset::VT_SD_OR_SDG, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Table<'a, B>>>(SDOrSDG::VT_SD_OR_SDG, None)}
   }
   #[inline]
   #[allow(non_snake_case)]
@@ -4212,14 +4212,14 @@ impl<B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Verifiable for SDOrSDG<'_
   ) -> Result<(), flatbuffers::InvalidFlatbuffer> {
     use self::flatbuffers::Verifiable;
     v.visit_table(pos)?
-     .visit_union::<SDxorSDGUnionValue>("sd_or_sdg_type", SDOrSDGOffset::VT_SD_OR_SDG_TYPE, "sd_or_sdg", SDOrSDGOffset::VT_SD_OR_SDG, false)?
+     .visit_union::<SDxorSDGUnionValue>("sd_or_sdg_type", SDOrSDG::VT_SD_OR_SDG_TYPE, "sd_or_sdg", SDOrSDG::VT_SD_OR_SDG, false)?
      .finish();
     Ok(())
   }
 }
 pub struct SDOrSDGArgs {
     pub sd_or_sdg_type: SDxorSDG,
-    pub sd_or_sdg: Option<flatbuffers::WIPOffset<SDxorSDGUnionValue>>,
+    pub sd_or_sdg: Option<flatbuffers::WIPOffset<flatbuffers::UnionWIPOffset>>,
 }
 impl<'a> Default for SDOrSDGArgs {
   #[inline]
@@ -4238,11 +4238,11 @@ pub struct SDOrSDGBuilder<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> {
 impl<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> SDOrSDGBuilder<'a, 'b, A> {
   #[inline]
   pub fn add_sd_or_sdg_type(&mut self, sd_or_sdg_type: SDxorSDG) {
-    self.fbb_.push_slot::<SDxorSDG>(SDOrSDGOffset::VT_SD_OR_SDG_TYPE, sd_or_sdg_type, SDxorSDG::NONE);
+    self.fbb_.push_slot::<SDxorSDG>(SDOrSDG::VT_SD_OR_SDG_TYPE, sd_or_sdg_type, SDxorSDG::NONE);
   }
   #[inline]
-  pub fn add_sd_or_sdg(&mut self, sd_or_sdg: flatbuffers::WIPOffset<SDxorSDGUnionValue>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(SDOrSDGOffset::VT_SD_OR_SDG, sd_or_sdg);
+  pub fn add_sd_or_sdg(&mut self, sd_or_sdg: flatbuffers::WIPOffset<flatbuffers::UnionWIPOffset>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(SDOrSDG::VT_SD_OR_SDG, sd_or_sdg);
   }
   #[inline]
   pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a, A>) -> SDOrSDGBuilder<'a, 'b, A> {
@@ -4286,12 +4286,6 @@ impl core::fmt::Debug for SDOrSDG<'_> {
       ds.finish()
   }
 }
-pub enum SDGOffset {}
-impl SDGOffset {
-    pub const VT_CAPTION_SN: flatbuffers::VOffsetT = 4;
-    pub const VT_SDS: flatbuffers::VOffsetT = 6;
-    pub const VT_SI: flatbuffers::VOffsetT = 8;
-}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Copy for SDG<'a, B> {}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Clone for SDG<'a, B> {
   fn clone(&self) -> Self { *self }
@@ -4312,12 +4306,11 @@ impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'
   }
 }
 
-impl<'a, B: flatbuffers::ReadBuffer + ?Sized> SDG<'a, B> {
+impl<'a> SDG<'a> {
+  pub const VT_CAPTION_SN: flatbuffers::VOffsetT = 4;
+  pub const VT_SDS: flatbuffers::VOffsetT = 6;
+  pub const VT_SI: flatbuffers::VOffsetT = 8;
 
-  #[inline]
-  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
-    SDG { _tab: table }
-  }
   #[allow(unused_mut)]
   pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr, A: flatbuffers::Allocator + 'bldr>(
     _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr, A>,
@@ -4329,6 +4322,13 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> SDG<'a, B> {
     if let Some(x) = args.caption_sn { builder.add_caption_sn(x); }
     builder.finish()
   }
+}
+
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> SDG<'a, B> {
+  #[inline]
+  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
+    SDG { _tab: table }
+  }
 
 
   #[inline]
@@ -4336,21 +4336,21 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> SDG<'a, B> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(SDGOffset::VT_CAPTION_SN, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(SDG::VT_CAPTION_SN, None)}
   }
   #[inline]
   pub fn sds(&self) -> Option<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<SDOrSDG<'a, B>>, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<SDOrSDG<'a, B>>, B>>>(SDGOffset::VT_SDS, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<SDOrSDG<'a, B>>, B>>>(SDG::VT_SDS, None)}
   }
   #[inline]
   pub fn si(&self) -> Option<&'a str> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(SDGOffset::VT_SI, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(SDG::VT_SI, None)}
   }
 }
 
@@ -4361,9 +4361,9 @@ impl<B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Verifiable for SDG<'_, B>
   ) -> Result<(), flatbuffers::InvalidFlatbuffer> {
     use self::flatbuffers::Verifiable;
     v.visit_table(pos)?
-     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("caption_sn", SDGOffset::VT_CAPTION_SN, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<SDOrSDG<'_, B>>, B>>>("sds", SDGOffset::VT_SDS, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("si", SDGOffset::VT_SI, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("caption_sn", SDG::VT_CAPTION_SN, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<SDOrSDG<'_, B>>, B>>>("sds", SDG::VT_SDS, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("si", SDG::VT_SI, false)?
      .finish();
     Ok(())
   }
@@ -4391,15 +4391,15 @@ pub struct SDGBuilder<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> {
 impl<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> SDGBuilder<'a, 'b, A> {
   #[inline]
   pub fn add_caption_sn(&mut self, caption_sn: flatbuffers::WIPOffset<&'b  str>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(SDGOffset::VT_CAPTION_SN, caption_sn);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(SDG::VT_CAPTION_SN, caption_sn);
   }
   #[inline]
   pub fn add_sds(&mut self, sds: flatbuffers::WIPOffset<flatbuffers::Vector<'b , flatbuffers::ForwardsUOffset<SDOrSDG<'b >>>>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(SDGOffset::VT_SDS, sds);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(SDG::VT_SDS, sds);
   }
   #[inline]
   pub fn add_si(&mut self, si: flatbuffers::WIPOffset<&'b  str>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(SDGOffset::VT_SI, si);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(SDG::VT_SI, si);
   }
   #[inline]
   pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a, A>) -> SDGBuilder<'a, 'b, A> {
@@ -4425,10 +4425,6 @@ impl core::fmt::Debug for SDG<'_> {
       ds.finish()
   }
 }
-pub enum SDGSOffset {}
-impl SDGSOffset {
-    pub const VT_SDGS: flatbuffers::VOffsetT = 4;
-}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Copy for SDGS<'a, B> {}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Clone for SDGS<'a, B> {
   fn clone(&self) -> Self { *self }
@@ -4449,12 +4445,9 @@ impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'
   }
 }
 
-impl<'a, B: flatbuffers::ReadBuffer + ?Sized> SDGS<'a, B> {
+impl<'a> SDGS<'a> {
+  pub const VT_SDGS: flatbuffers::VOffsetT = 4;
 
-  #[inline]
-  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
-    SDGS { _tab: table }
-  }
   #[allow(unused_mut)]
   pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr, A: flatbuffers::Allocator + 'bldr>(
     _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr, A>,
@@ -4464,6 +4457,13 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> SDGS<'a, B> {
     if let Some(x) = args.sdgs { builder.add_sdgs(x); }
     builder.finish()
   }
+}
+
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> SDGS<'a, B> {
+  #[inline]
+  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
+    SDGS { _tab: table }
+  }
 
 
   #[inline]
@@ -4471,7 +4471,7 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> SDGS<'a, B> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<SDG<'a, B>>, B>>>(SDGSOffset::VT_SDGS, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<SDG<'a, B>>, B>>>(SDGS::VT_SDGS, None)}
   }
 }
 
@@ -4482,7 +4482,7 @@ impl<B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Verifiable for SDGS<'_, B
   ) -> Result<(), flatbuffers::InvalidFlatbuffer> {
     use self::flatbuffers::Verifiable;
     v.visit_table(pos)?
-     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<SDG<'_, B>>, B>>>("sdgs", SDGSOffset::VT_SDGS, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<SDG<'_, B>>, B>>>("sdgs", SDGS::VT_SDGS, false)?
      .finish();
     Ok(())
   }
@@ -4506,7 +4506,7 @@ pub struct SDGSBuilder<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> {
 impl<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> SDGSBuilder<'a, 'b, A> {
   #[inline]
   pub fn add_sdgs(&mut self, sdgs: flatbuffers::WIPOffset<flatbuffers::Vector<'b , flatbuffers::ForwardsUOffset<SDG<'b >>>>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(SDGSOffset::VT_SDGS, sdgs);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(SDGS::VT_SDGS, sdgs);
   }
   #[inline]
   pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a, A>) -> SDGSBuilder<'a, 'b, A> {
@@ -4530,16 +4530,6 @@ impl core::fmt::Debug for SDGS<'_> {
       ds.finish()
   }
 }
-pub enum AudienceOffset {}
-impl AudienceOffset {
-    pub const VT_ENABLED_AUDIENCES: flatbuffers::VOffsetT = 4;
-    pub const VT_DISABLED_AUDIENCES: flatbuffers::VOffsetT = 6;
-    pub const VT_IS_SUPPLIER: flatbuffers::VOffsetT = 8;
-    pub const VT_IS_DEVELOPMENT: flatbuffers::VOffsetT = 10;
-    pub const VT_IS_MANUFACTURING: flatbuffers::VOffsetT = 12;
-    pub const VT_IS_AFTER_SALES: flatbuffers::VOffsetT = 14;
-    pub const VT_IS_AFTER_MARKET: flatbuffers::VOffsetT = 16;
-}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Copy for Audience<'a, B> {}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Clone for Audience<'a, B> {
   fn clone(&self) -> Self { *self }
@@ -4560,12 +4550,15 @@ impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'
   }
 }
 
-impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Audience<'a, B> {
+impl<'a> Audience<'a> {
+  pub const VT_ENABLED_AUDIENCES: flatbuffers::VOffsetT = 4;
+  pub const VT_DISABLED_AUDIENCES: flatbuffers::VOffsetT = 6;
+  pub const VT_IS_SUPPLIER: flatbuffers::VOffsetT = 8;
+  pub const VT_IS_DEVELOPMENT: flatbuffers::VOffsetT = 10;
+  pub const VT_IS_MANUFACTURING: flatbuffers::VOffsetT = 12;
+  pub const VT_IS_AFTER_SALES: flatbuffers::VOffsetT = 14;
+  pub const VT_IS_AFTER_MARKET: flatbuffers::VOffsetT = 16;
 
-  #[inline]
-  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
-    Audience { _tab: table }
-  }
   #[allow(unused_mut)]
   pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr, A: flatbuffers::Allocator + 'bldr>(
     _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr, A>,
@@ -4581,6 +4574,13 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Audience<'a, B> {
     builder.add_is_supplier(args.is_supplier);
     builder.finish()
   }
+}
+
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Audience<'a, B> {
+  #[inline]
+  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
+    Audience { _tab: table }
+  }
 
 
   #[inline]
@@ -4588,49 +4588,49 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Audience<'a, B> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<AdditionalAudience<'a, B>>, B>>>(AudienceOffset::VT_ENABLED_AUDIENCES, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<AdditionalAudience<'a, B>>, B>>>(Audience::VT_ENABLED_AUDIENCES, None)}
   }
   #[inline]
   pub fn disabled_audiences(&self) -> Option<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<AdditionalAudience<'a, B>>, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<AdditionalAudience<'a, B>>, B>>>(AudienceOffset::VT_DISABLED_AUDIENCES, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<AdditionalAudience<'a, B>>, B>>>(Audience::VT_DISABLED_AUDIENCES, None)}
   }
   #[inline]
   pub fn is_supplier(&self) -> bool {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<bool>(AudienceOffset::VT_IS_SUPPLIER, Some(false)).unwrap()}
+    unsafe { self._tab.get::<bool>(Audience::VT_IS_SUPPLIER, Some(false)).unwrap()}
   }
   #[inline]
   pub fn is_development(&self) -> bool {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<bool>(AudienceOffset::VT_IS_DEVELOPMENT, Some(false)).unwrap()}
+    unsafe { self._tab.get::<bool>(Audience::VT_IS_DEVELOPMENT, Some(false)).unwrap()}
   }
   #[inline]
   pub fn is_manufacturing(&self) -> bool {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<bool>(AudienceOffset::VT_IS_MANUFACTURING, Some(false)).unwrap()}
+    unsafe { self._tab.get::<bool>(Audience::VT_IS_MANUFACTURING, Some(false)).unwrap()}
   }
   #[inline]
   pub fn is_after_sales(&self) -> bool {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<bool>(AudienceOffset::VT_IS_AFTER_SALES, Some(false)).unwrap()}
+    unsafe { self._tab.get::<bool>(Audience::VT_IS_AFTER_SALES, Some(false)).unwrap()}
   }
   #[inline]
   pub fn is_after_market(&self) -> bool {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<bool>(AudienceOffset::VT_IS_AFTER_MARKET, Some(false)).unwrap()}
+    unsafe { self._tab.get::<bool>(Audience::VT_IS_AFTER_MARKET, Some(false)).unwrap()}
   }
 }
 
@@ -4641,13 +4641,13 @@ impl<B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Verifiable for Audience<'
   ) -> Result<(), flatbuffers::InvalidFlatbuffer> {
     use self::flatbuffers::Verifiable;
     v.visit_table(pos)?
-     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<AdditionalAudience<'_, B>>, B>>>("enabled_audiences", AudienceOffset::VT_ENABLED_AUDIENCES, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<AdditionalAudience<'_, B>>, B>>>("disabled_audiences", AudienceOffset::VT_DISABLED_AUDIENCES, false)?
-     .visit_field::<bool>("is_supplier", AudienceOffset::VT_IS_SUPPLIER, false)?
-     .visit_field::<bool>("is_development", AudienceOffset::VT_IS_DEVELOPMENT, false)?
-     .visit_field::<bool>("is_manufacturing", AudienceOffset::VT_IS_MANUFACTURING, false)?
-     .visit_field::<bool>("is_after_sales", AudienceOffset::VT_IS_AFTER_SALES, false)?
-     .visit_field::<bool>("is_after_market", AudienceOffset::VT_IS_AFTER_MARKET, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<AdditionalAudience<'_, B>>, B>>>("enabled_audiences", Audience::VT_ENABLED_AUDIENCES, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<AdditionalAudience<'_, B>>, B>>>("disabled_audiences", Audience::VT_DISABLED_AUDIENCES, false)?
+     .visit_field::<bool>("is_supplier", Audience::VT_IS_SUPPLIER, false)?
+     .visit_field::<bool>("is_development", Audience::VT_IS_DEVELOPMENT, false)?
+     .visit_field::<bool>("is_manufacturing", Audience::VT_IS_MANUFACTURING, false)?
+     .visit_field::<bool>("is_after_sales", Audience::VT_IS_AFTER_SALES, false)?
+     .visit_field::<bool>("is_after_market", Audience::VT_IS_AFTER_MARKET, false)?
      .finish();
     Ok(())
   }
@@ -4683,31 +4683,31 @@ pub struct AudienceBuilder<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> {
 impl<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> AudienceBuilder<'a, 'b, A> {
   #[inline]
   pub fn add_enabled_audiences(&mut self, enabled_audiences: flatbuffers::WIPOffset<flatbuffers::Vector<'b , flatbuffers::ForwardsUOffset<AdditionalAudience<'b >>>>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(AudienceOffset::VT_ENABLED_AUDIENCES, enabled_audiences);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(Audience::VT_ENABLED_AUDIENCES, enabled_audiences);
   }
   #[inline]
   pub fn add_disabled_audiences(&mut self, disabled_audiences: flatbuffers::WIPOffset<flatbuffers::Vector<'b , flatbuffers::ForwardsUOffset<AdditionalAudience<'b >>>>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(AudienceOffset::VT_DISABLED_AUDIENCES, disabled_audiences);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(Audience::VT_DISABLED_AUDIENCES, disabled_audiences);
   }
   #[inline]
   pub fn add_is_supplier(&mut self, is_supplier: bool) {
-    self.fbb_.push_slot::<bool>(AudienceOffset::VT_IS_SUPPLIER, is_supplier, false);
+    self.fbb_.push_slot::<bool>(Audience::VT_IS_SUPPLIER, is_supplier, false);
   }
   #[inline]
   pub fn add_is_development(&mut self, is_development: bool) {
-    self.fbb_.push_slot::<bool>(AudienceOffset::VT_IS_DEVELOPMENT, is_development, false);
+    self.fbb_.push_slot::<bool>(Audience::VT_IS_DEVELOPMENT, is_development, false);
   }
   #[inline]
   pub fn add_is_manufacturing(&mut self, is_manufacturing: bool) {
-    self.fbb_.push_slot::<bool>(AudienceOffset::VT_IS_MANUFACTURING, is_manufacturing, false);
+    self.fbb_.push_slot::<bool>(Audience::VT_IS_MANUFACTURING, is_manufacturing, false);
   }
   #[inline]
   pub fn add_is_after_sales(&mut self, is_after_sales: bool) {
-    self.fbb_.push_slot::<bool>(AudienceOffset::VT_IS_AFTER_SALES, is_after_sales, false);
+    self.fbb_.push_slot::<bool>(Audience::VT_IS_AFTER_SALES, is_after_sales, false);
   }
   #[inline]
   pub fn add_is_after_market(&mut self, is_after_market: bool) {
-    self.fbb_.push_slot::<bool>(AudienceOffset::VT_IS_AFTER_MARKET, is_after_market, false);
+    self.fbb_.push_slot::<bool>(Audience::VT_IS_AFTER_MARKET, is_after_market, false);
   }
   #[inline]
   pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a, A>) -> AudienceBuilder<'a, 'b, A> {
@@ -4737,10 +4737,6 @@ impl core::fmt::Debug for Audience<'_> {
       ds.finish()
   }
 }
-pub enum LeadingLengthInfoTypeOffset {}
-impl LeadingLengthInfoTypeOffset {
-    pub const VT_BIT_LENGTH: flatbuffers::VOffsetT = 4;
-}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Copy for LeadingLengthInfoType<'a, B> {}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Clone for LeadingLengthInfoType<'a, B> {
   fn clone(&self) -> Self { *self }
@@ -4761,12 +4757,9 @@ impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'
   }
 }
 
-impl<'a, B: flatbuffers::ReadBuffer + ?Sized> LeadingLengthInfoType<'a, B> {
+impl<'a> LeadingLengthInfoType<'a> {
+  pub const VT_BIT_LENGTH: flatbuffers::VOffsetT = 4;
 
-  #[inline]
-  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
-    LeadingLengthInfoType { _tab: table }
-  }
   #[allow(unused_mut)]
   pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr, A: flatbuffers::Allocator + 'bldr>(
     _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr, A>,
@@ -4776,6 +4769,13 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> LeadingLengthInfoType<'a, B> {
     builder.add_bit_length(args.bit_length);
     builder.finish()
   }
+}
+
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> LeadingLengthInfoType<'a, B> {
+  #[inline]
+  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
+    LeadingLengthInfoType { _tab: table }
+  }
 
 
   #[inline]
@@ -4783,7 +4783,7 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> LeadingLengthInfoType<'a, B> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<u32>(LeadingLengthInfoTypeOffset::VT_BIT_LENGTH, Some(0)).unwrap()}
+    unsafe { self._tab.get::<u32>(LeadingLengthInfoType::VT_BIT_LENGTH, Some(0)).unwrap()}
   }
 }
 
@@ -4794,7 +4794,7 @@ impl<B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Verifiable for LeadingLen
   ) -> Result<(), flatbuffers::InvalidFlatbuffer> {
     use self::flatbuffers::Verifiable;
     v.visit_table(pos)?
-     .visit_field::<u32>("bit_length", LeadingLengthInfoTypeOffset::VT_BIT_LENGTH, false)?
+     .visit_field::<u32>("bit_length", LeadingLengthInfoType::VT_BIT_LENGTH, false)?
      .finish();
     Ok(())
   }
@@ -4818,7 +4818,7 @@ pub struct LeadingLengthInfoTypeBuilder<'a: 'b, 'b, A: flatbuffers::Allocator + 
 impl<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> LeadingLengthInfoTypeBuilder<'a, 'b, A> {
   #[inline]
   pub fn add_bit_length(&mut self, bit_length: u32) {
-    self.fbb_.push_slot::<u32>(LeadingLengthInfoTypeOffset::VT_BIT_LENGTH, bit_length, 0);
+    self.fbb_.push_slot::<u32>(LeadingLengthInfoType::VT_BIT_LENGTH, bit_length, 0);
   }
   #[inline]
   pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a, A>) -> LeadingLengthInfoTypeBuilder<'a, 'b, A> {
@@ -4842,12 +4842,6 @@ impl core::fmt::Debug for LeadingLengthInfoType<'_> {
       ds.finish()
   }
 }
-pub enum MinMaxLengthTypeOffset {}
-impl MinMaxLengthTypeOffset {
-    pub const VT_MIN_LENGTH: flatbuffers::VOffsetT = 4;
-    pub const VT_MAX_LENGTH: flatbuffers::VOffsetT = 6;
-    pub const VT_TERMINATION: flatbuffers::VOffsetT = 8;
-}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Copy for MinMaxLengthType<'a, B> {}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Clone for MinMaxLengthType<'a, B> {
   fn clone(&self) -> Self { *self }
@@ -4868,12 +4862,11 @@ impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'
   }
 }
 
-impl<'a, B: flatbuffers::ReadBuffer + ?Sized> MinMaxLengthType<'a, B> {
+impl<'a> MinMaxLengthType<'a> {
+  pub const VT_MIN_LENGTH: flatbuffers::VOffsetT = 4;
+  pub const VT_MAX_LENGTH: flatbuffers::VOffsetT = 6;
+  pub const VT_TERMINATION: flatbuffers::VOffsetT = 8;
 
-  #[inline]
-  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
-    MinMaxLengthType { _tab: table }
-  }
   #[allow(unused_mut)]
   pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr, A: flatbuffers::Allocator + 'bldr>(
     _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr, A>,
@@ -4885,6 +4878,13 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> MinMaxLengthType<'a, B> {
     builder.add_termination(args.termination);
     builder.finish()
   }
+}
+
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> MinMaxLengthType<'a, B> {
+  #[inline]
+  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
+    MinMaxLengthType { _tab: table }
+  }
 
 
   #[inline]
@@ -4892,21 +4892,21 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> MinMaxLengthType<'a, B> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<u32>(MinMaxLengthTypeOffset::VT_MIN_LENGTH, Some(0)).unwrap()}
+    unsafe { self._tab.get::<u32>(MinMaxLengthType::VT_MIN_LENGTH, Some(0)).unwrap()}
   }
   #[inline]
   pub fn max_length(&self) -> Option<u32> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<u32>(MinMaxLengthTypeOffset::VT_MAX_LENGTH, None)}
+    unsafe { self._tab.get::<u32>(MinMaxLengthType::VT_MAX_LENGTH, None)}
   }
   #[inline]
   pub fn termination(&self) -> Termination {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<Termination>(MinMaxLengthTypeOffset::VT_TERMINATION, Some(Termination::END_OF_PDU)).unwrap()}
+    unsafe { self._tab.get::<Termination>(MinMaxLengthType::VT_TERMINATION, Some(Termination::END_OF_PDU)).unwrap()}
   }
 }
 
@@ -4917,9 +4917,9 @@ impl<B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Verifiable for MinMaxLeng
   ) -> Result<(), flatbuffers::InvalidFlatbuffer> {
     use self::flatbuffers::Verifiable;
     v.visit_table(pos)?
-     .visit_field::<u32>("min_length", MinMaxLengthTypeOffset::VT_MIN_LENGTH, false)?
-     .visit_field::<u32>("max_length", MinMaxLengthTypeOffset::VT_MAX_LENGTH, false)?
-     .visit_field::<Termination>("termination", MinMaxLengthTypeOffset::VT_TERMINATION, false)?
+     .visit_field::<u32>("min_length", MinMaxLengthType::VT_MIN_LENGTH, false)?
+     .visit_field::<u32>("max_length", MinMaxLengthType::VT_MAX_LENGTH, false)?
+     .visit_field::<Termination>("termination", MinMaxLengthType::VT_TERMINATION, false)?
      .finish();
     Ok(())
   }
@@ -4947,15 +4947,15 @@ pub struct MinMaxLengthTypeBuilder<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> {
 impl<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> MinMaxLengthTypeBuilder<'a, 'b, A> {
   #[inline]
   pub fn add_min_length(&mut self, min_length: u32) {
-    self.fbb_.push_slot::<u32>(MinMaxLengthTypeOffset::VT_MIN_LENGTH, min_length, 0);
+    self.fbb_.push_slot::<u32>(MinMaxLengthType::VT_MIN_LENGTH, min_length, 0);
   }
   #[inline]
   pub fn add_max_length(&mut self, max_length: u32) {
-    self.fbb_.push_slot_always::<u32>(MinMaxLengthTypeOffset::VT_MAX_LENGTH, max_length);
+    self.fbb_.push_slot_always::<u32>(MinMaxLengthType::VT_MAX_LENGTH, max_length);
   }
   #[inline]
   pub fn add_termination(&mut self, termination: Termination) {
-    self.fbb_.push_slot::<Termination>(MinMaxLengthTypeOffset::VT_TERMINATION, termination, Termination::END_OF_PDU);
+    self.fbb_.push_slot::<Termination>(MinMaxLengthType::VT_TERMINATION, termination, Termination::END_OF_PDU);
   }
   #[inline]
   pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a, A>) -> MinMaxLengthTypeBuilder<'a, 'b, A> {
@@ -4981,10 +4981,6 @@ impl core::fmt::Debug for MinMaxLengthType<'_> {
       ds.finish()
   }
 }
-pub enum ParamLengthInfoTypeOffset {}
-impl ParamLengthInfoTypeOffset {
-    pub const VT_LENGTH_KEY: flatbuffers::VOffsetT = 4;
-}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Copy for ParamLengthInfoType<'a, B> {}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Clone for ParamLengthInfoType<'a, B> {
   fn clone(&self) -> Self { *self }
@@ -5005,12 +5001,9 @@ impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'
   }
 }
 
-impl<'a, B: flatbuffers::ReadBuffer + ?Sized> ParamLengthInfoType<'a, B> {
+impl<'a> ParamLengthInfoType<'a> {
+  pub const VT_LENGTH_KEY: flatbuffers::VOffsetT = 4;
 
-  #[inline]
-  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
-    ParamLengthInfoType { _tab: table }
-  }
   #[allow(unused_mut)]
   pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr, A: flatbuffers::Allocator + 'bldr>(
     _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr, A>,
@@ -5020,6 +5013,13 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> ParamLengthInfoType<'a, B> {
     if let Some(x) = args.length_key { builder.add_length_key(x); }
     builder.finish()
   }
+}
+
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> ParamLengthInfoType<'a, B> {
+  #[inline]
+  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
+    ParamLengthInfoType { _tab: table }
+  }
 
 
   #[inline]
@@ -5027,7 +5027,7 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> ParamLengthInfoType<'a, B> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<Param<'a, B>>>(ParamLengthInfoTypeOffset::VT_LENGTH_KEY, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<Param<'a, B>>>(ParamLengthInfoType::VT_LENGTH_KEY, None)}
   }
 }
 
@@ -5038,7 +5038,7 @@ impl<B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Verifiable for ParamLengt
   ) -> Result<(), flatbuffers::InvalidFlatbuffer> {
     use self::flatbuffers::Verifiable;
     v.visit_table(pos)?
-     .visit_field::<flatbuffers::ForwardsUOffset<Param<'_, B>>>("length_key", ParamLengthInfoTypeOffset::VT_LENGTH_KEY, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<Param<'_, B>>>("length_key", ParamLengthInfoType::VT_LENGTH_KEY, false)?
      .finish();
     Ok(())
   }
@@ -5062,7 +5062,7 @@ pub struct ParamLengthInfoTypeBuilder<'a: 'b, 'b, A: flatbuffers::Allocator + 'a
 impl<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> ParamLengthInfoTypeBuilder<'a, 'b, A> {
   #[inline]
   pub fn add_length_key(&mut self, length_key: flatbuffers::WIPOffset<Param<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Param>>(ParamLengthInfoTypeOffset::VT_LENGTH_KEY, length_key);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Param>>(ParamLengthInfoType::VT_LENGTH_KEY, length_key);
   }
   #[inline]
   pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a, A>) -> ParamLengthInfoTypeBuilder<'a, 'b, A> {
@@ -5086,12 +5086,6 @@ impl core::fmt::Debug for ParamLengthInfoType<'_> {
       ds.finish()
   }
 }
-pub enum StandardLengthTypeOffset {}
-impl StandardLengthTypeOffset {
-    pub const VT_BIT_LENGTH: flatbuffers::VOffsetT = 4;
-    pub const VT_BIT_MASK: flatbuffers::VOffsetT = 6;
-    pub const VT_CONDENSED: flatbuffers::VOffsetT = 8;
-}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Copy for StandardLengthType<'a, B> {}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Clone for StandardLengthType<'a, B> {
   fn clone(&self) -> Self { *self }
@@ -5112,12 +5106,11 @@ impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'
   }
 }
 
-impl<'a, B: flatbuffers::ReadBuffer + ?Sized> StandardLengthType<'a, B> {
+impl<'a> StandardLengthType<'a> {
+  pub const VT_BIT_LENGTH: flatbuffers::VOffsetT = 4;
+  pub const VT_BIT_MASK: flatbuffers::VOffsetT = 6;
+  pub const VT_CONDENSED: flatbuffers::VOffsetT = 8;
 
-  #[inline]
-  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
-    StandardLengthType { _tab: table }
-  }
   #[allow(unused_mut)]
   pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr, A: flatbuffers::Allocator + 'bldr>(
     _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr, A>,
@@ -5129,6 +5122,13 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> StandardLengthType<'a, B> {
     builder.add_condensed(args.condensed);
     builder.finish()
   }
+}
+
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> StandardLengthType<'a, B> {
+  #[inline]
+  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
+    StandardLengthType { _tab: table }
+  }
 
 
   #[inline]
@@ -5136,21 +5136,21 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> StandardLengthType<'a, B> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<u32>(StandardLengthTypeOffset::VT_BIT_LENGTH, Some(0)).unwrap()}
+    unsafe { self._tab.get::<u32>(StandardLengthType::VT_BIT_LENGTH, Some(0)).unwrap()}
   }
   #[inline]
   pub fn bit_mask(&self) -> Option<flatbuffers::Vector<'a, u8, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, u8, B>>>(StandardLengthTypeOffset::VT_BIT_MASK, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, u8, B>>>(StandardLengthType::VT_BIT_MASK, None)}
   }
   #[inline]
   pub fn condensed(&self) -> bool {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<bool>(StandardLengthTypeOffset::VT_CONDENSED, Some(false)).unwrap()}
+    unsafe { self._tab.get::<bool>(StandardLengthType::VT_CONDENSED, Some(false)).unwrap()}
   }
 }
 
@@ -5161,9 +5161,9 @@ impl<B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Verifiable for StandardLe
   ) -> Result<(), flatbuffers::InvalidFlatbuffer> {
     use self::flatbuffers::Verifiable;
     v.visit_table(pos)?
-     .visit_field::<u32>("bit_length", StandardLengthTypeOffset::VT_BIT_LENGTH, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, u8, B>>>("bit_mask", StandardLengthTypeOffset::VT_BIT_MASK, false)?
-     .visit_field::<bool>("condensed", StandardLengthTypeOffset::VT_CONDENSED, false)?
+     .visit_field::<u32>("bit_length", StandardLengthType::VT_BIT_LENGTH, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, u8, B>>>("bit_mask", StandardLengthType::VT_BIT_MASK, false)?
+     .visit_field::<bool>("condensed", StandardLengthType::VT_CONDENSED, false)?
      .finish();
     Ok(())
   }
@@ -5191,15 +5191,15 @@ pub struct StandardLengthTypeBuilder<'a: 'b, 'b, A: flatbuffers::Allocator + 'a>
 impl<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> StandardLengthTypeBuilder<'a, 'b, A> {
   #[inline]
   pub fn add_bit_length(&mut self, bit_length: u32) {
-    self.fbb_.push_slot::<u32>(StandardLengthTypeOffset::VT_BIT_LENGTH, bit_length, 0);
+    self.fbb_.push_slot::<u32>(StandardLengthType::VT_BIT_LENGTH, bit_length, 0);
   }
   #[inline]
   pub fn add_bit_mask(&mut self, bit_mask: flatbuffers::WIPOffset<flatbuffers::Vector<'b , u8>>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(StandardLengthTypeOffset::VT_BIT_MASK, bit_mask);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(StandardLengthType::VT_BIT_MASK, bit_mask);
   }
   #[inline]
   pub fn add_condensed(&mut self, condensed: bool) {
-    self.fbb_.push_slot::<bool>(StandardLengthTypeOffset::VT_CONDENSED, condensed, false);
+    self.fbb_.push_slot::<bool>(StandardLengthType::VT_CONDENSED, condensed, false);
   }
   #[inline]
   pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a, A>) -> StandardLengthTypeBuilder<'a, 'b, A> {
@@ -5225,15 +5225,6 @@ impl core::fmt::Debug for StandardLengthType<'_> {
       ds.finish()
   }
 }
-pub enum DiagCodedTypeOffset {}
-impl DiagCodedTypeOffset {
-    pub const VT_TYPE_: flatbuffers::VOffsetT = 4;
-    pub const VT_BASE_TYPE_ENCODING: flatbuffers::VOffsetT = 6;
-    pub const VT_BASE_DATA_TYPE: flatbuffers::VOffsetT = 8;
-    pub const VT_IS_HIGH_LOW_BYTE_ORDER: flatbuffers::VOffsetT = 10;
-    pub const VT_SPECIFIC_DATA_TYPE: flatbuffers::VOffsetT = 12;
-    pub const VT_SPECIFIC_DATA: flatbuffers::VOffsetT = 14;
-}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Copy for DiagCodedType<'a, B> {}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Clone for DiagCodedType<'a, B> {
   fn clone(&self) -> Self { *self }
@@ -5254,12 +5245,14 @@ impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'
   }
 }
 
-impl<'a, B: flatbuffers::ReadBuffer + ?Sized> DiagCodedType<'a, B> {
+impl<'a> DiagCodedType<'a> {
+  pub const VT_TYPE_: flatbuffers::VOffsetT = 4;
+  pub const VT_BASE_TYPE_ENCODING: flatbuffers::VOffsetT = 6;
+  pub const VT_BASE_DATA_TYPE: flatbuffers::VOffsetT = 8;
+  pub const VT_IS_HIGH_LOW_BYTE_ORDER: flatbuffers::VOffsetT = 10;
+  pub const VT_SPECIFIC_DATA_TYPE: flatbuffers::VOffsetT = 12;
+  pub const VT_SPECIFIC_DATA: flatbuffers::VOffsetT = 14;
 
-  #[inline]
-  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
-    DiagCodedType { _tab: table }
-  }
   #[allow(unused_mut)]
   pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr, A: flatbuffers::Allocator + 'bldr>(
     _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr, A>,
@@ -5274,6 +5267,13 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> DiagCodedType<'a, B> {
     builder.add_type_(args.type_);
     builder.finish()
   }
+}
+
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> DiagCodedType<'a, B> {
+  #[inline]
+  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
+    DiagCodedType { _tab: table }
+  }
 
 
   #[inline]
@@ -5281,42 +5281,42 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> DiagCodedType<'a, B> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<DiagCodedTypeName>(DiagCodedTypeOffset::VT_TYPE_, Some(DiagCodedTypeName::LEADING_LENGTH_INFO_TYPE)).unwrap()}
+    unsafe { self._tab.get::<DiagCodedTypeName>(DiagCodedType::VT_TYPE_, Some(DiagCodedTypeName::LEADING_LENGTH_INFO_TYPE)).unwrap()}
   }
   #[inline]
   pub fn base_type_encoding(&self) -> Option<&'a str> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(DiagCodedTypeOffset::VT_BASE_TYPE_ENCODING, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(DiagCodedType::VT_BASE_TYPE_ENCODING, None)}
   }
   #[inline]
   pub fn base_data_type(&self) -> DataType {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<DataType>(DiagCodedTypeOffset::VT_BASE_DATA_TYPE, Some(DataType::A_INT_32)).unwrap()}
+    unsafe { self._tab.get::<DataType>(DiagCodedType::VT_BASE_DATA_TYPE, Some(DataType::A_INT_32)).unwrap()}
   }
   #[inline]
   pub fn is_high_low_byte_order(&self) -> bool {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<bool>(DiagCodedTypeOffset::VT_IS_HIGH_LOW_BYTE_ORDER, Some(true)).unwrap()}
+    unsafe { self._tab.get::<bool>(DiagCodedType::VT_IS_HIGH_LOW_BYTE_ORDER, Some(true)).unwrap()}
   }
   #[inline]
   pub fn specific_data_type(&self) -> SpecificDataType {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<SpecificDataType>(DiagCodedTypeOffset::VT_SPECIFIC_DATA_TYPE, Some(SpecificDataType::NONE)).unwrap()}
+    unsafe { self._tab.get::<SpecificDataType>(DiagCodedType::VT_SPECIFIC_DATA_TYPE, Some(SpecificDataType::NONE)).unwrap()}
   }
   #[inline]
   pub fn specific_data(&self) -> Option<flatbuffers::Table<'a, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Table<'a, B>>>(DiagCodedTypeOffset::VT_SPECIFIC_DATA, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Table<'a, B>>>(DiagCodedType::VT_SPECIFIC_DATA, None)}
   }
   #[inline]
   #[allow(non_snake_case)]
@@ -5387,11 +5387,11 @@ impl<B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Verifiable for DiagCodedT
   ) -> Result<(), flatbuffers::InvalidFlatbuffer> {
     use self::flatbuffers::Verifiable;
     v.visit_table(pos)?
-     .visit_field::<DiagCodedTypeName>("type_", DiagCodedTypeOffset::VT_TYPE_, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("base_type_encoding", DiagCodedTypeOffset::VT_BASE_TYPE_ENCODING, false)?
-     .visit_field::<DataType>("base_data_type", DiagCodedTypeOffset::VT_BASE_DATA_TYPE, false)?
-     .visit_field::<bool>("is_high_low_byte_order", DiagCodedTypeOffset::VT_IS_HIGH_LOW_BYTE_ORDER, false)?
-     .visit_union::<SpecificDataTypeUnionValue>("specific_data_type", DiagCodedTypeOffset::VT_SPECIFIC_DATA_TYPE, "specific_data", DiagCodedTypeOffset::VT_SPECIFIC_DATA, false)?
+     .visit_field::<DiagCodedTypeName>("type_", DiagCodedType::VT_TYPE_, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("base_type_encoding", DiagCodedType::VT_BASE_TYPE_ENCODING, false)?
+     .visit_field::<DataType>("base_data_type", DiagCodedType::VT_BASE_DATA_TYPE, false)?
+     .visit_field::<bool>("is_high_low_byte_order", DiagCodedType::VT_IS_HIGH_LOW_BYTE_ORDER, false)?
+     .visit_union::<SpecificDataTypeUnionValue>("specific_data_type", DiagCodedType::VT_SPECIFIC_DATA_TYPE, "specific_data", DiagCodedType::VT_SPECIFIC_DATA, false)?
      .finish();
     Ok(())
   }
@@ -5402,7 +5402,7 @@ pub struct DiagCodedTypeArgs<'a> {
     pub base_data_type: DataType,
     pub is_high_low_byte_order: bool,
     pub specific_data_type: SpecificDataType,
-    pub specific_data: Option<flatbuffers::WIPOffset<SpecificDataTypeUnionValue>>,
+    pub specific_data: Option<flatbuffers::WIPOffset<flatbuffers::UnionWIPOffset>>,
 }
 impl<'a> Default for DiagCodedTypeArgs<'a> {
   #[inline]
@@ -5425,27 +5425,27 @@ pub struct DiagCodedTypeBuilder<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> {
 impl<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> DiagCodedTypeBuilder<'a, 'b, A> {
   #[inline]
   pub fn add_type_(&mut self, type_: DiagCodedTypeName) {
-    self.fbb_.push_slot::<DiagCodedTypeName>(DiagCodedTypeOffset::VT_TYPE_, type_, DiagCodedTypeName::LEADING_LENGTH_INFO_TYPE);
+    self.fbb_.push_slot::<DiagCodedTypeName>(DiagCodedType::VT_TYPE_, type_, DiagCodedTypeName::LEADING_LENGTH_INFO_TYPE);
   }
   #[inline]
   pub fn add_base_type_encoding(&mut self, base_type_encoding: flatbuffers::WIPOffset<&'b  str>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(DiagCodedTypeOffset::VT_BASE_TYPE_ENCODING, base_type_encoding);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(DiagCodedType::VT_BASE_TYPE_ENCODING, base_type_encoding);
   }
   #[inline]
   pub fn add_base_data_type(&mut self, base_data_type: DataType) {
-    self.fbb_.push_slot::<DataType>(DiagCodedTypeOffset::VT_BASE_DATA_TYPE, base_data_type, DataType::A_INT_32);
+    self.fbb_.push_slot::<DataType>(DiagCodedType::VT_BASE_DATA_TYPE, base_data_type, DataType::A_INT_32);
   }
   #[inline]
   pub fn add_is_high_low_byte_order(&mut self, is_high_low_byte_order: bool) {
-    self.fbb_.push_slot::<bool>(DiagCodedTypeOffset::VT_IS_HIGH_LOW_BYTE_ORDER, is_high_low_byte_order, true);
+    self.fbb_.push_slot::<bool>(DiagCodedType::VT_IS_HIGH_LOW_BYTE_ORDER, is_high_low_byte_order, true);
   }
   #[inline]
   pub fn add_specific_data_type(&mut self, specific_data_type: SpecificDataType) {
-    self.fbb_.push_slot::<SpecificDataType>(DiagCodedTypeOffset::VT_SPECIFIC_DATA_TYPE, specific_data_type, SpecificDataType::NONE);
+    self.fbb_.push_slot::<SpecificDataType>(DiagCodedType::VT_SPECIFIC_DATA_TYPE, specific_data_type, SpecificDataType::NONE);
   }
   #[inline]
-  pub fn add_specific_data(&mut self, specific_data: flatbuffers::WIPOffset<SpecificDataTypeUnionValue>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(DiagCodedTypeOffset::VT_SPECIFIC_DATA, specific_data);
+  pub fn add_specific_data(&mut self, specific_data: flatbuffers::WIPOffset<flatbuffers::UnionWIPOffset>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(DiagCodedType::VT_SPECIFIC_DATA, specific_data);
   }
   #[inline]
   pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a, A>) -> DiagCodedTypeBuilder<'a, 'b, A> {
@@ -5507,11 +5507,6 @@ impl core::fmt::Debug for DiagCodedType<'_> {
       ds.finish()
   }
 }
-pub enum TextOffset {}
-impl TextOffset {
-    pub const VT_VALUE: flatbuffers::VOffsetT = 4;
-    pub const VT_TI: flatbuffers::VOffsetT = 6;
-}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Copy for Text<'a, B> {}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Clone for Text<'a, B> {
   fn clone(&self) -> Self { *self }
@@ -5532,12 +5527,10 @@ impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'
   }
 }
 
-impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Text<'a, B> {
+impl<'a> Text<'a> {
+  pub const VT_VALUE: flatbuffers::VOffsetT = 4;
+  pub const VT_TI: flatbuffers::VOffsetT = 6;
 
-  #[inline]
-  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
-    Text { _tab: table }
-  }
   #[allow(unused_mut)]
   pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr, A: flatbuffers::Allocator + 'bldr>(
     _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr, A>,
@@ -5548,6 +5541,13 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Text<'a, B> {
     if let Some(x) = args.value { builder.add_value(x); }
     builder.finish()
   }
+}
+
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Text<'a, B> {
+  #[inline]
+  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
+    Text { _tab: table }
+  }
 
 
   #[inline]
@@ -5555,14 +5555,14 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Text<'a, B> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(TextOffset::VT_VALUE, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(Text::VT_VALUE, None)}
   }
   #[inline]
   pub fn ti(&self) -> Option<&'a str> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(TextOffset::VT_TI, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(Text::VT_TI, None)}
   }
 }
 
@@ -5573,8 +5573,8 @@ impl<B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Verifiable for Text<'_, B
   ) -> Result<(), flatbuffers::InvalidFlatbuffer> {
     use self::flatbuffers::Verifiable;
     v.visit_table(pos)?
-     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("value", TextOffset::VT_VALUE, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("ti", TextOffset::VT_TI, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("value", Text::VT_VALUE, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("ti", Text::VT_TI, false)?
      .finish();
     Ok(())
   }
@@ -5600,11 +5600,11 @@ pub struct TextBuilder<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> {
 impl<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> TextBuilder<'a, 'b, A> {
   #[inline]
   pub fn add_value(&mut self, value: flatbuffers::WIPOffset<&'b  str>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(TextOffset::VT_VALUE, value);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(Text::VT_VALUE, value);
   }
   #[inline]
   pub fn add_ti(&mut self, ti: flatbuffers::WIPOffset<&'b  str>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(TextOffset::VT_TI, ti);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(Text::VT_TI, ti);
   }
   #[inline]
   pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a, A>) -> TextBuilder<'a, 'b, A> {
@@ -5629,11 +5629,6 @@ impl core::fmt::Debug for Text<'_> {
       ds.finish()
   }
 }
-pub enum LimitOffset {}
-impl LimitOffset {
-    pub const VT_VALUE: flatbuffers::VOffsetT = 4;
-    pub const VT_INTERVAL_TYPE: flatbuffers::VOffsetT = 6;
-}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Copy for Limit<'a, B> {}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Clone for Limit<'a, B> {
   fn clone(&self) -> Self { *self }
@@ -5654,12 +5649,10 @@ impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'
   }
 }
 
-impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Limit<'a, B> {
+impl<'a> Limit<'a> {
+  pub const VT_VALUE: flatbuffers::VOffsetT = 4;
+  pub const VT_INTERVAL_TYPE: flatbuffers::VOffsetT = 6;
 
-  #[inline]
-  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
-    Limit { _tab: table }
-  }
   #[allow(unused_mut)]
   pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr, A: flatbuffers::Allocator + 'bldr>(
     _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr, A>,
@@ -5670,6 +5663,13 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Limit<'a, B> {
     builder.add_interval_type(args.interval_type);
     builder.finish()
   }
+}
+
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Limit<'a, B> {
+  #[inline]
+  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
+    Limit { _tab: table }
+  }
 
 
   #[inline]
@@ -5677,14 +5677,14 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Limit<'a, B> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(LimitOffset::VT_VALUE, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(Limit::VT_VALUE, None)}
   }
   #[inline]
   pub fn interval_type(&self) -> IntervalType {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<IntervalType>(LimitOffset::VT_INTERVAL_TYPE, Some(IntervalType::OPEN)).unwrap()}
+    unsafe { self._tab.get::<IntervalType>(Limit::VT_INTERVAL_TYPE, Some(IntervalType::OPEN)).unwrap()}
   }
 }
 
@@ -5695,8 +5695,8 @@ impl<B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Verifiable for Limit<'_, 
   ) -> Result<(), flatbuffers::InvalidFlatbuffer> {
     use self::flatbuffers::Verifiable;
     v.visit_table(pos)?
-     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("value", LimitOffset::VT_VALUE, false)?
-     .visit_field::<IntervalType>("interval_type", LimitOffset::VT_INTERVAL_TYPE, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("value", Limit::VT_VALUE, false)?
+     .visit_field::<IntervalType>("interval_type", Limit::VT_INTERVAL_TYPE, false)?
      .finish();
     Ok(())
   }
@@ -5722,11 +5722,11 @@ pub struct LimitBuilder<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> {
 impl<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> LimitBuilder<'a, 'b, A> {
   #[inline]
   pub fn add_value(&mut self, value: flatbuffers::WIPOffset<&'b  str>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(LimitOffset::VT_VALUE, value);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(Limit::VT_VALUE, value);
   }
   #[inline]
   pub fn add_interval_type(&mut self, interval_type: IntervalType) {
-    self.fbb_.push_slot::<IntervalType>(LimitOffset::VT_INTERVAL_TYPE, interval_type, IntervalType::OPEN);
+    self.fbb_.push_slot::<IntervalType>(Limit::VT_INTERVAL_TYPE, interval_type, IntervalType::OPEN);
   }
   #[inline]
   pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a, A>) -> LimitBuilder<'a, 'b, A> {
@@ -5751,12 +5751,6 @@ impl core::fmt::Debug for Limit<'_> {
       ds.finish()
   }
 }
-pub enum CompuValuesOffset {}
-impl CompuValuesOffset {
-    pub const VT_V: flatbuffers::VOffsetT = 4;
-    pub const VT_VT: flatbuffers::VOffsetT = 6;
-    pub const VT_VT_TI: flatbuffers::VOffsetT = 8;
-}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Copy for CompuValues<'a, B> {}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Clone for CompuValues<'a, B> {
   fn clone(&self) -> Self { *self }
@@ -5777,12 +5771,11 @@ impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'
   }
 }
 
-impl<'a, B: flatbuffers::ReadBuffer + ?Sized> CompuValues<'a, B> {
+impl<'a> CompuValues<'a> {
+  pub const VT_V: flatbuffers::VOffsetT = 4;
+  pub const VT_VT: flatbuffers::VOffsetT = 6;
+  pub const VT_VT_TI: flatbuffers::VOffsetT = 8;
 
-  #[inline]
-  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
-    CompuValues { _tab: table }
-  }
   #[allow(unused_mut)]
   pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr, A: flatbuffers::Allocator + 'bldr>(
     _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr, A>,
@@ -5794,6 +5787,13 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> CompuValues<'a, B> {
     if let Some(x) = args.vt { builder.add_vt(x); }
     builder.finish()
   }
+}
+
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> CompuValues<'a, B> {
+  #[inline]
+  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
+    CompuValues { _tab: table }
+  }
 
 
   #[inline]
@@ -5801,21 +5801,21 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> CompuValues<'a, B> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<f64>(CompuValuesOffset::VT_V, None)}
+    unsafe { self._tab.get::<f64>(CompuValues::VT_V, None)}
   }
   #[inline]
   pub fn vt(&self) -> Option<&'a str> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(CompuValuesOffset::VT_VT, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(CompuValues::VT_VT, None)}
   }
   #[inline]
   pub fn vt_ti(&self) -> Option<&'a str> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(CompuValuesOffset::VT_VT_TI, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(CompuValues::VT_VT_TI, None)}
   }
 }
 
@@ -5826,9 +5826,9 @@ impl<B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Verifiable for CompuValue
   ) -> Result<(), flatbuffers::InvalidFlatbuffer> {
     use self::flatbuffers::Verifiable;
     v.visit_table(pos)?
-     .visit_field::<f64>("v", CompuValuesOffset::VT_V, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("vt", CompuValuesOffset::VT_VT, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("vt_ti", CompuValuesOffset::VT_VT_TI, false)?
+     .visit_field::<f64>("v", CompuValues::VT_V, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("vt", CompuValues::VT_VT, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("vt_ti", CompuValues::VT_VT_TI, false)?
      .finish();
     Ok(())
   }
@@ -5856,15 +5856,15 @@ pub struct CompuValuesBuilder<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> {
 impl<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> CompuValuesBuilder<'a, 'b, A> {
   #[inline]
   pub fn add_v(&mut self, v: f64) {
-    self.fbb_.push_slot_always::<f64>(CompuValuesOffset::VT_V, v);
+    self.fbb_.push_slot_always::<f64>(CompuValues::VT_V, v);
   }
   #[inline]
   pub fn add_vt(&mut self, vt: flatbuffers::WIPOffset<&'b  str>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(CompuValuesOffset::VT_VT, vt);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(CompuValues::VT_VT, vt);
   }
   #[inline]
   pub fn add_vt_ti(&mut self, vt_ti: flatbuffers::WIPOffset<&'b  str>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(CompuValuesOffset::VT_VT_TI, vt_ti);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(CompuValues::VT_VT_TI, vt_ti);
   }
   #[inline]
   pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a, A>) -> CompuValuesBuilder<'a, 'b, A> {
@@ -5890,11 +5890,6 @@ impl core::fmt::Debug for CompuValues<'_> {
       ds.finish()
   }
 }
-pub enum CompuRationalCoEffsOffset {}
-impl CompuRationalCoEffsOffset {
-    pub const VT_NUMERATOR: flatbuffers::VOffsetT = 4;
-    pub const VT_DENOMINATOR: flatbuffers::VOffsetT = 6;
-}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Copy for CompuRationalCoEffs<'a, B> {}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Clone for CompuRationalCoEffs<'a, B> {
   fn clone(&self) -> Self { *self }
@@ -5915,12 +5910,10 @@ impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'
   }
 }
 
-impl<'a, B: flatbuffers::ReadBuffer + ?Sized> CompuRationalCoEffs<'a, B> {
+impl<'a> CompuRationalCoEffs<'a> {
+  pub const VT_NUMERATOR: flatbuffers::VOffsetT = 4;
+  pub const VT_DENOMINATOR: flatbuffers::VOffsetT = 6;
 
-  #[inline]
-  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
-    CompuRationalCoEffs { _tab: table }
-  }
   #[allow(unused_mut)]
   pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr, A: flatbuffers::Allocator + 'bldr>(
     _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr, A>,
@@ -5931,6 +5924,13 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> CompuRationalCoEffs<'a, B> {
     if let Some(x) = args.numerator { builder.add_numerator(x); }
     builder.finish()
   }
+}
+
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> CompuRationalCoEffs<'a, B> {
+  #[inline]
+  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
+    CompuRationalCoEffs { _tab: table }
+  }
 
 
   #[inline]
@@ -5938,14 +5938,14 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> CompuRationalCoEffs<'a, B> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, f64, B>>>(CompuRationalCoEffsOffset::VT_NUMERATOR, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, f64, B>>>(CompuRationalCoEffs::VT_NUMERATOR, None)}
   }
   #[inline]
   pub fn denominator(&self) -> Option<flatbuffers::Vector<'a, f64, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, f64, B>>>(CompuRationalCoEffsOffset::VT_DENOMINATOR, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, f64, B>>>(CompuRationalCoEffs::VT_DENOMINATOR, None)}
   }
 }
 
@@ -5956,8 +5956,8 @@ impl<B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Verifiable for CompuRatio
   ) -> Result<(), flatbuffers::InvalidFlatbuffer> {
     use self::flatbuffers::Verifiable;
     v.visit_table(pos)?
-     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, f64, B>>>("numerator", CompuRationalCoEffsOffset::VT_NUMERATOR, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, f64, B>>>("denominator", CompuRationalCoEffsOffset::VT_DENOMINATOR, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, f64, B>>>("numerator", CompuRationalCoEffs::VT_NUMERATOR, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, f64, B>>>("denominator", CompuRationalCoEffs::VT_DENOMINATOR, false)?
      .finish();
     Ok(())
   }
@@ -5983,11 +5983,11 @@ pub struct CompuRationalCoEffsBuilder<'a: 'b, 'b, A: flatbuffers::Allocator + 'a
 impl<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> CompuRationalCoEffsBuilder<'a, 'b, A> {
   #[inline]
   pub fn add_numerator(&mut self, numerator: flatbuffers::WIPOffset<flatbuffers::Vector<'b , f64>>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(CompuRationalCoEffsOffset::VT_NUMERATOR, numerator);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(CompuRationalCoEffs::VT_NUMERATOR, numerator);
   }
   #[inline]
   pub fn add_denominator(&mut self, denominator: flatbuffers::WIPOffset<flatbuffers::Vector<'b , f64>>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(CompuRationalCoEffsOffset::VT_DENOMINATOR, denominator);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(CompuRationalCoEffs::VT_DENOMINATOR, denominator);
   }
   #[inline]
   pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a, A>) -> CompuRationalCoEffsBuilder<'a, 'b, A> {
@@ -6012,15 +6012,6 @@ impl core::fmt::Debug for CompuRationalCoEffs<'_> {
       ds.finish()
   }
 }
-pub enum CompuScaleOffset {}
-impl CompuScaleOffset {
-    pub const VT_SHORT_LABEL: flatbuffers::VOffsetT = 4;
-    pub const VT_LOWER_LIMIT: flatbuffers::VOffsetT = 6;
-    pub const VT_UPPER_LIMIT: flatbuffers::VOffsetT = 8;
-    pub const VT_INVERSE_VALUES: flatbuffers::VOffsetT = 10;
-    pub const VT_CONSTS: flatbuffers::VOffsetT = 12;
-    pub const VT_RATIONAL_CO_EFFS: flatbuffers::VOffsetT = 14;
-}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Copy for CompuScale<'a, B> {}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Clone for CompuScale<'a, B> {
   fn clone(&self) -> Self { *self }
@@ -6041,12 +6032,14 @@ impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'
   }
 }
 
-impl<'a, B: flatbuffers::ReadBuffer + ?Sized> CompuScale<'a, B> {
+impl<'a> CompuScale<'a> {
+  pub const VT_SHORT_LABEL: flatbuffers::VOffsetT = 4;
+  pub const VT_LOWER_LIMIT: flatbuffers::VOffsetT = 6;
+  pub const VT_UPPER_LIMIT: flatbuffers::VOffsetT = 8;
+  pub const VT_INVERSE_VALUES: flatbuffers::VOffsetT = 10;
+  pub const VT_CONSTS: flatbuffers::VOffsetT = 12;
+  pub const VT_RATIONAL_CO_EFFS: flatbuffers::VOffsetT = 14;
 
-  #[inline]
-  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
-    CompuScale { _tab: table }
-  }
   #[allow(unused_mut)]
   pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr, A: flatbuffers::Allocator + 'bldr>(
     _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr, A>,
@@ -6061,6 +6054,13 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> CompuScale<'a, B> {
     if let Some(x) = args.short_label { builder.add_short_label(x); }
     builder.finish()
   }
+}
+
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> CompuScale<'a, B> {
+  #[inline]
+  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
+    CompuScale { _tab: table }
+  }
 
 
   #[inline]
@@ -6068,42 +6068,42 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> CompuScale<'a, B> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<Text<'a, B>>>(CompuScaleOffset::VT_SHORT_LABEL, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<Text<'a, B>>>(CompuScale::VT_SHORT_LABEL, None)}
   }
   #[inline]
   pub fn lower_limit(&self) -> Option<Limit<'a, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<Limit<'a, B>>>(CompuScaleOffset::VT_LOWER_LIMIT, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<Limit<'a, B>>>(CompuScale::VT_LOWER_LIMIT, None)}
   }
   #[inline]
   pub fn upper_limit(&self) -> Option<Limit<'a, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<Limit<'a, B>>>(CompuScaleOffset::VT_UPPER_LIMIT, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<Limit<'a, B>>>(CompuScale::VT_UPPER_LIMIT, None)}
   }
   #[inline]
   pub fn inverse_values(&self) -> Option<CompuValues<'a, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<CompuValues<'a, B>>>(CompuScaleOffset::VT_INVERSE_VALUES, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<CompuValues<'a, B>>>(CompuScale::VT_INVERSE_VALUES, None)}
   }
   #[inline]
   pub fn consts(&self) -> Option<CompuValues<'a, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<CompuValues<'a, B>>>(CompuScaleOffset::VT_CONSTS, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<CompuValues<'a, B>>>(CompuScale::VT_CONSTS, None)}
   }
   #[inline]
   pub fn rational_co_effs(&self) -> Option<CompuRationalCoEffs<'a, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<CompuRationalCoEffs<'a, B>>>(CompuScaleOffset::VT_RATIONAL_CO_EFFS, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<CompuRationalCoEffs<'a, B>>>(CompuScale::VT_RATIONAL_CO_EFFS, None)}
   }
 }
 
@@ -6114,12 +6114,12 @@ impl<B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Verifiable for CompuScale
   ) -> Result<(), flatbuffers::InvalidFlatbuffer> {
     use self::flatbuffers::Verifiable;
     v.visit_table(pos)?
-     .visit_field::<flatbuffers::ForwardsUOffset<Text<'_, B>>>("short_label", CompuScaleOffset::VT_SHORT_LABEL, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<Limit<'_, B>>>("lower_limit", CompuScaleOffset::VT_LOWER_LIMIT, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<Limit<'_, B>>>("upper_limit", CompuScaleOffset::VT_UPPER_LIMIT, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<CompuValues<'_, B>>>("inverse_values", CompuScaleOffset::VT_INVERSE_VALUES, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<CompuValues<'_, B>>>("consts", CompuScaleOffset::VT_CONSTS, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<CompuRationalCoEffs<'_, B>>>("rational_co_effs", CompuScaleOffset::VT_RATIONAL_CO_EFFS, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<Text<'_, B>>>("short_label", CompuScale::VT_SHORT_LABEL, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<Limit<'_, B>>>("lower_limit", CompuScale::VT_LOWER_LIMIT, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<Limit<'_, B>>>("upper_limit", CompuScale::VT_UPPER_LIMIT, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<CompuValues<'_, B>>>("inverse_values", CompuScale::VT_INVERSE_VALUES, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<CompuValues<'_, B>>>("consts", CompuScale::VT_CONSTS, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<CompuRationalCoEffs<'_, B>>>("rational_co_effs", CompuScale::VT_RATIONAL_CO_EFFS, false)?
      .finish();
     Ok(())
   }
@@ -6153,27 +6153,27 @@ pub struct CompuScaleBuilder<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> {
 impl<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> CompuScaleBuilder<'a, 'b, A> {
   #[inline]
   pub fn add_short_label(&mut self, short_label: flatbuffers::WIPOffset<Text<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Text>>(CompuScaleOffset::VT_SHORT_LABEL, short_label);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Text>>(CompuScale::VT_SHORT_LABEL, short_label);
   }
   #[inline]
   pub fn add_lower_limit(&mut self, lower_limit: flatbuffers::WIPOffset<Limit<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Limit>>(CompuScaleOffset::VT_LOWER_LIMIT, lower_limit);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Limit>>(CompuScale::VT_LOWER_LIMIT, lower_limit);
   }
   #[inline]
   pub fn add_upper_limit(&mut self, upper_limit: flatbuffers::WIPOffset<Limit<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Limit>>(CompuScaleOffset::VT_UPPER_LIMIT, upper_limit);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Limit>>(CompuScale::VT_UPPER_LIMIT, upper_limit);
   }
   #[inline]
   pub fn add_inverse_values(&mut self, inverse_values: flatbuffers::WIPOffset<CompuValues<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<CompuValues>>(CompuScaleOffset::VT_INVERSE_VALUES, inverse_values);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<CompuValues>>(CompuScale::VT_INVERSE_VALUES, inverse_values);
   }
   #[inline]
   pub fn add_consts(&mut self, consts: flatbuffers::WIPOffset<CompuValues<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<CompuValues>>(CompuScaleOffset::VT_CONSTS, consts);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<CompuValues>>(CompuScale::VT_CONSTS, consts);
   }
   #[inline]
   pub fn add_rational_co_effs(&mut self, rational_co_effs: flatbuffers::WIPOffset<CompuRationalCoEffs<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<CompuRationalCoEffs>>(CompuScaleOffset::VT_RATIONAL_CO_EFFS, rational_co_effs);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<CompuRationalCoEffs>>(CompuScale::VT_RATIONAL_CO_EFFS, rational_co_effs);
   }
   #[inline]
   pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a, A>) -> CompuScaleBuilder<'a, 'b, A> {
@@ -6202,11 +6202,6 @@ impl core::fmt::Debug for CompuScale<'_> {
       ds.finish()
   }
 }
-pub enum CompuDefaultValueOffset {}
-impl CompuDefaultValueOffset {
-    pub const VT_VALUES: flatbuffers::VOffsetT = 4;
-    pub const VT_INVERSE_VALUES: flatbuffers::VOffsetT = 6;
-}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Copy for CompuDefaultValue<'a, B> {}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Clone for CompuDefaultValue<'a, B> {
   fn clone(&self) -> Self { *self }
@@ -6227,12 +6222,10 @@ impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'
   }
 }
 
-impl<'a, B: flatbuffers::ReadBuffer + ?Sized> CompuDefaultValue<'a, B> {
+impl<'a> CompuDefaultValue<'a> {
+  pub const VT_VALUES: flatbuffers::VOffsetT = 4;
+  pub const VT_INVERSE_VALUES: flatbuffers::VOffsetT = 6;
 
-  #[inline]
-  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
-    CompuDefaultValue { _tab: table }
-  }
   #[allow(unused_mut)]
   pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr, A: flatbuffers::Allocator + 'bldr>(
     _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr, A>,
@@ -6243,6 +6236,13 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> CompuDefaultValue<'a, B> {
     if let Some(x) = args.values { builder.add_values(x); }
     builder.finish()
   }
+}
+
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> CompuDefaultValue<'a, B> {
+  #[inline]
+  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
+    CompuDefaultValue { _tab: table }
+  }
 
 
   #[inline]
@@ -6250,14 +6250,14 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> CompuDefaultValue<'a, B> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<CompuValues<'a, B>>>(CompuDefaultValueOffset::VT_VALUES, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<CompuValues<'a, B>>>(CompuDefaultValue::VT_VALUES, None)}
   }
   #[inline]
   pub fn inverse_values(&self) -> Option<CompuValues<'a, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<CompuValues<'a, B>>>(CompuDefaultValueOffset::VT_INVERSE_VALUES, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<CompuValues<'a, B>>>(CompuDefaultValue::VT_INVERSE_VALUES, None)}
   }
 }
 
@@ -6268,8 +6268,8 @@ impl<B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Verifiable for CompuDefau
   ) -> Result<(), flatbuffers::InvalidFlatbuffer> {
     use self::flatbuffers::Verifiable;
     v.visit_table(pos)?
-     .visit_field::<flatbuffers::ForwardsUOffset<CompuValues<'_, B>>>("values", CompuDefaultValueOffset::VT_VALUES, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<CompuValues<'_, B>>>("inverse_values", CompuDefaultValueOffset::VT_INVERSE_VALUES, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<CompuValues<'_, B>>>("values", CompuDefaultValue::VT_VALUES, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<CompuValues<'_, B>>>("inverse_values", CompuDefaultValue::VT_INVERSE_VALUES, false)?
      .finish();
     Ok(())
   }
@@ -6295,11 +6295,11 @@ pub struct CompuDefaultValueBuilder<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> 
 impl<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> CompuDefaultValueBuilder<'a, 'b, A> {
   #[inline]
   pub fn add_values(&mut self, values: flatbuffers::WIPOffset<CompuValues<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<CompuValues>>(CompuDefaultValueOffset::VT_VALUES, values);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<CompuValues>>(CompuDefaultValue::VT_VALUES, values);
   }
   #[inline]
   pub fn add_inverse_values(&mut self, inverse_values: flatbuffers::WIPOffset<CompuValues<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<CompuValues>>(CompuDefaultValueOffset::VT_INVERSE_VALUES, inverse_values);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<CompuValues>>(CompuDefaultValue::VT_INVERSE_VALUES, inverse_values);
   }
   #[inline]
   pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a, A>) -> CompuDefaultValueBuilder<'a, 'b, A> {
@@ -6324,12 +6324,6 @@ impl core::fmt::Debug for CompuDefaultValue<'_> {
       ds.finish()
   }
 }
-pub enum CompuInternalToPhysOffset {}
-impl CompuInternalToPhysOffset {
-    pub const VT_COMPU_SCALES: flatbuffers::VOffsetT = 4;
-    pub const VT_PROG_CODE: flatbuffers::VOffsetT = 6;
-    pub const VT_COMPU_DEFAULT_VALUE: flatbuffers::VOffsetT = 8;
-}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Copy for CompuInternalToPhys<'a, B> {}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Clone for CompuInternalToPhys<'a, B> {
   fn clone(&self) -> Self { *self }
@@ -6350,12 +6344,11 @@ impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'
   }
 }
 
-impl<'a, B: flatbuffers::ReadBuffer + ?Sized> CompuInternalToPhys<'a, B> {
+impl<'a> CompuInternalToPhys<'a> {
+  pub const VT_COMPU_SCALES: flatbuffers::VOffsetT = 4;
+  pub const VT_PROG_CODE: flatbuffers::VOffsetT = 6;
+  pub const VT_COMPU_DEFAULT_VALUE: flatbuffers::VOffsetT = 8;
 
-  #[inline]
-  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
-    CompuInternalToPhys { _tab: table }
-  }
   #[allow(unused_mut)]
   pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr, A: flatbuffers::Allocator + 'bldr>(
     _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr, A>,
@@ -6367,6 +6360,13 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> CompuInternalToPhys<'a, B> {
     if let Some(x) = args.compu_scales { builder.add_compu_scales(x); }
     builder.finish()
   }
+}
+
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> CompuInternalToPhys<'a, B> {
+  #[inline]
+  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
+    CompuInternalToPhys { _tab: table }
+  }
 
 
   #[inline]
@@ -6374,21 +6374,21 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> CompuInternalToPhys<'a, B> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<CompuScale<'a, B>>, B>>>(CompuInternalToPhysOffset::VT_COMPU_SCALES, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<CompuScale<'a, B>>, B>>>(CompuInternalToPhys::VT_COMPU_SCALES, None)}
   }
   #[inline]
   pub fn prog_code(&self) -> Option<ProgCode<'a, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<ProgCode<'a, B>>>(CompuInternalToPhysOffset::VT_PROG_CODE, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<ProgCode<'a, B>>>(CompuInternalToPhys::VT_PROG_CODE, None)}
   }
   #[inline]
   pub fn compu_default_value(&self) -> Option<CompuDefaultValue<'a, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<CompuDefaultValue<'a, B>>>(CompuInternalToPhysOffset::VT_COMPU_DEFAULT_VALUE, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<CompuDefaultValue<'a, B>>>(CompuInternalToPhys::VT_COMPU_DEFAULT_VALUE, None)}
   }
 }
 
@@ -6399,9 +6399,9 @@ impl<B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Verifiable for CompuInter
   ) -> Result<(), flatbuffers::InvalidFlatbuffer> {
     use self::flatbuffers::Verifiable;
     v.visit_table(pos)?
-     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<CompuScale<'_, B>>, B>>>("compu_scales", CompuInternalToPhysOffset::VT_COMPU_SCALES, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<ProgCode<'_, B>>>("prog_code", CompuInternalToPhysOffset::VT_PROG_CODE, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<CompuDefaultValue<'_, B>>>("compu_default_value", CompuInternalToPhysOffset::VT_COMPU_DEFAULT_VALUE, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<CompuScale<'_, B>>, B>>>("compu_scales", CompuInternalToPhys::VT_COMPU_SCALES, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<ProgCode<'_, B>>>("prog_code", CompuInternalToPhys::VT_PROG_CODE, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<CompuDefaultValue<'_, B>>>("compu_default_value", CompuInternalToPhys::VT_COMPU_DEFAULT_VALUE, false)?
      .finish();
     Ok(())
   }
@@ -6429,15 +6429,15 @@ pub struct CompuInternalToPhysBuilder<'a: 'b, 'b, A: flatbuffers::Allocator + 'a
 impl<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> CompuInternalToPhysBuilder<'a, 'b, A> {
   #[inline]
   pub fn add_compu_scales(&mut self, compu_scales: flatbuffers::WIPOffset<flatbuffers::Vector<'b , flatbuffers::ForwardsUOffset<CompuScale<'b >>>>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(CompuInternalToPhysOffset::VT_COMPU_SCALES, compu_scales);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(CompuInternalToPhys::VT_COMPU_SCALES, compu_scales);
   }
   #[inline]
   pub fn add_prog_code(&mut self, prog_code: flatbuffers::WIPOffset<ProgCode<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<ProgCode>>(CompuInternalToPhysOffset::VT_PROG_CODE, prog_code);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<ProgCode>>(CompuInternalToPhys::VT_PROG_CODE, prog_code);
   }
   #[inline]
   pub fn add_compu_default_value(&mut self, compu_default_value: flatbuffers::WIPOffset<CompuDefaultValue<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<CompuDefaultValue>>(CompuInternalToPhysOffset::VT_COMPU_DEFAULT_VALUE, compu_default_value);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<CompuDefaultValue>>(CompuInternalToPhys::VT_COMPU_DEFAULT_VALUE, compu_default_value);
   }
   #[inline]
   pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a, A>) -> CompuInternalToPhysBuilder<'a, 'b, A> {
@@ -6463,12 +6463,6 @@ impl core::fmt::Debug for CompuInternalToPhys<'_> {
       ds.finish()
   }
 }
-pub enum CompuPhysToInternalOffset {}
-impl CompuPhysToInternalOffset {
-    pub const VT_PROG_CODE: flatbuffers::VOffsetT = 4;
-    pub const VT_COMPU_SCALES: flatbuffers::VOffsetT = 6;
-    pub const VT_COMPU_DEFAULT_VALUE: flatbuffers::VOffsetT = 8;
-}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Copy for CompuPhysToInternal<'a, B> {}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Clone for CompuPhysToInternal<'a, B> {
   fn clone(&self) -> Self { *self }
@@ -6489,12 +6483,11 @@ impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'
   }
 }
 
-impl<'a, B: flatbuffers::ReadBuffer + ?Sized> CompuPhysToInternal<'a, B> {
+impl<'a> CompuPhysToInternal<'a> {
+  pub const VT_PROG_CODE: flatbuffers::VOffsetT = 4;
+  pub const VT_COMPU_SCALES: flatbuffers::VOffsetT = 6;
+  pub const VT_COMPU_DEFAULT_VALUE: flatbuffers::VOffsetT = 8;
 
-  #[inline]
-  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
-    CompuPhysToInternal { _tab: table }
-  }
   #[allow(unused_mut)]
   pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr, A: flatbuffers::Allocator + 'bldr>(
     _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr, A>,
@@ -6506,6 +6499,13 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> CompuPhysToInternal<'a, B> {
     if let Some(x) = args.prog_code { builder.add_prog_code(x); }
     builder.finish()
   }
+}
+
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> CompuPhysToInternal<'a, B> {
+  #[inline]
+  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
+    CompuPhysToInternal { _tab: table }
+  }
 
 
   #[inline]
@@ -6513,21 +6513,21 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> CompuPhysToInternal<'a, B> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<ProgCode<'a, B>>>(CompuPhysToInternalOffset::VT_PROG_CODE, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<ProgCode<'a, B>>>(CompuPhysToInternal::VT_PROG_CODE, None)}
   }
   #[inline]
   pub fn compu_scales(&self) -> Option<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<CompuScale<'a, B>>, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<CompuScale<'a, B>>, B>>>(CompuPhysToInternalOffset::VT_COMPU_SCALES, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<CompuScale<'a, B>>, B>>>(CompuPhysToInternal::VT_COMPU_SCALES, None)}
   }
   #[inline]
   pub fn compu_default_value(&self) -> Option<CompuDefaultValue<'a, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<CompuDefaultValue<'a, B>>>(CompuPhysToInternalOffset::VT_COMPU_DEFAULT_VALUE, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<CompuDefaultValue<'a, B>>>(CompuPhysToInternal::VT_COMPU_DEFAULT_VALUE, None)}
   }
 }
 
@@ -6538,9 +6538,9 @@ impl<B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Verifiable for CompuPhysT
   ) -> Result<(), flatbuffers::InvalidFlatbuffer> {
     use self::flatbuffers::Verifiable;
     v.visit_table(pos)?
-     .visit_field::<flatbuffers::ForwardsUOffset<ProgCode<'_, B>>>("prog_code", CompuPhysToInternalOffset::VT_PROG_CODE, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<CompuScale<'_, B>>, B>>>("compu_scales", CompuPhysToInternalOffset::VT_COMPU_SCALES, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<CompuDefaultValue<'_, B>>>("compu_default_value", CompuPhysToInternalOffset::VT_COMPU_DEFAULT_VALUE, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<ProgCode<'_, B>>>("prog_code", CompuPhysToInternal::VT_PROG_CODE, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<CompuScale<'_, B>>, B>>>("compu_scales", CompuPhysToInternal::VT_COMPU_SCALES, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<CompuDefaultValue<'_, B>>>("compu_default_value", CompuPhysToInternal::VT_COMPU_DEFAULT_VALUE, false)?
      .finish();
     Ok(())
   }
@@ -6568,15 +6568,15 @@ pub struct CompuPhysToInternalBuilder<'a: 'b, 'b, A: flatbuffers::Allocator + 'a
 impl<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> CompuPhysToInternalBuilder<'a, 'b, A> {
   #[inline]
   pub fn add_prog_code(&mut self, prog_code: flatbuffers::WIPOffset<ProgCode<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<ProgCode>>(CompuPhysToInternalOffset::VT_PROG_CODE, prog_code);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<ProgCode>>(CompuPhysToInternal::VT_PROG_CODE, prog_code);
   }
   #[inline]
   pub fn add_compu_scales(&mut self, compu_scales: flatbuffers::WIPOffset<flatbuffers::Vector<'b , flatbuffers::ForwardsUOffset<CompuScale<'b >>>>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(CompuPhysToInternalOffset::VT_COMPU_SCALES, compu_scales);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(CompuPhysToInternal::VT_COMPU_SCALES, compu_scales);
   }
   #[inline]
   pub fn add_compu_default_value(&mut self, compu_default_value: flatbuffers::WIPOffset<CompuDefaultValue<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<CompuDefaultValue>>(CompuPhysToInternalOffset::VT_COMPU_DEFAULT_VALUE, compu_default_value);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<CompuDefaultValue>>(CompuPhysToInternal::VT_COMPU_DEFAULT_VALUE, compu_default_value);
   }
   #[inline]
   pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a, A>) -> CompuPhysToInternalBuilder<'a, 'b, A> {
@@ -6602,12 +6602,6 @@ impl core::fmt::Debug for CompuPhysToInternal<'_> {
       ds.finish()
   }
 }
-pub enum CompuMethodOffset {}
-impl CompuMethodOffset {
-    pub const VT_CATEGORY: flatbuffers::VOffsetT = 4;
-    pub const VT_INTERNAL_TO_PHYS: flatbuffers::VOffsetT = 6;
-    pub const VT_PHYS_TO_INTERNAL: flatbuffers::VOffsetT = 8;
-}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Copy for CompuMethod<'a, B> {}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Clone for CompuMethod<'a, B> {
   fn clone(&self) -> Self { *self }
@@ -6628,12 +6622,11 @@ impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'
   }
 }
 
-impl<'a, B: flatbuffers::ReadBuffer + ?Sized> CompuMethod<'a, B> {
+impl<'a> CompuMethod<'a> {
+  pub const VT_CATEGORY: flatbuffers::VOffsetT = 4;
+  pub const VT_INTERNAL_TO_PHYS: flatbuffers::VOffsetT = 6;
+  pub const VT_PHYS_TO_INTERNAL: flatbuffers::VOffsetT = 8;
 
-  #[inline]
-  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
-    CompuMethod { _tab: table }
-  }
   #[allow(unused_mut)]
   pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr, A: flatbuffers::Allocator + 'bldr>(
     _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr, A>,
@@ -6645,6 +6638,13 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> CompuMethod<'a, B> {
     builder.add_category(args.category);
     builder.finish()
   }
+}
+
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> CompuMethod<'a, B> {
+  #[inline]
+  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
+    CompuMethod { _tab: table }
+  }
 
 
   #[inline]
@@ -6652,21 +6652,21 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> CompuMethod<'a, B> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<CompuCategory>(CompuMethodOffset::VT_CATEGORY, Some(CompuCategory::IDENTICAL)).unwrap()}
+    unsafe { self._tab.get::<CompuCategory>(CompuMethod::VT_CATEGORY, Some(CompuCategory::IDENTICAL)).unwrap()}
   }
   #[inline]
   pub fn internal_to_phys(&self) -> Option<CompuInternalToPhys<'a, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<CompuInternalToPhys<'a, B>>>(CompuMethodOffset::VT_INTERNAL_TO_PHYS, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<CompuInternalToPhys<'a, B>>>(CompuMethod::VT_INTERNAL_TO_PHYS, None)}
   }
   #[inline]
   pub fn phys_to_internal(&self) -> Option<CompuPhysToInternal<'a, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<CompuPhysToInternal<'a, B>>>(CompuMethodOffset::VT_PHYS_TO_INTERNAL, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<CompuPhysToInternal<'a, B>>>(CompuMethod::VT_PHYS_TO_INTERNAL, None)}
   }
 }
 
@@ -6677,9 +6677,9 @@ impl<B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Verifiable for CompuMetho
   ) -> Result<(), flatbuffers::InvalidFlatbuffer> {
     use self::flatbuffers::Verifiable;
     v.visit_table(pos)?
-     .visit_field::<CompuCategory>("category", CompuMethodOffset::VT_CATEGORY, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<CompuInternalToPhys<'_, B>>>("internal_to_phys", CompuMethodOffset::VT_INTERNAL_TO_PHYS, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<CompuPhysToInternal<'_, B>>>("phys_to_internal", CompuMethodOffset::VT_PHYS_TO_INTERNAL, false)?
+     .visit_field::<CompuCategory>("category", CompuMethod::VT_CATEGORY, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<CompuInternalToPhys<'_, B>>>("internal_to_phys", CompuMethod::VT_INTERNAL_TO_PHYS, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<CompuPhysToInternal<'_, B>>>("phys_to_internal", CompuMethod::VT_PHYS_TO_INTERNAL, false)?
      .finish();
     Ok(())
   }
@@ -6707,15 +6707,15 @@ pub struct CompuMethodBuilder<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> {
 impl<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> CompuMethodBuilder<'a, 'b, A> {
   #[inline]
   pub fn add_category(&mut self, category: CompuCategory) {
-    self.fbb_.push_slot::<CompuCategory>(CompuMethodOffset::VT_CATEGORY, category, CompuCategory::IDENTICAL);
+    self.fbb_.push_slot::<CompuCategory>(CompuMethod::VT_CATEGORY, category, CompuCategory::IDENTICAL);
   }
   #[inline]
   pub fn add_internal_to_phys(&mut self, internal_to_phys: flatbuffers::WIPOffset<CompuInternalToPhys<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<CompuInternalToPhys>>(CompuMethodOffset::VT_INTERNAL_TO_PHYS, internal_to_phys);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<CompuInternalToPhys>>(CompuMethod::VT_INTERNAL_TO_PHYS, internal_to_phys);
   }
   #[inline]
   pub fn add_phys_to_internal(&mut self, phys_to_internal: flatbuffers::WIPOffset<CompuPhysToInternal<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<CompuPhysToInternal>>(CompuMethodOffset::VT_PHYS_TO_INTERNAL, phys_to_internal);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<CompuPhysToInternal>>(CompuMethod::VT_PHYS_TO_INTERNAL, phys_to_internal);
   }
   #[inline]
   pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a, A>) -> CompuMethodBuilder<'a, 'b, A> {
@@ -6741,12 +6741,6 @@ impl core::fmt::Debug for CompuMethod<'_> {
       ds.finish()
   }
 }
-pub enum PhysicalTypeOffset {}
-impl PhysicalTypeOffset {
-    pub const VT_PRECISION: flatbuffers::VOffsetT = 4;
-    pub const VT_BASE_DATA_TYPE: flatbuffers::VOffsetT = 6;
-    pub const VT_DISPLAY_RADIX: flatbuffers::VOffsetT = 8;
-}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Copy for PhysicalType<'a, B> {}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Clone for PhysicalType<'a, B> {
   fn clone(&self) -> Self { *self }
@@ -6767,12 +6761,11 @@ impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'
   }
 }
 
-impl<'a, B: flatbuffers::ReadBuffer + ?Sized> PhysicalType<'a, B> {
+impl<'a> PhysicalType<'a> {
+  pub const VT_PRECISION: flatbuffers::VOffsetT = 4;
+  pub const VT_BASE_DATA_TYPE: flatbuffers::VOffsetT = 6;
+  pub const VT_DISPLAY_RADIX: flatbuffers::VOffsetT = 8;
 
-  #[inline]
-  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
-    PhysicalType { _tab: table }
-  }
   #[allow(unused_mut)]
   pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr, A: flatbuffers::Allocator + 'bldr>(
     _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr, A>,
@@ -6784,6 +6777,13 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> PhysicalType<'a, B> {
     builder.add_base_data_type(args.base_data_type);
     builder.finish()
   }
+}
+
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> PhysicalType<'a, B> {
+  #[inline]
+  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
+    PhysicalType { _tab: table }
+  }
 
 
   #[inline]
@@ -6791,21 +6791,21 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> PhysicalType<'a, B> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<u32>(PhysicalTypeOffset::VT_PRECISION, None)}
+    unsafe { self._tab.get::<u32>(PhysicalType::VT_PRECISION, None)}
   }
   #[inline]
   pub fn base_data_type(&self) -> PhysicalTypeDataType {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<PhysicalTypeDataType>(PhysicalTypeOffset::VT_BASE_DATA_TYPE, Some(PhysicalTypeDataType::A_INT_32)).unwrap()}
+    unsafe { self._tab.get::<PhysicalTypeDataType>(PhysicalType::VT_BASE_DATA_TYPE, Some(PhysicalTypeDataType::A_INT_32)).unwrap()}
   }
   #[inline]
   pub fn display_radix(&self) -> Radix {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<Radix>(PhysicalTypeOffset::VT_DISPLAY_RADIX, Some(Radix::HEX)).unwrap()}
+    unsafe { self._tab.get::<Radix>(PhysicalType::VT_DISPLAY_RADIX, Some(Radix::HEX)).unwrap()}
   }
 }
 
@@ -6816,9 +6816,9 @@ impl<B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Verifiable for PhysicalTy
   ) -> Result<(), flatbuffers::InvalidFlatbuffer> {
     use self::flatbuffers::Verifiable;
     v.visit_table(pos)?
-     .visit_field::<u32>("precision", PhysicalTypeOffset::VT_PRECISION, false)?
-     .visit_field::<PhysicalTypeDataType>("base_data_type", PhysicalTypeOffset::VT_BASE_DATA_TYPE, false)?
-     .visit_field::<Radix>("display_radix", PhysicalTypeOffset::VT_DISPLAY_RADIX, false)?
+     .visit_field::<u32>("precision", PhysicalType::VT_PRECISION, false)?
+     .visit_field::<PhysicalTypeDataType>("base_data_type", PhysicalType::VT_BASE_DATA_TYPE, false)?
+     .visit_field::<Radix>("display_radix", PhysicalType::VT_DISPLAY_RADIX, false)?
      .finish();
     Ok(())
   }
@@ -6846,15 +6846,15 @@ pub struct PhysicalTypeBuilder<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> {
 impl<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> PhysicalTypeBuilder<'a, 'b, A> {
   #[inline]
   pub fn add_precision(&mut self, precision: u32) {
-    self.fbb_.push_slot_always::<u32>(PhysicalTypeOffset::VT_PRECISION, precision);
+    self.fbb_.push_slot_always::<u32>(PhysicalType::VT_PRECISION, precision);
   }
   #[inline]
   pub fn add_base_data_type(&mut self, base_data_type: PhysicalTypeDataType) {
-    self.fbb_.push_slot::<PhysicalTypeDataType>(PhysicalTypeOffset::VT_BASE_DATA_TYPE, base_data_type, PhysicalTypeDataType::A_INT_32);
+    self.fbb_.push_slot::<PhysicalTypeDataType>(PhysicalType::VT_BASE_DATA_TYPE, base_data_type, PhysicalTypeDataType::A_INT_32);
   }
   #[inline]
   pub fn add_display_radix(&mut self, display_radix: Radix) {
-    self.fbb_.push_slot::<Radix>(PhysicalTypeOffset::VT_DISPLAY_RADIX, display_radix, Radix::HEX);
+    self.fbb_.push_slot::<Radix>(PhysicalType::VT_DISPLAY_RADIX, display_radix, Radix::HEX);
   }
   #[inline]
   pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a, A>) -> PhysicalTypeBuilder<'a, 'b, A> {
@@ -6880,14 +6880,6 @@ impl core::fmt::Debug for PhysicalType<'_> {
       ds.finish()
   }
 }
-pub enum UnitOffset {}
-impl UnitOffset {
-    pub const VT_SHORT_NAME: flatbuffers::VOffsetT = 4;
-    pub const VT_DISPLAY_NAME: flatbuffers::VOffsetT = 6;
-    pub const VT_FACTORSITOUNIT: flatbuffers::VOffsetT = 8;
-    pub const VT_OFFSETITOUNIT: flatbuffers::VOffsetT = 10;
-    pub const VT_PHYSICAL_DIMENSION: flatbuffers::VOffsetT = 12;
-}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Copy for Unit<'a, B> {}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Clone for Unit<'a, B> {
   fn clone(&self) -> Self { *self }
@@ -6908,12 +6900,13 @@ impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'
   }
 }
 
-impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Unit<'a, B> {
+impl<'a> Unit<'a> {
+  pub const VT_SHORT_NAME: flatbuffers::VOffsetT = 4;
+  pub const VT_DISPLAY_NAME: flatbuffers::VOffsetT = 6;
+  pub const VT_FACTORSITOUNIT: flatbuffers::VOffsetT = 8;
+  pub const VT_OFFSETITOUNIT: flatbuffers::VOffsetT = 10;
+  pub const VT_PHYSICAL_DIMENSION: flatbuffers::VOffsetT = 12;
 
-  #[inline]
-  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
-    Unit { _tab: table }
-  }
   #[allow(unused_mut)]
   pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr, A: flatbuffers::Allocator + 'bldr>(
     _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr, A>,
@@ -6927,6 +6920,13 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Unit<'a, B> {
     if let Some(x) = args.short_name { builder.add_short_name(x); }
     builder.finish()
   }
+}
+
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Unit<'a, B> {
+  #[inline]
+  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
+    Unit { _tab: table }
+  }
 
 
   #[inline]
@@ -6934,35 +6934,35 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Unit<'a, B> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(UnitOffset::VT_SHORT_NAME, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(Unit::VT_SHORT_NAME, None)}
   }
   #[inline]
   pub fn display_name(&self) -> Option<&'a str> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(UnitOffset::VT_DISPLAY_NAME, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(Unit::VT_DISPLAY_NAME, None)}
   }
   #[inline]
   pub fn factorsitounit(&self) -> Option<f64> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<f64>(UnitOffset::VT_FACTORSITOUNIT, None)}
+    unsafe { self._tab.get::<f64>(Unit::VT_FACTORSITOUNIT, None)}
   }
   #[inline]
   pub fn offsetitounit(&self) -> Option<f64> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<f64>(UnitOffset::VT_OFFSETITOUNIT, None)}
+    unsafe { self._tab.get::<f64>(Unit::VT_OFFSETITOUNIT, None)}
   }
   #[inline]
   pub fn physical_dimension(&self) -> Option<PhysicalDimension<'a, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<PhysicalDimension<'a, B>>>(UnitOffset::VT_PHYSICAL_DIMENSION, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<PhysicalDimension<'a, B>>>(Unit::VT_PHYSICAL_DIMENSION, None)}
   }
 }
 
@@ -6973,11 +6973,11 @@ impl<B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Verifiable for Unit<'_, B
   ) -> Result<(), flatbuffers::InvalidFlatbuffer> {
     use self::flatbuffers::Verifiable;
     v.visit_table(pos)?
-     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("short_name", UnitOffset::VT_SHORT_NAME, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("display_name", UnitOffset::VT_DISPLAY_NAME, false)?
-     .visit_field::<f64>("factorsitounit", UnitOffset::VT_FACTORSITOUNIT, false)?
-     .visit_field::<f64>("offsetitounit", UnitOffset::VT_OFFSETITOUNIT, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<PhysicalDimension<'_, B>>>("physical_dimension", UnitOffset::VT_PHYSICAL_DIMENSION, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("short_name", Unit::VT_SHORT_NAME, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("display_name", Unit::VT_DISPLAY_NAME, false)?
+     .visit_field::<f64>("factorsitounit", Unit::VT_FACTORSITOUNIT, false)?
+     .visit_field::<f64>("offsetitounit", Unit::VT_OFFSETITOUNIT, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<PhysicalDimension<'_, B>>>("physical_dimension", Unit::VT_PHYSICAL_DIMENSION, false)?
      .finish();
     Ok(())
   }
@@ -7009,23 +7009,23 @@ pub struct UnitBuilder<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> {
 impl<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> UnitBuilder<'a, 'b, A> {
   #[inline]
   pub fn add_short_name(&mut self, short_name: flatbuffers::WIPOffset<&'b  str>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(UnitOffset::VT_SHORT_NAME, short_name);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(Unit::VT_SHORT_NAME, short_name);
   }
   #[inline]
   pub fn add_display_name(&mut self, display_name: flatbuffers::WIPOffset<&'b  str>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(UnitOffset::VT_DISPLAY_NAME, display_name);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(Unit::VT_DISPLAY_NAME, display_name);
   }
   #[inline]
   pub fn add_factorsitounit(&mut self, factorsitounit: f64) {
-    self.fbb_.push_slot_always::<f64>(UnitOffset::VT_FACTORSITOUNIT, factorsitounit);
+    self.fbb_.push_slot_always::<f64>(Unit::VT_FACTORSITOUNIT, factorsitounit);
   }
   #[inline]
   pub fn add_offsetitounit(&mut self, offsetitounit: f64) {
-    self.fbb_.push_slot_always::<f64>(UnitOffset::VT_OFFSETITOUNIT, offsetitounit);
+    self.fbb_.push_slot_always::<f64>(Unit::VT_OFFSETITOUNIT, offsetitounit);
   }
   #[inline]
   pub fn add_physical_dimension(&mut self, physical_dimension: flatbuffers::WIPOffset<PhysicalDimension<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<PhysicalDimension>>(UnitOffset::VT_PHYSICAL_DIMENSION, physical_dimension);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<PhysicalDimension>>(Unit::VT_PHYSICAL_DIMENSION, physical_dimension);
   }
   #[inline]
   pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a, A>) -> UnitBuilder<'a, 'b, A> {
@@ -7053,13 +7053,6 @@ impl core::fmt::Debug for Unit<'_> {
       ds.finish()
   }
 }
-pub enum ScaleConstrOffset {}
-impl ScaleConstrOffset {
-    pub const VT_SHORT_LABEL: flatbuffers::VOffsetT = 4;
-    pub const VT_LOWER_LIMIT: flatbuffers::VOffsetT = 6;
-    pub const VT_UPPER_LIMIT: flatbuffers::VOffsetT = 8;
-    pub const VT_VALIDITY: flatbuffers::VOffsetT = 10;
-}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Copy for ScaleConstr<'a, B> {}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Clone for ScaleConstr<'a, B> {
   fn clone(&self) -> Self { *self }
@@ -7080,12 +7073,12 @@ impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'
   }
 }
 
-impl<'a, B: flatbuffers::ReadBuffer + ?Sized> ScaleConstr<'a, B> {
+impl<'a> ScaleConstr<'a> {
+  pub const VT_SHORT_LABEL: flatbuffers::VOffsetT = 4;
+  pub const VT_LOWER_LIMIT: flatbuffers::VOffsetT = 6;
+  pub const VT_UPPER_LIMIT: flatbuffers::VOffsetT = 8;
+  pub const VT_VALIDITY: flatbuffers::VOffsetT = 10;
 
-  #[inline]
-  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
-    ScaleConstr { _tab: table }
-  }
   #[allow(unused_mut)]
   pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr, A: flatbuffers::Allocator + 'bldr>(
     _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr, A>,
@@ -7098,6 +7091,13 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> ScaleConstr<'a, B> {
     builder.add_validity(args.validity);
     builder.finish()
   }
+}
+
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> ScaleConstr<'a, B> {
+  #[inline]
+  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
+    ScaleConstr { _tab: table }
+  }
 
 
   #[inline]
@@ -7105,28 +7105,28 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> ScaleConstr<'a, B> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<Text<'a, B>>>(ScaleConstrOffset::VT_SHORT_LABEL, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<Text<'a, B>>>(ScaleConstr::VT_SHORT_LABEL, None)}
   }
   #[inline]
   pub fn lower_limit(&self) -> Option<Limit<'a, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<Limit<'a, B>>>(ScaleConstrOffset::VT_LOWER_LIMIT, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<Limit<'a, B>>>(ScaleConstr::VT_LOWER_LIMIT, None)}
   }
   #[inline]
   pub fn upper_limit(&self) -> Option<Limit<'a, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<Limit<'a, B>>>(ScaleConstrOffset::VT_UPPER_LIMIT, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<Limit<'a, B>>>(ScaleConstr::VT_UPPER_LIMIT, None)}
   }
   #[inline]
   pub fn validity(&self) -> ValidType {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<ValidType>(ScaleConstrOffset::VT_VALIDITY, Some(ValidType::VALID)).unwrap()}
+    unsafe { self._tab.get::<ValidType>(ScaleConstr::VT_VALIDITY, Some(ValidType::VALID)).unwrap()}
   }
 }
 
@@ -7137,10 +7137,10 @@ impl<B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Verifiable for ScaleConst
   ) -> Result<(), flatbuffers::InvalidFlatbuffer> {
     use self::flatbuffers::Verifiable;
     v.visit_table(pos)?
-     .visit_field::<flatbuffers::ForwardsUOffset<Text<'_, B>>>("short_label", ScaleConstrOffset::VT_SHORT_LABEL, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<Limit<'_, B>>>("lower_limit", ScaleConstrOffset::VT_LOWER_LIMIT, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<Limit<'_, B>>>("upper_limit", ScaleConstrOffset::VT_UPPER_LIMIT, false)?
-     .visit_field::<ValidType>("validity", ScaleConstrOffset::VT_VALIDITY, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<Text<'_, B>>>("short_label", ScaleConstr::VT_SHORT_LABEL, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<Limit<'_, B>>>("lower_limit", ScaleConstr::VT_LOWER_LIMIT, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<Limit<'_, B>>>("upper_limit", ScaleConstr::VT_UPPER_LIMIT, false)?
+     .visit_field::<ValidType>("validity", ScaleConstr::VT_VALIDITY, false)?
      .finish();
     Ok(())
   }
@@ -7170,19 +7170,19 @@ pub struct ScaleConstrBuilder<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> {
 impl<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> ScaleConstrBuilder<'a, 'b, A> {
   #[inline]
   pub fn add_short_label(&mut self, short_label: flatbuffers::WIPOffset<Text<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Text>>(ScaleConstrOffset::VT_SHORT_LABEL, short_label);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Text>>(ScaleConstr::VT_SHORT_LABEL, short_label);
   }
   #[inline]
   pub fn add_lower_limit(&mut self, lower_limit: flatbuffers::WIPOffset<Limit<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Limit>>(ScaleConstrOffset::VT_LOWER_LIMIT, lower_limit);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Limit>>(ScaleConstr::VT_LOWER_LIMIT, lower_limit);
   }
   #[inline]
   pub fn add_upper_limit(&mut self, upper_limit: flatbuffers::WIPOffset<Limit<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Limit>>(ScaleConstrOffset::VT_UPPER_LIMIT, upper_limit);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Limit>>(ScaleConstr::VT_UPPER_LIMIT, upper_limit);
   }
   #[inline]
   pub fn add_validity(&mut self, validity: ValidType) {
-    self.fbb_.push_slot::<ValidType>(ScaleConstrOffset::VT_VALIDITY, validity, ValidType::VALID);
+    self.fbb_.push_slot::<ValidType>(ScaleConstr::VT_VALIDITY, validity, ValidType::VALID);
   }
   #[inline]
   pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a, A>) -> ScaleConstrBuilder<'a, 'b, A> {
@@ -7209,12 +7209,6 @@ impl core::fmt::Debug for ScaleConstr<'_> {
       ds.finish()
   }
 }
-pub enum InternalConstrOffset {}
-impl InternalConstrOffset {
-    pub const VT_LOWER_LIMIT: flatbuffers::VOffsetT = 4;
-    pub const VT_UPPER_LIMIT: flatbuffers::VOffsetT = 6;
-    pub const VT_SCALE_CONSTR: flatbuffers::VOffsetT = 8;
-}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Copy for InternalConstr<'a, B> {}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Clone for InternalConstr<'a, B> {
   fn clone(&self) -> Self { *self }
@@ -7235,12 +7229,11 @@ impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'
   }
 }
 
-impl<'a, B: flatbuffers::ReadBuffer + ?Sized> InternalConstr<'a, B> {
+impl<'a> InternalConstr<'a> {
+  pub const VT_LOWER_LIMIT: flatbuffers::VOffsetT = 4;
+  pub const VT_UPPER_LIMIT: flatbuffers::VOffsetT = 6;
+  pub const VT_SCALE_CONSTR: flatbuffers::VOffsetT = 8;
 
-  #[inline]
-  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
-    InternalConstr { _tab: table }
-  }
   #[allow(unused_mut)]
   pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr, A: flatbuffers::Allocator + 'bldr>(
     _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr, A>,
@@ -7252,6 +7245,13 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> InternalConstr<'a, B> {
     if let Some(x) = args.lower_limit { builder.add_lower_limit(x); }
     builder.finish()
   }
+}
+
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> InternalConstr<'a, B> {
+  #[inline]
+  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
+    InternalConstr { _tab: table }
+  }
 
 
   #[inline]
@@ -7259,21 +7259,21 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> InternalConstr<'a, B> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<Limit<'a, B>>>(InternalConstrOffset::VT_LOWER_LIMIT, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<Limit<'a, B>>>(InternalConstr::VT_LOWER_LIMIT, None)}
   }
   #[inline]
   pub fn upper_limit(&self) -> Option<Limit<'a, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<Limit<'a, B>>>(InternalConstrOffset::VT_UPPER_LIMIT, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<Limit<'a, B>>>(InternalConstr::VT_UPPER_LIMIT, None)}
   }
   #[inline]
   pub fn scale_constr(&self) -> Option<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<ScaleConstr<'a, B>>, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<ScaleConstr<'a, B>>, B>>>(InternalConstrOffset::VT_SCALE_CONSTR, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<ScaleConstr<'a, B>>, B>>>(InternalConstr::VT_SCALE_CONSTR, None)}
   }
 }
 
@@ -7284,9 +7284,9 @@ impl<B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Verifiable for InternalCo
   ) -> Result<(), flatbuffers::InvalidFlatbuffer> {
     use self::flatbuffers::Verifiable;
     v.visit_table(pos)?
-     .visit_field::<flatbuffers::ForwardsUOffset<Limit<'_, B>>>("lower_limit", InternalConstrOffset::VT_LOWER_LIMIT, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<Limit<'_, B>>>("upper_limit", InternalConstrOffset::VT_UPPER_LIMIT, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<ScaleConstr<'_, B>>, B>>>("scale_constr", InternalConstrOffset::VT_SCALE_CONSTR, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<Limit<'_, B>>>("lower_limit", InternalConstr::VT_LOWER_LIMIT, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<Limit<'_, B>>>("upper_limit", InternalConstr::VT_UPPER_LIMIT, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<ScaleConstr<'_, B>>, B>>>("scale_constr", InternalConstr::VT_SCALE_CONSTR, false)?
      .finish();
     Ok(())
   }
@@ -7314,15 +7314,15 @@ pub struct InternalConstrBuilder<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> {
 impl<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> InternalConstrBuilder<'a, 'b, A> {
   #[inline]
   pub fn add_lower_limit(&mut self, lower_limit: flatbuffers::WIPOffset<Limit<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Limit>>(InternalConstrOffset::VT_LOWER_LIMIT, lower_limit);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Limit>>(InternalConstr::VT_LOWER_LIMIT, lower_limit);
   }
   #[inline]
   pub fn add_upper_limit(&mut self, upper_limit: flatbuffers::WIPOffset<Limit<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Limit>>(InternalConstrOffset::VT_UPPER_LIMIT, upper_limit);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Limit>>(InternalConstr::VT_UPPER_LIMIT, upper_limit);
   }
   #[inline]
   pub fn add_scale_constr(&mut self, scale_constr: flatbuffers::WIPOffset<flatbuffers::Vector<'b , flatbuffers::ForwardsUOffset<ScaleConstr<'b >>>>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(InternalConstrOffset::VT_SCALE_CONSTR, scale_constr);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(InternalConstr::VT_SCALE_CONSTR, scale_constr);
   }
   #[inline]
   pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a, A>) -> InternalConstrBuilder<'a, 'b, A> {
@@ -7348,16 +7348,6 @@ impl core::fmt::Debug for InternalConstr<'_> {
       ds.finish()
   }
 }
-pub enum DTCOffset {}
-impl DTCOffset {
-    pub const VT_SHORT_NAME: flatbuffers::VOffsetT = 4;
-    pub const VT_TROUBLE_CODE: flatbuffers::VOffsetT = 6;
-    pub const VT_DISPLAY_TROUBLE_CODE: flatbuffers::VOffsetT = 8;
-    pub const VT_TEXT: flatbuffers::VOffsetT = 10;
-    pub const VT_LEVEL: flatbuffers::VOffsetT = 12;
-    pub const VT_SDGS: flatbuffers::VOffsetT = 14;
-    pub const VT_IS_TEMPORARY: flatbuffers::VOffsetT = 16;
-}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Copy for DTC<'a, B> {}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Clone for DTC<'a, B> {
   fn clone(&self) -> Self { *self }
@@ -7378,12 +7368,15 @@ impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'
   }
 }
 
-impl<'a, B: flatbuffers::ReadBuffer + ?Sized> DTC<'a, B> {
+impl<'a> DTC<'a> {
+  pub const VT_SHORT_NAME: flatbuffers::VOffsetT = 4;
+  pub const VT_TROUBLE_CODE: flatbuffers::VOffsetT = 6;
+  pub const VT_DISPLAY_TROUBLE_CODE: flatbuffers::VOffsetT = 8;
+  pub const VT_TEXT: flatbuffers::VOffsetT = 10;
+  pub const VT_LEVEL: flatbuffers::VOffsetT = 12;
+  pub const VT_SDGS: flatbuffers::VOffsetT = 14;
+  pub const VT_IS_TEMPORARY: flatbuffers::VOffsetT = 16;
 
-  #[inline]
-  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
-    DTC { _tab: table }
-  }
   #[allow(unused_mut)]
   pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr, A: flatbuffers::Allocator + 'bldr>(
     _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr, A>,
@@ -7399,6 +7392,13 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> DTC<'a, B> {
     builder.add_is_temporary(args.is_temporary);
     builder.finish()
   }
+}
+
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> DTC<'a, B> {
+  #[inline]
+  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
+    DTC { _tab: table }
+  }
 
 
   #[inline]
@@ -7406,49 +7406,49 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> DTC<'a, B> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(DTCOffset::VT_SHORT_NAME, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(DTC::VT_SHORT_NAME, None)}
   }
   #[inline]
   pub fn trouble_code(&self) -> u32 {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<u32>(DTCOffset::VT_TROUBLE_CODE, Some(0)).unwrap()}
+    unsafe { self._tab.get::<u32>(DTC::VT_TROUBLE_CODE, Some(0)).unwrap()}
   }
   #[inline]
   pub fn display_trouble_code(&self) -> Option<&'a str> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(DTCOffset::VT_DISPLAY_TROUBLE_CODE, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(DTC::VT_DISPLAY_TROUBLE_CODE, None)}
   }
   #[inline]
   pub fn text(&self) -> Option<Text<'a, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<Text<'a, B>>>(DTCOffset::VT_TEXT, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<Text<'a, B>>>(DTC::VT_TEXT, None)}
   }
   #[inline]
   pub fn level(&self) -> Option<u32> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<u32>(DTCOffset::VT_LEVEL, None)}
+    unsafe { self._tab.get::<u32>(DTC::VT_LEVEL, None)}
   }
   #[inline]
   pub fn sdgs(&self) -> Option<SDGS<'a, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<SDGS<'a, B>>>(DTCOffset::VT_SDGS, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<SDGS<'a, B>>>(DTC::VT_SDGS, None)}
   }
   #[inline]
   pub fn is_temporary(&self) -> bool {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<bool>(DTCOffset::VT_IS_TEMPORARY, Some(false)).unwrap()}
+    unsafe { self._tab.get::<bool>(DTC::VT_IS_TEMPORARY, Some(false)).unwrap()}
   }
 }
 
@@ -7459,13 +7459,13 @@ impl<B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Verifiable for DTC<'_, B>
   ) -> Result<(), flatbuffers::InvalidFlatbuffer> {
     use self::flatbuffers::Verifiable;
     v.visit_table(pos)?
-     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("short_name", DTCOffset::VT_SHORT_NAME, false)?
-     .visit_field::<u32>("trouble_code", DTCOffset::VT_TROUBLE_CODE, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("display_trouble_code", DTCOffset::VT_DISPLAY_TROUBLE_CODE, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<Text<'_, B>>>("text", DTCOffset::VT_TEXT, false)?
-     .visit_field::<u32>("level", DTCOffset::VT_LEVEL, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<SDGS<'_, B>>>("sdgs", DTCOffset::VT_SDGS, false)?
-     .visit_field::<bool>("is_temporary", DTCOffset::VT_IS_TEMPORARY, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("short_name", DTC::VT_SHORT_NAME, false)?
+     .visit_field::<u32>("trouble_code", DTC::VT_TROUBLE_CODE, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("display_trouble_code", DTC::VT_DISPLAY_TROUBLE_CODE, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<Text<'_, B>>>("text", DTC::VT_TEXT, false)?
+     .visit_field::<u32>("level", DTC::VT_LEVEL, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<SDGS<'_, B>>>("sdgs", DTC::VT_SDGS, false)?
+     .visit_field::<bool>("is_temporary", DTC::VT_IS_TEMPORARY, false)?
      .finish();
     Ok(())
   }
@@ -7501,31 +7501,31 @@ pub struct DTCBuilder<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> {
 impl<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> DTCBuilder<'a, 'b, A> {
   #[inline]
   pub fn add_short_name(&mut self, short_name: flatbuffers::WIPOffset<&'b  str>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(DTCOffset::VT_SHORT_NAME, short_name);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(DTC::VT_SHORT_NAME, short_name);
   }
   #[inline]
   pub fn add_trouble_code(&mut self, trouble_code: u32) {
-    self.fbb_.push_slot::<u32>(DTCOffset::VT_TROUBLE_CODE, trouble_code, 0);
+    self.fbb_.push_slot::<u32>(DTC::VT_TROUBLE_CODE, trouble_code, 0);
   }
   #[inline]
   pub fn add_display_trouble_code(&mut self, display_trouble_code: flatbuffers::WIPOffset<&'b  str>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(DTCOffset::VT_DISPLAY_TROUBLE_CODE, display_trouble_code);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(DTC::VT_DISPLAY_TROUBLE_CODE, display_trouble_code);
   }
   #[inline]
   pub fn add_text(&mut self, text: flatbuffers::WIPOffset<Text<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Text>>(DTCOffset::VT_TEXT, text);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Text>>(DTC::VT_TEXT, text);
   }
   #[inline]
   pub fn add_level(&mut self, level: u32) {
-    self.fbb_.push_slot_always::<u32>(DTCOffset::VT_LEVEL, level);
+    self.fbb_.push_slot_always::<u32>(DTC::VT_LEVEL, level);
   }
   #[inline]
   pub fn add_sdgs(&mut self, sdgs: flatbuffers::WIPOffset<SDGS<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<SDGS>>(DTCOffset::VT_SDGS, sdgs);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<SDGS>>(DTC::VT_SDGS, sdgs);
   }
   #[inline]
   pub fn add_is_temporary(&mut self, is_temporary: bool) {
-    self.fbb_.push_slot::<bool>(DTCOffset::VT_IS_TEMPORARY, is_temporary, false);
+    self.fbb_.push_slot::<bool>(DTC::VT_IS_TEMPORARY, is_temporary, false);
   }
   #[inline]
   pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a, A>) -> DTCBuilder<'a, 'b, A> {
@@ -7555,15 +7555,6 @@ impl core::fmt::Debug for DTC<'_> {
       ds.finish()
   }
 }
-pub enum NormalDOPOffset {}
-impl NormalDOPOffset {
-    pub const VT_COMPU_METHOD: flatbuffers::VOffsetT = 4;
-    pub const VT_DIAG_CODED_TYPE: flatbuffers::VOffsetT = 6;
-    pub const VT_PHYSICAL_TYPE: flatbuffers::VOffsetT = 8;
-    pub const VT_INTERNAL_CONSTR: flatbuffers::VOffsetT = 10;
-    pub const VT_UNIT_REF: flatbuffers::VOffsetT = 12;
-    pub const VT_PHYS_CONSTR: flatbuffers::VOffsetT = 14;
-}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Copy for NormalDOP<'a, B> {}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Clone for NormalDOP<'a, B> {
   fn clone(&self) -> Self { *self }
@@ -7584,12 +7575,14 @@ impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'
   }
 }
 
-impl<'a, B: flatbuffers::ReadBuffer + ?Sized> NormalDOP<'a, B> {
+impl<'a> NormalDOP<'a> {
+  pub const VT_COMPU_METHOD: flatbuffers::VOffsetT = 4;
+  pub const VT_DIAG_CODED_TYPE: flatbuffers::VOffsetT = 6;
+  pub const VT_PHYSICAL_TYPE: flatbuffers::VOffsetT = 8;
+  pub const VT_INTERNAL_CONSTR: flatbuffers::VOffsetT = 10;
+  pub const VT_UNIT_REF: flatbuffers::VOffsetT = 12;
+  pub const VT_PHYS_CONSTR: flatbuffers::VOffsetT = 14;
 
-  #[inline]
-  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
-    NormalDOP { _tab: table }
-  }
   #[allow(unused_mut)]
   pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr, A: flatbuffers::Allocator + 'bldr>(
     _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr, A>,
@@ -7604,6 +7597,13 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> NormalDOP<'a, B> {
     if let Some(x) = args.compu_method { builder.add_compu_method(x); }
     builder.finish()
   }
+}
+
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> NormalDOP<'a, B> {
+  #[inline]
+  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
+    NormalDOP { _tab: table }
+  }
 
 
   #[inline]
@@ -7611,42 +7611,42 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> NormalDOP<'a, B> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<CompuMethod<'a, B>>>(NormalDOPOffset::VT_COMPU_METHOD, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<CompuMethod<'a, B>>>(NormalDOP::VT_COMPU_METHOD, None)}
   }
   #[inline]
   pub fn diag_coded_type(&self) -> Option<DiagCodedType<'a, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<DiagCodedType<'a, B>>>(NormalDOPOffset::VT_DIAG_CODED_TYPE, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<DiagCodedType<'a, B>>>(NormalDOP::VT_DIAG_CODED_TYPE, None)}
   }
   #[inline]
   pub fn physical_type(&self) -> Option<PhysicalType<'a, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<PhysicalType<'a, B>>>(NormalDOPOffset::VT_PHYSICAL_TYPE, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<PhysicalType<'a, B>>>(NormalDOP::VT_PHYSICAL_TYPE, None)}
   }
   #[inline]
   pub fn internal_constr(&self) -> Option<InternalConstr<'a, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<InternalConstr<'a, B>>>(NormalDOPOffset::VT_INTERNAL_CONSTR, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<InternalConstr<'a, B>>>(NormalDOP::VT_INTERNAL_CONSTR, None)}
   }
   #[inline]
   pub fn unit_ref(&self) -> Option<Unit<'a, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<Unit<'a, B>>>(NormalDOPOffset::VT_UNIT_REF, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<Unit<'a, B>>>(NormalDOP::VT_UNIT_REF, None)}
   }
   #[inline]
   pub fn phys_constr(&self) -> Option<InternalConstr<'a, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<InternalConstr<'a, B>>>(NormalDOPOffset::VT_PHYS_CONSTR, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<InternalConstr<'a, B>>>(NormalDOP::VT_PHYS_CONSTR, None)}
   }
 }
 
@@ -7657,12 +7657,12 @@ impl<B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Verifiable for NormalDOP<
   ) -> Result<(), flatbuffers::InvalidFlatbuffer> {
     use self::flatbuffers::Verifiable;
     v.visit_table(pos)?
-     .visit_field::<flatbuffers::ForwardsUOffset<CompuMethod<'_, B>>>("compu_method", NormalDOPOffset::VT_COMPU_METHOD, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<DiagCodedType<'_, B>>>("diag_coded_type", NormalDOPOffset::VT_DIAG_CODED_TYPE, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<PhysicalType<'_, B>>>("physical_type", NormalDOPOffset::VT_PHYSICAL_TYPE, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<InternalConstr<'_, B>>>("internal_constr", NormalDOPOffset::VT_INTERNAL_CONSTR, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<Unit<'_, B>>>("unit_ref", NormalDOPOffset::VT_UNIT_REF, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<InternalConstr<'_, B>>>("phys_constr", NormalDOPOffset::VT_PHYS_CONSTR, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<CompuMethod<'_, B>>>("compu_method", NormalDOP::VT_COMPU_METHOD, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<DiagCodedType<'_, B>>>("diag_coded_type", NormalDOP::VT_DIAG_CODED_TYPE, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<PhysicalType<'_, B>>>("physical_type", NormalDOP::VT_PHYSICAL_TYPE, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<InternalConstr<'_, B>>>("internal_constr", NormalDOP::VT_INTERNAL_CONSTR, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<Unit<'_, B>>>("unit_ref", NormalDOP::VT_UNIT_REF, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<InternalConstr<'_, B>>>("phys_constr", NormalDOP::VT_PHYS_CONSTR, false)?
      .finish();
     Ok(())
   }
@@ -7696,27 +7696,27 @@ pub struct NormalDOPBuilder<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> {
 impl<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> NormalDOPBuilder<'a, 'b, A> {
   #[inline]
   pub fn add_compu_method(&mut self, compu_method: flatbuffers::WIPOffset<CompuMethod<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<CompuMethod>>(NormalDOPOffset::VT_COMPU_METHOD, compu_method);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<CompuMethod>>(NormalDOP::VT_COMPU_METHOD, compu_method);
   }
   #[inline]
   pub fn add_diag_coded_type(&mut self, diag_coded_type: flatbuffers::WIPOffset<DiagCodedType<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<DiagCodedType>>(NormalDOPOffset::VT_DIAG_CODED_TYPE, diag_coded_type);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<DiagCodedType>>(NormalDOP::VT_DIAG_CODED_TYPE, diag_coded_type);
   }
   #[inline]
   pub fn add_physical_type(&mut self, physical_type: flatbuffers::WIPOffset<PhysicalType<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<PhysicalType>>(NormalDOPOffset::VT_PHYSICAL_TYPE, physical_type);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<PhysicalType>>(NormalDOP::VT_PHYSICAL_TYPE, physical_type);
   }
   #[inline]
   pub fn add_internal_constr(&mut self, internal_constr: flatbuffers::WIPOffset<InternalConstr<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<InternalConstr>>(NormalDOPOffset::VT_INTERNAL_CONSTR, internal_constr);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<InternalConstr>>(NormalDOP::VT_INTERNAL_CONSTR, internal_constr);
   }
   #[inline]
   pub fn add_unit_ref(&mut self, unit_ref: flatbuffers::WIPOffset<Unit<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Unit>>(NormalDOPOffset::VT_UNIT_REF, unit_ref);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Unit>>(NormalDOP::VT_UNIT_REF, unit_ref);
   }
   #[inline]
   pub fn add_phys_constr(&mut self, phys_constr: flatbuffers::WIPOffset<InternalConstr<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<InternalConstr>>(NormalDOPOffset::VT_PHYS_CONSTR, phys_constr);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<InternalConstr>>(NormalDOP::VT_PHYS_CONSTR, phys_constr);
   }
   #[inline]
   pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a, A>) -> NormalDOPBuilder<'a, 'b, A> {
@@ -7745,12 +7745,6 @@ impl core::fmt::Debug for NormalDOP<'_> {
       ds.finish()
   }
 }
-pub enum FieldOffset {}
-impl FieldOffset {
-    pub const VT_BASIC_STRUCTURE: flatbuffers::VOffsetT = 4;
-    pub const VT_ENV_DATA_DESC: flatbuffers::VOffsetT = 6;
-    pub const VT_IS_VISIBLE: flatbuffers::VOffsetT = 8;
-}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Copy for Field<'a, B> {}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Clone for Field<'a, B> {
   fn clone(&self) -> Self { *self }
@@ -7771,12 +7765,11 @@ impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'
   }
 }
 
-impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Field<'a, B> {
+impl<'a> Field<'a> {
+  pub const VT_BASIC_STRUCTURE: flatbuffers::VOffsetT = 4;
+  pub const VT_ENV_DATA_DESC: flatbuffers::VOffsetT = 6;
+  pub const VT_IS_VISIBLE: flatbuffers::VOffsetT = 8;
 
-  #[inline]
-  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
-    Field { _tab: table }
-  }
   #[allow(unused_mut)]
   pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr, A: flatbuffers::Allocator + 'bldr>(
     _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr, A>,
@@ -7788,6 +7781,13 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Field<'a, B> {
     builder.add_is_visible(args.is_visible);
     builder.finish()
   }
+}
+
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Field<'a, B> {
+  #[inline]
+  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
+    Field { _tab: table }
+  }
 
 
   #[inline]
@@ -7795,21 +7795,21 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Field<'a, B> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<DOP<'a, B>>>(FieldOffset::VT_BASIC_STRUCTURE, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<DOP<'a, B>>>(Field::VT_BASIC_STRUCTURE, None)}
   }
   #[inline]
   pub fn env_data_desc(&self) -> Option<DOP<'a, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<DOP<'a, B>>>(FieldOffset::VT_ENV_DATA_DESC, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<DOP<'a, B>>>(Field::VT_ENV_DATA_DESC, None)}
   }
   #[inline]
   pub fn is_visible(&self) -> bool {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<bool>(FieldOffset::VT_IS_VISIBLE, Some(true)).unwrap()}
+    unsafe { self._tab.get::<bool>(Field::VT_IS_VISIBLE, Some(true)).unwrap()}
   }
 }
 
@@ -7820,9 +7820,9 @@ impl<B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Verifiable for Field<'_, 
   ) -> Result<(), flatbuffers::InvalidFlatbuffer> {
     use self::flatbuffers::Verifiable;
     v.visit_table(pos)?
-     .visit_field::<flatbuffers::ForwardsUOffset<DOP<'_, B>>>("basic_structure", FieldOffset::VT_BASIC_STRUCTURE, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<DOP<'_, B>>>("env_data_desc", FieldOffset::VT_ENV_DATA_DESC, false)?
-     .visit_field::<bool>("is_visible", FieldOffset::VT_IS_VISIBLE, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<DOP<'_, B>>>("basic_structure", Field::VT_BASIC_STRUCTURE, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<DOP<'_, B>>>("env_data_desc", Field::VT_ENV_DATA_DESC, false)?
+     .visit_field::<bool>("is_visible", Field::VT_IS_VISIBLE, false)?
      .finish();
     Ok(())
   }
@@ -7850,15 +7850,15 @@ pub struct FieldBuilder<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> {
 impl<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> FieldBuilder<'a, 'b, A> {
   #[inline]
   pub fn add_basic_structure(&mut self, basic_structure: flatbuffers::WIPOffset<DOP<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<DOP>>(FieldOffset::VT_BASIC_STRUCTURE, basic_structure);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<DOP>>(Field::VT_BASIC_STRUCTURE, basic_structure);
   }
   #[inline]
   pub fn add_env_data_desc(&mut self, env_data_desc: flatbuffers::WIPOffset<DOP<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<DOP>>(FieldOffset::VT_ENV_DATA_DESC, env_data_desc);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<DOP>>(Field::VT_ENV_DATA_DESC, env_data_desc);
   }
   #[inline]
   pub fn add_is_visible(&mut self, is_visible: bool) {
-    self.fbb_.push_slot::<bool>(FieldOffset::VT_IS_VISIBLE, is_visible, true);
+    self.fbb_.push_slot::<bool>(Field::VT_IS_VISIBLE, is_visible, true);
   }
   #[inline]
   pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a, A>) -> FieldBuilder<'a, 'b, A> {
@@ -7884,12 +7884,6 @@ impl core::fmt::Debug for Field<'_> {
       ds.finish()
   }
 }
-pub enum StaticFieldOffset {}
-impl StaticFieldOffset {
-    pub const VT_FIXED_NUMBER_OF_ITEMS: flatbuffers::VOffsetT = 4;
-    pub const VT_ITEM_BYTE_SIZE: flatbuffers::VOffsetT = 6;
-    pub const VT_FIELD: flatbuffers::VOffsetT = 8;
-}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Copy for StaticField<'a, B> {}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Clone for StaticField<'a, B> {
   fn clone(&self) -> Self { *self }
@@ -7910,12 +7904,11 @@ impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'
   }
 }
 
-impl<'a, B: flatbuffers::ReadBuffer + ?Sized> StaticField<'a, B> {
+impl<'a> StaticField<'a> {
+  pub const VT_FIXED_NUMBER_OF_ITEMS: flatbuffers::VOffsetT = 4;
+  pub const VT_ITEM_BYTE_SIZE: flatbuffers::VOffsetT = 6;
+  pub const VT_FIELD: flatbuffers::VOffsetT = 8;
 
-  #[inline]
-  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
-    StaticField { _tab: table }
-  }
   #[allow(unused_mut)]
   pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr, A: flatbuffers::Allocator + 'bldr>(
     _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr, A>,
@@ -7927,6 +7920,13 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> StaticField<'a, B> {
     builder.add_fixed_number_of_items(args.fixed_number_of_items);
     builder.finish()
   }
+}
+
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> StaticField<'a, B> {
+  #[inline]
+  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
+    StaticField { _tab: table }
+  }
 
 
   #[inline]
@@ -7934,21 +7934,21 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> StaticField<'a, B> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<u32>(StaticFieldOffset::VT_FIXED_NUMBER_OF_ITEMS, Some(0)).unwrap()}
+    unsafe { self._tab.get::<u32>(StaticField::VT_FIXED_NUMBER_OF_ITEMS, Some(0)).unwrap()}
   }
   #[inline]
   pub fn item_byte_size(&self) -> u32 {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<u32>(StaticFieldOffset::VT_ITEM_BYTE_SIZE, Some(0)).unwrap()}
+    unsafe { self._tab.get::<u32>(StaticField::VT_ITEM_BYTE_SIZE, Some(0)).unwrap()}
   }
   #[inline]
   pub fn field(&self) -> Option<Field<'a, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<Field<'a, B>>>(StaticFieldOffset::VT_FIELD, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<Field<'a, B>>>(StaticField::VT_FIELD, None)}
   }
 }
 
@@ -7959,9 +7959,9 @@ impl<B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Verifiable for StaticFiel
   ) -> Result<(), flatbuffers::InvalidFlatbuffer> {
     use self::flatbuffers::Verifiable;
     v.visit_table(pos)?
-     .visit_field::<u32>("fixed_number_of_items", StaticFieldOffset::VT_FIXED_NUMBER_OF_ITEMS, false)?
-     .visit_field::<u32>("item_byte_size", StaticFieldOffset::VT_ITEM_BYTE_SIZE, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<Field<'_, B>>>("field", StaticFieldOffset::VT_FIELD, false)?
+     .visit_field::<u32>("fixed_number_of_items", StaticField::VT_FIXED_NUMBER_OF_ITEMS, false)?
+     .visit_field::<u32>("item_byte_size", StaticField::VT_ITEM_BYTE_SIZE, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<Field<'_, B>>>("field", StaticField::VT_FIELD, false)?
      .finish();
     Ok(())
   }
@@ -7989,15 +7989,15 @@ pub struct StaticFieldBuilder<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> {
 impl<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> StaticFieldBuilder<'a, 'b, A> {
   #[inline]
   pub fn add_fixed_number_of_items(&mut self, fixed_number_of_items: u32) {
-    self.fbb_.push_slot::<u32>(StaticFieldOffset::VT_FIXED_NUMBER_OF_ITEMS, fixed_number_of_items, 0);
+    self.fbb_.push_slot::<u32>(StaticField::VT_FIXED_NUMBER_OF_ITEMS, fixed_number_of_items, 0);
   }
   #[inline]
   pub fn add_item_byte_size(&mut self, item_byte_size: u32) {
-    self.fbb_.push_slot::<u32>(StaticFieldOffset::VT_ITEM_BYTE_SIZE, item_byte_size, 0);
+    self.fbb_.push_slot::<u32>(StaticField::VT_ITEM_BYTE_SIZE, item_byte_size, 0);
   }
   #[inline]
   pub fn add_field(&mut self, field: flatbuffers::WIPOffset<Field<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Field>>(StaticFieldOffset::VT_FIELD, field);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Field>>(StaticField::VT_FIELD, field);
   }
   #[inline]
   pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a, A>) -> StaticFieldBuilder<'a, 'b, A> {
@@ -8023,12 +8023,6 @@ impl core::fmt::Debug for StaticField<'_> {
       ds.finish()
   }
 }
-pub enum EndOfPduFieldOffset {}
-impl EndOfPduFieldOffset {
-    pub const VT_MAX_NUMBER_OF_ITEMS: flatbuffers::VOffsetT = 4;
-    pub const VT_MIN_NUMBER_OF_ITEMS: flatbuffers::VOffsetT = 6;
-    pub const VT_FIELD: flatbuffers::VOffsetT = 8;
-}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Copy for EndOfPduField<'a, B> {}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Clone for EndOfPduField<'a, B> {
   fn clone(&self) -> Self { *self }
@@ -8049,12 +8043,11 @@ impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'
   }
 }
 
-impl<'a, B: flatbuffers::ReadBuffer + ?Sized> EndOfPduField<'a, B> {
+impl<'a> EndOfPduField<'a> {
+  pub const VT_MAX_NUMBER_OF_ITEMS: flatbuffers::VOffsetT = 4;
+  pub const VT_MIN_NUMBER_OF_ITEMS: flatbuffers::VOffsetT = 6;
+  pub const VT_FIELD: flatbuffers::VOffsetT = 8;
 
-  #[inline]
-  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
-    EndOfPduField { _tab: table }
-  }
   #[allow(unused_mut)]
   pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr, A: flatbuffers::Allocator + 'bldr>(
     _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr, A>,
@@ -8066,6 +8059,13 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> EndOfPduField<'a, B> {
     if let Some(x) = args.max_number_of_items { builder.add_max_number_of_items(x); }
     builder.finish()
   }
+}
+
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> EndOfPduField<'a, B> {
+  #[inline]
+  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
+    EndOfPduField { _tab: table }
+  }
 
 
   #[inline]
@@ -8073,21 +8073,21 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> EndOfPduField<'a, B> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<u32>(EndOfPduFieldOffset::VT_MAX_NUMBER_OF_ITEMS, None)}
+    unsafe { self._tab.get::<u32>(EndOfPduField::VT_MAX_NUMBER_OF_ITEMS, None)}
   }
   #[inline]
   pub fn min_number_of_items(&self) -> Option<u32> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<u32>(EndOfPduFieldOffset::VT_MIN_NUMBER_OF_ITEMS, None)}
+    unsafe { self._tab.get::<u32>(EndOfPduField::VT_MIN_NUMBER_OF_ITEMS, None)}
   }
   #[inline]
   pub fn field(&self) -> Option<Field<'a, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<Field<'a, B>>>(EndOfPduFieldOffset::VT_FIELD, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<Field<'a, B>>>(EndOfPduField::VT_FIELD, None)}
   }
 }
 
@@ -8098,9 +8098,9 @@ impl<B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Verifiable for EndOfPduFi
   ) -> Result<(), flatbuffers::InvalidFlatbuffer> {
     use self::flatbuffers::Verifiable;
     v.visit_table(pos)?
-     .visit_field::<u32>("max_number_of_items", EndOfPduFieldOffset::VT_MAX_NUMBER_OF_ITEMS, false)?
-     .visit_field::<u32>("min_number_of_items", EndOfPduFieldOffset::VT_MIN_NUMBER_OF_ITEMS, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<Field<'_, B>>>("field", EndOfPduFieldOffset::VT_FIELD, false)?
+     .visit_field::<u32>("max_number_of_items", EndOfPduField::VT_MAX_NUMBER_OF_ITEMS, false)?
+     .visit_field::<u32>("min_number_of_items", EndOfPduField::VT_MIN_NUMBER_OF_ITEMS, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<Field<'_, B>>>("field", EndOfPduField::VT_FIELD, false)?
      .finish();
     Ok(())
   }
@@ -8128,15 +8128,15 @@ pub struct EndOfPduFieldBuilder<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> {
 impl<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> EndOfPduFieldBuilder<'a, 'b, A> {
   #[inline]
   pub fn add_max_number_of_items(&mut self, max_number_of_items: u32) {
-    self.fbb_.push_slot_always::<u32>(EndOfPduFieldOffset::VT_MAX_NUMBER_OF_ITEMS, max_number_of_items);
+    self.fbb_.push_slot_always::<u32>(EndOfPduField::VT_MAX_NUMBER_OF_ITEMS, max_number_of_items);
   }
   #[inline]
   pub fn add_min_number_of_items(&mut self, min_number_of_items: u32) {
-    self.fbb_.push_slot_always::<u32>(EndOfPduFieldOffset::VT_MIN_NUMBER_OF_ITEMS, min_number_of_items);
+    self.fbb_.push_slot_always::<u32>(EndOfPduField::VT_MIN_NUMBER_OF_ITEMS, min_number_of_items);
   }
   #[inline]
   pub fn add_field(&mut self, field: flatbuffers::WIPOffset<Field<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Field>>(EndOfPduFieldOffset::VT_FIELD, field);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Field>>(EndOfPduField::VT_FIELD, field);
   }
   #[inline]
   pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a, A>) -> EndOfPduFieldBuilder<'a, 'b, A> {
@@ -8162,12 +8162,6 @@ impl core::fmt::Debug for EndOfPduField<'_> {
       ds.finish()
   }
 }
-pub enum EnvDataDescOffset {}
-impl EnvDataDescOffset {
-    pub const VT_PARAM_SHORT_NAME: flatbuffers::VOffsetT = 4;
-    pub const VT_PARAM_PATH_SHORT_NAME: flatbuffers::VOffsetT = 6;
-    pub const VT_ENV_DATAS: flatbuffers::VOffsetT = 8;
-}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Copy for EnvDataDesc<'a, B> {}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Clone for EnvDataDesc<'a, B> {
   fn clone(&self) -> Self { *self }
@@ -8188,12 +8182,11 @@ impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'
   }
 }
 
-impl<'a, B: flatbuffers::ReadBuffer + ?Sized> EnvDataDesc<'a, B> {
+impl<'a> EnvDataDesc<'a> {
+  pub const VT_PARAM_SHORT_NAME: flatbuffers::VOffsetT = 4;
+  pub const VT_PARAM_PATH_SHORT_NAME: flatbuffers::VOffsetT = 6;
+  pub const VT_ENV_DATAS: flatbuffers::VOffsetT = 8;
 
-  #[inline]
-  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
-    EnvDataDesc { _tab: table }
-  }
   #[allow(unused_mut)]
   pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr, A: flatbuffers::Allocator + 'bldr>(
     _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr, A>,
@@ -8205,6 +8198,13 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> EnvDataDesc<'a, B> {
     if let Some(x) = args.param_short_name { builder.add_param_short_name(x); }
     builder.finish()
   }
+}
+
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> EnvDataDesc<'a, B> {
+  #[inline]
+  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
+    EnvDataDesc { _tab: table }
+  }
 
 
   #[inline]
@@ -8212,21 +8212,21 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> EnvDataDesc<'a, B> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(EnvDataDescOffset::VT_PARAM_SHORT_NAME, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(EnvDataDesc::VT_PARAM_SHORT_NAME, None)}
   }
   #[inline]
   pub fn param_path_short_name(&self) -> Option<&'a str> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(EnvDataDescOffset::VT_PARAM_PATH_SHORT_NAME, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(EnvDataDesc::VT_PARAM_PATH_SHORT_NAME, None)}
   }
   #[inline]
   pub fn env_datas(&self) -> Option<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<DOP<'a, B>>, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<DOP<'a, B>>, B>>>(EnvDataDescOffset::VT_ENV_DATAS, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<DOP<'a, B>>, B>>>(EnvDataDesc::VT_ENV_DATAS, None)}
   }
 }
 
@@ -8237,9 +8237,9 @@ impl<B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Verifiable for EnvDataDes
   ) -> Result<(), flatbuffers::InvalidFlatbuffer> {
     use self::flatbuffers::Verifiable;
     v.visit_table(pos)?
-     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("param_short_name", EnvDataDescOffset::VT_PARAM_SHORT_NAME, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("param_path_short_name", EnvDataDescOffset::VT_PARAM_PATH_SHORT_NAME, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<DOP<'_, B>>, B>>>("env_datas", EnvDataDescOffset::VT_ENV_DATAS, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("param_short_name", EnvDataDesc::VT_PARAM_SHORT_NAME, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("param_path_short_name", EnvDataDesc::VT_PARAM_PATH_SHORT_NAME, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<DOP<'_, B>>, B>>>("env_datas", EnvDataDesc::VT_ENV_DATAS, false)?
      .finish();
     Ok(())
   }
@@ -8267,15 +8267,15 @@ pub struct EnvDataDescBuilder<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> {
 impl<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> EnvDataDescBuilder<'a, 'b, A> {
   #[inline]
   pub fn add_param_short_name(&mut self, param_short_name: flatbuffers::WIPOffset<&'b  str>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(EnvDataDescOffset::VT_PARAM_SHORT_NAME, param_short_name);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(EnvDataDesc::VT_PARAM_SHORT_NAME, param_short_name);
   }
   #[inline]
   pub fn add_param_path_short_name(&mut self, param_path_short_name: flatbuffers::WIPOffset<&'b  str>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(EnvDataDescOffset::VT_PARAM_PATH_SHORT_NAME, param_path_short_name);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(EnvDataDesc::VT_PARAM_PATH_SHORT_NAME, param_path_short_name);
   }
   #[inline]
   pub fn add_env_datas(&mut self, env_datas: flatbuffers::WIPOffset<flatbuffers::Vector<'b , flatbuffers::ForwardsUOffset<DOP<'b >>>>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(EnvDataDescOffset::VT_ENV_DATAS, env_datas);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(EnvDataDesc::VT_ENV_DATAS, env_datas);
   }
   #[inline]
   pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a, A>) -> EnvDataDescBuilder<'a, 'b, A> {
@@ -8301,11 +8301,6 @@ impl core::fmt::Debug for EnvDataDesc<'_> {
       ds.finish()
   }
 }
-pub enum EnvDataOffset {}
-impl EnvDataOffset {
-    pub const VT_DTC_VALUES: flatbuffers::VOffsetT = 4;
-    pub const VT_PARAMS: flatbuffers::VOffsetT = 6;
-}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Copy for EnvData<'a, B> {}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Clone for EnvData<'a, B> {
   fn clone(&self) -> Self { *self }
@@ -8326,12 +8321,10 @@ impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'
   }
 }
 
-impl<'a, B: flatbuffers::ReadBuffer + ?Sized> EnvData<'a, B> {
+impl<'a> EnvData<'a> {
+  pub const VT_DTC_VALUES: flatbuffers::VOffsetT = 4;
+  pub const VT_PARAMS: flatbuffers::VOffsetT = 6;
 
-  #[inline]
-  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
-    EnvData { _tab: table }
-  }
   #[allow(unused_mut)]
   pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr, A: flatbuffers::Allocator + 'bldr>(
     _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr, A>,
@@ -8342,6 +8335,13 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> EnvData<'a, B> {
     if let Some(x) = args.dtc_values { builder.add_dtc_values(x); }
     builder.finish()
   }
+}
+
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> EnvData<'a, B> {
+  #[inline]
+  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
+    EnvData { _tab: table }
+  }
 
 
   #[inline]
@@ -8349,14 +8349,14 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> EnvData<'a, B> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, u32, B>>>(EnvDataOffset::VT_DTC_VALUES, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, u32, B>>>(EnvData::VT_DTC_VALUES, None)}
   }
   #[inline]
   pub fn params(&self) -> Option<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<Param<'a, B>>, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<Param<'a, B>>, B>>>(EnvDataOffset::VT_PARAMS, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<Param<'a, B>>, B>>>(EnvData::VT_PARAMS, None)}
   }
 }
 
@@ -8367,8 +8367,8 @@ impl<B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Verifiable for EnvData<'_
   ) -> Result<(), flatbuffers::InvalidFlatbuffer> {
     use self::flatbuffers::Verifiable;
     v.visit_table(pos)?
-     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, u32, B>>>("dtc_values", EnvDataOffset::VT_DTC_VALUES, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<Param<'_, B>>, B>>>("params", EnvDataOffset::VT_PARAMS, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, u32, B>>>("dtc_values", EnvData::VT_DTC_VALUES, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<Param<'_, B>>, B>>>("params", EnvData::VT_PARAMS, false)?
      .finish();
     Ok(())
   }
@@ -8394,11 +8394,11 @@ pub struct EnvDataBuilder<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> {
 impl<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> EnvDataBuilder<'a, 'b, A> {
   #[inline]
   pub fn add_dtc_values(&mut self, dtc_values: flatbuffers::WIPOffset<flatbuffers::Vector<'b , u32>>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(EnvDataOffset::VT_DTC_VALUES, dtc_values);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(EnvData::VT_DTC_VALUES, dtc_values);
   }
   #[inline]
   pub fn add_params(&mut self, params: flatbuffers::WIPOffset<flatbuffers::Vector<'b , flatbuffers::ForwardsUOffset<Param<'b >>>>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(EnvDataOffset::VT_PARAMS, params);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(EnvData::VT_PARAMS, params);
   }
   #[inline]
   pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a, A>) -> EnvDataBuilder<'a, 'b, A> {
@@ -8423,12 +8423,6 @@ impl core::fmt::Debug for EnvData<'_> {
       ds.finish()
   }
 }
-pub enum StructureOffset {}
-impl StructureOffset {
-    pub const VT_PARAMS: flatbuffers::VOffsetT = 4;
-    pub const VT_BYTE_SIZE: flatbuffers::VOffsetT = 6;
-    pub const VT_IS_VISIBLE: flatbuffers::VOffsetT = 8;
-}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Copy for Structure<'a, B> {}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Clone for Structure<'a, B> {
   fn clone(&self) -> Self { *self }
@@ -8449,12 +8443,11 @@ impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'
   }
 }
 
-impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Structure<'a, B> {
+impl<'a> Structure<'a> {
+  pub const VT_PARAMS: flatbuffers::VOffsetT = 4;
+  pub const VT_BYTE_SIZE: flatbuffers::VOffsetT = 6;
+  pub const VT_IS_VISIBLE: flatbuffers::VOffsetT = 8;
 
-  #[inline]
-  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
-    Structure { _tab: table }
-  }
   #[allow(unused_mut)]
   pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr, A: flatbuffers::Allocator + 'bldr>(
     _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr, A>,
@@ -8466,6 +8459,13 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Structure<'a, B> {
     builder.add_is_visible(args.is_visible);
     builder.finish()
   }
+}
+
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Structure<'a, B> {
+  #[inline]
+  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
+    Structure { _tab: table }
+  }
 
 
   #[inline]
@@ -8473,21 +8473,21 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Structure<'a, B> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<Param<'a, B>>, B>>>(StructureOffset::VT_PARAMS, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<Param<'a, B>>, B>>>(Structure::VT_PARAMS, None)}
   }
   #[inline]
   pub fn byte_size(&self) -> Option<u32> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<u32>(StructureOffset::VT_BYTE_SIZE, None)}
+    unsafe { self._tab.get::<u32>(Structure::VT_BYTE_SIZE, None)}
   }
   #[inline]
   pub fn is_visible(&self) -> bool {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<bool>(StructureOffset::VT_IS_VISIBLE, Some(true)).unwrap()}
+    unsafe { self._tab.get::<bool>(Structure::VT_IS_VISIBLE, Some(true)).unwrap()}
   }
 }
 
@@ -8498,9 +8498,9 @@ impl<B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Verifiable for Structure<
   ) -> Result<(), flatbuffers::InvalidFlatbuffer> {
     use self::flatbuffers::Verifiable;
     v.visit_table(pos)?
-     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<Param<'_, B>>, B>>>("params", StructureOffset::VT_PARAMS, false)?
-     .visit_field::<u32>("byte_size", StructureOffset::VT_BYTE_SIZE, false)?
-     .visit_field::<bool>("is_visible", StructureOffset::VT_IS_VISIBLE, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<Param<'_, B>>, B>>>("params", Structure::VT_PARAMS, false)?
+     .visit_field::<u32>("byte_size", Structure::VT_BYTE_SIZE, false)?
+     .visit_field::<bool>("is_visible", Structure::VT_IS_VISIBLE, false)?
      .finish();
     Ok(())
   }
@@ -8528,15 +8528,15 @@ pub struct StructureBuilder<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> {
 impl<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> StructureBuilder<'a, 'b, A> {
   #[inline]
   pub fn add_params(&mut self, params: flatbuffers::WIPOffset<flatbuffers::Vector<'b , flatbuffers::ForwardsUOffset<Param<'b >>>>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(StructureOffset::VT_PARAMS, params);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(Structure::VT_PARAMS, params);
   }
   #[inline]
   pub fn add_byte_size(&mut self, byte_size: u32) {
-    self.fbb_.push_slot_always::<u32>(StructureOffset::VT_BYTE_SIZE, byte_size);
+    self.fbb_.push_slot_always::<u32>(Structure::VT_BYTE_SIZE, byte_size);
   }
   #[inline]
   pub fn add_is_visible(&mut self, is_visible: bool) {
-    self.fbb_.push_slot::<bool>(StructureOffset::VT_IS_VISIBLE, is_visible, true);
+    self.fbb_.push_slot::<bool>(Structure::VT_IS_VISIBLE, is_visible, true);
   }
   #[inline]
   pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a, A>) -> StructureBuilder<'a, 'b, A> {
@@ -8562,14 +8562,6 @@ impl core::fmt::Debug for Structure<'_> {
       ds.finish()
   }
 }
-pub enum DTCDOPOffset {}
-impl DTCDOPOffset {
-    pub const VT_DIAG_CODED_TYPE: flatbuffers::VOffsetT = 4;
-    pub const VT_PHYSICAL_TYPE: flatbuffers::VOffsetT = 6;
-    pub const VT_COMPU_METHOD: flatbuffers::VOffsetT = 8;
-    pub const VT_DTCS: flatbuffers::VOffsetT = 10;
-    pub const VT_IS_VISIBLE: flatbuffers::VOffsetT = 12;
-}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Copy for DTCDOP<'a, B> {}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Clone for DTCDOP<'a, B> {
   fn clone(&self) -> Self { *self }
@@ -8590,12 +8582,13 @@ impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'
   }
 }
 
-impl<'a, B: flatbuffers::ReadBuffer + ?Sized> DTCDOP<'a, B> {
+impl<'a> DTCDOP<'a> {
+  pub const VT_DIAG_CODED_TYPE: flatbuffers::VOffsetT = 4;
+  pub const VT_PHYSICAL_TYPE: flatbuffers::VOffsetT = 6;
+  pub const VT_COMPU_METHOD: flatbuffers::VOffsetT = 8;
+  pub const VT_DTCS: flatbuffers::VOffsetT = 10;
+  pub const VT_IS_VISIBLE: flatbuffers::VOffsetT = 12;
 
-  #[inline]
-  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
-    DTCDOP { _tab: table }
-  }
   #[allow(unused_mut)]
   pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr, A: flatbuffers::Allocator + 'bldr>(
     _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr, A>,
@@ -8609,6 +8602,13 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> DTCDOP<'a, B> {
     builder.add_is_visible(args.is_visible);
     builder.finish()
   }
+}
+
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> DTCDOP<'a, B> {
+  #[inline]
+  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
+    DTCDOP { _tab: table }
+  }
 
 
   #[inline]
@@ -8616,35 +8616,35 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> DTCDOP<'a, B> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<DiagCodedType<'a, B>>>(DTCDOPOffset::VT_DIAG_CODED_TYPE, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<DiagCodedType<'a, B>>>(DTCDOP::VT_DIAG_CODED_TYPE, None)}
   }
   #[inline]
   pub fn physical_type(&self) -> Option<PhysicalType<'a, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<PhysicalType<'a, B>>>(DTCDOPOffset::VT_PHYSICAL_TYPE, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<PhysicalType<'a, B>>>(DTCDOP::VT_PHYSICAL_TYPE, None)}
   }
   #[inline]
   pub fn compu_method(&self) -> Option<CompuMethod<'a, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<CompuMethod<'a, B>>>(DTCDOPOffset::VT_COMPU_METHOD, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<CompuMethod<'a, B>>>(DTCDOP::VT_COMPU_METHOD, None)}
   }
   #[inline]
   pub fn dtcs(&self) -> Option<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<DTC<'a, B>>, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<DTC<'a, B>>, B>>>(DTCDOPOffset::VT_DTCS, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<DTC<'a, B>>, B>>>(DTCDOP::VT_DTCS, None)}
   }
   #[inline]
   pub fn is_visible(&self) -> bool {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<bool>(DTCDOPOffset::VT_IS_VISIBLE, Some(false)).unwrap()}
+    unsafe { self._tab.get::<bool>(DTCDOP::VT_IS_VISIBLE, Some(false)).unwrap()}
   }
 }
 
@@ -8655,11 +8655,11 @@ impl<B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Verifiable for DTCDOP<'_,
   ) -> Result<(), flatbuffers::InvalidFlatbuffer> {
     use self::flatbuffers::Verifiable;
     v.visit_table(pos)?
-     .visit_field::<flatbuffers::ForwardsUOffset<DiagCodedType<'_, B>>>("diag_coded_type", DTCDOPOffset::VT_DIAG_CODED_TYPE, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<PhysicalType<'_, B>>>("physical_type", DTCDOPOffset::VT_PHYSICAL_TYPE, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<CompuMethod<'_, B>>>("compu_method", DTCDOPOffset::VT_COMPU_METHOD, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<DTC<'_, B>>, B>>>("dtcs", DTCDOPOffset::VT_DTCS, false)?
-     .visit_field::<bool>("is_visible", DTCDOPOffset::VT_IS_VISIBLE, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<DiagCodedType<'_, B>>>("diag_coded_type", DTCDOP::VT_DIAG_CODED_TYPE, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<PhysicalType<'_, B>>>("physical_type", DTCDOP::VT_PHYSICAL_TYPE, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<CompuMethod<'_, B>>>("compu_method", DTCDOP::VT_COMPU_METHOD, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<DTC<'_, B>>, B>>>("dtcs", DTCDOP::VT_DTCS, false)?
+     .visit_field::<bool>("is_visible", DTCDOP::VT_IS_VISIBLE, false)?
      .finish();
     Ok(())
   }
@@ -8691,23 +8691,23 @@ pub struct DTCDOPBuilder<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> {
 impl<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> DTCDOPBuilder<'a, 'b, A> {
   #[inline]
   pub fn add_diag_coded_type(&mut self, diag_coded_type: flatbuffers::WIPOffset<DiagCodedType<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<DiagCodedType>>(DTCDOPOffset::VT_DIAG_CODED_TYPE, diag_coded_type);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<DiagCodedType>>(DTCDOP::VT_DIAG_CODED_TYPE, diag_coded_type);
   }
   #[inline]
   pub fn add_physical_type(&mut self, physical_type: flatbuffers::WIPOffset<PhysicalType<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<PhysicalType>>(DTCDOPOffset::VT_PHYSICAL_TYPE, physical_type);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<PhysicalType>>(DTCDOP::VT_PHYSICAL_TYPE, physical_type);
   }
   #[inline]
   pub fn add_compu_method(&mut self, compu_method: flatbuffers::WIPOffset<CompuMethod<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<CompuMethod>>(DTCDOPOffset::VT_COMPU_METHOD, compu_method);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<CompuMethod>>(DTCDOP::VT_COMPU_METHOD, compu_method);
   }
   #[inline]
   pub fn add_dtcs(&mut self, dtcs: flatbuffers::WIPOffset<flatbuffers::Vector<'b , flatbuffers::ForwardsUOffset<DTC<'b >>>>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(DTCDOPOffset::VT_DTCS, dtcs);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(DTCDOP::VT_DTCS, dtcs);
   }
   #[inline]
   pub fn add_is_visible(&mut self, is_visible: bool) {
-    self.fbb_.push_slot::<bool>(DTCDOPOffset::VT_IS_VISIBLE, is_visible, false);
+    self.fbb_.push_slot::<bool>(DTCDOP::VT_IS_VISIBLE, is_visible, false);
   }
   #[inline]
   pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a, A>) -> DTCDOPBuilder<'a, 'b, A> {
@@ -8735,11 +8735,6 @@ impl core::fmt::Debug for DTCDOP<'_> {
       ds.finish()
   }
 }
-pub enum LongNameOffset {}
-impl LongNameOffset {
-    pub const VT_VALUE: flatbuffers::VOffsetT = 4;
-    pub const VT_TI: flatbuffers::VOffsetT = 6;
-}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Copy for LongName<'a, B> {}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Clone for LongName<'a, B> {
   fn clone(&self) -> Self { *self }
@@ -8760,12 +8755,10 @@ impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'
   }
 }
 
-impl<'a, B: flatbuffers::ReadBuffer + ?Sized> LongName<'a, B> {
+impl<'a> LongName<'a> {
+  pub const VT_VALUE: flatbuffers::VOffsetT = 4;
+  pub const VT_TI: flatbuffers::VOffsetT = 6;
 
-  #[inline]
-  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
-    LongName { _tab: table }
-  }
   #[allow(unused_mut)]
   pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr, A: flatbuffers::Allocator + 'bldr>(
     _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr, A>,
@@ -8776,6 +8769,13 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> LongName<'a, B> {
     if let Some(x) = args.value { builder.add_value(x); }
     builder.finish()
   }
+}
+
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> LongName<'a, B> {
+  #[inline]
+  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
+    LongName { _tab: table }
+  }
 
 
   #[inline]
@@ -8783,14 +8783,14 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> LongName<'a, B> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(LongNameOffset::VT_VALUE, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(LongName::VT_VALUE, None)}
   }
   #[inline]
   pub fn ti(&self) -> Option<&'a str> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(LongNameOffset::VT_TI, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(LongName::VT_TI, None)}
   }
 }
 
@@ -8801,8 +8801,8 @@ impl<B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Verifiable for LongName<'
   ) -> Result<(), flatbuffers::InvalidFlatbuffer> {
     use self::flatbuffers::Verifiable;
     v.visit_table(pos)?
-     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("value", LongNameOffset::VT_VALUE, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("ti", LongNameOffset::VT_TI, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("value", LongName::VT_VALUE, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("ti", LongName::VT_TI, false)?
      .finish();
     Ok(())
   }
@@ -8828,11 +8828,11 @@ pub struct LongNameBuilder<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> {
 impl<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> LongNameBuilder<'a, 'b, A> {
   #[inline]
   pub fn add_value(&mut self, value: flatbuffers::WIPOffset<&'b  str>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(LongNameOffset::VT_VALUE, value);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(LongName::VT_VALUE, value);
   }
   #[inline]
   pub fn add_ti(&mut self, ti: flatbuffers::WIPOffset<&'b  str>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(LongNameOffset::VT_TI, ti);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(LongName::VT_TI, ti);
   }
   #[inline]
   pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a, A>) -> LongNameBuilder<'a, 'b, A> {
@@ -8857,12 +8857,6 @@ impl core::fmt::Debug for LongName<'_> {
       ds.finish()
   }
 }
-pub enum SwitchKeyOffset {}
-impl SwitchKeyOffset {
-    pub const VT_BYTE_POSITION: flatbuffers::VOffsetT = 4;
-    pub const VT_BIT_POSITION: flatbuffers::VOffsetT = 6;
-    pub const VT_DOP: flatbuffers::VOffsetT = 8;
-}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Copy for SwitchKey<'a, B> {}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Clone for SwitchKey<'a, B> {
   fn clone(&self) -> Self { *self }
@@ -8883,12 +8877,11 @@ impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'
   }
 }
 
-impl<'a, B: flatbuffers::ReadBuffer + ?Sized> SwitchKey<'a, B> {
+impl<'a> SwitchKey<'a> {
+  pub const VT_BYTE_POSITION: flatbuffers::VOffsetT = 4;
+  pub const VT_BIT_POSITION: flatbuffers::VOffsetT = 6;
+  pub const VT_DOP: flatbuffers::VOffsetT = 8;
 
-  #[inline]
-  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
-    SwitchKey { _tab: table }
-  }
   #[allow(unused_mut)]
   pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr, A: flatbuffers::Allocator + 'bldr>(
     _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr, A>,
@@ -8900,6 +8893,13 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> SwitchKey<'a, B> {
     builder.add_byte_position(args.byte_position);
     builder.finish()
   }
+}
+
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> SwitchKey<'a, B> {
+  #[inline]
+  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
+    SwitchKey { _tab: table }
+  }
 
 
   #[inline]
@@ -8907,21 +8907,21 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> SwitchKey<'a, B> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<u32>(SwitchKeyOffset::VT_BYTE_POSITION, Some(0)).unwrap()}
+    unsafe { self._tab.get::<u32>(SwitchKey::VT_BYTE_POSITION, Some(0)).unwrap()}
   }
   #[inline]
   pub fn bit_position(&self) -> Option<u32> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<u32>(SwitchKeyOffset::VT_BIT_POSITION, None)}
+    unsafe { self._tab.get::<u32>(SwitchKey::VT_BIT_POSITION, None)}
   }
   #[inline]
   pub fn dop(&self) -> Option<DOP<'a, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<DOP<'a, B>>>(SwitchKeyOffset::VT_DOP, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<DOP<'a, B>>>(SwitchKey::VT_DOP, None)}
   }
 }
 
@@ -8932,9 +8932,9 @@ impl<B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Verifiable for SwitchKey<
   ) -> Result<(), flatbuffers::InvalidFlatbuffer> {
     use self::flatbuffers::Verifiable;
     v.visit_table(pos)?
-     .visit_field::<u32>("byte_position", SwitchKeyOffset::VT_BYTE_POSITION, false)?
-     .visit_field::<u32>("bit_position", SwitchKeyOffset::VT_BIT_POSITION, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<DOP<'_, B>>>("dop", SwitchKeyOffset::VT_DOP, false)?
+     .visit_field::<u32>("byte_position", SwitchKey::VT_BYTE_POSITION, false)?
+     .visit_field::<u32>("bit_position", SwitchKey::VT_BIT_POSITION, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<DOP<'_, B>>>("dop", SwitchKey::VT_DOP, false)?
      .finish();
     Ok(())
   }
@@ -8962,15 +8962,15 @@ pub struct SwitchKeyBuilder<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> {
 impl<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> SwitchKeyBuilder<'a, 'b, A> {
   #[inline]
   pub fn add_byte_position(&mut self, byte_position: u32) {
-    self.fbb_.push_slot::<u32>(SwitchKeyOffset::VT_BYTE_POSITION, byte_position, 0);
+    self.fbb_.push_slot::<u32>(SwitchKey::VT_BYTE_POSITION, byte_position, 0);
   }
   #[inline]
   pub fn add_bit_position(&mut self, bit_position: u32) {
-    self.fbb_.push_slot_always::<u32>(SwitchKeyOffset::VT_BIT_POSITION, bit_position);
+    self.fbb_.push_slot_always::<u32>(SwitchKey::VT_BIT_POSITION, bit_position);
   }
   #[inline]
   pub fn add_dop(&mut self, dop: flatbuffers::WIPOffset<DOP<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<DOP>>(SwitchKeyOffset::VT_DOP, dop);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<DOP>>(SwitchKey::VT_DOP, dop);
   }
   #[inline]
   pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a, A>) -> SwitchKeyBuilder<'a, 'b, A> {
@@ -8996,12 +8996,6 @@ impl core::fmt::Debug for SwitchKey<'_> {
       ds.finish()
   }
 }
-pub enum DefaultCaseOffset {}
-impl DefaultCaseOffset {
-    pub const VT_SHORT_NAME: flatbuffers::VOffsetT = 4;
-    pub const VT_LONG_NAME: flatbuffers::VOffsetT = 6;
-    pub const VT_STRUCTURE: flatbuffers::VOffsetT = 8;
-}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Copy for DefaultCase<'a, B> {}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Clone for DefaultCase<'a, B> {
   fn clone(&self) -> Self { *self }
@@ -9022,12 +9016,11 @@ impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'
   }
 }
 
-impl<'a, B: flatbuffers::ReadBuffer + ?Sized> DefaultCase<'a, B> {
+impl<'a> DefaultCase<'a> {
+  pub const VT_SHORT_NAME: flatbuffers::VOffsetT = 4;
+  pub const VT_LONG_NAME: flatbuffers::VOffsetT = 6;
+  pub const VT_STRUCTURE: flatbuffers::VOffsetT = 8;
 
-  #[inline]
-  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
-    DefaultCase { _tab: table }
-  }
   #[allow(unused_mut)]
   pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr, A: flatbuffers::Allocator + 'bldr>(
     _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr, A>,
@@ -9039,6 +9032,13 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> DefaultCase<'a, B> {
     if let Some(x) = args.short_name { builder.add_short_name(x); }
     builder.finish()
   }
+}
+
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> DefaultCase<'a, B> {
+  #[inline]
+  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
+    DefaultCase { _tab: table }
+  }
 
 
   #[inline]
@@ -9046,21 +9046,21 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> DefaultCase<'a, B> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(DefaultCaseOffset::VT_SHORT_NAME, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(DefaultCase::VT_SHORT_NAME, None)}
   }
   #[inline]
   pub fn long_name(&self) -> Option<LongName<'a, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<LongName<'a, B>>>(DefaultCaseOffset::VT_LONG_NAME, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<LongName<'a, B>>>(DefaultCase::VT_LONG_NAME, None)}
   }
   #[inline]
   pub fn structure(&self) -> Option<DOP<'a, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<DOP<'a, B>>>(DefaultCaseOffset::VT_STRUCTURE, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<DOP<'a, B>>>(DefaultCase::VT_STRUCTURE, None)}
   }
 }
 
@@ -9071,9 +9071,9 @@ impl<B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Verifiable for DefaultCas
   ) -> Result<(), flatbuffers::InvalidFlatbuffer> {
     use self::flatbuffers::Verifiable;
     v.visit_table(pos)?
-     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("short_name", DefaultCaseOffset::VT_SHORT_NAME, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<LongName<'_, B>>>("long_name", DefaultCaseOffset::VT_LONG_NAME, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<DOP<'_, B>>>("structure", DefaultCaseOffset::VT_STRUCTURE, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("short_name", DefaultCase::VT_SHORT_NAME, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<LongName<'_, B>>>("long_name", DefaultCase::VT_LONG_NAME, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<DOP<'_, B>>>("structure", DefaultCase::VT_STRUCTURE, false)?
      .finish();
     Ok(())
   }
@@ -9101,15 +9101,15 @@ pub struct DefaultCaseBuilder<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> {
 impl<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> DefaultCaseBuilder<'a, 'b, A> {
   #[inline]
   pub fn add_short_name(&mut self, short_name: flatbuffers::WIPOffset<&'b  str>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(DefaultCaseOffset::VT_SHORT_NAME, short_name);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(DefaultCase::VT_SHORT_NAME, short_name);
   }
   #[inline]
   pub fn add_long_name(&mut self, long_name: flatbuffers::WIPOffset<LongName<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<LongName>>(DefaultCaseOffset::VT_LONG_NAME, long_name);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<LongName>>(DefaultCase::VT_LONG_NAME, long_name);
   }
   #[inline]
   pub fn add_structure(&mut self, structure: flatbuffers::WIPOffset<DOP<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<DOP>>(DefaultCaseOffset::VT_STRUCTURE, structure);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<DOP>>(DefaultCase::VT_STRUCTURE, structure);
   }
   #[inline]
   pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a, A>) -> DefaultCaseBuilder<'a, 'b, A> {
@@ -9135,14 +9135,6 @@ impl core::fmt::Debug for DefaultCase<'_> {
       ds.finish()
   }
 }
-pub enum CaseOffset {}
-impl CaseOffset {
-    pub const VT_SHORT_NAME: flatbuffers::VOffsetT = 4;
-    pub const VT_LONG_NAME: flatbuffers::VOffsetT = 6;
-    pub const VT_STRUCTURE: flatbuffers::VOffsetT = 8;
-    pub const VT_LOWER_LIMIT: flatbuffers::VOffsetT = 10;
-    pub const VT_UPPER_LIMIT: flatbuffers::VOffsetT = 12;
-}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Copy for Case<'a, B> {}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Clone for Case<'a, B> {
   fn clone(&self) -> Self { *self }
@@ -9163,12 +9155,13 @@ impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'
   }
 }
 
-impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Case<'a, B> {
+impl<'a> Case<'a> {
+  pub const VT_SHORT_NAME: flatbuffers::VOffsetT = 4;
+  pub const VT_LONG_NAME: flatbuffers::VOffsetT = 6;
+  pub const VT_STRUCTURE: flatbuffers::VOffsetT = 8;
+  pub const VT_LOWER_LIMIT: flatbuffers::VOffsetT = 10;
+  pub const VT_UPPER_LIMIT: flatbuffers::VOffsetT = 12;
 
-  #[inline]
-  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
-    Case { _tab: table }
-  }
   #[allow(unused_mut)]
   pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr, A: flatbuffers::Allocator + 'bldr>(
     _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr, A>,
@@ -9182,6 +9175,13 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Case<'a, B> {
     if let Some(x) = args.short_name { builder.add_short_name(x); }
     builder.finish()
   }
+}
+
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Case<'a, B> {
+  #[inline]
+  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
+    Case { _tab: table }
+  }
 
 
   #[inline]
@@ -9189,35 +9189,35 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Case<'a, B> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(CaseOffset::VT_SHORT_NAME, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(Case::VT_SHORT_NAME, None)}
   }
   #[inline]
   pub fn long_name(&self) -> Option<LongName<'a, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<LongName<'a, B>>>(CaseOffset::VT_LONG_NAME, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<LongName<'a, B>>>(Case::VT_LONG_NAME, None)}
   }
   #[inline]
   pub fn structure(&self) -> Option<DOP<'a, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<DOP<'a, B>>>(CaseOffset::VT_STRUCTURE, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<DOP<'a, B>>>(Case::VT_STRUCTURE, None)}
   }
   #[inline]
   pub fn lower_limit(&self) -> Option<Limit<'a, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<Limit<'a, B>>>(CaseOffset::VT_LOWER_LIMIT, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<Limit<'a, B>>>(Case::VT_LOWER_LIMIT, None)}
   }
   #[inline]
   pub fn upper_limit(&self) -> Option<Limit<'a, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<Limit<'a, B>>>(CaseOffset::VT_UPPER_LIMIT, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<Limit<'a, B>>>(Case::VT_UPPER_LIMIT, None)}
   }
 }
 
@@ -9228,11 +9228,11 @@ impl<B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Verifiable for Case<'_, B
   ) -> Result<(), flatbuffers::InvalidFlatbuffer> {
     use self::flatbuffers::Verifiable;
     v.visit_table(pos)?
-     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("short_name", CaseOffset::VT_SHORT_NAME, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<LongName<'_, B>>>("long_name", CaseOffset::VT_LONG_NAME, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<DOP<'_, B>>>("structure", CaseOffset::VT_STRUCTURE, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<Limit<'_, B>>>("lower_limit", CaseOffset::VT_LOWER_LIMIT, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<Limit<'_, B>>>("upper_limit", CaseOffset::VT_UPPER_LIMIT, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("short_name", Case::VT_SHORT_NAME, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<LongName<'_, B>>>("long_name", Case::VT_LONG_NAME, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<DOP<'_, B>>>("structure", Case::VT_STRUCTURE, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<Limit<'_, B>>>("lower_limit", Case::VT_LOWER_LIMIT, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<Limit<'_, B>>>("upper_limit", Case::VT_UPPER_LIMIT, false)?
      .finish();
     Ok(())
   }
@@ -9264,23 +9264,23 @@ pub struct CaseBuilder<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> {
 impl<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> CaseBuilder<'a, 'b, A> {
   #[inline]
   pub fn add_short_name(&mut self, short_name: flatbuffers::WIPOffset<&'b  str>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(CaseOffset::VT_SHORT_NAME, short_name);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(Case::VT_SHORT_NAME, short_name);
   }
   #[inline]
   pub fn add_long_name(&mut self, long_name: flatbuffers::WIPOffset<LongName<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<LongName>>(CaseOffset::VT_LONG_NAME, long_name);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<LongName>>(Case::VT_LONG_NAME, long_name);
   }
   #[inline]
   pub fn add_structure(&mut self, structure: flatbuffers::WIPOffset<DOP<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<DOP>>(CaseOffset::VT_STRUCTURE, structure);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<DOP>>(Case::VT_STRUCTURE, structure);
   }
   #[inline]
   pub fn add_lower_limit(&mut self, lower_limit: flatbuffers::WIPOffset<Limit<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Limit>>(CaseOffset::VT_LOWER_LIMIT, lower_limit);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Limit>>(Case::VT_LOWER_LIMIT, lower_limit);
   }
   #[inline]
   pub fn add_upper_limit(&mut self, upper_limit: flatbuffers::WIPOffset<Limit<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Limit>>(CaseOffset::VT_UPPER_LIMIT, upper_limit);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Limit>>(Case::VT_UPPER_LIMIT, upper_limit);
   }
   #[inline]
   pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a, A>) -> CaseBuilder<'a, 'b, A> {
@@ -9308,14 +9308,6 @@ impl core::fmt::Debug for Case<'_> {
       ds.finish()
   }
 }
-pub enum MUXDOPOffset {}
-impl MUXDOPOffset {
-    pub const VT_BYTE_POSITION: flatbuffers::VOffsetT = 4;
-    pub const VT_SWITCH_KEY: flatbuffers::VOffsetT = 6;
-    pub const VT_DEFAULT_CASE: flatbuffers::VOffsetT = 8;
-    pub const VT_CASES: flatbuffers::VOffsetT = 10;
-    pub const VT_IS_VISIBLE: flatbuffers::VOffsetT = 12;
-}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Copy for MUXDOP<'a, B> {}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Clone for MUXDOP<'a, B> {
   fn clone(&self) -> Self { *self }
@@ -9336,12 +9328,13 @@ impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'
   }
 }
 
-impl<'a, B: flatbuffers::ReadBuffer + ?Sized> MUXDOP<'a, B> {
+impl<'a> MUXDOP<'a> {
+  pub const VT_BYTE_POSITION: flatbuffers::VOffsetT = 4;
+  pub const VT_SWITCH_KEY: flatbuffers::VOffsetT = 6;
+  pub const VT_DEFAULT_CASE: flatbuffers::VOffsetT = 8;
+  pub const VT_CASES: flatbuffers::VOffsetT = 10;
+  pub const VT_IS_VISIBLE: flatbuffers::VOffsetT = 12;
 
-  #[inline]
-  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
-    MUXDOP { _tab: table }
-  }
   #[allow(unused_mut)]
   pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr, A: flatbuffers::Allocator + 'bldr>(
     _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr, A>,
@@ -9355,6 +9348,13 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> MUXDOP<'a, B> {
     builder.add_is_visible(args.is_visible);
     builder.finish()
   }
+}
+
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> MUXDOP<'a, B> {
+  #[inline]
+  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
+    MUXDOP { _tab: table }
+  }
 
 
   #[inline]
@@ -9362,35 +9362,35 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> MUXDOP<'a, B> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<u32>(MUXDOPOffset::VT_BYTE_POSITION, Some(0)).unwrap()}
+    unsafe { self._tab.get::<u32>(MUXDOP::VT_BYTE_POSITION, Some(0)).unwrap()}
   }
   #[inline]
   pub fn switch_key(&self) -> Option<SwitchKey<'a, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<SwitchKey<'a, B>>>(MUXDOPOffset::VT_SWITCH_KEY, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<SwitchKey<'a, B>>>(MUXDOP::VT_SWITCH_KEY, None)}
   }
   #[inline]
   pub fn default_case(&self) -> Option<DefaultCase<'a, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<DefaultCase<'a, B>>>(MUXDOPOffset::VT_DEFAULT_CASE, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<DefaultCase<'a, B>>>(MUXDOP::VT_DEFAULT_CASE, None)}
   }
   #[inline]
   pub fn cases(&self) -> Option<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<Case<'a, B>>, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<Case<'a, B>>, B>>>(MUXDOPOffset::VT_CASES, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<Case<'a, B>>, B>>>(MUXDOP::VT_CASES, None)}
   }
   #[inline]
   pub fn is_visible(&self) -> bool {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<bool>(MUXDOPOffset::VT_IS_VISIBLE, Some(false)).unwrap()}
+    unsafe { self._tab.get::<bool>(MUXDOP::VT_IS_VISIBLE, Some(false)).unwrap()}
   }
 }
 
@@ -9401,11 +9401,11 @@ impl<B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Verifiable for MUXDOP<'_,
   ) -> Result<(), flatbuffers::InvalidFlatbuffer> {
     use self::flatbuffers::Verifiable;
     v.visit_table(pos)?
-     .visit_field::<u32>("byte_position", MUXDOPOffset::VT_BYTE_POSITION, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<SwitchKey<'_, B>>>("switch_key", MUXDOPOffset::VT_SWITCH_KEY, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<DefaultCase<'_, B>>>("default_case", MUXDOPOffset::VT_DEFAULT_CASE, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<Case<'_, B>>, B>>>("cases", MUXDOPOffset::VT_CASES, false)?
-     .visit_field::<bool>("is_visible", MUXDOPOffset::VT_IS_VISIBLE, false)?
+     .visit_field::<u32>("byte_position", MUXDOP::VT_BYTE_POSITION, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<SwitchKey<'_, B>>>("switch_key", MUXDOP::VT_SWITCH_KEY, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<DefaultCase<'_, B>>>("default_case", MUXDOP::VT_DEFAULT_CASE, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<Case<'_, B>>, B>>>("cases", MUXDOP::VT_CASES, false)?
+     .visit_field::<bool>("is_visible", MUXDOP::VT_IS_VISIBLE, false)?
      .finish();
     Ok(())
   }
@@ -9437,23 +9437,23 @@ pub struct MUXDOPBuilder<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> {
 impl<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> MUXDOPBuilder<'a, 'b, A> {
   #[inline]
   pub fn add_byte_position(&mut self, byte_position: u32) {
-    self.fbb_.push_slot::<u32>(MUXDOPOffset::VT_BYTE_POSITION, byte_position, 0);
+    self.fbb_.push_slot::<u32>(MUXDOP::VT_BYTE_POSITION, byte_position, 0);
   }
   #[inline]
   pub fn add_switch_key(&mut self, switch_key: flatbuffers::WIPOffset<SwitchKey<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<SwitchKey>>(MUXDOPOffset::VT_SWITCH_KEY, switch_key);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<SwitchKey>>(MUXDOP::VT_SWITCH_KEY, switch_key);
   }
   #[inline]
   pub fn add_default_case(&mut self, default_case: flatbuffers::WIPOffset<DefaultCase<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<DefaultCase>>(MUXDOPOffset::VT_DEFAULT_CASE, default_case);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<DefaultCase>>(MUXDOP::VT_DEFAULT_CASE, default_case);
   }
   #[inline]
   pub fn add_cases(&mut self, cases: flatbuffers::WIPOffset<flatbuffers::Vector<'b , flatbuffers::ForwardsUOffset<Case<'b >>>>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(MUXDOPOffset::VT_CASES, cases);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(MUXDOP::VT_CASES, cases);
   }
   #[inline]
   pub fn add_is_visible(&mut self, is_visible: bool) {
-    self.fbb_.push_slot::<bool>(MUXDOPOffset::VT_IS_VISIBLE, is_visible, false);
+    self.fbb_.push_slot::<bool>(MUXDOP::VT_IS_VISIBLE, is_visible, false);
   }
   #[inline]
   pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a, A>) -> MUXDOPBuilder<'a, 'b, A> {
@@ -9481,12 +9481,6 @@ impl core::fmt::Debug for MUXDOP<'_> {
       ds.finish()
   }
 }
-pub enum DetermineNumberOfItemsOffset {}
-impl DetermineNumberOfItemsOffset {
-    pub const VT_BYTE_POSITION: flatbuffers::VOffsetT = 4;
-    pub const VT_BIT_POSITION: flatbuffers::VOffsetT = 6;
-    pub const VT_DOP: flatbuffers::VOffsetT = 8;
-}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Copy for DetermineNumberOfItems<'a, B> {}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Clone for DetermineNumberOfItems<'a, B> {
   fn clone(&self) -> Self { *self }
@@ -9507,12 +9501,11 @@ impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'
   }
 }
 
-impl<'a, B: flatbuffers::ReadBuffer + ?Sized> DetermineNumberOfItems<'a, B> {
+impl<'a> DetermineNumberOfItems<'a> {
+  pub const VT_BYTE_POSITION: flatbuffers::VOffsetT = 4;
+  pub const VT_BIT_POSITION: flatbuffers::VOffsetT = 6;
+  pub const VT_DOP: flatbuffers::VOffsetT = 8;
 
-  #[inline]
-  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
-    DetermineNumberOfItems { _tab: table }
-  }
   #[allow(unused_mut)]
   pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr, A: flatbuffers::Allocator + 'bldr>(
     _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr, A>,
@@ -9524,6 +9517,13 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> DetermineNumberOfItems<'a, B> {
     builder.add_byte_position(args.byte_position);
     builder.finish()
   }
+}
+
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> DetermineNumberOfItems<'a, B> {
+  #[inline]
+  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
+    DetermineNumberOfItems { _tab: table }
+  }
 
 
   #[inline]
@@ -9531,21 +9531,21 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> DetermineNumberOfItems<'a, B> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<u32>(DetermineNumberOfItemsOffset::VT_BYTE_POSITION, Some(0)).unwrap()}
+    unsafe { self._tab.get::<u32>(DetermineNumberOfItems::VT_BYTE_POSITION, Some(0)).unwrap()}
   }
   #[inline]
   pub fn bit_position(&self) -> u32 {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<u32>(DetermineNumberOfItemsOffset::VT_BIT_POSITION, Some(0)).unwrap()}
+    unsafe { self._tab.get::<u32>(DetermineNumberOfItems::VT_BIT_POSITION, Some(0)).unwrap()}
   }
   #[inline]
   pub fn dop(&self) -> Option<DOP<'a, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<DOP<'a, B>>>(DetermineNumberOfItemsOffset::VT_DOP, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<DOP<'a, B>>>(DetermineNumberOfItems::VT_DOP, None)}
   }
 }
 
@@ -9556,9 +9556,9 @@ impl<B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Verifiable for DetermineN
   ) -> Result<(), flatbuffers::InvalidFlatbuffer> {
     use self::flatbuffers::Verifiable;
     v.visit_table(pos)?
-     .visit_field::<u32>("byte_position", DetermineNumberOfItemsOffset::VT_BYTE_POSITION, false)?
-     .visit_field::<u32>("bit_position", DetermineNumberOfItemsOffset::VT_BIT_POSITION, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<DOP<'_, B>>>("dop", DetermineNumberOfItemsOffset::VT_DOP, false)?
+     .visit_field::<u32>("byte_position", DetermineNumberOfItems::VT_BYTE_POSITION, false)?
+     .visit_field::<u32>("bit_position", DetermineNumberOfItems::VT_BIT_POSITION, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<DOP<'_, B>>>("dop", DetermineNumberOfItems::VT_DOP, false)?
      .finish();
     Ok(())
   }
@@ -9586,15 +9586,15 @@ pub struct DetermineNumberOfItemsBuilder<'a: 'b, 'b, A: flatbuffers::Allocator +
 impl<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> DetermineNumberOfItemsBuilder<'a, 'b, A> {
   #[inline]
   pub fn add_byte_position(&mut self, byte_position: u32) {
-    self.fbb_.push_slot::<u32>(DetermineNumberOfItemsOffset::VT_BYTE_POSITION, byte_position, 0);
+    self.fbb_.push_slot::<u32>(DetermineNumberOfItems::VT_BYTE_POSITION, byte_position, 0);
   }
   #[inline]
   pub fn add_bit_position(&mut self, bit_position: u32) {
-    self.fbb_.push_slot::<u32>(DetermineNumberOfItemsOffset::VT_BIT_POSITION, bit_position, 0);
+    self.fbb_.push_slot::<u32>(DetermineNumberOfItems::VT_BIT_POSITION, bit_position, 0);
   }
   #[inline]
   pub fn add_dop(&mut self, dop: flatbuffers::WIPOffset<DOP<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<DOP>>(DetermineNumberOfItemsOffset::VT_DOP, dop);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<DOP>>(DetermineNumberOfItems::VT_DOP, dop);
   }
   #[inline]
   pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a, A>) -> DetermineNumberOfItemsBuilder<'a, 'b, A> {
@@ -9620,12 +9620,6 @@ impl core::fmt::Debug for DetermineNumberOfItems<'_> {
       ds.finish()
   }
 }
-pub enum DynamicLengthFieldOffset {}
-impl DynamicLengthFieldOffset {
-    pub const VT_OFFSET: flatbuffers::VOffsetT = 4;
-    pub const VT_FIELD: flatbuffers::VOffsetT = 6;
-    pub const VT_DETERMINE_NUMBER_OF_ITEMS: flatbuffers::VOffsetT = 8;
-}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Copy for DynamicLengthField<'a, B> {}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Clone for DynamicLengthField<'a, B> {
   fn clone(&self) -> Self { *self }
@@ -9646,12 +9640,11 @@ impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'
   }
 }
 
-impl<'a, B: flatbuffers::ReadBuffer + ?Sized> DynamicLengthField<'a, B> {
+impl<'a> DynamicLengthField<'a> {
+  pub const VT_OFFSET: flatbuffers::VOffsetT = 4;
+  pub const VT_FIELD: flatbuffers::VOffsetT = 6;
+  pub const VT_DETERMINE_NUMBER_OF_ITEMS: flatbuffers::VOffsetT = 8;
 
-  #[inline]
-  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
-    DynamicLengthField { _tab: table }
-  }
   #[allow(unused_mut)]
   pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr, A: flatbuffers::Allocator + 'bldr>(
     _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr, A>,
@@ -9663,6 +9656,13 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> DynamicLengthField<'a, B> {
     builder.add_offset(args.offset);
     builder.finish()
   }
+}
+
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> DynamicLengthField<'a, B> {
+  #[inline]
+  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
+    DynamicLengthField { _tab: table }
+  }
 
 
   #[inline]
@@ -9670,21 +9670,21 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> DynamicLengthField<'a, B> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<u32>(DynamicLengthFieldOffset::VT_OFFSET, Some(0)).unwrap()}
+    unsafe { self._tab.get::<u32>(DynamicLengthField::VT_OFFSET, Some(0)).unwrap()}
   }
   #[inline]
   pub fn field(&self) -> Option<Field<'a, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<Field<'a, B>>>(DynamicLengthFieldOffset::VT_FIELD, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<Field<'a, B>>>(DynamicLengthField::VT_FIELD, None)}
   }
   #[inline]
   pub fn determine_number_of_items(&self) -> Option<DetermineNumberOfItems<'a, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<DetermineNumberOfItems<'a, B>>>(DynamicLengthFieldOffset::VT_DETERMINE_NUMBER_OF_ITEMS, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<DetermineNumberOfItems<'a, B>>>(DynamicLengthField::VT_DETERMINE_NUMBER_OF_ITEMS, None)}
   }
 }
 
@@ -9695,9 +9695,9 @@ impl<B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Verifiable for DynamicLen
   ) -> Result<(), flatbuffers::InvalidFlatbuffer> {
     use self::flatbuffers::Verifiable;
     v.visit_table(pos)?
-     .visit_field::<u32>("offset", DynamicLengthFieldOffset::VT_OFFSET, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<Field<'_, B>>>("field", DynamicLengthFieldOffset::VT_FIELD, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<DetermineNumberOfItems<'_, B>>>("determine_number_of_items", DynamicLengthFieldOffset::VT_DETERMINE_NUMBER_OF_ITEMS, false)?
+     .visit_field::<u32>("offset", DynamicLengthField::VT_OFFSET, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<Field<'_, B>>>("field", DynamicLengthField::VT_FIELD, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<DetermineNumberOfItems<'_, B>>>("determine_number_of_items", DynamicLengthField::VT_DETERMINE_NUMBER_OF_ITEMS, false)?
      .finish();
     Ok(())
   }
@@ -9725,15 +9725,15 @@ pub struct DynamicLengthFieldBuilder<'a: 'b, 'b, A: flatbuffers::Allocator + 'a>
 impl<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> DynamicLengthFieldBuilder<'a, 'b, A> {
   #[inline]
   pub fn add_offset(&mut self, offset: u32) {
-    self.fbb_.push_slot::<u32>(DynamicLengthFieldOffset::VT_OFFSET, offset, 0);
+    self.fbb_.push_slot::<u32>(DynamicLengthField::VT_OFFSET, offset, 0);
   }
   #[inline]
   pub fn add_field(&mut self, field: flatbuffers::WIPOffset<Field<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Field>>(DynamicLengthFieldOffset::VT_FIELD, field);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Field>>(DynamicLengthField::VT_FIELD, field);
   }
   #[inline]
   pub fn add_determine_number_of_items(&mut self, determine_number_of_items: flatbuffers::WIPOffset<DetermineNumberOfItems<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<DetermineNumberOfItems>>(DynamicLengthFieldOffset::VT_DETERMINE_NUMBER_OF_ITEMS, determine_number_of_items);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<DetermineNumberOfItems>>(DynamicLengthField::VT_DETERMINE_NUMBER_OF_ITEMS, determine_number_of_items);
   }
   #[inline]
   pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a, A>) -> DynamicLengthFieldBuilder<'a, 'b, A> {
@@ -9759,14 +9759,6 @@ impl core::fmt::Debug for DynamicLengthField<'_> {
       ds.finish()
   }
 }
-pub enum DOPOffset {}
-impl DOPOffset {
-    pub const VT_DOP_TYPE: flatbuffers::VOffsetT = 4;
-    pub const VT_SHORT_NAME: flatbuffers::VOffsetT = 6;
-    pub const VT_SDGS: flatbuffers::VOffsetT = 8;
-    pub const VT_SPECIFIC_DATA_TYPE: flatbuffers::VOffsetT = 10;
-    pub const VT_SPECIFIC_DATA: flatbuffers::VOffsetT = 12;
-}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Copy for DOP<'a, B> {}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Clone for DOP<'a, B> {
   fn clone(&self) -> Self { *self }
@@ -9787,12 +9779,13 @@ impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'
   }
 }
 
-impl<'a, B: flatbuffers::ReadBuffer + ?Sized> DOP<'a, B> {
+impl<'a> DOP<'a> {
+  pub const VT_DOP_TYPE: flatbuffers::VOffsetT = 4;
+  pub const VT_SHORT_NAME: flatbuffers::VOffsetT = 6;
+  pub const VT_SDGS: flatbuffers::VOffsetT = 8;
+  pub const VT_SPECIFIC_DATA_TYPE: flatbuffers::VOffsetT = 10;
+  pub const VT_SPECIFIC_DATA: flatbuffers::VOffsetT = 12;
 
-  #[inline]
-  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
-    DOP { _tab: table }
-  }
   #[allow(unused_mut)]
   pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr, A: flatbuffers::Allocator + 'bldr>(
     _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr, A>,
@@ -9806,6 +9799,13 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> DOP<'a, B> {
     builder.add_dop_type(args.dop_type);
     builder.finish()
   }
+}
+
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> DOP<'a, B> {
+  #[inline]
+  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
+    DOP { _tab: table }
+  }
 
 
   #[inline]
@@ -9813,35 +9813,35 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> DOP<'a, B> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<DOPType>(DOPOffset::VT_DOP_TYPE, Some(DOPType::REGULAR)).unwrap()}
+    unsafe { self._tab.get::<DOPType>(DOP::VT_DOP_TYPE, Some(DOPType::REGULAR)).unwrap()}
   }
   #[inline]
   pub fn short_name(&self) -> Option<&'a str> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(DOPOffset::VT_SHORT_NAME, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(DOP::VT_SHORT_NAME, None)}
   }
   #[inline]
   pub fn sdgs(&self) -> Option<SDGS<'a, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<SDGS<'a, B>>>(DOPOffset::VT_SDGS, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<SDGS<'a, B>>>(DOP::VT_SDGS, None)}
   }
   #[inline]
   pub fn specific_data_type(&self) -> SpecificDOPData {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<SpecificDOPData>(DOPOffset::VT_SPECIFIC_DATA_TYPE, Some(SpecificDOPData::NONE)).unwrap()}
+    unsafe { self._tab.get::<SpecificDOPData>(DOP::VT_SPECIFIC_DATA_TYPE, Some(SpecificDOPData::NONE)).unwrap()}
   }
   #[inline]
   pub fn specific_data(&self) -> Option<flatbuffers::Table<'a, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Table<'a, B>>>(DOPOffset::VT_SPECIFIC_DATA, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Table<'a, B>>>(DOP::VT_SPECIFIC_DATA, None)}
   }
   #[inline]
   #[allow(non_snake_case)]
@@ -9987,10 +9987,10 @@ impl<B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Verifiable for DOP<'_, B>
   ) -> Result<(), flatbuffers::InvalidFlatbuffer> {
     use self::flatbuffers::Verifiable;
     v.visit_table(pos)?
-     .visit_field::<DOPType>("dop_type", DOPOffset::VT_DOP_TYPE, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("short_name", DOPOffset::VT_SHORT_NAME, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<SDGS<'_, B>>>("sdgs", DOPOffset::VT_SDGS, false)?
-     .visit_union::<SpecificDOPDataUnionValue>("specific_data_type", DOPOffset::VT_SPECIFIC_DATA_TYPE, "specific_data", DOPOffset::VT_SPECIFIC_DATA, false)?
+     .visit_field::<DOPType>("dop_type", DOP::VT_DOP_TYPE, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("short_name", DOP::VT_SHORT_NAME, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<SDGS<'_, B>>>("sdgs", DOP::VT_SDGS, false)?
+     .visit_union::<SpecificDOPDataUnionValue>("specific_data_type", DOP::VT_SPECIFIC_DATA_TYPE, "specific_data", DOP::VT_SPECIFIC_DATA, false)?
      .finish();
     Ok(())
   }
@@ -10000,7 +10000,7 @@ pub struct DOPArgs<'a> {
     pub short_name: Option<flatbuffers::WIPOffset<&'a str>>,
     pub sdgs: Option<flatbuffers::WIPOffset<SDGS<'a>>>,
     pub specific_data_type: SpecificDOPData,
-    pub specific_data: Option<flatbuffers::WIPOffset<SpecificDOPDataUnionValue>>,
+    pub specific_data: Option<flatbuffers::WIPOffset<flatbuffers::UnionWIPOffset>>,
 }
 impl<'a> Default for DOPArgs<'a> {
   #[inline]
@@ -10022,23 +10022,23 @@ pub struct DOPBuilder<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> {
 impl<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> DOPBuilder<'a, 'b, A> {
   #[inline]
   pub fn add_dop_type(&mut self, dop_type: DOPType) {
-    self.fbb_.push_slot::<DOPType>(DOPOffset::VT_DOP_TYPE, dop_type, DOPType::REGULAR);
+    self.fbb_.push_slot::<DOPType>(DOP::VT_DOP_TYPE, dop_type, DOPType::REGULAR);
   }
   #[inline]
   pub fn add_short_name(&mut self, short_name: flatbuffers::WIPOffset<&'b  str>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(DOPOffset::VT_SHORT_NAME, short_name);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(DOP::VT_SHORT_NAME, short_name);
   }
   #[inline]
   pub fn add_sdgs(&mut self, sdgs: flatbuffers::WIPOffset<SDGS<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<SDGS>>(DOPOffset::VT_SDGS, sdgs);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<SDGS>>(DOP::VT_SDGS, sdgs);
   }
   #[inline]
   pub fn add_specific_data_type(&mut self, specific_data_type: SpecificDOPData) {
-    self.fbb_.push_slot::<SpecificDOPData>(DOPOffset::VT_SPECIFIC_DATA_TYPE, specific_data_type, SpecificDOPData::NONE);
+    self.fbb_.push_slot::<SpecificDOPData>(DOP::VT_SPECIFIC_DATA_TYPE, specific_data_type, SpecificDOPData::NONE);
   }
   #[inline]
-  pub fn add_specific_data(&mut self, specific_data: flatbuffers::WIPOffset<SpecificDOPDataUnionValue>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(DOPOffset::VT_SPECIFIC_DATA, specific_data);
+  pub fn add_specific_data(&mut self, specific_data: flatbuffers::WIPOffset<flatbuffers::UnionWIPOffset>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(DOP::VT_SPECIFIC_DATA, specific_data);
   }
   #[inline]
   pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a, A>) -> DOPBuilder<'a, 'b, A> {
@@ -10134,11 +10134,6 @@ impl core::fmt::Debug for DOP<'_> {
       ds.finish()
   }
 }
-pub enum StateOffset {}
-impl StateOffset {
-    pub const VT_SHORT_NAME: flatbuffers::VOffsetT = 4;
-    pub const VT_LONG_NAME: flatbuffers::VOffsetT = 6;
-}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Copy for State<'a, B> {}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Clone for State<'a, B> {
   fn clone(&self) -> Self { *self }
@@ -10159,12 +10154,10 @@ impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'
   }
 }
 
-impl<'a, B: flatbuffers::ReadBuffer + ?Sized> State<'a, B> {
+impl<'a> State<'a> {
+  pub const VT_SHORT_NAME: flatbuffers::VOffsetT = 4;
+  pub const VT_LONG_NAME: flatbuffers::VOffsetT = 6;
 
-  #[inline]
-  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
-    State { _tab: table }
-  }
   #[allow(unused_mut)]
   pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr, A: flatbuffers::Allocator + 'bldr>(
     _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr, A>,
@@ -10175,6 +10168,13 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> State<'a, B> {
     if let Some(x) = args.short_name { builder.add_short_name(x); }
     builder.finish()
   }
+}
+
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> State<'a, B> {
+  #[inline]
+  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
+    State { _tab: table }
+  }
 
 
   #[inline]
@@ -10182,14 +10182,14 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> State<'a, B> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(StateOffset::VT_SHORT_NAME, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(State::VT_SHORT_NAME, None)}
   }
   #[inline]
   pub fn long_name(&self) -> Option<LongName<'a, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<LongName<'a, B>>>(StateOffset::VT_LONG_NAME, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<LongName<'a, B>>>(State::VT_LONG_NAME, None)}
   }
 }
 
@@ -10200,8 +10200,8 @@ impl<B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Verifiable for State<'_, 
   ) -> Result<(), flatbuffers::InvalidFlatbuffer> {
     use self::flatbuffers::Verifiable;
     v.visit_table(pos)?
-     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("short_name", StateOffset::VT_SHORT_NAME, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<LongName<'_, B>>>("long_name", StateOffset::VT_LONG_NAME, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("short_name", State::VT_SHORT_NAME, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<LongName<'_, B>>>("long_name", State::VT_LONG_NAME, false)?
      .finish();
     Ok(())
   }
@@ -10227,11 +10227,11 @@ pub struct StateBuilder<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> {
 impl<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> StateBuilder<'a, 'b, A> {
   #[inline]
   pub fn add_short_name(&mut self, short_name: flatbuffers::WIPOffset<&'b  str>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(StateOffset::VT_SHORT_NAME, short_name);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(State::VT_SHORT_NAME, short_name);
   }
   #[inline]
   pub fn add_long_name(&mut self, long_name: flatbuffers::WIPOffset<LongName<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<LongName>>(StateOffset::VT_LONG_NAME, long_name);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<LongName>>(State::VT_LONG_NAME, long_name);
   }
   #[inline]
   pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a, A>) -> StateBuilder<'a, 'b, A> {
@@ -10256,14 +10256,6 @@ impl core::fmt::Debug for State<'_> {
       ds.finish()
   }
 }
-pub enum StateChartOffset {}
-impl StateChartOffset {
-    pub const VT_SHORT_NAME: flatbuffers::VOffsetT = 4;
-    pub const VT_SEMANTIC: flatbuffers::VOffsetT = 6;
-    pub const VT_STATE_TRANSITIONS: flatbuffers::VOffsetT = 8;
-    pub const VT_START_STATE_SHORT_NAME_REF: flatbuffers::VOffsetT = 10;
-    pub const VT_STATES: flatbuffers::VOffsetT = 12;
-}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Copy for StateChart<'a, B> {}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Clone for StateChart<'a, B> {
   fn clone(&self) -> Self { *self }
@@ -10284,12 +10276,13 @@ impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'
   }
 }
 
-impl<'a, B: flatbuffers::ReadBuffer + ?Sized> StateChart<'a, B> {
+impl<'a> StateChart<'a> {
+  pub const VT_SHORT_NAME: flatbuffers::VOffsetT = 4;
+  pub const VT_SEMANTIC: flatbuffers::VOffsetT = 6;
+  pub const VT_STATE_TRANSITIONS: flatbuffers::VOffsetT = 8;
+  pub const VT_START_STATE_SHORT_NAME_REF: flatbuffers::VOffsetT = 10;
+  pub const VT_STATES: flatbuffers::VOffsetT = 12;
 
-  #[inline]
-  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
-    StateChart { _tab: table }
-  }
   #[allow(unused_mut)]
   pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr, A: flatbuffers::Allocator + 'bldr>(
     _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr, A>,
@@ -10303,6 +10296,13 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> StateChart<'a, B> {
     if let Some(x) = args.short_name { builder.add_short_name(x); }
     builder.finish()
   }
+}
+
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> StateChart<'a, B> {
+  #[inline]
+  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
+    StateChart { _tab: table }
+  }
 
 
   #[inline]
@@ -10310,35 +10310,35 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> StateChart<'a, B> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(StateChartOffset::VT_SHORT_NAME, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(StateChart::VT_SHORT_NAME, None)}
   }
   #[inline]
   pub fn semantic(&self) -> Option<&'a str> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(StateChartOffset::VT_SEMANTIC, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(StateChart::VT_SEMANTIC, None)}
   }
   #[inline]
   pub fn state_transitions(&self) -> Option<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<StateTransition<'a, B>>, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<StateTransition<'a, B>>, B>>>(StateChartOffset::VT_STATE_TRANSITIONS, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<StateTransition<'a, B>>, B>>>(StateChart::VT_STATE_TRANSITIONS, None)}
   }
   #[inline]
   pub fn start_state_short_name_ref(&self) -> Option<&'a str> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(StateChartOffset::VT_START_STATE_SHORT_NAME_REF, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(StateChart::VT_START_STATE_SHORT_NAME_REF, None)}
   }
   #[inline]
   pub fn states(&self) -> Option<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<State<'a, B>>, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<State<'a, B>>, B>>>(StateChartOffset::VT_STATES, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<State<'a, B>>, B>>>(StateChart::VT_STATES, None)}
   }
 }
 
@@ -10349,11 +10349,11 @@ impl<B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Verifiable for StateChart
   ) -> Result<(), flatbuffers::InvalidFlatbuffer> {
     use self::flatbuffers::Verifiable;
     v.visit_table(pos)?
-     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("short_name", StateChartOffset::VT_SHORT_NAME, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("semantic", StateChartOffset::VT_SEMANTIC, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<StateTransition<'_, B>>, B>>>("state_transitions", StateChartOffset::VT_STATE_TRANSITIONS, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("start_state_short_name_ref", StateChartOffset::VT_START_STATE_SHORT_NAME_REF, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<State<'_, B>>, B>>>("states", StateChartOffset::VT_STATES, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("short_name", StateChart::VT_SHORT_NAME, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("semantic", StateChart::VT_SEMANTIC, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<StateTransition<'_, B>>, B>>>("state_transitions", StateChart::VT_STATE_TRANSITIONS, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("start_state_short_name_ref", StateChart::VT_START_STATE_SHORT_NAME_REF, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<State<'_, B>>, B>>>("states", StateChart::VT_STATES, false)?
      .finish();
     Ok(())
   }
@@ -10385,23 +10385,23 @@ pub struct StateChartBuilder<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> {
 impl<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> StateChartBuilder<'a, 'b, A> {
   #[inline]
   pub fn add_short_name(&mut self, short_name: flatbuffers::WIPOffset<&'b  str>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(StateChartOffset::VT_SHORT_NAME, short_name);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(StateChart::VT_SHORT_NAME, short_name);
   }
   #[inline]
   pub fn add_semantic(&mut self, semantic: flatbuffers::WIPOffset<&'b  str>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(StateChartOffset::VT_SEMANTIC, semantic);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(StateChart::VT_SEMANTIC, semantic);
   }
   #[inline]
   pub fn add_state_transitions(&mut self, state_transitions: flatbuffers::WIPOffset<flatbuffers::Vector<'b , flatbuffers::ForwardsUOffset<StateTransition<'b >>>>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(StateChartOffset::VT_STATE_TRANSITIONS, state_transitions);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(StateChart::VT_STATE_TRANSITIONS, state_transitions);
   }
   #[inline]
   pub fn add_start_state_short_name_ref(&mut self, start_state_short_name_ref: flatbuffers::WIPOffset<&'b  str>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(StateChartOffset::VT_START_STATE_SHORT_NAME_REF, start_state_short_name_ref);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(StateChart::VT_START_STATE_SHORT_NAME_REF, start_state_short_name_ref);
   }
   #[inline]
   pub fn add_states(&mut self, states: flatbuffers::WIPOffset<flatbuffers::Vector<'b , flatbuffers::ForwardsUOffset<State<'b >>>>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(StateChartOffset::VT_STATES, states);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(StateChart::VT_STATES, states);
   }
   #[inline]
   pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a, A>) -> StateChartBuilder<'a, 'b, A> {
@@ -10429,12 +10429,6 @@ impl core::fmt::Debug for StateChart<'_> {
       ds.finish()
   }
 }
-pub enum StateTransitionOffset {}
-impl StateTransitionOffset {
-    pub const VT_SHORT_NAME: flatbuffers::VOffsetT = 4;
-    pub const VT_SOURCE_SHORT_NAME_REF: flatbuffers::VOffsetT = 6;
-    pub const VT_TARGET_SHORT_NAME_REF: flatbuffers::VOffsetT = 8;
-}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Copy for StateTransition<'a, B> {}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Clone for StateTransition<'a, B> {
   fn clone(&self) -> Self { *self }
@@ -10455,12 +10449,11 @@ impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'
   }
 }
 
-impl<'a, B: flatbuffers::ReadBuffer + ?Sized> StateTransition<'a, B> {
+impl<'a> StateTransition<'a> {
+  pub const VT_SHORT_NAME: flatbuffers::VOffsetT = 4;
+  pub const VT_SOURCE_SHORT_NAME_REF: flatbuffers::VOffsetT = 6;
+  pub const VT_TARGET_SHORT_NAME_REF: flatbuffers::VOffsetT = 8;
 
-  #[inline]
-  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
-    StateTransition { _tab: table }
-  }
   #[allow(unused_mut)]
   pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr, A: flatbuffers::Allocator + 'bldr>(
     _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr, A>,
@@ -10472,6 +10465,13 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> StateTransition<'a, B> {
     if let Some(x) = args.short_name { builder.add_short_name(x); }
     builder.finish()
   }
+}
+
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> StateTransition<'a, B> {
+  #[inline]
+  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
+    StateTransition { _tab: table }
+  }
 
 
   #[inline]
@@ -10479,21 +10479,21 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> StateTransition<'a, B> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(StateTransitionOffset::VT_SHORT_NAME, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(StateTransition::VT_SHORT_NAME, None)}
   }
   #[inline]
   pub fn source_short_name_ref(&self) -> Option<&'a str> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(StateTransitionOffset::VT_SOURCE_SHORT_NAME_REF, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(StateTransition::VT_SOURCE_SHORT_NAME_REF, None)}
   }
   #[inline]
   pub fn target_short_name_ref(&self) -> Option<&'a str> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(StateTransitionOffset::VT_TARGET_SHORT_NAME_REF, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(StateTransition::VT_TARGET_SHORT_NAME_REF, None)}
   }
 }
 
@@ -10504,9 +10504,9 @@ impl<B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Verifiable for StateTrans
   ) -> Result<(), flatbuffers::InvalidFlatbuffer> {
     use self::flatbuffers::Verifiable;
     v.visit_table(pos)?
-     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("short_name", StateTransitionOffset::VT_SHORT_NAME, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("source_short_name_ref", StateTransitionOffset::VT_SOURCE_SHORT_NAME_REF, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("target_short_name_ref", StateTransitionOffset::VT_TARGET_SHORT_NAME_REF, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("short_name", StateTransition::VT_SHORT_NAME, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("source_short_name_ref", StateTransition::VT_SOURCE_SHORT_NAME_REF, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("target_short_name_ref", StateTransition::VT_TARGET_SHORT_NAME_REF, false)?
      .finish();
     Ok(())
   }
@@ -10534,15 +10534,15 @@ pub struct StateTransitionBuilder<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> {
 impl<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> StateTransitionBuilder<'a, 'b, A> {
   #[inline]
   pub fn add_short_name(&mut self, short_name: flatbuffers::WIPOffset<&'b  str>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(StateTransitionOffset::VT_SHORT_NAME, short_name);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(StateTransition::VT_SHORT_NAME, short_name);
   }
   #[inline]
   pub fn add_source_short_name_ref(&mut self, source_short_name_ref: flatbuffers::WIPOffset<&'b  str>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(StateTransitionOffset::VT_SOURCE_SHORT_NAME_REF, source_short_name_ref);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(StateTransition::VT_SOURCE_SHORT_NAME_REF, source_short_name_ref);
   }
   #[inline]
   pub fn add_target_short_name_ref(&mut self, target_short_name_ref: flatbuffers::WIPOffset<&'b  str>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(StateTransitionOffset::VT_TARGET_SHORT_NAME_REF, target_short_name_ref);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(StateTransition::VT_TARGET_SHORT_NAME_REF, target_short_name_ref);
   }
   #[inline]
   pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a, A>) -> StateTransitionBuilder<'a, 'b, A> {
@@ -10568,11 +10568,6 @@ impl core::fmt::Debug for StateTransition<'_> {
       ds.finish()
   }
 }
-pub enum StateTransitionRefOffset {}
-impl StateTransitionRefOffset {
-    pub const VT_VALUE: flatbuffers::VOffsetT = 4;
-    pub const VT_STATE_TRANSITION: flatbuffers::VOffsetT = 6;
-}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Copy for StateTransitionRef<'a, B> {}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Clone for StateTransitionRef<'a, B> {
   fn clone(&self) -> Self { *self }
@@ -10593,12 +10588,10 @@ impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'
   }
 }
 
-impl<'a, B: flatbuffers::ReadBuffer + ?Sized> StateTransitionRef<'a, B> {
+impl<'a> StateTransitionRef<'a> {
+  pub const VT_VALUE: flatbuffers::VOffsetT = 4;
+  pub const VT_STATE_TRANSITION: flatbuffers::VOffsetT = 6;
 
-  #[inline]
-  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
-    StateTransitionRef { _tab: table }
-  }
   #[allow(unused_mut)]
   pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr, A: flatbuffers::Allocator + 'bldr>(
     _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr, A>,
@@ -10609,6 +10602,13 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> StateTransitionRef<'a, B> {
     if let Some(x) = args.value { builder.add_value(x); }
     builder.finish()
   }
+}
+
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> StateTransitionRef<'a, B> {
+  #[inline]
+  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
+    StateTransitionRef { _tab: table }
+  }
 
 
   #[inline]
@@ -10616,14 +10616,14 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> StateTransitionRef<'a, B> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(StateTransitionRefOffset::VT_VALUE, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(StateTransitionRef::VT_VALUE, None)}
   }
   #[inline]
   pub fn state_transition(&self) -> Option<StateTransition<'a, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<StateTransition<'a, B>>>(StateTransitionRefOffset::VT_STATE_TRANSITION, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<StateTransition<'a, B>>>(StateTransitionRef::VT_STATE_TRANSITION, None)}
   }
 }
 
@@ -10634,8 +10634,8 @@ impl<B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Verifiable for StateTrans
   ) -> Result<(), flatbuffers::InvalidFlatbuffer> {
     use self::flatbuffers::Verifiable;
     v.visit_table(pos)?
-     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("value", StateTransitionRefOffset::VT_VALUE, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<StateTransition<'_, B>>>("state_transition", StateTransitionRefOffset::VT_STATE_TRANSITION, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("value", StateTransitionRef::VT_VALUE, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<StateTransition<'_, B>>>("state_transition", StateTransitionRef::VT_STATE_TRANSITION, false)?
      .finish();
     Ok(())
   }
@@ -10661,11 +10661,11 @@ pub struct StateTransitionRefBuilder<'a: 'b, 'b, A: flatbuffers::Allocator + 'a>
 impl<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> StateTransitionRefBuilder<'a, 'b, A> {
   #[inline]
   pub fn add_value(&mut self, value: flatbuffers::WIPOffset<&'b  str>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(StateTransitionRefOffset::VT_VALUE, value);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(StateTransitionRef::VT_VALUE, value);
   }
   #[inline]
   pub fn add_state_transition(&mut self, state_transition: flatbuffers::WIPOffset<StateTransition<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<StateTransition>>(StateTransitionRefOffset::VT_STATE_TRANSITION, state_transition);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<StateTransition>>(StateTransitionRef::VT_STATE_TRANSITION, state_transition);
   }
   #[inline]
   pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a, A>) -> StateTransitionRefBuilder<'a, 'b, A> {
@@ -10690,13 +10690,6 @@ impl core::fmt::Debug for StateTransitionRef<'_> {
       ds.finish()
   }
 }
-pub enum PreConditionStateRefOffset {}
-impl PreConditionStateRefOffset {
-    pub const VT_VALUE: flatbuffers::VOffsetT = 4;
-    pub const VT_IN_PARAM_IF_SHORT_NAME: flatbuffers::VOffsetT = 6;
-    pub const VT_IN_PARAM_PATH_SHORT_NAME: flatbuffers::VOffsetT = 8;
-    pub const VT_STATE: flatbuffers::VOffsetT = 10;
-}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Copy for PreConditionStateRef<'a, B> {}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Clone for PreConditionStateRef<'a, B> {
   fn clone(&self) -> Self { *self }
@@ -10717,12 +10710,12 @@ impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'
   }
 }
 
-impl<'a, B: flatbuffers::ReadBuffer + ?Sized> PreConditionStateRef<'a, B> {
+impl<'a> PreConditionStateRef<'a> {
+  pub const VT_VALUE: flatbuffers::VOffsetT = 4;
+  pub const VT_IN_PARAM_IF_SHORT_NAME: flatbuffers::VOffsetT = 6;
+  pub const VT_IN_PARAM_PATH_SHORT_NAME: flatbuffers::VOffsetT = 8;
+  pub const VT_STATE: flatbuffers::VOffsetT = 10;
 
-  #[inline]
-  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
-    PreConditionStateRef { _tab: table }
-  }
   #[allow(unused_mut)]
   pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr, A: flatbuffers::Allocator + 'bldr>(
     _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr, A>,
@@ -10735,6 +10728,13 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> PreConditionStateRef<'a, B> {
     if let Some(x) = args.value { builder.add_value(x); }
     builder.finish()
   }
+}
+
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> PreConditionStateRef<'a, B> {
+  #[inline]
+  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
+    PreConditionStateRef { _tab: table }
+  }
 
 
   #[inline]
@@ -10742,28 +10742,28 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> PreConditionStateRef<'a, B> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(PreConditionStateRefOffset::VT_VALUE, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(PreConditionStateRef::VT_VALUE, None)}
   }
   #[inline]
   pub fn in_param_if_short_name(&self) -> Option<&'a str> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(PreConditionStateRefOffset::VT_IN_PARAM_IF_SHORT_NAME, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(PreConditionStateRef::VT_IN_PARAM_IF_SHORT_NAME, None)}
   }
   #[inline]
   pub fn in_param_path_short_name(&self) -> Option<&'a str> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(PreConditionStateRefOffset::VT_IN_PARAM_PATH_SHORT_NAME, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(PreConditionStateRef::VT_IN_PARAM_PATH_SHORT_NAME, None)}
   }
   #[inline]
   pub fn state(&self) -> Option<State<'a, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<State<'a, B>>>(PreConditionStateRefOffset::VT_STATE, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<State<'a, B>>>(PreConditionStateRef::VT_STATE, None)}
   }
 }
 
@@ -10774,10 +10774,10 @@ impl<B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Verifiable for PreConditi
   ) -> Result<(), flatbuffers::InvalidFlatbuffer> {
     use self::flatbuffers::Verifiable;
     v.visit_table(pos)?
-     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("value", PreConditionStateRefOffset::VT_VALUE, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("in_param_if_short_name", PreConditionStateRefOffset::VT_IN_PARAM_IF_SHORT_NAME, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("in_param_path_short_name", PreConditionStateRefOffset::VT_IN_PARAM_PATH_SHORT_NAME, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<State<'_, B>>>("state", PreConditionStateRefOffset::VT_STATE, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("value", PreConditionStateRef::VT_VALUE, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("in_param_if_short_name", PreConditionStateRef::VT_IN_PARAM_IF_SHORT_NAME, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("in_param_path_short_name", PreConditionStateRef::VT_IN_PARAM_PATH_SHORT_NAME, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<State<'_, B>>>("state", PreConditionStateRef::VT_STATE, false)?
      .finish();
     Ok(())
   }
@@ -10807,19 +10807,19 @@ pub struct PreConditionStateRefBuilder<'a: 'b, 'b, A: flatbuffers::Allocator + '
 impl<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> PreConditionStateRefBuilder<'a, 'b, A> {
   #[inline]
   pub fn add_value(&mut self, value: flatbuffers::WIPOffset<&'b  str>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(PreConditionStateRefOffset::VT_VALUE, value);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(PreConditionStateRef::VT_VALUE, value);
   }
   #[inline]
   pub fn add_in_param_if_short_name(&mut self, in_param_if_short_name: flatbuffers::WIPOffset<&'b  str>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(PreConditionStateRefOffset::VT_IN_PARAM_IF_SHORT_NAME, in_param_if_short_name);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(PreConditionStateRef::VT_IN_PARAM_IF_SHORT_NAME, in_param_if_short_name);
   }
   #[inline]
   pub fn add_in_param_path_short_name(&mut self, in_param_path_short_name: flatbuffers::WIPOffset<&'b  str>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(PreConditionStateRefOffset::VT_IN_PARAM_PATH_SHORT_NAME, in_param_path_short_name);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(PreConditionStateRef::VT_IN_PARAM_PATH_SHORT_NAME, in_param_path_short_name);
   }
   #[inline]
   pub fn add_state(&mut self, state: flatbuffers::WIPOffset<State<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<State>>(PreConditionStateRefOffset::VT_STATE, state);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<State>>(PreConditionStateRef::VT_STATE, state);
   }
   #[inline]
   pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a, A>) -> PreConditionStateRefBuilder<'a, 'b, A> {
@@ -10846,23 +10846,6 @@ impl core::fmt::Debug for PreConditionStateRef<'_> {
       ds.finish()
   }
 }
-pub enum TableRowOffset {}
-impl TableRowOffset {
-    pub const VT_SHORT_NAME: flatbuffers::VOffsetT = 4;
-    pub const VT_LONG_NAME: flatbuffers::VOffsetT = 6;
-    pub const VT_KEY: flatbuffers::VOffsetT = 8;
-    pub const VT_DOP: flatbuffers::VOffsetT = 10;
-    pub const VT_STRUCTURE: flatbuffers::VOffsetT = 12;
-    pub const VT_SDGS: flatbuffers::VOffsetT = 14;
-    pub const VT_AUDIENCE: flatbuffers::VOffsetT = 16;
-    pub const VT_FUNCT_CLASS_REFS: flatbuffers::VOffsetT = 18;
-    pub const VT_STATE_TRANSITION_REFS: flatbuffers::VOffsetT = 20;
-    pub const VT_PRE_CONDITION_STATE_REFS: flatbuffers::VOffsetT = 22;
-    pub const VT_IS_EXECUTABLE: flatbuffers::VOffsetT = 24;
-    pub const VT_SEMANTIC: flatbuffers::VOffsetT = 26;
-    pub const VT_IS_MANDATORY: flatbuffers::VOffsetT = 28;
-    pub const VT_IS_FINAL: flatbuffers::VOffsetT = 30;
-}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Copy for TableRow<'a, B> {}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Clone for TableRow<'a, B> {
   fn clone(&self) -> Self { *self }
@@ -10883,12 +10866,22 @@ impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'
   }
 }
 
-impl<'a, B: flatbuffers::ReadBuffer + ?Sized> TableRow<'a, B> {
+impl<'a> TableRow<'a> {
+  pub const VT_SHORT_NAME: flatbuffers::VOffsetT = 4;
+  pub const VT_LONG_NAME: flatbuffers::VOffsetT = 6;
+  pub const VT_KEY: flatbuffers::VOffsetT = 8;
+  pub const VT_DOP: flatbuffers::VOffsetT = 10;
+  pub const VT_STRUCTURE: flatbuffers::VOffsetT = 12;
+  pub const VT_SDGS: flatbuffers::VOffsetT = 14;
+  pub const VT_AUDIENCE: flatbuffers::VOffsetT = 16;
+  pub const VT_FUNCT_CLASS_REFS: flatbuffers::VOffsetT = 18;
+  pub const VT_STATE_TRANSITION_REFS: flatbuffers::VOffsetT = 20;
+  pub const VT_PRE_CONDITION_STATE_REFS: flatbuffers::VOffsetT = 22;
+  pub const VT_IS_EXECUTABLE: flatbuffers::VOffsetT = 24;
+  pub const VT_SEMANTIC: flatbuffers::VOffsetT = 26;
+  pub const VT_IS_MANDATORY: flatbuffers::VOffsetT = 28;
+  pub const VT_IS_FINAL: flatbuffers::VOffsetT = 30;
 
-  #[inline]
-  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
-    TableRow { _tab: table }
-  }
   #[allow(unused_mut)]
   pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr, A: flatbuffers::Allocator + 'bldr>(
     _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr, A>,
@@ -10911,6 +10904,13 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> TableRow<'a, B> {
     builder.add_is_executable(args.is_executable);
     builder.finish()
   }
+}
+
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> TableRow<'a, B> {
+  #[inline]
+  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
+    TableRow { _tab: table }
+  }
 
 
   #[inline]
@@ -10918,98 +10918,98 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> TableRow<'a, B> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(TableRowOffset::VT_SHORT_NAME, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(TableRow::VT_SHORT_NAME, None)}
   }
   #[inline]
   pub fn long_name(&self) -> Option<LongName<'a, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<LongName<'a, B>>>(TableRowOffset::VT_LONG_NAME, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<LongName<'a, B>>>(TableRow::VT_LONG_NAME, None)}
   }
   #[inline]
   pub fn key(&self) -> Option<&'a str> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(TableRowOffset::VT_KEY, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(TableRow::VT_KEY, None)}
   }
   #[inline]
   pub fn dop(&self) -> Option<DOP<'a, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<DOP<'a, B>>>(TableRowOffset::VT_DOP, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<DOP<'a, B>>>(TableRow::VT_DOP, None)}
   }
   #[inline]
   pub fn structure(&self) -> Option<DOP<'a, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<DOP<'a, B>>>(TableRowOffset::VT_STRUCTURE, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<DOP<'a, B>>>(TableRow::VT_STRUCTURE, None)}
   }
   #[inline]
   pub fn sdgs(&self) -> Option<SDGS<'a, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<SDGS<'a, B>>>(TableRowOffset::VT_SDGS, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<SDGS<'a, B>>>(TableRow::VT_SDGS, None)}
   }
   #[inline]
   pub fn audience(&self) -> Option<Audience<'a, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<Audience<'a, B>>>(TableRowOffset::VT_AUDIENCE, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<Audience<'a, B>>>(TableRow::VT_AUDIENCE, None)}
   }
   #[inline]
   pub fn funct_class_refs(&self) -> Option<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<FunctClass<'a, B>>, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<FunctClass<'a, B>>, B>>>(TableRowOffset::VT_FUNCT_CLASS_REFS, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<FunctClass<'a, B>>, B>>>(TableRow::VT_FUNCT_CLASS_REFS, None)}
   }
   #[inline]
   pub fn state_transition_refs(&self) -> Option<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<StateTransitionRef<'a, B>>, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<StateTransitionRef<'a, B>>, B>>>(TableRowOffset::VT_STATE_TRANSITION_REFS, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<StateTransitionRef<'a, B>>, B>>>(TableRow::VT_STATE_TRANSITION_REFS, None)}
   }
   #[inline]
   pub fn pre_condition_state_refs(&self) -> Option<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<PreConditionStateRef<'a, B>>, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<PreConditionStateRef<'a, B>>, B>>>(TableRowOffset::VT_PRE_CONDITION_STATE_REFS, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<PreConditionStateRef<'a, B>>, B>>>(TableRow::VT_PRE_CONDITION_STATE_REFS, None)}
   }
   #[inline]
   pub fn is_executable(&self) -> bool {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<bool>(TableRowOffset::VT_IS_EXECUTABLE, Some(true)).unwrap()}
+    unsafe { self._tab.get::<bool>(TableRow::VT_IS_EXECUTABLE, Some(true)).unwrap()}
   }
   #[inline]
   pub fn semantic(&self) -> Option<&'a str> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(TableRowOffset::VT_SEMANTIC, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(TableRow::VT_SEMANTIC, None)}
   }
   #[inline]
   pub fn is_mandatory(&self) -> bool {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<bool>(TableRowOffset::VT_IS_MANDATORY, Some(false)).unwrap()}
+    unsafe { self._tab.get::<bool>(TableRow::VT_IS_MANDATORY, Some(false)).unwrap()}
   }
   #[inline]
   pub fn is_final(&self) -> bool {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<bool>(TableRowOffset::VT_IS_FINAL, Some(false)).unwrap()}
+    unsafe { self._tab.get::<bool>(TableRow::VT_IS_FINAL, Some(false)).unwrap()}
   }
 }
 
@@ -11020,20 +11020,20 @@ impl<B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Verifiable for TableRow<'
   ) -> Result<(), flatbuffers::InvalidFlatbuffer> {
     use self::flatbuffers::Verifiable;
     v.visit_table(pos)?
-     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("short_name", TableRowOffset::VT_SHORT_NAME, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<LongName<'_, B>>>("long_name", TableRowOffset::VT_LONG_NAME, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("key", TableRowOffset::VT_KEY, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<DOP<'_, B>>>("dop", TableRowOffset::VT_DOP, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<DOP<'_, B>>>("structure", TableRowOffset::VT_STRUCTURE, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<SDGS<'_, B>>>("sdgs", TableRowOffset::VT_SDGS, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<Audience<'_, B>>>("audience", TableRowOffset::VT_AUDIENCE, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<FunctClass<'_, B>>, B>>>("funct_class_refs", TableRowOffset::VT_FUNCT_CLASS_REFS, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<StateTransitionRef<'_, B>>, B>>>("state_transition_refs", TableRowOffset::VT_STATE_TRANSITION_REFS, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<PreConditionStateRef<'_, B>>, B>>>("pre_condition_state_refs", TableRowOffset::VT_PRE_CONDITION_STATE_REFS, false)?
-     .visit_field::<bool>("is_executable", TableRowOffset::VT_IS_EXECUTABLE, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("semantic", TableRowOffset::VT_SEMANTIC, false)?
-     .visit_field::<bool>("is_mandatory", TableRowOffset::VT_IS_MANDATORY, false)?
-     .visit_field::<bool>("is_final", TableRowOffset::VT_IS_FINAL, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("short_name", TableRow::VT_SHORT_NAME, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<LongName<'_, B>>>("long_name", TableRow::VT_LONG_NAME, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("key", TableRow::VT_KEY, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<DOP<'_, B>>>("dop", TableRow::VT_DOP, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<DOP<'_, B>>>("structure", TableRow::VT_STRUCTURE, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<SDGS<'_, B>>>("sdgs", TableRow::VT_SDGS, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<Audience<'_, B>>>("audience", TableRow::VT_AUDIENCE, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<FunctClass<'_, B>>, B>>>("funct_class_refs", TableRow::VT_FUNCT_CLASS_REFS, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<StateTransitionRef<'_, B>>, B>>>("state_transition_refs", TableRow::VT_STATE_TRANSITION_REFS, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<PreConditionStateRef<'_, B>>, B>>>("pre_condition_state_refs", TableRow::VT_PRE_CONDITION_STATE_REFS, false)?
+     .visit_field::<bool>("is_executable", TableRow::VT_IS_EXECUTABLE, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("semantic", TableRow::VT_SEMANTIC, false)?
+     .visit_field::<bool>("is_mandatory", TableRow::VT_IS_MANDATORY, false)?
+     .visit_field::<bool>("is_final", TableRow::VT_IS_FINAL, false)?
      .finish();
     Ok(())
   }
@@ -11083,59 +11083,59 @@ pub struct TableRowBuilder<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> {
 impl<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> TableRowBuilder<'a, 'b, A> {
   #[inline]
   pub fn add_short_name(&mut self, short_name: flatbuffers::WIPOffset<&'b  str>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(TableRowOffset::VT_SHORT_NAME, short_name);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(TableRow::VT_SHORT_NAME, short_name);
   }
   #[inline]
   pub fn add_long_name(&mut self, long_name: flatbuffers::WIPOffset<LongName<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<LongName>>(TableRowOffset::VT_LONG_NAME, long_name);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<LongName>>(TableRow::VT_LONG_NAME, long_name);
   }
   #[inline]
   pub fn add_key(&mut self, key: flatbuffers::WIPOffset<&'b  str>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(TableRowOffset::VT_KEY, key);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(TableRow::VT_KEY, key);
   }
   #[inline]
   pub fn add_dop(&mut self, dop: flatbuffers::WIPOffset<DOP<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<DOP>>(TableRowOffset::VT_DOP, dop);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<DOP>>(TableRow::VT_DOP, dop);
   }
   #[inline]
   pub fn add_structure(&mut self, structure: flatbuffers::WIPOffset<DOP<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<DOP>>(TableRowOffset::VT_STRUCTURE, structure);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<DOP>>(TableRow::VT_STRUCTURE, structure);
   }
   #[inline]
   pub fn add_sdgs(&mut self, sdgs: flatbuffers::WIPOffset<SDGS<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<SDGS>>(TableRowOffset::VT_SDGS, sdgs);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<SDGS>>(TableRow::VT_SDGS, sdgs);
   }
   #[inline]
   pub fn add_audience(&mut self, audience: flatbuffers::WIPOffset<Audience<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Audience>>(TableRowOffset::VT_AUDIENCE, audience);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Audience>>(TableRow::VT_AUDIENCE, audience);
   }
   #[inline]
   pub fn add_funct_class_refs(&mut self, funct_class_refs: flatbuffers::WIPOffset<flatbuffers::Vector<'b , flatbuffers::ForwardsUOffset<FunctClass<'b >>>>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(TableRowOffset::VT_FUNCT_CLASS_REFS, funct_class_refs);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(TableRow::VT_FUNCT_CLASS_REFS, funct_class_refs);
   }
   #[inline]
   pub fn add_state_transition_refs(&mut self, state_transition_refs: flatbuffers::WIPOffset<flatbuffers::Vector<'b , flatbuffers::ForwardsUOffset<StateTransitionRef<'b >>>>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(TableRowOffset::VT_STATE_TRANSITION_REFS, state_transition_refs);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(TableRow::VT_STATE_TRANSITION_REFS, state_transition_refs);
   }
   #[inline]
   pub fn add_pre_condition_state_refs(&mut self, pre_condition_state_refs: flatbuffers::WIPOffset<flatbuffers::Vector<'b , flatbuffers::ForwardsUOffset<PreConditionStateRef<'b >>>>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(TableRowOffset::VT_PRE_CONDITION_STATE_REFS, pre_condition_state_refs);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(TableRow::VT_PRE_CONDITION_STATE_REFS, pre_condition_state_refs);
   }
   #[inline]
   pub fn add_is_executable(&mut self, is_executable: bool) {
-    self.fbb_.push_slot::<bool>(TableRowOffset::VT_IS_EXECUTABLE, is_executable, true);
+    self.fbb_.push_slot::<bool>(TableRow::VT_IS_EXECUTABLE, is_executable, true);
   }
   #[inline]
   pub fn add_semantic(&mut self, semantic: flatbuffers::WIPOffset<&'b  str>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(TableRowOffset::VT_SEMANTIC, semantic);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(TableRow::VT_SEMANTIC, semantic);
   }
   #[inline]
   pub fn add_is_mandatory(&mut self, is_mandatory: bool) {
-    self.fbb_.push_slot::<bool>(TableRowOffset::VT_IS_MANDATORY, is_mandatory, false);
+    self.fbb_.push_slot::<bool>(TableRow::VT_IS_MANDATORY, is_mandatory, false);
   }
   #[inline]
   pub fn add_is_final(&mut self, is_final: bool) {
-    self.fbb_.push_slot::<bool>(TableRowOffset::VT_IS_FINAL, is_final, false);
+    self.fbb_.push_slot::<bool>(TableRow::VT_IS_FINAL, is_final, false);
   }
   #[inline]
   pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a, A>) -> TableRowBuilder<'a, 'b, A> {
@@ -11172,12 +11172,6 @@ impl core::fmt::Debug for TableRow<'_> {
       ds.finish()
   }
 }
-pub enum TableDiagCommConnectorOffset {}
-impl TableDiagCommConnectorOffset {
-    pub const VT_DIAG_COMM_TYPE: flatbuffers::VOffsetT = 4;
-    pub const VT_DIAG_COMM: flatbuffers::VOffsetT = 6;
-    pub const VT_SEMANTIC: flatbuffers::VOffsetT = 8;
-}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Copy for TableDiagCommConnector<'a, B> {}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Clone for TableDiagCommConnector<'a, B> {
   fn clone(&self) -> Self { *self }
@@ -11198,12 +11192,11 @@ impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'
   }
 }
 
-impl<'a, B: flatbuffers::ReadBuffer + ?Sized> TableDiagCommConnector<'a, B> {
+impl<'a> TableDiagCommConnector<'a> {
+  pub const VT_DIAG_COMM_TYPE: flatbuffers::VOffsetT = 4;
+  pub const VT_DIAG_COMM: flatbuffers::VOffsetT = 6;
+  pub const VT_SEMANTIC: flatbuffers::VOffsetT = 8;
 
-  #[inline]
-  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
-    TableDiagCommConnector { _tab: table }
-  }
   #[allow(unused_mut)]
   pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr, A: flatbuffers::Allocator + 'bldr>(
     _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr, A>,
@@ -11215,6 +11208,13 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> TableDiagCommConnector<'a, B> {
     builder.add_diag_comm_type(args.diag_comm_type);
     builder.finish()
   }
+}
+
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> TableDiagCommConnector<'a, B> {
+  #[inline]
+  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
+    TableDiagCommConnector { _tab: table }
+  }
 
 
   #[inline]
@@ -11222,21 +11222,21 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> TableDiagCommConnector<'a, B> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<DiagServiceOrJob>(TableDiagCommConnectorOffset::VT_DIAG_COMM_TYPE, Some(DiagServiceOrJob::NONE)).unwrap()}
+    unsafe { self._tab.get::<DiagServiceOrJob>(TableDiagCommConnector::VT_DIAG_COMM_TYPE, Some(DiagServiceOrJob::NONE)).unwrap()}
   }
   #[inline]
   pub fn diag_comm(&self) -> Option<flatbuffers::Table<'a, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Table<'a, B>>>(TableDiagCommConnectorOffset::VT_DIAG_COMM, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Table<'a, B>>>(TableDiagCommConnector::VT_DIAG_COMM, None)}
   }
   #[inline]
   pub fn semantic(&self) -> Option<&'a str> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(TableDiagCommConnectorOffset::VT_SEMANTIC, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(TableDiagCommConnector::VT_SEMANTIC, None)}
   }
   #[inline]
   #[allow(non_snake_case)]
@@ -11277,15 +11277,15 @@ impl<B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Verifiable for TableDiagC
   ) -> Result<(), flatbuffers::InvalidFlatbuffer> {
     use self::flatbuffers::Verifiable;
     v.visit_table(pos)?
-     .visit_union::<DiagServiceOrJobUnionValue>("diag_comm_type", TableDiagCommConnectorOffset::VT_DIAG_COMM_TYPE, "diag_comm", TableDiagCommConnectorOffset::VT_DIAG_COMM, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("semantic", TableDiagCommConnectorOffset::VT_SEMANTIC, false)?
+     .visit_union::<DiagServiceOrJobUnionValue>("diag_comm_type", TableDiagCommConnector::VT_DIAG_COMM_TYPE, "diag_comm", TableDiagCommConnector::VT_DIAG_COMM, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("semantic", TableDiagCommConnector::VT_SEMANTIC, false)?
      .finish();
     Ok(())
   }
 }
 pub struct TableDiagCommConnectorArgs<'a> {
     pub diag_comm_type: DiagServiceOrJob,
-    pub diag_comm: Option<flatbuffers::WIPOffset<DiagServiceOrJobUnionValue>>,
+    pub diag_comm: Option<flatbuffers::WIPOffset<flatbuffers::UnionWIPOffset>>,
     pub semantic: Option<flatbuffers::WIPOffset<&'a str>>,
 }
 impl<'a> Default for TableDiagCommConnectorArgs<'a> {
@@ -11306,15 +11306,15 @@ pub struct TableDiagCommConnectorBuilder<'a: 'b, 'b, A: flatbuffers::Allocator +
 impl<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> TableDiagCommConnectorBuilder<'a, 'b, A> {
   #[inline]
   pub fn add_diag_comm_type(&mut self, diag_comm_type: DiagServiceOrJob) {
-    self.fbb_.push_slot::<DiagServiceOrJob>(TableDiagCommConnectorOffset::VT_DIAG_COMM_TYPE, diag_comm_type, DiagServiceOrJob::NONE);
+    self.fbb_.push_slot::<DiagServiceOrJob>(TableDiagCommConnector::VT_DIAG_COMM_TYPE, diag_comm_type, DiagServiceOrJob::NONE);
   }
   #[inline]
-  pub fn add_diag_comm(&mut self, diag_comm: flatbuffers::WIPOffset<DiagServiceOrJobUnionValue>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(TableDiagCommConnectorOffset::VT_DIAG_COMM, diag_comm);
+  pub fn add_diag_comm(&mut self, diag_comm: flatbuffers::WIPOffset<flatbuffers::UnionWIPOffset>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(TableDiagCommConnector::VT_DIAG_COMM, diag_comm);
   }
   #[inline]
   pub fn add_semantic(&mut self, semantic: flatbuffers::WIPOffset<&'b  str>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(TableDiagCommConnectorOffset::VT_SEMANTIC, semantic);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(TableDiagCommConnector::VT_SEMANTIC, semantic);
   }
   #[inline]
   pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a, A>) -> TableDiagCommConnectorBuilder<'a, 'b, A> {
@@ -11359,18 +11359,6 @@ impl core::fmt::Debug for TableDiagCommConnector<'_> {
       ds.finish()
   }
 }
-pub enum TableDopOffset {}
-impl TableDopOffset {
-    pub const VT_SEMANTIC: flatbuffers::VOffsetT = 4;
-    pub const VT_SHORT_NAME: flatbuffers::VOffsetT = 6;
-    pub const VT_LONG_NAME: flatbuffers::VOffsetT = 8;
-    pub const VT_KEY_LABEL: flatbuffers::VOffsetT = 10;
-    pub const VT_STRUCT_LABEL: flatbuffers::VOffsetT = 12;
-    pub const VT_KEY_DOP: flatbuffers::VOffsetT = 14;
-    pub const VT_ROWS: flatbuffers::VOffsetT = 16;
-    pub const VT_DIAG_COMM_CONNECTOR: flatbuffers::VOffsetT = 18;
-    pub const VT_SDGS: flatbuffers::VOffsetT = 20;
-}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Copy for TableDop<'a, B> {}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Clone for TableDop<'a, B> {
   fn clone(&self) -> Self { *self }
@@ -11391,12 +11379,17 @@ impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'
   }
 }
 
-impl<'a, B: flatbuffers::ReadBuffer + ?Sized> TableDop<'a, B> {
+impl<'a> TableDop<'a> {
+  pub const VT_SEMANTIC: flatbuffers::VOffsetT = 4;
+  pub const VT_SHORT_NAME: flatbuffers::VOffsetT = 6;
+  pub const VT_LONG_NAME: flatbuffers::VOffsetT = 8;
+  pub const VT_KEY_LABEL: flatbuffers::VOffsetT = 10;
+  pub const VT_STRUCT_LABEL: flatbuffers::VOffsetT = 12;
+  pub const VT_KEY_DOP: flatbuffers::VOffsetT = 14;
+  pub const VT_ROWS: flatbuffers::VOffsetT = 16;
+  pub const VT_DIAG_COMM_CONNECTOR: flatbuffers::VOffsetT = 18;
+  pub const VT_SDGS: flatbuffers::VOffsetT = 20;
 
-  #[inline]
-  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
-    TableDop { _tab: table }
-  }
   #[allow(unused_mut)]
   pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr, A: flatbuffers::Allocator + 'bldr>(
     _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr, A>,
@@ -11414,6 +11407,13 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> TableDop<'a, B> {
     if let Some(x) = args.semantic { builder.add_semantic(x); }
     builder.finish()
   }
+}
+
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> TableDop<'a, B> {
+  #[inline]
+  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
+    TableDop { _tab: table }
+  }
 
 
   #[inline]
@@ -11421,63 +11421,63 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> TableDop<'a, B> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(TableDopOffset::VT_SEMANTIC, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(TableDop::VT_SEMANTIC, None)}
   }
   #[inline]
   pub fn short_name(&self) -> Option<&'a str> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(TableDopOffset::VT_SHORT_NAME, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(TableDop::VT_SHORT_NAME, None)}
   }
   #[inline]
   pub fn long_name(&self) -> Option<LongName<'a, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<LongName<'a, B>>>(TableDopOffset::VT_LONG_NAME, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<LongName<'a, B>>>(TableDop::VT_LONG_NAME, None)}
   }
   #[inline]
   pub fn key_label(&self) -> Option<&'a str> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(TableDopOffset::VT_KEY_LABEL, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(TableDop::VT_KEY_LABEL, None)}
   }
   #[inline]
   pub fn struct_label(&self) -> Option<&'a str> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(TableDopOffset::VT_STRUCT_LABEL, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(TableDop::VT_STRUCT_LABEL, None)}
   }
   #[inline]
   pub fn key_dop(&self) -> Option<DOP<'a, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<DOP<'a, B>>>(TableDopOffset::VT_KEY_DOP, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<DOP<'a, B>>>(TableDop::VT_KEY_DOP, None)}
   }
   #[inline]
   pub fn rows(&self) -> Option<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<TableRow<'a, B>>, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<TableRow<'a, B>>, B>>>(TableDopOffset::VT_ROWS, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<TableRow<'a, B>>, B>>>(TableDop::VT_ROWS, None)}
   }
   #[inline]
   pub fn diag_comm_connector(&self) -> Option<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<TableDiagCommConnector<'a, B>>, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<TableDiagCommConnector<'a, B>>, B>>>(TableDopOffset::VT_DIAG_COMM_CONNECTOR, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<TableDiagCommConnector<'a, B>>, B>>>(TableDop::VT_DIAG_COMM_CONNECTOR, None)}
   }
   #[inline]
   pub fn sdgs(&self) -> Option<SDGS<'a, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<SDGS<'a, B>>>(TableDopOffset::VT_SDGS, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<SDGS<'a, B>>>(TableDop::VT_SDGS, None)}
   }
 }
 
@@ -11488,15 +11488,15 @@ impl<B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Verifiable for TableDop<'
   ) -> Result<(), flatbuffers::InvalidFlatbuffer> {
     use self::flatbuffers::Verifiable;
     v.visit_table(pos)?
-     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("semantic", TableDopOffset::VT_SEMANTIC, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("short_name", TableDopOffset::VT_SHORT_NAME, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<LongName<'_, B>>>("long_name", TableDopOffset::VT_LONG_NAME, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("key_label", TableDopOffset::VT_KEY_LABEL, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("struct_label", TableDopOffset::VT_STRUCT_LABEL, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<DOP<'_, B>>>("key_dop", TableDopOffset::VT_KEY_DOP, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<TableRow<'_, B>>, B>>>("rows", TableDopOffset::VT_ROWS, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<TableDiagCommConnector<'_, B>>, B>>>("diag_comm_connector", TableDopOffset::VT_DIAG_COMM_CONNECTOR, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<SDGS<'_, B>>>("sdgs", TableDopOffset::VT_SDGS, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("semantic", TableDop::VT_SEMANTIC, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("short_name", TableDop::VT_SHORT_NAME, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<LongName<'_, B>>>("long_name", TableDop::VT_LONG_NAME, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("key_label", TableDop::VT_KEY_LABEL, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("struct_label", TableDop::VT_STRUCT_LABEL, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<DOP<'_, B>>>("key_dop", TableDop::VT_KEY_DOP, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<TableRow<'_, B>>, B>>>("rows", TableDop::VT_ROWS, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<TableDiagCommConnector<'_, B>>, B>>>("diag_comm_connector", TableDop::VT_DIAG_COMM_CONNECTOR, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<SDGS<'_, B>>>("sdgs", TableDop::VT_SDGS, false)?
      .finish();
     Ok(())
   }
@@ -11536,39 +11536,39 @@ pub struct TableDopBuilder<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> {
 impl<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> TableDopBuilder<'a, 'b, A> {
   #[inline]
   pub fn add_semantic(&mut self, semantic: flatbuffers::WIPOffset<&'b  str>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(TableDopOffset::VT_SEMANTIC, semantic);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(TableDop::VT_SEMANTIC, semantic);
   }
   #[inline]
   pub fn add_short_name(&mut self, short_name: flatbuffers::WIPOffset<&'b  str>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(TableDopOffset::VT_SHORT_NAME, short_name);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(TableDop::VT_SHORT_NAME, short_name);
   }
   #[inline]
   pub fn add_long_name(&mut self, long_name: flatbuffers::WIPOffset<LongName<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<LongName>>(TableDopOffset::VT_LONG_NAME, long_name);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<LongName>>(TableDop::VT_LONG_NAME, long_name);
   }
   #[inline]
   pub fn add_key_label(&mut self, key_label: flatbuffers::WIPOffset<&'b  str>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(TableDopOffset::VT_KEY_LABEL, key_label);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(TableDop::VT_KEY_LABEL, key_label);
   }
   #[inline]
   pub fn add_struct_label(&mut self, struct_label: flatbuffers::WIPOffset<&'b  str>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(TableDopOffset::VT_STRUCT_LABEL, struct_label);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(TableDop::VT_STRUCT_LABEL, struct_label);
   }
   #[inline]
   pub fn add_key_dop(&mut self, key_dop: flatbuffers::WIPOffset<DOP<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<DOP>>(TableDopOffset::VT_KEY_DOP, key_dop);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<DOP>>(TableDop::VT_KEY_DOP, key_dop);
   }
   #[inline]
   pub fn add_rows(&mut self, rows: flatbuffers::WIPOffset<flatbuffers::Vector<'b , flatbuffers::ForwardsUOffset<TableRow<'b >>>>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(TableDopOffset::VT_ROWS, rows);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(TableDop::VT_ROWS, rows);
   }
   #[inline]
   pub fn add_diag_comm_connector(&mut self, diag_comm_connector: flatbuffers::WIPOffset<flatbuffers::Vector<'b , flatbuffers::ForwardsUOffset<TableDiagCommConnector<'b >>>>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(TableDopOffset::VT_DIAG_COMM_CONNECTOR, diag_comm_connector);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(TableDop::VT_DIAG_COMM_CONNECTOR, diag_comm_connector);
   }
   #[inline]
   pub fn add_sdgs(&mut self, sdgs: flatbuffers::WIPOffset<SDGS<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<SDGS>>(TableDopOffset::VT_SDGS, sdgs);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<SDGS>>(TableDop::VT_SDGS, sdgs);
   }
   #[inline]
   pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a, A>) -> TableDopBuilder<'a, 'b, A> {
@@ -11600,11 +11600,6 @@ impl core::fmt::Debug for TableDop<'_> {
       ds.finish()
   }
 }
-pub enum CodedConstOffset {}
-impl CodedConstOffset {
-    pub const VT_CODED_VALUE: flatbuffers::VOffsetT = 4;
-    pub const VT_DIAG_CODED_TYPE: flatbuffers::VOffsetT = 6;
-}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Copy for CodedConst<'a, B> {}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Clone for CodedConst<'a, B> {
   fn clone(&self) -> Self { *self }
@@ -11625,12 +11620,10 @@ impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'
   }
 }
 
-impl<'a, B: flatbuffers::ReadBuffer + ?Sized> CodedConst<'a, B> {
+impl<'a> CodedConst<'a> {
+  pub const VT_CODED_VALUE: flatbuffers::VOffsetT = 4;
+  pub const VT_DIAG_CODED_TYPE: flatbuffers::VOffsetT = 6;
 
-  #[inline]
-  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
-    CodedConst { _tab: table }
-  }
   #[allow(unused_mut)]
   pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr, A: flatbuffers::Allocator + 'bldr>(
     _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr, A>,
@@ -11641,6 +11634,13 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> CodedConst<'a, B> {
     if let Some(x) = args.coded_value { builder.add_coded_value(x); }
     builder.finish()
   }
+}
+
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> CodedConst<'a, B> {
+  #[inline]
+  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
+    CodedConst { _tab: table }
+  }
 
 
   #[inline]
@@ -11648,14 +11648,14 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> CodedConst<'a, B> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(CodedConstOffset::VT_CODED_VALUE, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(CodedConst::VT_CODED_VALUE, None)}
   }
   #[inline]
   pub fn diag_coded_type(&self) -> Option<DiagCodedType<'a, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<DiagCodedType<'a, B>>>(CodedConstOffset::VT_DIAG_CODED_TYPE, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<DiagCodedType<'a, B>>>(CodedConst::VT_DIAG_CODED_TYPE, None)}
   }
 }
 
@@ -11666,8 +11666,8 @@ impl<B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Verifiable for CodedConst
   ) -> Result<(), flatbuffers::InvalidFlatbuffer> {
     use self::flatbuffers::Verifiable;
     v.visit_table(pos)?
-     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("coded_value", CodedConstOffset::VT_CODED_VALUE, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<DiagCodedType<'_, B>>>("diag_coded_type", CodedConstOffset::VT_DIAG_CODED_TYPE, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("coded_value", CodedConst::VT_CODED_VALUE, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<DiagCodedType<'_, B>>>("diag_coded_type", CodedConst::VT_DIAG_CODED_TYPE, false)?
      .finish();
     Ok(())
   }
@@ -11693,11 +11693,11 @@ pub struct CodedConstBuilder<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> {
 impl<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> CodedConstBuilder<'a, 'b, A> {
   #[inline]
   pub fn add_coded_value(&mut self, coded_value: flatbuffers::WIPOffset<&'b  str>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(CodedConstOffset::VT_CODED_VALUE, coded_value);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(CodedConst::VT_CODED_VALUE, coded_value);
   }
   #[inline]
   pub fn add_diag_coded_type(&mut self, diag_coded_type: flatbuffers::WIPOffset<DiagCodedType<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<DiagCodedType>>(CodedConstOffset::VT_DIAG_CODED_TYPE, diag_coded_type);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<DiagCodedType>>(CodedConst::VT_DIAG_CODED_TYPE, diag_coded_type);
   }
   #[inline]
   pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a, A>) -> CodedConstBuilder<'a, 'b, A> {
@@ -11722,9 +11722,6 @@ impl core::fmt::Debug for CodedConst<'_> {
       ds.finish()
   }
 }
-pub enum DynamicOffset {}
-impl DynamicOffset {
-}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Copy for Dynamic<'a, B> {}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Clone for Dynamic<'a, B> {
   fn clone(&self) -> Self { *self }
@@ -11745,12 +11742,8 @@ impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'
   }
 }
 
-impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Dynamic<'a, B> {
+impl<'a> Dynamic<'a> {
 
-  #[inline]
-  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
-    Dynamic { _tab: table }
-  }
   #[allow(unused_mut)]
   pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr, A: flatbuffers::Allocator + 'bldr>(
     _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr, A>,
@@ -11758,6 +11751,13 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Dynamic<'a, B> {
   ) -> flatbuffers::WIPOffset<Dynamic<'bldr>> {
     let mut builder = DynamicBuilder::new(_fbb);
     builder.finish()
+  }
+}
+
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Dynamic<'a, B> {
+  #[inline]
+  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
+    Dynamic { _tab: table }
   }
 
 }
@@ -11809,10 +11809,6 @@ impl core::fmt::Debug for Dynamic<'_> {
       ds.finish()
   }
 }
-pub enum LengthKeyRefOffset {}
-impl LengthKeyRefOffset {
-    pub const VT_DOP: flatbuffers::VOffsetT = 4;
-}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Copy for LengthKeyRef<'a, B> {}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Clone for LengthKeyRef<'a, B> {
   fn clone(&self) -> Self { *self }
@@ -11833,12 +11829,9 @@ impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'
   }
 }
 
-impl<'a, B: flatbuffers::ReadBuffer + ?Sized> LengthKeyRef<'a, B> {
+impl<'a> LengthKeyRef<'a> {
+  pub const VT_DOP: flatbuffers::VOffsetT = 4;
 
-  #[inline]
-  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
-    LengthKeyRef { _tab: table }
-  }
   #[allow(unused_mut)]
   pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr, A: flatbuffers::Allocator + 'bldr>(
     _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr, A>,
@@ -11848,6 +11841,13 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> LengthKeyRef<'a, B> {
     if let Some(x) = args.dop { builder.add_dop(x); }
     builder.finish()
   }
+}
+
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> LengthKeyRef<'a, B> {
+  #[inline]
+  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
+    LengthKeyRef { _tab: table }
+  }
 
 
   #[inline]
@@ -11855,7 +11855,7 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> LengthKeyRef<'a, B> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<DOP<'a, B>>>(LengthKeyRefOffset::VT_DOP, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<DOP<'a, B>>>(LengthKeyRef::VT_DOP, None)}
   }
 }
 
@@ -11866,7 +11866,7 @@ impl<B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Verifiable for LengthKeyR
   ) -> Result<(), flatbuffers::InvalidFlatbuffer> {
     use self::flatbuffers::Verifiable;
     v.visit_table(pos)?
-     .visit_field::<flatbuffers::ForwardsUOffset<DOP<'_, B>>>("dop", LengthKeyRefOffset::VT_DOP, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<DOP<'_, B>>>("dop", LengthKeyRef::VT_DOP, false)?
      .finish();
     Ok(())
   }
@@ -11890,7 +11890,7 @@ pub struct LengthKeyRefBuilder<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> {
 impl<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> LengthKeyRefBuilder<'a, 'b, A> {
   #[inline]
   pub fn add_dop(&mut self, dop: flatbuffers::WIPOffset<DOP<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<DOP>>(LengthKeyRefOffset::VT_DOP, dop);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<DOP>>(LengthKeyRef::VT_DOP, dop);
   }
   #[inline]
   pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a, A>) -> LengthKeyRefBuilder<'a, 'b, A> {
@@ -11914,11 +11914,6 @@ impl core::fmt::Debug for LengthKeyRef<'_> {
       ds.finish()
   }
 }
-pub enum MatchingRequestParamOffset {}
-impl MatchingRequestParamOffset {
-    pub const VT_REQUEST_BYTE_POS: flatbuffers::VOffsetT = 4;
-    pub const VT_BYTE_LENGTH: flatbuffers::VOffsetT = 6;
-}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Copy for MatchingRequestParam<'a, B> {}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Clone for MatchingRequestParam<'a, B> {
   fn clone(&self) -> Self { *self }
@@ -11939,12 +11934,10 @@ impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'
   }
 }
 
-impl<'a, B: flatbuffers::ReadBuffer + ?Sized> MatchingRequestParam<'a, B> {
+impl<'a> MatchingRequestParam<'a> {
+  pub const VT_REQUEST_BYTE_POS: flatbuffers::VOffsetT = 4;
+  pub const VT_BYTE_LENGTH: flatbuffers::VOffsetT = 6;
 
-  #[inline]
-  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
-    MatchingRequestParam { _tab: table }
-  }
   #[allow(unused_mut)]
   pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr, A: flatbuffers::Allocator + 'bldr>(
     _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr, A>,
@@ -11955,6 +11948,13 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> MatchingRequestParam<'a, B> {
     builder.add_request_byte_pos(args.request_byte_pos);
     builder.finish()
   }
+}
+
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> MatchingRequestParam<'a, B> {
+  #[inline]
+  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
+    MatchingRequestParam { _tab: table }
+  }
 
 
   #[inline]
@@ -11962,14 +11962,14 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> MatchingRequestParam<'a, B> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<i32>(MatchingRequestParamOffset::VT_REQUEST_BYTE_POS, Some(0)).unwrap()}
+    unsafe { self._tab.get::<i32>(MatchingRequestParam::VT_REQUEST_BYTE_POS, Some(0)).unwrap()}
   }
   #[inline]
   pub fn byte_length(&self) -> u32 {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<u32>(MatchingRequestParamOffset::VT_BYTE_LENGTH, Some(0)).unwrap()}
+    unsafe { self._tab.get::<u32>(MatchingRequestParam::VT_BYTE_LENGTH, Some(0)).unwrap()}
   }
 }
 
@@ -11980,8 +11980,8 @@ impl<B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Verifiable for MatchingRe
   ) -> Result<(), flatbuffers::InvalidFlatbuffer> {
     use self::flatbuffers::Verifiable;
     v.visit_table(pos)?
-     .visit_field::<i32>("request_byte_pos", MatchingRequestParamOffset::VT_REQUEST_BYTE_POS, false)?
-     .visit_field::<u32>("byte_length", MatchingRequestParamOffset::VT_BYTE_LENGTH, false)?
+     .visit_field::<i32>("request_byte_pos", MatchingRequestParam::VT_REQUEST_BYTE_POS, false)?
+     .visit_field::<u32>("byte_length", MatchingRequestParam::VT_BYTE_LENGTH, false)?
      .finish();
     Ok(())
   }
@@ -12007,11 +12007,11 @@ pub struct MatchingRequestParamBuilder<'a: 'b, 'b, A: flatbuffers::Allocator + '
 impl<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> MatchingRequestParamBuilder<'a, 'b, A> {
   #[inline]
   pub fn add_request_byte_pos(&mut self, request_byte_pos: i32) {
-    self.fbb_.push_slot::<i32>(MatchingRequestParamOffset::VT_REQUEST_BYTE_POS, request_byte_pos, 0);
+    self.fbb_.push_slot::<i32>(MatchingRequestParam::VT_REQUEST_BYTE_POS, request_byte_pos, 0);
   }
   #[inline]
   pub fn add_byte_length(&mut self, byte_length: u32) {
-    self.fbb_.push_slot::<u32>(MatchingRequestParamOffset::VT_BYTE_LENGTH, byte_length, 0);
+    self.fbb_.push_slot::<u32>(MatchingRequestParam::VT_BYTE_LENGTH, byte_length, 0);
   }
   #[inline]
   pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a, A>) -> MatchingRequestParamBuilder<'a, 'b, A> {
@@ -12036,11 +12036,6 @@ impl core::fmt::Debug for MatchingRequestParam<'_> {
       ds.finish()
   }
 }
-pub enum NrcConstOffset {}
-impl NrcConstOffset {
-    pub const VT_CODED_VALUES: flatbuffers::VOffsetT = 4;
-    pub const VT_DIAG_CODED_TYPE: flatbuffers::VOffsetT = 6;
-}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Copy for NrcConst<'a, B> {}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Clone for NrcConst<'a, B> {
   fn clone(&self) -> Self { *self }
@@ -12061,12 +12056,10 @@ impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'
   }
 }
 
-impl<'a, B: flatbuffers::ReadBuffer + ?Sized> NrcConst<'a, B> {
+impl<'a> NrcConst<'a> {
+  pub const VT_CODED_VALUES: flatbuffers::VOffsetT = 4;
+  pub const VT_DIAG_CODED_TYPE: flatbuffers::VOffsetT = 6;
 
-  #[inline]
-  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
-    NrcConst { _tab: table }
-  }
   #[allow(unused_mut)]
   pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr, A: flatbuffers::Allocator + 'bldr>(
     _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr, A>,
@@ -12077,6 +12070,13 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> NrcConst<'a, B> {
     if let Some(x) = args.coded_values { builder.add_coded_values(x); }
     builder.finish()
   }
+}
+
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> NrcConst<'a, B> {
+  #[inline]
+  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
+    NrcConst { _tab: table }
+  }
 
 
   #[inline]
@@ -12084,14 +12084,14 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> NrcConst<'a, B> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<&'a str>, B>>>(NrcConstOffset::VT_CODED_VALUES, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<&'a str>, B>>>(NrcConst::VT_CODED_VALUES, None)}
   }
   #[inline]
   pub fn diag_coded_type(&self) -> Option<DiagCodedType<'a, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<DiagCodedType<'a, B>>>(NrcConstOffset::VT_DIAG_CODED_TYPE, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<DiagCodedType<'a, B>>>(NrcConst::VT_DIAG_CODED_TYPE, None)}
   }
 }
 
@@ -12102,8 +12102,8 @@ impl<B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Verifiable for NrcConst<'
   ) -> Result<(), flatbuffers::InvalidFlatbuffer> {
     use self::flatbuffers::Verifiable;
     v.visit_table(pos)?
-     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<&'_ str>, B>>>("coded_values", NrcConstOffset::VT_CODED_VALUES, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<DiagCodedType<'_, B>>>("diag_coded_type", NrcConstOffset::VT_DIAG_CODED_TYPE, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<&'_ str>, B>>>("coded_values", NrcConst::VT_CODED_VALUES, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<DiagCodedType<'_, B>>>("diag_coded_type", NrcConst::VT_DIAG_CODED_TYPE, false)?
      .finish();
     Ok(())
   }
@@ -12129,11 +12129,11 @@ pub struct NrcConstBuilder<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> {
 impl<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> NrcConstBuilder<'a, 'b, A> {
   #[inline]
   pub fn add_coded_values(&mut self, coded_values: flatbuffers::WIPOffset<flatbuffers::Vector<'b , flatbuffers::ForwardsUOffset<&'b  str>>>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(NrcConstOffset::VT_CODED_VALUES, coded_values);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(NrcConst::VT_CODED_VALUES, coded_values);
   }
   #[inline]
   pub fn add_diag_coded_type(&mut self, diag_coded_type: flatbuffers::WIPOffset<DiagCodedType<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<DiagCodedType>>(NrcConstOffset::VT_DIAG_CODED_TYPE, diag_coded_type);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<DiagCodedType>>(NrcConst::VT_DIAG_CODED_TYPE, diag_coded_type);
   }
   #[inline]
   pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a, A>) -> NrcConstBuilder<'a, 'b, A> {
@@ -12158,11 +12158,6 @@ impl core::fmt::Debug for NrcConst<'_> {
       ds.finish()
   }
 }
-pub enum PhysConstOffset {}
-impl PhysConstOffset {
-    pub const VT_PHYS_CONSTANT_VALUE: flatbuffers::VOffsetT = 4;
-    pub const VT_DOP: flatbuffers::VOffsetT = 6;
-}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Copy for PhysConst<'a, B> {}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Clone for PhysConst<'a, B> {
   fn clone(&self) -> Self { *self }
@@ -12183,12 +12178,10 @@ impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'
   }
 }
 
-impl<'a, B: flatbuffers::ReadBuffer + ?Sized> PhysConst<'a, B> {
+impl<'a> PhysConst<'a> {
+  pub const VT_PHYS_CONSTANT_VALUE: flatbuffers::VOffsetT = 4;
+  pub const VT_DOP: flatbuffers::VOffsetT = 6;
 
-  #[inline]
-  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
-    PhysConst { _tab: table }
-  }
   #[allow(unused_mut)]
   pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr, A: flatbuffers::Allocator + 'bldr>(
     _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr, A>,
@@ -12199,6 +12192,13 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> PhysConst<'a, B> {
     if let Some(x) = args.phys_constant_value { builder.add_phys_constant_value(x); }
     builder.finish()
   }
+}
+
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> PhysConst<'a, B> {
+  #[inline]
+  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
+    PhysConst { _tab: table }
+  }
 
 
   #[inline]
@@ -12206,14 +12206,14 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> PhysConst<'a, B> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(PhysConstOffset::VT_PHYS_CONSTANT_VALUE, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(PhysConst::VT_PHYS_CONSTANT_VALUE, None)}
   }
   #[inline]
   pub fn dop(&self) -> Option<DOP<'a, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<DOP<'a, B>>>(PhysConstOffset::VT_DOP, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<DOP<'a, B>>>(PhysConst::VT_DOP, None)}
   }
 }
 
@@ -12224,8 +12224,8 @@ impl<B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Verifiable for PhysConst<
   ) -> Result<(), flatbuffers::InvalidFlatbuffer> {
     use self::flatbuffers::Verifiable;
     v.visit_table(pos)?
-     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("phys_constant_value", PhysConstOffset::VT_PHYS_CONSTANT_VALUE, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<DOP<'_, B>>>("dop", PhysConstOffset::VT_DOP, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("phys_constant_value", PhysConst::VT_PHYS_CONSTANT_VALUE, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<DOP<'_, B>>>("dop", PhysConst::VT_DOP, false)?
      .finish();
     Ok(())
   }
@@ -12251,11 +12251,11 @@ pub struct PhysConstBuilder<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> {
 impl<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> PhysConstBuilder<'a, 'b, A> {
   #[inline]
   pub fn add_phys_constant_value(&mut self, phys_constant_value: flatbuffers::WIPOffset<&'b  str>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(PhysConstOffset::VT_PHYS_CONSTANT_VALUE, phys_constant_value);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(PhysConst::VT_PHYS_CONSTANT_VALUE, phys_constant_value);
   }
   #[inline]
   pub fn add_dop(&mut self, dop: flatbuffers::WIPOffset<DOP<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<DOP>>(PhysConstOffset::VT_DOP, dop);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<DOP>>(PhysConst::VT_DOP, dop);
   }
   #[inline]
   pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a, A>) -> PhysConstBuilder<'a, 'b, A> {
@@ -12280,10 +12280,6 @@ impl core::fmt::Debug for PhysConst<'_> {
       ds.finish()
   }
 }
-pub enum ReservedOffset {}
-impl ReservedOffset {
-    pub const VT_BIT_LENGTH: flatbuffers::VOffsetT = 4;
-}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Copy for Reserved<'a, B> {}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Clone for Reserved<'a, B> {
   fn clone(&self) -> Self { *self }
@@ -12304,12 +12300,9 @@ impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'
   }
 }
 
-impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Reserved<'a, B> {
+impl<'a> Reserved<'a> {
+  pub const VT_BIT_LENGTH: flatbuffers::VOffsetT = 4;
 
-  #[inline]
-  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
-    Reserved { _tab: table }
-  }
   #[allow(unused_mut)]
   pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr, A: flatbuffers::Allocator + 'bldr>(
     _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr, A>,
@@ -12319,6 +12312,13 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Reserved<'a, B> {
     builder.add_bit_length(args.bit_length);
     builder.finish()
   }
+}
+
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Reserved<'a, B> {
+  #[inline]
+  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
+    Reserved { _tab: table }
+  }
 
 
   #[inline]
@@ -12326,7 +12326,7 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Reserved<'a, B> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<u32>(ReservedOffset::VT_BIT_LENGTH, Some(0)).unwrap()}
+    unsafe { self._tab.get::<u32>(Reserved::VT_BIT_LENGTH, Some(0)).unwrap()}
   }
 }
 
@@ -12337,7 +12337,7 @@ impl<B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Verifiable for Reserved<'
   ) -> Result<(), flatbuffers::InvalidFlatbuffer> {
     use self::flatbuffers::Verifiable;
     v.visit_table(pos)?
-     .visit_field::<u32>("bit_length", ReservedOffset::VT_BIT_LENGTH, false)?
+     .visit_field::<u32>("bit_length", Reserved::VT_BIT_LENGTH, false)?
      .finish();
     Ok(())
   }
@@ -12361,7 +12361,7 @@ pub struct ReservedBuilder<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> {
 impl<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> ReservedBuilder<'a, 'b, A> {
   #[inline]
   pub fn add_bit_length(&mut self, bit_length: u32) {
-    self.fbb_.push_slot::<u32>(ReservedOffset::VT_BIT_LENGTH, bit_length, 0);
+    self.fbb_.push_slot::<u32>(Reserved::VT_BIT_LENGTH, bit_length, 0);
   }
   #[inline]
   pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a, A>) -> ReservedBuilder<'a, 'b, A> {
@@ -12385,11 +12385,6 @@ impl core::fmt::Debug for Reserved<'_> {
       ds.finish()
   }
 }
-pub enum SystemOffset {}
-impl SystemOffset {
-    pub const VT_DOP: flatbuffers::VOffsetT = 4;
-    pub const VT_SYS_PARAM: flatbuffers::VOffsetT = 6;
-}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Copy for System<'a, B> {}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Clone for System<'a, B> {
   fn clone(&self) -> Self { *self }
@@ -12410,12 +12405,10 @@ impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'
   }
 }
 
-impl<'a, B: flatbuffers::ReadBuffer + ?Sized> System<'a, B> {
+impl<'a> System<'a> {
+  pub const VT_DOP: flatbuffers::VOffsetT = 4;
+  pub const VT_SYS_PARAM: flatbuffers::VOffsetT = 6;
 
-  #[inline]
-  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
-    System { _tab: table }
-  }
   #[allow(unused_mut)]
   pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr, A: flatbuffers::Allocator + 'bldr>(
     _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr, A>,
@@ -12426,6 +12419,13 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> System<'a, B> {
     if let Some(x) = args.dop { builder.add_dop(x); }
     builder.finish()
   }
+}
+
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> System<'a, B> {
+  #[inline]
+  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
+    System { _tab: table }
+  }
 
 
   #[inline]
@@ -12433,14 +12433,14 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> System<'a, B> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<DOP<'a, B>>>(SystemOffset::VT_DOP, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<DOP<'a, B>>>(System::VT_DOP, None)}
   }
   #[inline]
   pub fn sys_param(&self) -> Option<&'a str> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(SystemOffset::VT_SYS_PARAM, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(System::VT_SYS_PARAM, None)}
   }
 }
 
@@ -12451,8 +12451,8 @@ impl<B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Verifiable for System<'_,
   ) -> Result<(), flatbuffers::InvalidFlatbuffer> {
     use self::flatbuffers::Verifiable;
     v.visit_table(pos)?
-     .visit_field::<flatbuffers::ForwardsUOffset<DOP<'_, B>>>("dop", SystemOffset::VT_DOP, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("sys_param", SystemOffset::VT_SYS_PARAM, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<DOP<'_, B>>>("dop", System::VT_DOP, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("sys_param", System::VT_SYS_PARAM, false)?
      .finish();
     Ok(())
   }
@@ -12478,11 +12478,11 @@ pub struct SystemBuilder<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> {
 impl<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> SystemBuilder<'a, 'b, A> {
   #[inline]
   pub fn add_dop(&mut self, dop: flatbuffers::WIPOffset<DOP<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<DOP>>(SystemOffset::VT_DOP, dop);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<DOP>>(System::VT_DOP, dop);
   }
   #[inline]
   pub fn add_sys_param(&mut self, sys_param: flatbuffers::WIPOffset<&'b  str>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(SystemOffset::VT_SYS_PARAM, sys_param);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(System::VT_SYS_PARAM, sys_param);
   }
   #[inline]
   pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a, A>) -> SystemBuilder<'a, 'b, A> {
@@ -12507,12 +12507,6 @@ impl core::fmt::Debug for System<'_> {
       ds.finish()
   }
 }
-pub enum TableEntryOffset {}
-impl TableEntryOffset {
-    pub const VT_PARAM: flatbuffers::VOffsetT = 4;
-    pub const VT_TARGET: flatbuffers::VOffsetT = 6;
-    pub const VT_TABLE_ROW: flatbuffers::VOffsetT = 8;
-}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Copy for TableEntry<'a, B> {}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Clone for TableEntry<'a, B> {
   fn clone(&self) -> Self { *self }
@@ -12533,12 +12527,11 @@ impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'
   }
 }
 
-impl<'a, B: flatbuffers::ReadBuffer + ?Sized> TableEntry<'a, B> {
+impl<'a> TableEntry<'a> {
+  pub const VT_PARAM: flatbuffers::VOffsetT = 4;
+  pub const VT_TARGET: flatbuffers::VOffsetT = 6;
+  pub const VT_TABLE_ROW: flatbuffers::VOffsetT = 8;
 
-  #[inline]
-  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
-    TableEntry { _tab: table }
-  }
   #[allow(unused_mut)]
   pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr, A: flatbuffers::Allocator + 'bldr>(
     _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr, A>,
@@ -12550,6 +12543,13 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> TableEntry<'a, B> {
     builder.add_target(args.target);
     builder.finish()
   }
+}
+
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> TableEntry<'a, B> {
+  #[inline]
+  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
+    TableEntry { _tab: table }
+  }
 
 
   #[inline]
@@ -12557,21 +12557,21 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> TableEntry<'a, B> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<Param<'a, B>>>(TableEntryOffset::VT_PARAM, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<Param<'a, B>>>(TableEntry::VT_PARAM, None)}
   }
   #[inline]
   pub fn target(&self) -> TableEntryRowFragment {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<TableEntryRowFragment>(TableEntryOffset::VT_TARGET, Some(TableEntryRowFragment::KEY)).unwrap()}
+    unsafe { self._tab.get::<TableEntryRowFragment>(TableEntry::VT_TARGET, Some(TableEntryRowFragment::KEY)).unwrap()}
   }
   #[inline]
   pub fn table_row(&self) -> Option<TableRow<'a, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<TableRow<'a, B>>>(TableEntryOffset::VT_TABLE_ROW, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<TableRow<'a, B>>>(TableEntry::VT_TABLE_ROW, None)}
   }
 }
 
@@ -12582,9 +12582,9 @@ impl<B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Verifiable for TableEntry
   ) -> Result<(), flatbuffers::InvalidFlatbuffer> {
     use self::flatbuffers::Verifiable;
     v.visit_table(pos)?
-     .visit_field::<flatbuffers::ForwardsUOffset<Param<'_, B>>>("param", TableEntryOffset::VT_PARAM, false)?
-     .visit_field::<TableEntryRowFragment>("target", TableEntryOffset::VT_TARGET, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<TableRow<'_, B>>>("table_row", TableEntryOffset::VT_TABLE_ROW, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<Param<'_, B>>>("param", TableEntry::VT_PARAM, false)?
+     .visit_field::<TableEntryRowFragment>("target", TableEntry::VT_TARGET, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<TableRow<'_, B>>>("table_row", TableEntry::VT_TABLE_ROW, false)?
      .finish();
     Ok(())
   }
@@ -12612,15 +12612,15 @@ pub struct TableEntryBuilder<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> {
 impl<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> TableEntryBuilder<'a, 'b, A> {
   #[inline]
   pub fn add_param(&mut self, param: flatbuffers::WIPOffset<Param<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Param>>(TableEntryOffset::VT_PARAM, param);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Param>>(TableEntry::VT_PARAM, param);
   }
   #[inline]
   pub fn add_target(&mut self, target: TableEntryRowFragment) {
-    self.fbb_.push_slot::<TableEntryRowFragment>(TableEntryOffset::VT_TARGET, target, TableEntryRowFragment::KEY);
+    self.fbb_.push_slot::<TableEntryRowFragment>(TableEntry::VT_TARGET, target, TableEntryRowFragment::KEY);
   }
   #[inline]
   pub fn add_table_row(&mut self, table_row: flatbuffers::WIPOffset<TableRow<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<TableRow>>(TableEntryOffset::VT_TABLE_ROW, table_row);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<TableRow>>(TableEntry::VT_TABLE_ROW, table_row);
   }
   #[inline]
   pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a, A>) -> TableEntryBuilder<'a, 'b, A> {
@@ -12646,11 +12646,6 @@ impl core::fmt::Debug for TableEntry<'_> {
       ds.finish()
   }
 }
-pub enum TableKeyOffset {}
-impl TableKeyOffset {
-    pub const VT_TABLE_KEY_REFERENCE_TYPE: flatbuffers::VOffsetT = 4;
-    pub const VT_TABLE_KEY_REFERENCE: flatbuffers::VOffsetT = 6;
-}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Copy for TableKey<'a, B> {}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Clone for TableKey<'a, B> {
   fn clone(&self) -> Self { *self }
@@ -12671,12 +12666,10 @@ impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'
   }
 }
 
-impl<'a, B: flatbuffers::ReadBuffer + ?Sized> TableKey<'a, B> {
+impl<'a> TableKey<'a> {
+  pub const VT_TABLE_KEY_REFERENCE_TYPE: flatbuffers::VOffsetT = 4;
+  pub const VT_TABLE_KEY_REFERENCE: flatbuffers::VOffsetT = 6;
 
-  #[inline]
-  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
-    TableKey { _tab: table }
-  }
   #[allow(unused_mut)]
   pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr, A: flatbuffers::Allocator + 'bldr>(
     _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr, A>,
@@ -12687,6 +12680,13 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> TableKey<'a, B> {
     builder.add_table_key_reference_type(args.table_key_reference_type);
     builder.finish()
   }
+}
+
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> TableKey<'a, B> {
+  #[inline]
+  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
+    TableKey { _tab: table }
+  }
 
 
   #[inline]
@@ -12694,14 +12694,14 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> TableKey<'a, B> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<TableKeyReference>(TableKeyOffset::VT_TABLE_KEY_REFERENCE_TYPE, Some(TableKeyReference::NONE)).unwrap()}
+    unsafe { self._tab.get::<TableKeyReference>(TableKey::VT_TABLE_KEY_REFERENCE_TYPE, Some(TableKeyReference::NONE)).unwrap()}
   }
   #[inline]
   pub fn table_key_reference(&self) -> Option<flatbuffers::Table<'a, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Table<'a, B>>>(TableKeyOffset::VT_TABLE_KEY_REFERENCE, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Table<'a, B>>>(TableKey::VT_TABLE_KEY_REFERENCE, None)}
   }
   #[inline]
   #[allow(non_snake_case)]
@@ -12742,14 +12742,14 @@ impl<B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Verifiable for TableKey<'
   ) -> Result<(), flatbuffers::InvalidFlatbuffer> {
     use self::flatbuffers::Verifiable;
     v.visit_table(pos)?
-     .visit_union::<TableKeyReferenceUnionValue>("table_key_reference_type", TableKeyOffset::VT_TABLE_KEY_REFERENCE_TYPE, "table_key_reference", TableKeyOffset::VT_TABLE_KEY_REFERENCE, false)?
+     .visit_union::<TableKeyReferenceUnionValue>("table_key_reference_type", TableKey::VT_TABLE_KEY_REFERENCE_TYPE, "table_key_reference", TableKey::VT_TABLE_KEY_REFERENCE, false)?
      .finish();
     Ok(())
   }
 }
 pub struct TableKeyArgs {
     pub table_key_reference_type: TableKeyReference,
-    pub table_key_reference: Option<flatbuffers::WIPOffset<TableKeyReferenceUnionValue>>,
+    pub table_key_reference: Option<flatbuffers::WIPOffset<flatbuffers::UnionWIPOffset>>,
 }
 impl<'a> Default for TableKeyArgs {
   #[inline]
@@ -12768,11 +12768,11 @@ pub struct TableKeyBuilder<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> {
 impl<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> TableKeyBuilder<'a, 'b, A> {
   #[inline]
   pub fn add_table_key_reference_type(&mut self, table_key_reference_type: TableKeyReference) {
-    self.fbb_.push_slot::<TableKeyReference>(TableKeyOffset::VT_TABLE_KEY_REFERENCE_TYPE, table_key_reference_type, TableKeyReference::NONE);
+    self.fbb_.push_slot::<TableKeyReference>(TableKey::VT_TABLE_KEY_REFERENCE_TYPE, table_key_reference_type, TableKeyReference::NONE);
   }
   #[inline]
-  pub fn add_table_key_reference(&mut self, table_key_reference: flatbuffers::WIPOffset<TableKeyReferenceUnionValue>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(TableKeyOffset::VT_TABLE_KEY_REFERENCE, table_key_reference);
+  pub fn add_table_key_reference(&mut self, table_key_reference: flatbuffers::WIPOffset<flatbuffers::UnionWIPOffset>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(TableKey::VT_TABLE_KEY_REFERENCE, table_key_reference);
   }
   #[inline]
   pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a, A>) -> TableKeyBuilder<'a, 'b, A> {
@@ -12816,10 +12816,6 @@ impl core::fmt::Debug for TableKey<'_> {
       ds.finish()
   }
 }
-pub enum TableStructOffset {}
-impl TableStructOffset {
-    pub const VT_TABLE_KEY: flatbuffers::VOffsetT = 4;
-}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Copy for TableStruct<'a, B> {}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Clone for TableStruct<'a, B> {
   fn clone(&self) -> Self { *self }
@@ -12840,12 +12836,9 @@ impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'
   }
 }
 
-impl<'a, B: flatbuffers::ReadBuffer + ?Sized> TableStruct<'a, B> {
+impl<'a> TableStruct<'a> {
+  pub const VT_TABLE_KEY: flatbuffers::VOffsetT = 4;
 
-  #[inline]
-  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
-    TableStruct { _tab: table }
-  }
   #[allow(unused_mut)]
   pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr, A: flatbuffers::Allocator + 'bldr>(
     _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr, A>,
@@ -12855,6 +12848,13 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> TableStruct<'a, B> {
     if let Some(x) = args.table_key { builder.add_table_key(x); }
     builder.finish()
   }
+}
+
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> TableStruct<'a, B> {
+  #[inline]
+  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
+    TableStruct { _tab: table }
+  }
 
 
   #[inline]
@@ -12862,7 +12862,7 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> TableStruct<'a, B> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<Param<'a, B>>>(TableStructOffset::VT_TABLE_KEY, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<Param<'a, B>>>(TableStruct::VT_TABLE_KEY, None)}
   }
 }
 
@@ -12873,7 +12873,7 @@ impl<B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Verifiable for TableStruc
   ) -> Result<(), flatbuffers::InvalidFlatbuffer> {
     use self::flatbuffers::Verifiable;
     v.visit_table(pos)?
-     .visit_field::<flatbuffers::ForwardsUOffset<Param<'_, B>>>("table_key", TableStructOffset::VT_TABLE_KEY, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<Param<'_, B>>>("table_key", TableStruct::VT_TABLE_KEY, false)?
      .finish();
     Ok(())
   }
@@ -12897,7 +12897,7 @@ pub struct TableStructBuilder<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> {
 impl<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> TableStructBuilder<'a, 'b, A> {
   #[inline]
   pub fn add_table_key(&mut self, table_key: flatbuffers::WIPOffset<Param<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Param>>(TableStructOffset::VT_TABLE_KEY, table_key);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Param>>(TableStruct::VT_TABLE_KEY, table_key);
   }
   #[inline]
   pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a, A>) -> TableStructBuilder<'a, 'b, A> {
@@ -12921,11 +12921,6 @@ impl core::fmt::Debug for TableStruct<'_> {
       ds.finish()
   }
 }
-pub enum ValueOffset {}
-impl ValueOffset {
-    pub const VT_PHYSICAL_DEFAULT_VALUE: flatbuffers::VOffsetT = 4;
-    pub const VT_DOP: flatbuffers::VOffsetT = 6;
-}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Copy for Value<'a, B> {}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Clone for Value<'a, B> {
   fn clone(&self) -> Self { *self }
@@ -12946,12 +12941,10 @@ impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'
   }
 }
 
-impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Value<'a, B> {
+impl<'a> Value<'a> {
+  pub const VT_PHYSICAL_DEFAULT_VALUE: flatbuffers::VOffsetT = 4;
+  pub const VT_DOP: flatbuffers::VOffsetT = 6;
 
-  #[inline]
-  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
-    Value { _tab: table }
-  }
   #[allow(unused_mut)]
   pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr, A: flatbuffers::Allocator + 'bldr>(
     _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr, A>,
@@ -12962,6 +12955,13 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Value<'a, B> {
     if let Some(x) = args.physical_default_value { builder.add_physical_default_value(x); }
     builder.finish()
   }
+}
+
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Value<'a, B> {
+  #[inline]
+  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
+    Value { _tab: table }
+  }
 
 
   #[inline]
@@ -12969,14 +12969,14 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Value<'a, B> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(ValueOffset::VT_PHYSICAL_DEFAULT_VALUE, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(Value::VT_PHYSICAL_DEFAULT_VALUE, None)}
   }
   #[inline]
   pub fn dop(&self) -> Option<DOP<'a, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<DOP<'a, B>>>(ValueOffset::VT_DOP, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<DOP<'a, B>>>(Value::VT_DOP, None)}
   }
 }
 
@@ -12987,8 +12987,8 @@ impl<B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Verifiable for Value<'_, 
   ) -> Result<(), flatbuffers::InvalidFlatbuffer> {
     use self::flatbuffers::Verifiable;
     v.visit_table(pos)?
-     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("physical_default_value", ValueOffset::VT_PHYSICAL_DEFAULT_VALUE, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<DOP<'_, B>>>("dop", ValueOffset::VT_DOP, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("physical_default_value", Value::VT_PHYSICAL_DEFAULT_VALUE, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<DOP<'_, B>>>("dop", Value::VT_DOP, false)?
      .finish();
     Ok(())
   }
@@ -13014,11 +13014,11 @@ pub struct ValueBuilder<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> {
 impl<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> ValueBuilder<'a, 'b, A> {
   #[inline]
   pub fn add_physical_default_value(&mut self, physical_default_value: flatbuffers::WIPOffset<&'b  str>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(ValueOffset::VT_PHYSICAL_DEFAULT_VALUE, physical_default_value);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(Value::VT_PHYSICAL_DEFAULT_VALUE, physical_default_value);
   }
   #[inline]
   pub fn add_dop(&mut self, dop: flatbuffers::WIPOffset<DOP<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<DOP>>(ValueOffset::VT_DOP, dop);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<DOP>>(Value::VT_DOP, dop);
   }
   #[inline]
   pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a, A>) -> ValueBuilder<'a, 'b, A> {
@@ -13043,19 +13043,6 @@ impl core::fmt::Debug for Value<'_> {
       ds.finish()
   }
 }
-pub enum ParamOffset {}
-impl ParamOffset {
-    pub const VT_ID: flatbuffers::VOffsetT = 4;
-    pub const VT_PARAM_TYPE: flatbuffers::VOffsetT = 6;
-    pub const VT_SHORT_NAME: flatbuffers::VOffsetT = 8;
-    pub const VT_SEMANTIC: flatbuffers::VOffsetT = 10;
-    pub const VT_SDGS: flatbuffers::VOffsetT = 12;
-    pub const VT_PHYSICAL_DEFAULT_VALUE: flatbuffers::VOffsetT = 14;
-    pub const VT_BYTE_POSITION: flatbuffers::VOffsetT = 16;
-    pub const VT_BIT_POSITION: flatbuffers::VOffsetT = 18;
-    pub const VT_SPECIFIC_DATA_TYPE: flatbuffers::VOffsetT = 20;
-    pub const VT_SPECIFIC_DATA: flatbuffers::VOffsetT = 22;
-}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Copy for Param<'a, B> {}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Clone for Param<'a, B> {
   fn clone(&self) -> Self { *self }
@@ -13076,12 +13063,18 @@ impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'
   }
 }
 
-impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Param<'a, B> {
+impl<'a> Param<'a> {
+  pub const VT_ID: flatbuffers::VOffsetT = 4;
+  pub const VT_PARAM_TYPE: flatbuffers::VOffsetT = 6;
+  pub const VT_SHORT_NAME: flatbuffers::VOffsetT = 8;
+  pub const VT_SEMANTIC: flatbuffers::VOffsetT = 10;
+  pub const VT_SDGS: flatbuffers::VOffsetT = 12;
+  pub const VT_PHYSICAL_DEFAULT_VALUE: flatbuffers::VOffsetT = 14;
+  pub const VT_BYTE_POSITION: flatbuffers::VOffsetT = 16;
+  pub const VT_BIT_POSITION: flatbuffers::VOffsetT = 18;
+  pub const VT_SPECIFIC_DATA_TYPE: flatbuffers::VOffsetT = 20;
+  pub const VT_SPECIFIC_DATA: flatbuffers::VOffsetT = 22;
 
-  #[inline]
-  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
-    Param { _tab: table }
-  }
   #[allow(unused_mut)]
   pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr, A: flatbuffers::Allocator + 'bldr>(
     _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr, A>,
@@ -13100,6 +13093,13 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Param<'a, B> {
     builder.add_param_type(args.param_type);
     builder.finish()
   }
+}
+
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Param<'a, B> {
+  #[inline]
+  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
+    Param { _tab: table }
+  }
 
 
   #[inline]
@@ -13107,70 +13107,70 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Param<'a, B> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<u32>(ParamOffset::VT_ID, Some(0)).unwrap()}
+    unsafe { self._tab.get::<u32>(Param::VT_ID, Some(0)).unwrap()}
   }
   #[inline]
   pub fn param_type(&self) -> ParamType {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<ParamType>(ParamOffset::VT_PARAM_TYPE, Some(ParamType::CODED_CONST)).unwrap()}
+    unsafe { self._tab.get::<ParamType>(Param::VT_PARAM_TYPE, Some(ParamType::CODED_CONST)).unwrap()}
   }
   #[inline]
   pub fn short_name(&self) -> Option<&'a str> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(ParamOffset::VT_SHORT_NAME, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(Param::VT_SHORT_NAME, None)}
   }
   #[inline]
   pub fn semantic(&self) -> Option<&'a str> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(ParamOffset::VT_SEMANTIC, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(Param::VT_SEMANTIC, None)}
   }
   #[inline]
   pub fn sdgs(&self) -> Option<SDGS<'a, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<SDGS<'a, B>>>(ParamOffset::VT_SDGS, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<SDGS<'a, B>>>(Param::VT_SDGS, None)}
   }
   #[inline]
   pub fn physical_default_value(&self) -> Option<&'a str> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(ParamOffset::VT_PHYSICAL_DEFAULT_VALUE, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(Param::VT_PHYSICAL_DEFAULT_VALUE, None)}
   }
   #[inline]
   pub fn byte_position(&self) -> Option<u32> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<u32>(ParamOffset::VT_BYTE_POSITION, None)}
+    unsafe { self._tab.get::<u32>(Param::VT_BYTE_POSITION, None)}
   }
   #[inline]
   pub fn bit_position(&self) -> Option<u32> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<u32>(ParamOffset::VT_BIT_POSITION, None)}
+    unsafe { self._tab.get::<u32>(Param::VT_BIT_POSITION, None)}
   }
   #[inline]
   pub fn specific_data_type(&self) -> ParamSpecificData {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<ParamSpecificData>(ParamOffset::VT_SPECIFIC_DATA_TYPE, Some(ParamSpecificData::NONE)).unwrap()}
+    unsafe { self._tab.get::<ParamSpecificData>(Param::VT_SPECIFIC_DATA_TYPE, Some(ParamSpecificData::NONE)).unwrap()}
   }
   #[inline]
   pub fn specific_data(&self) -> Option<flatbuffers::Table<'a, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Table<'a, B>>>(ParamOffset::VT_SPECIFIC_DATA, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Table<'a, B>>>(Param::VT_SPECIFIC_DATA, None)}
   }
   #[inline]
   #[allow(non_snake_case)]
@@ -13361,15 +13361,15 @@ impl<B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Verifiable for Param<'_, 
   ) -> Result<(), flatbuffers::InvalidFlatbuffer> {
     use self::flatbuffers::Verifiable;
     v.visit_table(pos)?
-     .visit_field::<u32>("id", ParamOffset::VT_ID, false)?
-     .visit_field::<ParamType>("param_type", ParamOffset::VT_PARAM_TYPE, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("short_name", ParamOffset::VT_SHORT_NAME, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("semantic", ParamOffset::VT_SEMANTIC, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<SDGS<'_, B>>>("sdgs", ParamOffset::VT_SDGS, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("physical_default_value", ParamOffset::VT_PHYSICAL_DEFAULT_VALUE, false)?
-     .visit_field::<u32>("byte_position", ParamOffset::VT_BYTE_POSITION, false)?
-     .visit_field::<u32>("bit_position", ParamOffset::VT_BIT_POSITION, false)?
-     .visit_union::<ParamSpecificDataUnionValue>("specific_data_type", ParamOffset::VT_SPECIFIC_DATA_TYPE, "specific_data", ParamOffset::VT_SPECIFIC_DATA, false)?
+     .visit_field::<u32>("id", Param::VT_ID, false)?
+     .visit_field::<ParamType>("param_type", Param::VT_PARAM_TYPE, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("short_name", Param::VT_SHORT_NAME, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("semantic", Param::VT_SEMANTIC, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<SDGS<'_, B>>>("sdgs", Param::VT_SDGS, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("physical_default_value", Param::VT_PHYSICAL_DEFAULT_VALUE, false)?
+     .visit_field::<u32>("byte_position", Param::VT_BYTE_POSITION, false)?
+     .visit_field::<u32>("bit_position", Param::VT_BIT_POSITION, false)?
+     .visit_union::<ParamSpecificDataUnionValue>("specific_data_type", Param::VT_SPECIFIC_DATA_TYPE, "specific_data", Param::VT_SPECIFIC_DATA, false)?
      .finish();
     Ok(())
   }
@@ -13384,7 +13384,7 @@ pub struct ParamArgs<'a> {
     pub byte_position: Option<u32>,
     pub bit_position: Option<u32>,
     pub specific_data_type: ParamSpecificData,
-    pub specific_data: Option<flatbuffers::WIPOffset<ParamSpecificDataUnionValue>>,
+    pub specific_data: Option<flatbuffers::WIPOffset<flatbuffers::UnionWIPOffset>>,
 }
 impl<'a> Default for ParamArgs<'a> {
   #[inline]
@@ -13411,43 +13411,43 @@ pub struct ParamBuilder<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> {
 impl<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> ParamBuilder<'a, 'b, A> {
   #[inline]
   pub fn add_id(&mut self, id: u32) {
-    self.fbb_.push_slot::<u32>(ParamOffset::VT_ID, id, 0);
+    self.fbb_.push_slot::<u32>(Param::VT_ID, id, 0);
   }
   #[inline]
   pub fn add_param_type(&mut self, param_type: ParamType) {
-    self.fbb_.push_slot::<ParamType>(ParamOffset::VT_PARAM_TYPE, param_type, ParamType::CODED_CONST);
+    self.fbb_.push_slot::<ParamType>(Param::VT_PARAM_TYPE, param_type, ParamType::CODED_CONST);
   }
   #[inline]
   pub fn add_short_name(&mut self, short_name: flatbuffers::WIPOffset<&'b  str>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(ParamOffset::VT_SHORT_NAME, short_name);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(Param::VT_SHORT_NAME, short_name);
   }
   #[inline]
   pub fn add_semantic(&mut self, semantic: flatbuffers::WIPOffset<&'b  str>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(ParamOffset::VT_SEMANTIC, semantic);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(Param::VT_SEMANTIC, semantic);
   }
   #[inline]
   pub fn add_sdgs(&mut self, sdgs: flatbuffers::WIPOffset<SDGS<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<SDGS>>(ParamOffset::VT_SDGS, sdgs);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<SDGS>>(Param::VT_SDGS, sdgs);
   }
   #[inline]
   pub fn add_physical_default_value(&mut self, physical_default_value: flatbuffers::WIPOffset<&'b  str>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(ParamOffset::VT_PHYSICAL_DEFAULT_VALUE, physical_default_value);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(Param::VT_PHYSICAL_DEFAULT_VALUE, physical_default_value);
   }
   #[inline]
   pub fn add_byte_position(&mut self, byte_position: u32) {
-    self.fbb_.push_slot_always::<u32>(ParamOffset::VT_BYTE_POSITION, byte_position);
+    self.fbb_.push_slot_always::<u32>(Param::VT_BYTE_POSITION, byte_position);
   }
   #[inline]
   pub fn add_bit_position(&mut self, bit_position: u32) {
-    self.fbb_.push_slot_always::<u32>(ParamOffset::VT_BIT_POSITION, bit_position);
+    self.fbb_.push_slot_always::<u32>(Param::VT_BIT_POSITION, bit_position);
   }
   #[inline]
   pub fn add_specific_data_type(&mut self, specific_data_type: ParamSpecificData) {
-    self.fbb_.push_slot::<ParamSpecificData>(ParamOffset::VT_SPECIFIC_DATA_TYPE, specific_data_type, ParamSpecificData::NONE);
+    self.fbb_.push_slot::<ParamSpecificData>(Param::VT_SPECIFIC_DATA_TYPE, specific_data_type, ParamSpecificData::NONE);
   }
   #[inline]
-  pub fn add_specific_data(&mut self, specific_data: flatbuffers::WIPOffset<ParamSpecificDataUnionValue>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(ParamOffset::VT_SPECIFIC_DATA, specific_data);
+  pub fn add_specific_data(&mut self, specific_data: flatbuffers::WIPOffset<flatbuffers::UnionWIPOffset>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(Param::VT_SPECIFIC_DATA, specific_data);
   }
   #[inline]
   pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a, A>) -> ParamBuilder<'a, 'b, A> {
@@ -13569,10 +13569,6 @@ impl core::fmt::Debug for Param<'_> {
       ds.finish()
   }
 }
-pub enum FunctClassOffset {}
-impl FunctClassOffset {
-    pub const VT_SHORT_NAME: flatbuffers::VOffsetT = 4;
-}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Copy for FunctClass<'a, B> {}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Clone for FunctClass<'a, B> {
   fn clone(&self) -> Self { *self }
@@ -13593,12 +13589,9 @@ impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'
   }
 }
 
-impl<'a, B: flatbuffers::ReadBuffer + ?Sized> FunctClass<'a, B> {
+impl<'a> FunctClass<'a> {
+  pub const VT_SHORT_NAME: flatbuffers::VOffsetT = 4;
 
-  #[inline]
-  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
-    FunctClass { _tab: table }
-  }
   #[allow(unused_mut)]
   pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr, A: flatbuffers::Allocator + 'bldr>(
     _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr, A>,
@@ -13608,6 +13601,13 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> FunctClass<'a, B> {
     if let Some(x) = args.short_name { builder.add_short_name(x); }
     builder.finish()
   }
+}
+
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> FunctClass<'a, B> {
+  #[inline]
+  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
+    FunctClass { _tab: table }
+  }
 
 
   #[inline]
@@ -13615,7 +13615,7 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> FunctClass<'a, B> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(FunctClassOffset::VT_SHORT_NAME, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(FunctClass::VT_SHORT_NAME, None)}
   }
 }
 
@@ -13626,7 +13626,7 @@ impl<B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Verifiable for FunctClass
   ) -> Result<(), flatbuffers::InvalidFlatbuffer> {
     use self::flatbuffers::Verifiable;
     v.visit_table(pos)?
-     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("short_name", FunctClassOffset::VT_SHORT_NAME, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("short_name", FunctClass::VT_SHORT_NAME, false)?
      .finish();
     Ok(())
   }
@@ -13650,7 +13650,7 @@ pub struct FunctClassBuilder<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> {
 impl<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> FunctClassBuilder<'a, 'b, A> {
   #[inline]
   pub fn add_short_name(&mut self, short_name: flatbuffers::WIPOffset<&'b  str>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(FunctClassOffset::VT_SHORT_NAME, short_name);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(FunctClass::VT_SHORT_NAME, short_name);
   }
   #[inline]
   pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a, A>) -> FunctClassBuilder<'a, 'b, A> {
@@ -13674,11 +13674,6 @@ impl core::fmt::Debug for FunctClass<'_> {
       ds.finish()
   }
 }
-pub enum RequestOffset {}
-impl RequestOffset {
-    pub const VT_PARAMS: flatbuffers::VOffsetT = 4;
-    pub const VT_SDGS: flatbuffers::VOffsetT = 6;
-}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Copy for Request<'a, B> {}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Clone for Request<'a, B> {
   fn clone(&self) -> Self { *self }
@@ -13699,12 +13694,10 @@ impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'
   }
 }
 
-impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Request<'a, B> {
+impl<'a> Request<'a> {
+  pub const VT_PARAMS: flatbuffers::VOffsetT = 4;
+  pub const VT_SDGS: flatbuffers::VOffsetT = 6;
 
-  #[inline]
-  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
-    Request { _tab: table }
-  }
   #[allow(unused_mut)]
   pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr, A: flatbuffers::Allocator + 'bldr>(
     _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr, A>,
@@ -13715,6 +13708,13 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Request<'a, B> {
     if let Some(x) = args.params { builder.add_params(x); }
     builder.finish()
   }
+}
+
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Request<'a, B> {
+  #[inline]
+  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
+    Request { _tab: table }
+  }
 
 
   #[inline]
@@ -13722,14 +13722,14 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Request<'a, B> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<Param<'a, B>>, B>>>(RequestOffset::VT_PARAMS, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<Param<'a, B>>, B>>>(Request::VT_PARAMS, None)}
   }
   #[inline]
   pub fn sdgs(&self) -> Option<SDGS<'a, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<SDGS<'a, B>>>(RequestOffset::VT_SDGS, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<SDGS<'a, B>>>(Request::VT_SDGS, None)}
   }
 }
 
@@ -13740,8 +13740,8 @@ impl<B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Verifiable for Request<'_
   ) -> Result<(), flatbuffers::InvalidFlatbuffer> {
     use self::flatbuffers::Verifiable;
     v.visit_table(pos)?
-     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<Param<'_, B>>, B>>>("params", RequestOffset::VT_PARAMS, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<SDGS<'_, B>>>("sdgs", RequestOffset::VT_SDGS, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<Param<'_, B>>, B>>>("params", Request::VT_PARAMS, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<SDGS<'_, B>>>("sdgs", Request::VT_SDGS, false)?
      .finish();
     Ok(())
   }
@@ -13767,11 +13767,11 @@ pub struct RequestBuilder<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> {
 impl<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> RequestBuilder<'a, 'b, A> {
   #[inline]
   pub fn add_params(&mut self, params: flatbuffers::WIPOffset<flatbuffers::Vector<'b , flatbuffers::ForwardsUOffset<Param<'b >>>>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(RequestOffset::VT_PARAMS, params);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(Request::VT_PARAMS, params);
   }
   #[inline]
   pub fn add_sdgs(&mut self, sdgs: flatbuffers::WIPOffset<SDGS<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<SDGS>>(RequestOffset::VT_SDGS, sdgs);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<SDGS>>(Request::VT_SDGS, sdgs);
   }
   #[inline]
   pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a, A>) -> RequestBuilder<'a, 'b, A> {
@@ -13796,12 +13796,6 @@ impl core::fmt::Debug for Request<'_> {
       ds.finish()
   }
 }
-pub enum ResponseOffset {}
-impl ResponseOffset {
-    pub const VT_RESPONSE_TYPE: flatbuffers::VOffsetT = 4;
-    pub const VT_PARAMS: flatbuffers::VOffsetT = 6;
-    pub const VT_SDGS: flatbuffers::VOffsetT = 8;
-}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Copy for Response<'a, B> {}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Clone for Response<'a, B> {
   fn clone(&self) -> Self { *self }
@@ -13822,12 +13816,11 @@ impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'
   }
 }
 
-impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Response<'a, B> {
+impl<'a> Response<'a> {
+  pub const VT_RESPONSE_TYPE: flatbuffers::VOffsetT = 4;
+  pub const VT_PARAMS: flatbuffers::VOffsetT = 6;
+  pub const VT_SDGS: flatbuffers::VOffsetT = 8;
 
-  #[inline]
-  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
-    Response { _tab: table }
-  }
   #[allow(unused_mut)]
   pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr, A: flatbuffers::Allocator + 'bldr>(
     _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr, A>,
@@ -13839,6 +13832,13 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Response<'a, B> {
     builder.add_response_type(args.response_type);
     builder.finish()
   }
+}
+
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Response<'a, B> {
+  #[inline]
+  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
+    Response { _tab: table }
+  }
 
 
   #[inline]
@@ -13846,21 +13846,21 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Response<'a, B> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<ResponseType>(ResponseOffset::VT_RESPONSE_TYPE, Some(ResponseType::POS_RESPONSE)).unwrap()}
+    unsafe { self._tab.get::<ResponseType>(Response::VT_RESPONSE_TYPE, Some(ResponseType::POS_RESPONSE)).unwrap()}
   }
   #[inline]
   pub fn params(&self) -> Option<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<Param<'a, B>>, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<Param<'a, B>>, B>>>(ResponseOffset::VT_PARAMS, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<Param<'a, B>>, B>>>(Response::VT_PARAMS, None)}
   }
   #[inline]
   pub fn sdgs(&self) -> Option<SDGS<'a, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<SDGS<'a, B>>>(ResponseOffset::VT_SDGS, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<SDGS<'a, B>>>(Response::VT_SDGS, None)}
   }
 }
 
@@ -13871,9 +13871,9 @@ impl<B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Verifiable for Response<'
   ) -> Result<(), flatbuffers::InvalidFlatbuffer> {
     use self::flatbuffers::Verifiable;
     v.visit_table(pos)?
-     .visit_field::<ResponseType>("response_type", ResponseOffset::VT_RESPONSE_TYPE, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<Param<'_, B>>, B>>>("params", ResponseOffset::VT_PARAMS, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<SDGS<'_, B>>>("sdgs", ResponseOffset::VT_SDGS, false)?
+     .visit_field::<ResponseType>("response_type", Response::VT_RESPONSE_TYPE, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<Param<'_, B>>, B>>>("params", Response::VT_PARAMS, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<SDGS<'_, B>>>("sdgs", Response::VT_SDGS, false)?
      .finish();
     Ok(())
   }
@@ -13901,15 +13901,15 @@ pub struct ResponseBuilder<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> {
 impl<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> ResponseBuilder<'a, 'b, A> {
   #[inline]
   pub fn add_response_type(&mut self, response_type: ResponseType) {
-    self.fbb_.push_slot::<ResponseType>(ResponseOffset::VT_RESPONSE_TYPE, response_type, ResponseType::POS_RESPONSE);
+    self.fbb_.push_slot::<ResponseType>(Response::VT_RESPONSE_TYPE, response_type, ResponseType::POS_RESPONSE);
   }
   #[inline]
   pub fn add_params(&mut self, params: flatbuffers::WIPOffset<flatbuffers::Vector<'b , flatbuffers::ForwardsUOffset<Param<'b >>>>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(ResponseOffset::VT_PARAMS, params);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(Response::VT_PARAMS, params);
   }
   #[inline]
   pub fn add_sdgs(&mut self, sdgs: flatbuffers::WIPOffset<SDGS<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<SDGS>>(ResponseOffset::VT_SDGS, sdgs);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<SDGS>>(Response::VT_SDGS, sdgs);
   }
   #[inline]
   pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a, A>) -> ResponseBuilder<'a, 'b, A> {
@@ -13935,11 +13935,6 @@ impl core::fmt::Debug for Response<'_> {
       ds.finish()
   }
 }
-pub enum AdditionalAudienceOffset {}
-impl AdditionalAudienceOffset {
-    pub const VT_SHORT_NAME: flatbuffers::VOffsetT = 4;
-    pub const VT_LONG_NAME: flatbuffers::VOffsetT = 6;
-}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Copy for AdditionalAudience<'a, B> {}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Clone for AdditionalAudience<'a, B> {
   fn clone(&self) -> Self { *self }
@@ -13960,12 +13955,10 @@ impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'
   }
 }
 
-impl<'a, B: flatbuffers::ReadBuffer + ?Sized> AdditionalAudience<'a, B> {
+impl<'a> AdditionalAudience<'a> {
+  pub const VT_SHORT_NAME: flatbuffers::VOffsetT = 4;
+  pub const VT_LONG_NAME: flatbuffers::VOffsetT = 6;
 
-  #[inline]
-  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
-    AdditionalAudience { _tab: table }
-  }
   #[allow(unused_mut)]
   pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr, A: flatbuffers::Allocator + 'bldr>(
     _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr, A>,
@@ -13976,6 +13969,13 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> AdditionalAudience<'a, B> {
     if let Some(x) = args.short_name { builder.add_short_name(x); }
     builder.finish()
   }
+}
+
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> AdditionalAudience<'a, B> {
+  #[inline]
+  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
+    AdditionalAudience { _tab: table }
+  }
 
 
   #[inline]
@@ -13983,14 +13983,14 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> AdditionalAudience<'a, B> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(AdditionalAudienceOffset::VT_SHORT_NAME, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(AdditionalAudience::VT_SHORT_NAME, None)}
   }
   #[inline]
   pub fn long_name(&self) -> Option<LongName<'a, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<LongName<'a, B>>>(AdditionalAudienceOffset::VT_LONG_NAME, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<LongName<'a, B>>>(AdditionalAudience::VT_LONG_NAME, None)}
   }
 }
 
@@ -14001,8 +14001,8 @@ impl<B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Verifiable for Additional
   ) -> Result<(), flatbuffers::InvalidFlatbuffer> {
     use self::flatbuffers::Verifiable;
     v.visit_table(pos)?
-     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("short_name", AdditionalAudienceOffset::VT_SHORT_NAME, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<LongName<'_, B>>>("long_name", AdditionalAudienceOffset::VT_LONG_NAME, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("short_name", AdditionalAudience::VT_SHORT_NAME, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<LongName<'_, B>>>("long_name", AdditionalAudience::VT_LONG_NAME, false)?
      .finish();
     Ok(())
   }
@@ -14028,11 +14028,11 @@ pub struct AdditionalAudienceBuilder<'a: 'b, 'b, A: flatbuffers::Allocator + 'a>
 impl<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> AdditionalAudienceBuilder<'a, 'b, A> {
   #[inline]
   pub fn add_short_name(&mut self, short_name: flatbuffers::WIPOffset<&'b  str>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(AdditionalAudienceOffset::VT_SHORT_NAME, short_name);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(AdditionalAudience::VT_SHORT_NAME, short_name);
   }
   #[inline]
   pub fn add_long_name(&mut self, long_name: flatbuffers::WIPOffset<LongName<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<LongName>>(AdditionalAudienceOffset::VT_LONG_NAME, long_name);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<LongName>>(AdditionalAudience::VT_LONG_NAME, long_name);
   }
   #[inline]
   pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a, A>) -> AdditionalAudienceBuilder<'a, 'b, A> {
@@ -14057,22 +14057,6 @@ impl core::fmt::Debug for AdditionalAudience<'_> {
       ds.finish()
   }
 }
-pub enum DiagCommOffset {}
-impl DiagCommOffset {
-    pub const VT_SHORT_NAME: flatbuffers::VOffsetT = 4;
-    pub const VT_LONG_NAME: flatbuffers::VOffsetT = 6;
-    pub const VT_SEMANTIC: flatbuffers::VOffsetT = 8;
-    pub const VT_FUNCT_CLASS: flatbuffers::VOffsetT = 10;
-    pub const VT_SDGS: flatbuffers::VOffsetT = 12;
-    pub const VT_DIAG_CLASS_TYPE: flatbuffers::VOffsetT = 14;
-    pub const VT_PRE_CONDITION_STATE_REFS: flatbuffers::VOffsetT = 16;
-    pub const VT_STATE_TRANSITION_REFS: flatbuffers::VOffsetT = 18;
-    pub const VT_PROTOCOLS: flatbuffers::VOffsetT = 20;
-    pub const VT_AUDIENCE: flatbuffers::VOffsetT = 22;
-    pub const VT_IS_MANDATORY: flatbuffers::VOffsetT = 24;
-    pub const VT_IS_EXECUTABLE: flatbuffers::VOffsetT = 26;
-    pub const VT_IS_FINAL: flatbuffers::VOffsetT = 28;
-}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Copy for DiagComm<'a, B> {}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Clone for DiagComm<'a, B> {
   fn clone(&self) -> Self { *self }
@@ -14093,12 +14077,21 @@ impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'
   }
 }
 
-impl<'a, B: flatbuffers::ReadBuffer + ?Sized> DiagComm<'a, B> {
+impl<'a> DiagComm<'a> {
+  pub const VT_SHORT_NAME: flatbuffers::VOffsetT = 4;
+  pub const VT_LONG_NAME: flatbuffers::VOffsetT = 6;
+  pub const VT_SEMANTIC: flatbuffers::VOffsetT = 8;
+  pub const VT_FUNCT_CLASS: flatbuffers::VOffsetT = 10;
+  pub const VT_SDGS: flatbuffers::VOffsetT = 12;
+  pub const VT_DIAG_CLASS_TYPE: flatbuffers::VOffsetT = 14;
+  pub const VT_PRE_CONDITION_STATE_REFS: flatbuffers::VOffsetT = 16;
+  pub const VT_STATE_TRANSITION_REFS: flatbuffers::VOffsetT = 18;
+  pub const VT_PROTOCOLS: flatbuffers::VOffsetT = 20;
+  pub const VT_AUDIENCE: flatbuffers::VOffsetT = 22;
+  pub const VT_IS_MANDATORY: flatbuffers::VOffsetT = 24;
+  pub const VT_IS_EXECUTABLE: flatbuffers::VOffsetT = 26;
+  pub const VT_IS_FINAL: flatbuffers::VOffsetT = 28;
 
-  #[inline]
-  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
-    DiagComm { _tab: table }
-  }
   #[allow(unused_mut)]
   pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr, A: flatbuffers::Allocator + 'bldr>(
     _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr, A>,
@@ -14120,6 +14113,13 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> DiagComm<'a, B> {
     builder.add_diag_class_type(args.diag_class_type);
     builder.finish()
   }
+}
+
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> DiagComm<'a, B> {
+  #[inline]
+  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
+    DiagComm { _tab: table }
+  }
 
 
   #[inline]
@@ -14127,91 +14127,91 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> DiagComm<'a, B> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(DiagCommOffset::VT_SHORT_NAME, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(DiagComm::VT_SHORT_NAME, None)}
   }
   #[inline]
   pub fn long_name(&self) -> Option<LongName<'a, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<LongName<'a, B>>>(DiagCommOffset::VT_LONG_NAME, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<LongName<'a, B>>>(DiagComm::VT_LONG_NAME, None)}
   }
   #[inline]
   pub fn semantic(&self) -> Option<&'a str> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(DiagCommOffset::VT_SEMANTIC, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(DiagComm::VT_SEMANTIC, None)}
   }
   #[inline]
   pub fn funct_class(&self) -> Option<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<FunctClass<'a, B>>, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<FunctClass<'a, B>>, B>>>(DiagCommOffset::VT_FUNCT_CLASS, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<FunctClass<'a, B>>, B>>>(DiagComm::VT_FUNCT_CLASS, None)}
   }
   #[inline]
   pub fn sdgs(&self) -> Option<SDGS<'a, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<SDGS<'a, B>>>(DiagCommOffset::VT_SDGS, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<SDGS<'a, B>>>(DiagComm::VT_SDGS, None)}
   }
   #[inline]
   pub fn diag_class_type(&self) -> DiagClassType {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<DiagClassType>(DiagCommOffset::VT_DIAG_CLASS_TYPE, Some(DiagClassType::START_COMM)).unwrap()}
+    unsafe { self._tab.get::<DiagClassType>(DiagComm::VT_DIAG_CLASS_TYPE, Some(DiagClassType::START_COMM)).unwrap()}
   }
   #[inline]
   pub fn pre_condition_state_refs(&self) -> Option<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<PreConditionStateRef<'a, B>>, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<PreConditionStateRef<'a, B>>, B>>>(DiagCommOffset::VT_PRE_CONDITION_STATE_REFS, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<PreConditionStateRef<'a, B>>, B>>>(DiagComm::VT_PRE_CONDITION_STATE_REFS, None)}
   }
   #[inline]
   pub fn state_transition_refs(&self) -> Option<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<StateTransitionRef<'a, B>>, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<StateTransitionRef<'a, B>>, B>>>(DiagCommOffset::VT_STATE_TRANSITION_REFS, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<StateTransitionRef<'a, B>>, B>>>(DiagComm::VT_STATE_TRANSITION_REFS, None)}
   }
   #[inline]
   pub fn protocols(&self) -> Option<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<Protocol<'a, B>>, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<Protocol<'a, B>>, B>>>(DiagCommOffset::VT_PROTOCOLS, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<Protocol<'a, B>>, B>>>(DiagComm::VT_PROTOCOLS, None)}
   }
   #[inline]
   pub fn audience(&self) -> Option<Audience<'a, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<Audience<'a, B>>>(DiagCommOffset::VT_AUDIENCE, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<Audience<'a, B>>>(DiagComm::VT_AUDIENCE, None)}
   }
   #[inline]
   pub fn is_mandatory(&self) -> bool {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<bool>(DiagCommOffset::VT_IS_MANDATORY, Some(false)).unwrap()}
+    unsafe { self._tab.get::<bool>(DiagComm::VT_IS_MANDATORY, Some(false)).unwrap()}
   }
   #[inline]
   pub fn is_executable(&self) -> bool {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<bool>(DiagCommOffset::VT_IS_EXECUTABLE, Some(true)).unwrap()}
+    unsafe { self._tab.get::<bool>(DiagComm::VT_IS_EXECUTABLE, Some(true)).unwrap()}
   }
   #[inline]
   pub fn is_final(&self) -> bool {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<bool>(DiagCommOffset::VT_IS_FINAL, Some(false)).unwrap()}
+    unsafe { self._tab.get::<bool>(DiagComm::VT_IS_FINAL, Some(false)).unwrap()}
   }
 }
 
@@ -14222,19 +14222,19 @@ impl<B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Verifiable for DiagComm<'
   ) -> Result<(), flatbuffers::InvalidFlatbuffer> {
     use self::flatbuffers::Verifiable;
     v.visit_table(pos)?
-     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("short_name", DiagCommOffset::VT_SHORT_NAME, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<LongName<'_, B>>>("long_name", DiagCommOffset::VT_LONG_NAME, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("semantic", DiagCommOffset::VT_SEMANTIC, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<FunctClass<'_, B>>, B>>>("funct_class", DiagCommOffset::VT_FUNCT_CLASS, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<SDGS<'_, B>>>("sdgs", DiagCommOffset::VT_SDGS, false)?
-     .visit_field::<DiagClassType>("diag_class_type", DiagCommOffset::VT_DIAG_CLASS_TYPE, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<PreConditionStateRef<'_, B>>, B>>>("pre_condition_state_refs", DiagCommOffset::VT_PRE_CONDITION_STATE_REFS, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<StateTransitionRef<'_, B>>, B>>>("state_transition_refs", DiagCommOffset::VT_STATE_TRANSITION_REFS, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<Protocol<'_, B>>, B>>>("protocols", DiagCommOffset::VT_PROTOCOLS, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<Audience<'_, B>>>("audience", DiagCommOffset::VT_AUDIENCE, false)?
-     .visit_field::<bool>("is_mandatory", DiagCommOffset::VT_IS_MANDATORY, false)?
-     .visit_field::<bool>("is_executable", DiagCommOffset::VT_IS_EXECUTABLE, false)?
-     .visit_field::<bool>("is_final", DiagCommOffset::VT_IS_FINAL, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("short_name", DiagComm::VT_SHORT_NAME, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<LongName<'_, B>>>("long_name", DiagComm::VT_LONG_NAME, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("semantic", DiagComm::VT_SEMANTIC, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<FunctClass<'_, B>>, B>>>("funct_class", DiagComm::VT_FUNCT_CLASS, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<SDGS<'_, B>>>("sdgs", DiagComm::VT_SDGS, false)?
+     .visit_field::<DiagClassType>("diag_class_type", DiagComm::VT_DIAG_CLASS_TYPE, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<PreConditionStateRef<'_, B>>, B>>>("pre_condition_state_refs", DiagComm::VT_PRE_CONDITION_STATE_REFS, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<StateTransitionRef<'_, B>>, B>>>("state_transition_refs", DiagComm::VT_STATE_TRANSITION_REFS, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<Protocol<'_, B>>, B>>>("protocols", DiagComm::VT_PROTOCOLS, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<Audience<'_, B>>>("audience", DiagComm::VT_AUDIENCE, false)?
+     .visit_field::<bool>("is_mandatory", DiagComm::VT_IS_MANDATORY, false)?
+     .visit_field::<bool>("is_executable", DiagComm::VT_IS_EXECUTABLE, false)?
+     .visit_field::<bool>("is_final", DiagComm::VT_IS_FINAL, false)?
      .finish();
     Ok(())
   }
@@ -14282,55 +14282,55 @@ pub struct DiagCommBuilder<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> {
 impl<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> DiagCommBuilder<'a, 'b, A> {
   #[inline]
   pub fn add_short_name(&mut self, short_name: flatbuffers::WIPOffset<&'b  str>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(DiagCommOffset::VT_SHORT_NAME, short_name);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(DiagComm::VT_SHORT_NAME, short_name);
   }
   #[inline]
   pub fn add_long_name(&mut self, long_name: flatbuffers::WIPOffset<LongName<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<LongName>>(DiagCommOffset::VT_LONG_NAME, long_name);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<LongName>>(DiagComm::VT_LONG_NAME, long_name);
   }
   #[inline]
   pub fn add_semantic(&mut self, semantic: flatbuffers::WIPOffset<&'b  str>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(DiagCommOffset::VT_SEMANTIC, semantic);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(DiagComm::VT_SEMANTIC, semantic);
   }
   #[inline]
   pub fn add_funct_class(&mut self, funct_class: flatbuffers::WIPOffset<flatbuffers::Vector<'b , flatbuffers::ForwardsUOffset<FunctClass<'b >>>>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(DiagCommOffset::VT_FUNCT_CLASS, funct_class);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(DiagComm::VT_FUNCT_CLASS, funct_class);
   }
   #[inline]
   pub fn add_sdgs(&mut self, sdgs: flatbuffers::WIPOffset<SDGS<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<SDGS>>(DiagCommOffset::VT_SDGS, sdgs);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<SDGS>>(DiagComm::VT_SDGS, sdgs);
   }
   #[inline]
   pub fn add_diag_class_type(&mut self, diag_class_type: DiagClassType) {
-    self.fbb_.push_slot::<DiagClassType>(DiagCommOffset::VT_DIAG_CLASS_TYPE, diag_class_type, DiagClassType::START_COMM);
+    self.fbb_.push_slot::<DiagClassType>(DiagComm::VT_DIAG_CLASS_TYPE, diag_class_type, DiagClassType::START_COMM);
   }
   #[inline]
   pub fn add_pre_condition_state_refs(&mut self, pre_condition_state_refs: flatbuffers::WIPOffset<flatbuffers::Vector<'b , flatbuffers::ForwardsUOffset<PreConditionStateRef<'b >>>>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(DiagCommOffset::VT_PRE_CONDITION_STATE_REFS, pre_condition_state_refs);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(DiagComm::VT_PRE_CONDITION_STATE_REFS, pre_condition_state_refs);
   }
   #[inline]
   pub fn add_state_transition_refs(&mut self, state_transition_refs: flatbuffers::WIPOffset<flatbuffers::Vector<'b , flatbuffers::ForwardsUOffset<StateTransitionRef<'b >>>>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(DiagCommOffset::VT_STATE_TRANSITION_REFS, state_transition_refs);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(DiagComm::VT_STATE_TRANSITION_REFS, state_transition_refs);
   }
   #[inline]
   pub fn add_protocols(&mut self, protocols: flatbuffers::WIPOffset<flatbuffers::Vector<'b , flatbuffers::ForwardsUOffset<Protocol<'b >>>>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(DiagCommOffset::VT_PROTOCOLS, protocols);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(DiagComm::VT_PROTOCOLS, protocols);
   }
   #[inline]
   pub fn add_audience(&mut self, audience: flatbuffers::WIPOffset<Audience<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Audience>>(DiagCommOffset::VT_AUDIENCE, audience);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Audience>>(DiagComm::VT_AUDIENCE, audience);
   }
   #[inline]
   pub fn add_is_mandatory(&mut self, is_mandatory: bool) {
-    self.fbb_.push_slot::<bool>(DiagCommOffset::VT_IS_MANDATORY, is_mandatory, false);
+    self.fbb_.push_slot::<bool>(DiagComm::VT_IS_MANDATORY, is_mandatory, false);
   }
   #[inline]
   pub fn add_is_executable(&mut self, is_executable: bool) {
-    self.fbb_.push_slot::<bool>(DiagCommOffset::VT_IS_EXECUTABLE, is_executable, true);
+    self.fbb_.push_slot::<bool>(DiagComm::VT_IS_EXECUTABLE, is_executable, true);
   }
   #[inline]
   pub fn add_is_final(&mut self, is_final: bool) {
-    self.fbb_.push_slot::<bool>(DiagCommOffset::VT_IS_FINAL, is_final, false);
+    self.fbb_.push_slot::<bool>(DiagComm::VT_IS_FINAL, is_final, false);
   }
   #[inline]
   pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a, A>) -> DiagCommBuilder<'a, 'b, A> {
@@ -14366,18 +14366,6 @@ impl core::fmt::Debug for DiagComm<'_> {
       ds.finish()
   }
 }
-pub enum DiagServiceOffset {}
-impl DiagServiceOffset {
-    pub const VT_DIAG_COMM: flatbuffers::VOffsetT = 4;
-    pub const VT_REQUEST: flatbuffers::VOffsetT = 6;
-    pub const VT_POS_RESPONSES: flatbuffers::VOffsetT = 8;
-    pub const VT_NEG_RESPONSES: flatbuffers::VOffsetT = 10;
-    pub const VT_IS_CYCLIC: flatbuffers::VOffsetT = 12;
-    pub const VT_IS_MULTIPLE: flatbuffers::VOffsetT = 14;
-    pub const VT_ADDRESSING: flatbuffers::VOffsetT = 16;
-    pub const VT_TRANSMISSION_MODE: flatbuffers::VOffsetT = 18;
-    pub const VT_COM_PARAM_REFS: flatbuffers::VOffsetT = 20;
-}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Copy for DiagService<'a, B> {}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Clone for DiagService<'a, B> {
   fn clone(&self) -> Self { *self }
@@ -14398,12 +14386,17 @@ impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'
   }
 }
 
-impl<'a, B: flatbuffers::ReadBuffer + ?Sized> DiagService<'a, B> {
+impl<'a> DiagService<'a> {
+  pub const VT_DIAG_COMM: flatbuffers::VOffsetT = 4;
+  pub const VT_REQUEST: flatbuffers::VOffsetT = 6;
+  pub const VT_POS_RESPONSES: flatbuffers::VOffsetT = 8;
+  pub const VT_NEG_RESPONSES: flatbuffers::VOffsetT = 10;
+  pub const VT_IS_CYCLIC: flatbuffers::VOffsetT = 12;
+  pub const VT_IS_MULTIPLE: flatbuffers::VOffsetT = 14;
+  pub const VT_ADDRESSING: flatbuffers::VOffsetT = 16;
+  pub const VT_TRANSMISSION_MODE: flatbuffers::VOffsetT = 18;
+  pub const VT_COM_PARAM_REFS: flatbuffers::VOffsetT = 20;
 
-  #[inline]
-  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
-    DiagService { _tab: table }
-  }
   #[allow(unused_mut)]
   pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr, A: flatbuffers::Allocator + 'bldr>(
     _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr, A>,
@@ -14421,6 +14414,13 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> DiagService<'a, B> {
     builder.add_is_cyclic(args.is_cyclic);
     builder.finish()
   }
+}
+
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> DiagService<'a, B> {
+  #[inline]
+  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
+    DiagService { _tab: table }
+  }
 
 
   #[inline]
@@ -14428,63 +14428,63 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> DiagService<'a, B> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<DiagComm<'a, B>>>(DiagServiceOffset::VT_DIAG_COMM, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<DiagComm<'a, B>>>(DiagService::VT_DIAG_COMM, None)}
   }
   #[inline]
   pub fn request(&self) -> Option<Request<'a, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<Request<'a, B>>>(DiagServiceOffset::VT_REQUEST, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<Request<'a, B>>>(DiagService::VT_REQUEST, None)}
   }
   #[inline]
   pub fn pos_responses(&self) -> Option<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<Response<'a, B>>, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<Response<'a, B>>, B>>>(DiagServiceOffset::VT_POS_RESPONSES, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<Response<'a, B>>, B>>>(DiagService::VT_POS_RESPONSES, None)}
   }
   #[inline]
   pub fn neg_responses(&self) -> Option<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<Response<'a, B>>, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<Response<'a, B>>, B>>>(DiagServiceOffset::VT_NEG_RESPONSES, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<Response<'a, B>>, B>>>(DiagService::VT_NEG_RESPONSES, None)}
   }
   #[inline]
   pub fn is_cyclic(&self) -> bool {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<bool>(DiagServiceOffset::VT_IS_CYCLIC, Some(false)).unwrap()}
+    unsafe { self._tab.get::<bool>(DiagService::VT_IS_CYCLIC, Some(false)).unwrap()}
   }
   #[inline]
   pub fn is_multiple(&self) -> bool {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<bool>(DiagServiceOffset::VT_IS_MULTIPLE, Some(false)).unwrap()}
+    unsafe { self._tab.get::<bool>(DiagService::VT_IS_MULTIPLE, Some(false)).unwrap()}
   }
   #[inline]
   pub fn addressing(&self) -> Addressing {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<Addressing>(DiagServiceOffset::VT_ADDRESSING, Some(Addressing::FUNCTIONAL)).unwrap()}
+    unsafe { self._tab.get::<Addressing>(DiagService::VT_ADDRESSING, Some(Addressing::FUNCTIONAL)).unwrap()}
   }
   #[inline]
   pub fn transmission_mode(&self) -> TransmissionMode {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<TransmissionMode>(DiagServiceOffset::VT_TRANSMISSION_MODE, Some(TransmissionMode::SEND_ONLY)).unwrap()}
+    unsafe { self._tab.get::<TransmissionMode>(DiagService::VT_TRANSMISSION_MODE, Some(TransmissionMode::SEND_ONLY)).unwrap()}
   }
   #[inline]
   pub fn com_param_refs(&self) -> Option<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<ComParamRef<'a, B>>, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<ComParamRef<'a, B>>, B>>>(DiagServiceOffset::VT_COM_PARAM_REFS, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<ComParamRef<'a, B>>, B>>>(DiagService::VT_COM_PARAM_REFS, None)}
   }
 }
 
@@ -14495,15 +14495,15 @@ impl<B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Verifiable for DiagServic
   ) -> Result<(), flatbuffers::InvalidFlatbuffer> {
     use self::flatbuffers::Verifiable;
     v.visit_table(pos)?
-     .visit_field::<flatbuffers::ForwardsUOffset<DiagComm<'_, B>>>("diag_comm", DiagServiceOffset::VT_DIAG_COMM, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<Request<'_, B>>>("request", DiagServiceOffset::VT_REQUEST, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<Response<'_, B>>, B>>>("pos_responses", DiagServiceOffset::VT_POS_RESPONSES, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<Response<'_, B>>, B>>>("neg_responses", DiagServiceOffset::VT_NEG_RESPONSES, false)?
-     .visit_field::<bool>("is_cyclic", DiagServiceOffset::VT_IS_CYCLIC, false)?
-     .visit_field::<bool>("is_multiple", DiagServiceOffset::VT_IS_MULTIPLE, false)?
-     .visit_field::<Addressing>("addressing", DiagServiceOffset::VT_ADDRESSING, false)?
-     .visit_field::<TransmissionMode>("transmission_mode", DiagServiceOffset::VT_TRANSMISSION_MODE, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<ComParamRef<'_, B>>, B>>>("com_param_refs", DiagServiceOffset::VT_COM_PARAM_REFS, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<DiagComm<'_, B>>>("diag_comm", DiagService::VT_DIAG_COMM, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<Request<'_, B>>>("request", DiagService::VT_REQUEST, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<Response<'_, B>>, B>>>("pos_responses", DiagService::VT_POS_RESPONSES, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<Response<'_, B>>, B>>>("neg_responses", DiagService::VT_NEG_RESPONSES, false)?
+     .visit_field::<bool>("is_cyclic", DiagService::VT_IS_CYCLIC, false)?
+     .visit_field::<bool>("is_multiple", DiagService::VT_IS_MULTIPLE, false)?
+     .visit_field::<Addressing>("addressing", DiagService::VT_ADDRESSING, false)?
+     .visit_field::<TransmissionMode>("transmission_mode", DiagService::VT_TRANSMISSION_MODE, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<ComParamRef<'_, B>>, B>>>("com_param_refs", DiagService::VT_COM_PARAM_REFS, false)?
      .finish();
     Ok(())
   }
@@ -14543,39 +14543,39 @@ pub struct DiagServiceBuilder<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> {
 impl<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> DiagServiceBuilder<'a, 'b, A> {
   #[inline]
   pub fn add_diag_comm(&mut self, diag_comm: flatbuffers::WIPOffset<DiagComm<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<DiagComm>>(DiagServiceOffset::VT_DIAG_COMM, diag_comm);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<DiagComm>>(DiagService::VT_DIAG_COMM, diag_comm);
   }
   #[inline]
   pub fn add_request(&mut self, request: flatbuffers::WIPOffset<Request<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Request>>(DiagServiceOffset::VT_REQUEST, request);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Request>>(DiagService::VT_REQUEST, request);
   }
   #[inline]
   pub fn add_pos_responses(&mut self, pos_responses: flatbuffers::WIPOffset<flatbuffers::Vector<'b , flatbuffers::ForwardsUOffset<Response<'b >>>>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(DiagServiceOffset::VT_POS_RESPONSES, pos_responses);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(DiagService::VT_POS_RESPONSES, pos_responses);
   }
   #[inline]
   pub fn add_neg_responses(&mut self, neg_responses: flatbuffers::WIPOffset<flatbuffers::Vector<'b , flatbuffers::ForwardsUOffset<Response<'b >>>>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(DiagServiceOffset::VT_NEG_RESPONSES, neg_responses);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(DiagService::VT_NEG_RESPONSES, neg_responses);
   }
   #[inline]
   pub fn add_is_cyclic(&mut self, is_cyclic: bool) {
-    self.fbb_.push_slot::<bool>(DiagServiceOffset::VT_IS_CYCLIC, is_cyclic, false);
+    self.fbb_.push_slot::<bool>(DiagService::VT_IS_CYCLIC, is_cyclic, false);
   }
   #[inline]
   pub fn add_is_multiple(&mut self, is_multiple: bool) {
-    self.fbb_.push_slot::<bool>(DiagServiceOffset::VT_IS_MULTIPLE, is_multiple, false);
+    self.fbb_.push_slot::<bool>(DiagService::VT_IS_MULTIPLE, is_multiple, false);
   }
   #[inline]
   pub fn add_addressing(&mut self, addressing: Addressing) {
-    self.fbb_.push_slot::<Addressing>(DiagServiceOffset::VT_ADDRESSING, addressing, Addressing::FUNCTIONAL);
+    self.fbb_.push_slot::<Addressing>(DiagService::VT_ADDRESSING, addressing, Addressing::FUNCTIONAL);
   }
   #[inline]
   pub fn add_transmission_mode(&mut self, transmission_mode: TransmissionMode) {
-    self.fbb_.push_slot::<TransmissionMode>(DiagServiceOffset::VT_TRANSMISSION_MODE, transmission_mode, TransmissionMode::SEND_ONLY);
+    self.fbb_.push_slot::<TransmissionMode>(DiagService::VT_TRANSMISSION_MODE, transmission_mode, TransmissionMode::SEND_ONLY);
   }
   #[inline]
   pub fn add_com_param_refs(&mut self, com_param_refs: flatbuffers::WIPOffset<flatbuffers::Vector<'b , flatbuffers::ForwardsUOffset<ComParamRef<'b >>>>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(DiagServiceOffset::VT_COM_PARAM_REFS, com_param_refs);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(DiagService::VT_COM_PARAM_REFS, com_param_refs);
   }
   #[inline]
   pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a, A>) -> DiagServiceBuilder<'a, 'b, A> {
@@ -14607,15 +14607,6 @@ impl core::fmt::Debug for DiagService<'_> {
       ds.finish()
   }
 }
-pub enum ProgCodeOffset {}
-impl ProgCodeOffset {
-    pub const VT_CODE_FILE: flatbuffers::VOffsetT = 4;
-    pub const VT_ENCRYPTION: flatbuffers::VOffsetT = 6;
-    pub const VT_SYNTAX: flatbuffers::VOffsetT = 8;
-    pub const VT_REVISION: flatbuffers::VOffsetT = 10;
-    pub const VT_ENTRYPOINT: flatbuffers::VOffsetT = 12;
-    pub const VT_LIBRARY: flatbuffers::VOffsetT = 14;
-}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Copy for ProgCode<'a, B> {}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Clone for ProgCode<'a, B> {
   fn clone(&self) -> Self { *self }
@@ -14636,12 +14627,14 @@ impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'
   }
 }
 
-impl<'a, B: flatbuffers::ReadBuffer + ?Sized> ProgCode<'a, B> {
+impl<'a> ProgCode<'a> {
+  pub const VT_CODE_FILE: flatbuffers::VOffsetT = 4;
+  pub const VT_ENCRYPTION: flatbuffers::VOffsetT = 6;
+  pub const VT_SYNTAX: flatbuffers::VOffsetT = 8;
+  pub const VT_REVISION: flatbuffers::VOffsetT = 10;
+  pub const VT_ENTRYPOINT: flatbuffers::VOffsetT = 12;
+  pub const VT_LIBRARY: flatbuffers::VOffsetT = 14;
 
-  #[inline]
-  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
-    ProgCode { _tab: table }
-  }
   #[allow(unused_mut)]
   pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr, A: flatbuffers::Allocator + 'bldr>(
     _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr, A>,
@@ -14656,6 +14649,13 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> ProgCode<'a, B> {
     if let Some(x) = args.code_file { builder.add_code_file(x); }
     builder.finish()
   }
+}
+
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> ProgCode<'a, B> {
+  #[inline]
+  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
+    ProgCode { _tab: table }
+  }
 
 
   #[inline]
@@ -14663,42 +14663,42 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> ProgCode<'a, B> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(ProgCodeOffset::VT_CODE_FILE, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(ProgCode::VT_CODE_FILE, None)}
   }
   #[inline]
   pub fn encryption(&self) -> Option<&'a str> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(ProgCodeOffset::VT_ENCRYPTION, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(ProgCode::VT_ENCRYPTION, None)}
   }
   #[inline]
   pub fn syntax(&self) -> Option<&'a str> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(ProgCodeOffset::VT_SYNTAX, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(ProgCode::VT_SYNTAX, None)}
   }
   #[inline]
   pub fn revision(&self) -> Option<&'a str> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(ProgCodeOffset::VT_REVISION, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(ProgCode::VT_REVISION, None)}
   }
   #[inline]
   pub fn entrypoint(&self) -> Option<&'a str> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(ProgCodeOffset::VT_ENTRYPOINT, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(ProgCode::VT_ENTRYPOINT, None)}
   }
   #[inline]
   pub fn library(&self) -> Option<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<Library<'a, B>>, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<Library<'a, B>>, B>>>(ProgCodeOffset::VT_LIBRARY, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<Library<'a, B>>, B>>>(ProgCode::VT_LIBRARY, None)}
   }
 }
 
@@ -14709,12 +14709,12 @@ impl<B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Verifiable for ProgCode<'
   ) -> Result<(), flatbuffers::InvalidFlatbuffer> {
     use self::flatbuffers::Verifiable;
     v.visit_table(pos)?
-     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("code_file", ProgCodeOffset::VT_CODE_FILE, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("encryption", ProgCodeOffset::VT_ENCRYPTION, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("syntax", ProgCodeOffset::VT_SYNTAX, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("revision", ProgCodeOffset::VT_REVISION, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("entrypoint", ProgCodeOffset::VT_ENTRYPOINT, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<Library<'_, B>>, B>>>("library", ProgCodeOffset::VT_LIBRARY, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("code_file", ProgCode::VT_CODE_FILE, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("encryption", ProgCode::VT_ENCRYPTION, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("syntax", ProgCode::VT_SYNTAX, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("revision", ProgCode::VT_REVISION, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("entrypoint", ProgCode::VT_ENTRYPOINT, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<Library<'_, B>>, B>>>("library", ProgCode::VT_LIBRARY, false)?
      .finish();
     Ok(())
   }
@@ -14748,27 +14748,27 @@ pub struct ProgCodeBuilder<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> {
 impl<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> ProgCodeBuilder<'a, 'b, A> {
   #[inline]
   pub fn add_code_file(&mut self, code_file: flatbuffers::WIPOffset<&'b  str>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(ProgCodeOffset::VT_CODE_FILE, code_file);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(ProgCode::VT_CODE_FILE, code_file);
   }
   #[inline]
   pub fn add_encryption(&mut self, encryption: flatbuffers::WIPOffset<&'b  str>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(ProgCodeOffset::VT_ENCRYPTION, encryption);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(ProgCode::VT_ENCRYPTION, encryption);
   }
   #[inline]
   pub fn add_syntax(&mut self, syntax: flatbuffers::WIPOffset<&'b  str>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(ProgCodeOffset::VT_SYNTAX, syntax);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(ProgCode::VT_SYNTAX, syntax);
   }
   #[inline]
   pub fn add_revision(&mut self, revision: flatbuffers::WIPOffset<&'b  str>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(ProgCodeOffset::VT_REVISION, revision);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(ProgCode::VT_REVISION, revision);
   }
   #[inline]
   pub fn add_entrypoint(&mut self, entrypoint: flatbuffers::WIPOffset<&'b  str>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(ProgCodeOffset::VT_ENTRYPOINT, entrypoint);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(ProgCode::VT_ENTRYPOINT, entrypoint);
   }
   #[inline]
   pub fn add_library(&mut self, library: flatbuffers::WIPOffset<flatbuffers::Vector<'b , flatbuffers::ForwardsUOffset<Library<'b >>>>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(ProgCodeOffset::VT_LIBRARY, library);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(ProgCode::VT_LIBRARY, library);
   }
   #[inline]
   pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a, A>) -> ProgCodeBuilder<'a, 'b, A> {
@@ -14797,14 +14797,6 @@ impl core::fmt::Debug for ProgCode<'_> {
       ds.finish()
   }
 }
-pub enum JobParamOffset {}
-impl JobParamOffset {
-    pub const VT_SHORT_NAME: flatbuffers::VOffsetT = 4;
-    pub const VT_LONG_NAME: flatbuffers::VOffsetT = 6;
-    pub const VT_PHYSICAL_DEFAULT_VALUE: flatbuffers::VOffsetT = 8;
-    pub const VT_DOP_BASE: flatbuffers::VOffsetT = 10;
-    pub const VT_SEMANTIC: flatbuffers::VOffsetT = 12;
-}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Copy for JobParam<'a, B> {}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Clone for JobParam<'a, B> {
   fn clone(&self) -> Self { *self }
@@ -14825,12 +14817,13 @@ impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'
   }
 }
 
-impl<'a, B: flatbuffers::ReadBuffer + ?Sized> JobParam<'a, B> {
+impl<'a> JobParam<'a> {
+  pub const VT_SHORT_NAME: flatbuffers::VOffsetT = 4;
+  pub const VT_LONG_NAME: flatbuffers::VOffsetT = 6;
+  pub const VT_PHYSICAL_DEFAULT_VALUE: flatbuffers::VOffsetT = 8;
+  pub const VT_DOP_BASE: flatbuffers::VOffsetT = 10;
+  pub const VT_SEMANTIC: flatbuffers::VOffsetT = 12;
 
-  #[inline]
-  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
-    JobParam { _tab: table }
-  }
   #[allow(unused_mut)]
   pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr, A: flatbuffers::Allocator + 'bldr>(
     _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr, A>,
@@ -14844,6 +14837,13 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> JobParam<'a, B> {
     if let Some(x) = args.short_name { builder.add_short_name(x); }
     builder.finish()
   }
+}
+
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> JobParam<'a, B> {
+  #[inline]
+  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
+    JobParam { _tab: table }
+  }
 
 
   #[inline]
@@ -14851,35 +14851,35 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> JobParam<'a, B> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(JobParamOffset::VT_SHORT_NAME, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(JobParam::VT_SHORT_NAME, None)}
   }
   #[inline]
   pub fn long_name(&self) -> Option<LongName<'a, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<LongName<'a, B>>>(JobParamOffset::VT_LONG_NAME, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<LongName<'a, B>>>(JobParam::VT_LONG_NAME, None)}
   }
   #[inline]
   pub fn physical_default_value(&self) -> Option<&'a str> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(JobParamOffset::VT_PHYSICAL_DEFAULT_VALUE, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(JobParam::VT_PHYSICAL_DEFAULT_VALUE, None)}
   }
   #[inline]
   pub fn dop_base(&self) -> Option<DOP<'a, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<DOP<'a, B>>>(JobParamOffset::VT_DOP_BASE, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<DOP<'a, B>>>(JobParam::VT_DOP_BASE, None)}
   }
   #[inline]
   pub fn semantic(&self) -> Option<&'a str> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(JobParamOffset::VT_SEMANTIC, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(JobParam::VT_SEMANTIC, None)}
   }
 }
 
@@ -14890,11 +14890,11 @@ impl<B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Verifiable for JobParam<'
   ) -> Result<(), flatbuffers::InvalidFlatbuffer> {
     use self::flatbuffers::Verifiable;
     v.visit_table(pos)?
-     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("short_name", JobParamOffset::VT_SHORT_NAME, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<LongName<'_, B>>>("long_name", JobParamOffset::VT_LONG_NAME, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("physical_default_value", JobParamOffset::VT_PHYSICAL_DEFAULT_VALUE, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<DOP<'_, B>>>("dop_base", JobParamOffset::VT_DOP_BASE, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("semantic", JobParamOffset::VT_SEMANTIC, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("short_name", JobParam::VT_SHORT_NAME, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<LongName<'_, B>>>("long_name", JobParam::VT_LONG_NAME, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("physical_default_value", JobParam::VT_PHYSICAL_DEFAULT_VALUE, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<DOP<'_, B>>>("dop_base", JobParam::VT_DOP_BASE, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("semantic", JobParam::VT_SEMANTIC, false)?
      .finish();
     Ok(())
   }
@@ -14926,23 +14926,23 @@ pub struct JobParamBuilder<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> {
 impl<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> JobParamBuilder<'a, 'b, A> {
   #[inline]
   pub fn add_short_name(&mut self, short_name: flatbuffers::WIPOffset<&'b  str>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(JobParamOffset::VT_SHORT_NAME, short_name);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(JobParam::VT_SHORT_NAME, short_name);
   }
   #[inline]
   pub fn add_long_name(&mut self, long_name: flatbuffers::WIPOffset<LongName<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<LongName>>(JobParamOffset::VT_LONG_NAME, long_name);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<LongName>>(JobParam::VT_LONG_NAME, long_name);
   }
   #[inline]
   pub fn add_physical_default_value(&mut self, physical_default_value: flatbuffers::WIPOffset<&'b  str>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(JobParamOffset::VT_PHYSICAL_DEFAULT_VALUE, physical_default_value);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(JobParam::VT_PHYSICAL_DEFAULT_VALUE, physical_default_value);
   }
   #[inline]
   pub fn add_dop_base(&mut self, dop_base: flatbuffers::WIPOffset<DOP<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<DOP>>(JobParamOffset::VT_DOP_BASE, dop_base);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<DOP>>(JobParam::VT_DOP_BASE, dop_base);
   }
   #[inline]
   pub fn add_semantic(&mut self, semantic: flatbuffers::WIPOffset<&'b  str>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(JobParamOffset::VT_SEMANTIC, semantic);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(JobParam::VT_SEMANTIC, semantic);
   }
   #[inline]
   pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a, A>) -> JobParamBuilder<'a, 'b, A> {
@@ -14970,14 +14970,6 @@ impl core::fmt::Debug for JobParam<'_> {
       ds.finish()
   }
 }
-pub enum SingleEcuJobOffset {}
-impl SingleEcuJobOffset {
-    pub const VT_DIAG_COMM: flatbuffers::VOffsetT = 4;
-    pub const VT_PROG_CODES: flatbuffers::VOffsetT = 6;
-    pub const VT_INPUT_PARAMS: flatbuffers::VOffsetT = 8;
-    pub const VT_OUTPUT_PARAMS: flatbuffers::VOffsetT = 10;
-    pub const VT_NEG_OUTPUT_PARAMS: flatbuffers::VOffsetT = 12;
-}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Copy for SingleEcuJob<'a, B> {}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Clone for SingleEcuJob<'a, B> {
   fn clone(&self) -> Self { *self }
@@ -14998,12 +14990,13 @@ impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'
   }
 }
 
-impl<'a, B: flatbuffers::ReadBuffer + ?Sized> SingleEcuJob<'a, B> {
+impl<'a> SingleEcuJob<'a> {
+  pub const VT_DIAG_COMM: flatbuffers::VOffsetT = 4;
+  pub const VT_PROG_CODES: flatbuffers::VOffsetT = 6;
+  pub const VT_INPUT_PARAMS: flatbuffers::VOffsetT = 8;
+  pub const VT_OUTPUT_PARAMS: flatbuffers::VOffsetT = 10;
+  pub const VT_NEG_OUTPUT_PARAMS: flatbuffers::VOffsetT = 12;
 
-  #[inline]
-  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
-    SingleEcuJob { _tab: table }
-  }
   #[allow(unused_mut)]
   pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr, A: flatbuffers::Allocator + 'bldr>(
     _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr, A>,
@@ -15017,6 +15010,13 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> SingleEcuJob<'a, B> {
     if let Some(x) = args.diag_comm { builder.add_diag_comm(x); }
     builder.finish()
   }
+}
+
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> SingleEcuJob<'a, B> {
+  #[inline]
+  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
+    SingleEcuJob { _tab: table }
+  }
 
 
   #[inline]
@@ -15024,35 +15024,35 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> SingleEcuJob<'a, B> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<DiagComm<'a, B>>>(SingleEcuJobOffset::VT_DIAG_COMM, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<DiagComm<'a, B>>>(SingleEcuJob::VT_DIAG_COMM, None)}
   }
   #[inline]
   pub fn prog_codes(&self) -> Option<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<ProgCode<'a, B>>, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<ProgCode<'a, B>>, B>>>(SingleEcuJobOffset::VT_PROG_CODES, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<ProgCode<'a, B>>, B>>>(SingleEcuJob::VT_PROG_CODES, None)}
   }
   #[inline]
   pub fn input_params(&self) -> Option<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<JobParam<'a, B>>, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<JobParam<'a, B>>, B>>>(SingleEcuJobOffset::VT_INPUT_PARAMS, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<JobParam<'a, B>>, B>>>(SingleEcuJob::VT_INPUT_PARAMS, None)}
   }
   #[inline]
   pub fn output_params(&self) -> Option<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<JobParam<'a, B>>, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<JobParam<'a, B>>, B>>>(SingleEcuJobOffset::VT_OUTPUT_PARAMS, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<JobParam<'a, B>>, B>>>(SingleEcuJob::VT_OUTPUT_PARAMS, None)}
   }
   #[inline]
   pub fn neg_output_params(&self) -> Option<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<JobParam<'a, B>>, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<JobParam<'a, B>>, B>>>(SingleEcuJobOffset::VT_NEG_OUTPUT_PARAMS, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<JobParam<'a, B>>, B>>>(SingleEcuJob::VT_NEG_OUTPUT_PARAMS, None)}
   }
 }
 
@@ -15063,11 +15063,11 @@ impl<B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Verifiable for SingleEcuJ
   ) -> Result<(), flatbuffers::InvalidFlatbuffer> {
     use self::flatbuffers::Verifiable;
     v.visit_table(pos)?
-     .visit_field::<flatbuffers::ForwardsUOffset<DiagComm<'_, B>>>("diag_comm", SingleEcuJobOffset::VT_DIAG_COMM, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<ProgCode<'_, B>>, B>>>("prog_codes", SingleEcuJobOffset::VT_PROG_CODES, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<JobParam<'_, B>>, B>>>("input_params", SingleEcuJobOffset::VT_INPUT_PARAMS, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<JobParam<'_, B>>, B>>>("output_params", SingleEcuJobOffset::VT_OUTPUT_PARAMS, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<JobParam<'_, B>>, B>>>("neg_output_params", SingleEcuJobOffset::VT_NEG_OUTPUT_PARAMS, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<DiagComm<'_, B>>>("diag_comm", SingleEcuJob::VT_DIAG_COMM, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<ProgCode<'_, B>>, B>>>("prog_codes", SingleEcuJob::VT_PROG_CODES, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<JobParam<'_, B>>, B>>>("input_params", SingleEcuJob::VT_INPUT_PARAMS, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<JobParam<'_, B>>, B>>>("output_params", SingleEcuJob::VT_OUTPUT_PARAMS, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<JobParam<'_, B>>, B>>>("neg_output_params", SingleEcuJob::VT_NEG_OUTPUT_PARAMS, false)?
      .finish();
     Ok(())
   }
@@ -15099,23 +15099,23 @@ pub struct SingleEcuJobBuilder<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> {
 impl<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> SingleEcuJobBuilder<'a, 'b, A> {
   #[inline]
   pub fn add_diag_comm(&mut self, diag_comm: flatbuffers::WIPOffset<DiagComm<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<DiagComm>>(SingleEcuJobOffset::VT_DIAG_COMM, diag_comm);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<DiagComm>>(SingleEcuJob::VT_DIAG_COMM, diag_comm);
   }
   #[inline]
   pub fn add_prog_codes(&mut self, prog_codes: flatbuffers::WIPOffset<flatbuffers::Vector<'b , flatbuffers::ForwardsUOffset<ProgCode<'b >>>>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(SingleEcuJobOffset::VT_PROG_CODES, prog_codes);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(SingleEcuJob::VT_PROG_CODES, prog_codes);
   }
   #[inline]
   pub fn add_input_params(&mut self, input_params: flatbuffers::WIPOffset<flatbuffers::Vector<'b , flatbuffers::ForwardsUOffset<JobParam<'b >>>>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(SingleEcuJobOffset::VT_INPUT_PARAMS, input_params);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(SingleEcuJob::VT_INPUT_PARAMS, input_params);
   }
   #[inline]
   pub fn add_output_params(&mut self, output_params: flatbuffers::WIPOffset<flatbuffers::Vector<'b , flatbuffers::ForwardsUOffset<JobParam<'b >>>>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(SingleEcuJobOffset::VT_OUTPUT_PARAMS, output_params);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(SingleEcuJob::VT_OUTPUT_PARAMS, output_params);
   }
   #[inline]
   pub fn add_neg_output_params(&mut self, neg_output_params: flatbuffers::WIPOffset<flatbuffers::Vector<'b , flatbuffers::ForwardsUOffset<JobParam<'b >>>>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(SingleEcuJobOffset::VT_NEG_OUTPUT_PARAMS, neg_output_params);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(SingleEcuJob::VT_NEG_OUTPUT_PARAMS, neg_output_params);
   }
   #[inline]
   pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a, A>) -> SingleEcuJobBuilder<'a, 'b, A> {
@@ -15143,13 +15143,6 @@ impl core::fmt::Debug for SingleEcuJob<'_> {
       ds.finish()
   }
 }
-pub enum MatchingParameterOffset {}
-impl MatchingParameterOffset {
-    pub const VT_EXPECTED_VALUE: flatbuffers::VOffsetT = 4;
-    pub const VT_DIAG_SERVICE: flatbuffers::VOffsetT = 6;
-    pub const VT_OUT_PARAM: flatbuffers::VOffsetT = 8;
-    pub const VT_USE_PHYSICAL_ADDRESSING: flatbuffers::VOffsetT = 10;
-}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Copy for MatchingParameter<'a, B> {}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Clone for MatchingParameter<'a, B> {
   fn clone(&self) -> Self { *self }
@@ -15170,12 +15163,12 @@ impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'
   }
 }
 
-impl<'a, B: flatbuffers::ReadBuffer + ?Sized> MatchingParameter<'a, B> {
+impl<'a> MatchingParameter<'a> {
+  pub const VT_EXPECTED_VALUE: flatbuffers::VOffsetT = 4;
+  pub const VT_DIAG_SERVICE: flatbuffers::VOffsetT = 6;
+  pub const VT_OUT_PARAM: flatbuffers::VOffsetT = 8;
+  pub const VT_USE_PHYSICAL_ADDRESSING: flatbuffers::VOffsetT = 10;
 
-  #[inline]
-  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
-    MatchingParameter { _tab: table }
-  }
   #[allow(unused_mut)]
   pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr, A: flatbuffers::Allocator + 'bldr>(
     _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr, A>,
@@ -15188,6 +15181,13 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> MatchingParameter<'a, B> {
     if let Some(x) = args.use_physical_addressing { builder.add_use_physical_addressing(x); }
     builder.finish()
   }
+}
+
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> MatchingParameter<'a, B> {
+  #[inline]
+  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
+    MatchingParameter { _tab: table }
+  }
 
 
   #[inline]
@@ -15195,28 +15195,28 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> MatchingParameter<'a, B> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(MatchingParameterOffset::VT_EXPECTED_VALUE, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(MatchingParameter::VT_EXPECTED_VALUE, None)}
   }
   #[inline]
   pub fn diag_service(&self) -> Option<DiagService<'a, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<DiagService<'a, B>>>(MatchingParameterOffset::VT_DIAG_SERVICE, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<DiagService<'a, B>>>(MatchingParameter::VT_DIAG_SERVICE, None)}
   }
   #[inline]
   pub fn out_param(&self) -> Option<Param<'a, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<Param<'a, B>>>(MatchingParameterOffset::VT_OUT_PARAM, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<Param<'a, B>>>(MatchingParameter::VT_OUT_PARAM, None)}
   }
   #[inline]
   pub fn use_physical_addressing(&self) -> Option<bool> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<bool>(MatchingParameterOffset::VT_USE_PHYSICAL_ADDRESSING, None)}
+    unsafe { self._tab.get::<bool>(MatchingParameter::VT_USE_PHYSICAL_ADDRESSING, None)}
   }
 }
 
@@ -15227,10 +15227,10 @@ impl<B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Verifiable for MatchingPa
   ) -> Result<(), flatbuffers::InvalidFlatbuffer> {
     use self::flatbuffers::Verifiable;
     v.visit_table(pos)?
-     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("expected_value", MatchingParameterOffset::VT_EXPECTED_VALUE, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<DiagService<'_, B>>>("diag_service", MatchingParameterOffset::VT_DIAG_SERVICE, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<Param<'_, B>>>("out_param", MatchingParameterOffset::VT_OUT_PARAM, false)?
-     .visit_field::<bool>("use_physical_addressing", MatchingParameterOffset::VT_USE_PHYSICAL_ADDRESSING, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("expected_value", MatchingParameter::VT_EXPECTED_VALUE, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<DiagService<'_, B>>>("diag_service", MatchingParameter::VT_DIAG_SERVICE, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<Param<'_, B>>>("out_param", MatchingParameter::VT_OUT_PARAM, false)?
+     .visit_field::<bool>("use_physical_addressing", MatchingParameter::VT_USE_PHYSICAL_ADDRESSING, false)?
      .finish();
     Ok(())
   }
@@ -15260,19 +15260,19 @@ pub struct MatchingParameterBuilder<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> 
 impl<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> MatchingParameterBuilder<'a, 'b, A> {
   #[inline]
   pub fn add_expected_value(&mut self, expected_value: flatbuffers::WIPOffset<&'b  str>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(MatchingParameterOffset::VT_EXPECTED_VALUE, expected_value);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(MatchingParameter::VT_EXPECTED_VALUE, expected_value);
   }
   #[inline]
   pub fn add_diag_service(&mut self, diag_service: flatbuffers::WIPOffset<DiagService<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<DiagService>>(MatchingParameterOffset::VT_DIAG_SERVICE, diag_service);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<DiagService>>(MatchingParameter::VT_DIAG_SERVICE, diag_service);
   }
   #[inline]
   pub fn add_out_param(&mut self, out_param: flatbuffers::WIPOffset<Param<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Param>>(MatchingParameterOffset::VT_OUT_PARAM, out_param);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Param>>(MatchingParameter::VT_OUT_PARAM, out_param);
   }
   #[inline]
   pub fn add_use_physical_addressing(&mut self, use_physical_addressing: bool) {
-    self.fbb_.push_slot_always::<bool>(MatchingParameterOffset::VT_USE_PHYSICAL_ADDRESSING, use_physical_addressing);
+    self.fbb_.push_slot_always::<bool>(MatchingParameter::VT_USE_PHYSICAL_ADDRESSING, use_physical_addressing);
   }
   #[inline]
   pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a, A>) -> MatchingParameterBuilder<'a, 'b, A> {
@@ -15299,10 +15299,6 @@ impl core::fmt::Debug for MatchingParameter<'_> {
       ds.finish()
   }
 }
-pub enum VariantPatternOffset {}
-impl VariantPatternOffset {
-    pub const VT_MATCHING_PARAMETER: flatbuffers::VOffsetT = 4;
-}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Copy for VariantPattern<'a, B> {}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Clone for VariantPattern<'a, B> {
   fn clone(&self) -> Self { *self }
@@ -15323,12 +15319,9 @@ impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'
   }
 }
 
-impl<'a, B: flatbuffers::ReadBuffer + ?Sized> VariantPattern<'a, B> {
+impl<'a> VariantPattern<'a> {
+  pub const VT_MATCHING_PARAMETER: flatbuffers::VOffsetT = 4;
 
-  #[inline]
-  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
-    VariantPattern { _tab: table }
-  }
   #[allow(unused_mut)]
   pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr, A: flatbuffers::Allocator + 'bldr>(
     _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr, A>,
@@ -15338,6 +15331,13 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> VariantPattern<'a, B> {
     if let Some(x) = args.matching_parameter { builder.add_matching_parameter(x); }
     builder.finish()
   }
+}
+
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> VariantPattern<'a, B> {
+  #[inline]
+  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
+    VariantPattern { _tab: table }
+  }
 
 
   #[inline]
@@ -15345,7 +15345,7 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> VariantPattern<'a, B> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<MatchingParameter<'a, B>>, B>>>(VariantPatternOffset::VT_MATCHING_PARAMETER, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<MatchingParameter<'a, B>>, B>>>(VariantPattern::VT_MATCHING_PARAMETER, None)}
   }
 }
 
@@ -15356,7 +15356,7 @@ impl<B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Verifiable for VariantPat
   ) -> Result<(), flatbuffers::InvalidFlatbuffer> {
     use self::flatbuffers::Verifiable;
     v.visit_table(pos)?
-     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<MatchingParameter<'_, B>>, B>>>("matching_parameter", VariantPatternOffset::VT_MATCHING_PARAMETER, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<MatchingParameter<'_, B>>, B>>>("matching_parameter", VariantPattern::VT_MATCHING_PARAMETER, false)?
      .finish();
     Ok(())
   }
@@ -15380,7 +15380,7 @@ pub struct VariantPatternBuilder<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> {
 impl<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> VariantPatternBuilder<'a, 'b, A> {
   #[inline]
   pub fn add_matching_parameter(&mut self, matching_parameter: flatbuffers::WIPOffset<flatbuffers::Vector<'b , flatbuffers::ForwardsUOffset<MatchingParameter<'b >>>>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(VariantPatternOffset::VT_MATCHING_PARAMETER, matching_parameter);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(VariantPattern::VT_MATCHING_PARAMETER, matching_parameter);
   }
   #[inline]
   pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a, A>) -> VariantPatternBuilder<'a, 'b, A> {
@@ -15404,18 +15404,6 @@ impl core::fmt::Debug for VariantPattern<'_> {
       ds.finish()
   }
 }
-pub enum DiagLayerOffset {}
-impl DiagLayerOffset {
-    pub const VT_SHORT_NAME: flatbuffers::VOffsetT = 4;
-    pub const VT_LONG_NAME: flatbuffers::VOffsetT = 6;
-    pub const VT_FUNCT_CLASSES: flatbuffers::VOffsetT = 8;
-    pub const VT_COM_PARAM_REFS: flatbuffers::VOffsetT = 10;
-    pub const VT_DIAG_SERVICES: flatbuffers::VOffsetT = 12;
-    pub const VT_SINGLE_ECU_JOBS: flatbuffers::VOffsetT = 14;
-    pub const VT_STATE_CHARTS: flatbuffers::VOffsetT = 16;
-    pub const VT_ADDITIONAL_AUDIENCES: flatbuffers::VOffsetT = 18;
-    pub const VT_SDGS: flatbuffers::VOffsetT = 20;
-}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Copy for DiagLayer<'a, B> {}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Clone for DiagLayer<'a, B> {
   fn clone(&self) -> Self { *self }
@@ -15436,12 +15424,17 @@ impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'
   }
 }
 
-impl<'a, B: flatbuffers::ReadBuffer + ?Sized> DiagLayer<'a, B> {
+impl<'a> DiagLayer<'a> {
+  pub const VT_SHORT_NAME: flatbuffers::VOffsetT = 4;
+  pub const VT_LONG_NAME: flatbuffers::VOffsetT = 6;
+  pub const VT_FUNCT_CLASSES: flatbuffers::VOffsetT = 8;
+  pub const VT_COM_PARAM_REFS: flatbuffers::VOffsetT = 10;
+  pub const VT_DIAG_SERVICES: flatbuffers::VOffsetT = 12;
+  pub const VT_SINGLE_ECU_JOBS: flatbuffers::VOffsetT = 14;
+  pub const VT_STATE_CHARTS: flatbuffers::VOffsetT = 16;
+  pub const VT_ADDITIONAL_AUDIENCES: flatbuffers::VOffsetT = 18;
+  pub const VT_SDGS: flatbuffers::VOffsetT = 20;
 
-  #[inline]
-  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
-    DiagLayer { _tab: table }
-  }
   #[allow(unused_mut)]
   pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr, A: flatbuffers::Allocator + 'bldr>(
     _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr, A>,
@@ -15459,6 +15452,13 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> DiagLayer<'a, B> {
     if let Some(x) = args.short_name { builder.add_short_name(x); }
     builder.finish()
   }
+}
+
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> DiagLayer<'a, B> {
+  #[inline]
+  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
+    DiagLayer { _tab: table }
+  }
 
 
   #[inline]
@@ -15466,63 +15466,63 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> DiagLayer<'a, B> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(DiagLayerOffset::VT_SHORT_NAME, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(DiagLayer::VT_SHORT_NAME, None)}
   }
   #[inline]
   pub fn long_name(&self) -> Option<LongName<'a, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<LongName<'a, B>>>(DiagLayerOffset::VT_LONG_NAME, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<LongName<'a, B>>>(DiagLayer::VT_LONG_NAME, None)}
   }
   #[inline]
   pub fn funct_classes(&self) -> Option<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<FunctClass<'a, B>>, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<FunctClass<'a, B>>, B>>>(DiagLayerOffset::VT_FUNCT_CLASSES, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<FunctClass<'a, B>>, B>>>(DiagLayer::VT_FUNCT_CLASSES, None)}
   }
   #[inline]
   pub fn com_param_refs(&self) -> Option<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<ComParamRef<'a, B>>, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<ComParamRef<'a, B>>, B>>>(DiagLayerOffset::VT_COM_PARAM_REFS, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<ComParamRef<'a, B>>, B>>>(DiagLayer::VT_COM_PARAM_REFS, None)}
   }
   #[inline]
   pub fn diag_services(&self) -> Option<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<DiagService<'a, B>>, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<DiagService<'a, B>>, B>>>(DiagLayerOffset::VT_DIAG_SERVICES, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<DiagService<'a, B>>, B>>>(DiagLayer::VT_DIAG_SERVICES, None)}
   }
   #[inline]
   pub fn single_ecu_jobs(&self) -> Option<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<SingleEcuJob<'a, B>>, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<SingleEcuJob<'a, B>>, B>>>(DiagLayerOffset::VT_SINGLE_ECU_JOBS, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<SingleEcuJob<'a, B>>, B>>>(DiagLayer::VT_SINGLE_ECU_JOBS, None)}
   }
   #[inline]
   pub fn state_charts(&self) -> Option<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<StateChart<'a, B>>, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<StateChart<'a, B>>, B>>>(DiagLayerOffset::VT_STATE_CHARTS, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<StateChart<'a, B>>, B>>>(DiagLayer::VT_STATE_CHARTS, None)}
   }
   #[inline]
   pub fn additional_audiences(&self) -> Option<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<AdditionalAudience<'a, B>>, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<AdditionalAudience<'a, B>>, B>>>(DiagLayerOffset::VT_ADDITIONAL_AUDIENCES, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<AdditionalAudience<'a, B>>, B>>>(DiagLayer::VT_ADDITIONAL_AUDIENCES, None)}
   }
   #[inline]
   pub fn sdgs(&self) -> Option<SDGS<'a, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<SDGS<'a, B>>>(DiagLayerOffset::VT_SDGS, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<SDGS<'a, B>>>(DiagLayer::VT_SDGS, None)}
   }
 }
 
@@ -15533,15 +15533,15 @@ impl<B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Verifiable for DiagLayer<
   ) -> Result<(), flatbuffers::InvalidFlatbuffer> {
     use self::flatbuffers::Verifiable;
     v.visit_table(pos)?
-     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("short_name", DiagLayerOffset::VT_SHORT_NAME, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<LongName<'_, B>>>("long_name", DiagLayerOffset::VT_LONG_NAME, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<FunctClass<'_, B>>, B>>>("funct_classes", DiagLayerOffset::VT_FUNCT_CLASSES, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<ComParamRef<'_, B>>, B>>>("com_param_refs", DiagLayerOffset::VT_COM_PARAM_REFS, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<DiagService<'_, B>>, B>>>("diag_services", DiagLayerOffset::VT_DIAG_SERVICES, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<SingleEcuJob<'_, B>>, B>>>("single_ecu_jobs", DiagLayerOffset::VT_SINGLE_ECU_JOBS, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<StateChart<'_, B>>, B>>>("state_charts", DiagLayerOffset::VT_STATE_CHARTS, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<AdditionalAudience<'_, B>>, B>>>("additional_audiences", DiagLayerOffset::VT_ADDITIONAL_AUDIENCES, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<SDGS<'_, B>>>("sdgs", DiagLayerOffset::VT_SDGS, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("short_name", DiagLayer::VT_SHORT_NAME, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<LongName<'_, B>>>("long_name", DiagLayer::VT_LONG_NAME, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<FunctClass<'_, B>>, B>>>("funct_classes", DiagLayer::VT_FUNCT_CLASSES, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<ComParamRef<'_, B>>, B>>>("com_param_refs", DiagLayer::VT_COM_PARAM_REFS, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<DiagService<'_, B>>, B>>>("diag_services", DiagLayer::VT_DIAG_SERVICES, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<SingleEcuJob<'_, B>>, B>>>("single_ecu_jobs", DiagLayer::VT_SINGLE_ECU_JOBS, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<StateChart<'_, B>>, B>>>("state_charts", DiagLayer::VT_STATE_CHARTS, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<AdditionalAudience<'_, B>>, B>>>("additional_audiences", DiagLayer::VT_ADDITIONAL_AUDIENCES, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<SDGS<'_, B>>>("sdgs", DiagLayer::VT_SDGS, false)?
      .finish();
     Ok(())
   }
@@ -15581,39 +15581,39 @@ pub struct DiagLayerBuilder<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> {
 impl<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> DiagLayerBuilder<'a, 'b, A> {
   #[inline]
   pub fn add_short_name(&mut self, short_name: flatbuffers::WIPOffset<&'b  str>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(DiagLayerOffset::VT_SHORT_NAME, short_name);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(DiagLayer::VT_SHORT_NAME, short_name);
   }
   #[inline]
   pub fn add_long_name(&mut self, long_name: flatbuffers::WIPOffset<LongName<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<LongName>>(DiagLayerOffset::VT_LONG_NAME, long_name);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<LongName>>(DiagLayer::VT_LONG_NAME, long_name);
   }
   #[inline]
   pub fn add_funct_classes(&mut self, funct_classes: flatbuffers::WIPOffset<flatbuffers::Vector<'b , flatbuffers::ForwardsUOffset<FunctClass<'b >>>>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(DiagLayerOffset::VT_FUNCT_CLASSES, funct_classes);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(DiagLayer::VT_FUNCT_CLASSES, funct_classes);
   }
   #[inline]
   pub fn add_com_param_refs(&mut self, com_param_refs: flatbuffers::WIPOffset<flatbuffers::Vector<'b , flatbuffers::ForwardsUOffset<ComParamRef<'b >>>>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(DiagLayerOffset::VT_COM_PARAM_REFS, com_param_refs);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(DiagLayer::VT_COM_PARAM_REFS, com_param_refs);
   }
   #[inline]
   pub fn add_diag_services(&mut self, diag_services: flatbuffers::WIPOffset<flatbuffers::Vector<'b , flatbuffers::ForwardsUOffset<DiagService<'b >>>>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(DiagLayerOffset::VT_DIAG_SERVICES, diag_services);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(DiagLayer::VT_DIAG_SERVICES, diag_services);
   }
   #[inline]
   pub fn add_single_ecu_jobs(&mut self, single_ecu_jobs: flatbuffers::WIPOffset<flatbuffers::Vector<'b , flatbuffers::ForwardsUOffset<SingleEcuJob<'b >>>>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(DiagLayerOffset::VT_SINGLE_ECU_JOBS, single_ecu_jobs);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(DiagLayer::VT_SINGLE_ECU_JOBS, single_ecu_jobs);
   }
   #[inline]
   pub fn add_state_charts(&mut self, state_charts: flatbuffers::WIPOffset<flatbuffers::Vector<'b , flatbuffers::ForwardsUOffset<StateChart<'b >>>>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(DiagLayerOffset::VT_STATE_CHARTS, state_charts);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(DiagLayer::VT_STATE_CHARTS, state_charts);
   }
   #[inline]
   pub fn add_additional_audiences(&mut self, additional_audiences: flatbuffers::WIPOffset<flatbuffers::Vector<'b , flatbuffers::ForwardsUOffset<AdditionalAudience<'b >>>>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(DiagLayerOffset::VT_ADDITIONAL_AUDIENCES, additional_audiences);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(DiagLayer::VT_ADDITIONAL_AUDIENCES, additional_audiences);
   }
   #[inline]
   pub fn add_sdgs(&mut self, sdgs: flatbuffers::WIPOffset<SDGS<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<SDGS>>(DiagLayerOffset::VT_SDGS, sdgs);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<SDGS>>(DiagLayer::VT_SDGS, sdgs);
   }
   #[inline]
   pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a, A>) -> DiagLayerBuilder<'a, 'b, A> {
@@ -15645,11 +15645,6 @@ impl core::fmt::Debug for DiagLayer<'_> {
       ds.finish()
   }
 }
-pub enum FunctionalGroupOffset {}
-impl FunctionalGroupOffset {
-    pub const VT_DIAG_LAYER: flatbuffers::VOffsetT = 4;
-    pub const VT_PARENT_REFS: flatbuffers::VOffsetT = 6;
-}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Copy for FunctionalGroup<'a, B> {}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Clone for FunctionalGroup<'a, B> {
   fn clone(&self) -> Self { *self }
@@ -15670,12 +15665,10 @@ impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'
   }
 }
 
-impl<'a, B: flatbuffers::ReadBuffer + ?Sized> FunctionalGroup<'a, B> {
+impl<'a> FunctionalGroup<'a> {
+  pub const VT_DIAG_LAYER: flatbuffers::VOffsetT = 4;
+  pub const VT_PARENT_REFS: flatbuffers::VOffsetT = 6;
 
-  #[inline]
-  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
-    FunctionalGroup { _tab: table }
-  }
   #[allow(unused_mut)]
   pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr, A: flatbuffers::Allocator + 'bldr>(
     _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr, A>,
@@ -15686,6 +15679,13 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> FunctionalGroup<'a, B> {
     if let Some(x) = args.diag_layer { builder.add_diag_layer(x); }
     builder.finish()
   }
+}
+
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> FunctionalGroup<'a, B> {
+  #[inline]
+  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
+    FunctionalGroup { _tab: table }
+  }
 
 
   #[inline]
@@ -15693,14 +15693,14 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> FunctionalGroup<'a, B> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<DiagLayer<'a, B>>>(FunctionalGroupOffset::VT_DIAG_LAYER, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<DiagLayer<'a, B>>>(FunctionalGroup::VT_DIAG_LAYER, None)}
   }
   #[inline]
   pub fn parent_refs(&self) -> Option<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<ParentRef<'a, B>>, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<ParentRef<'a, B>>, B>>>(FunctionalGroupOffset::VT_PARENT_REFS, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<ParentRef<'a, B>>, B>>>(FunctionalGroup::VT_PARENT_REFS, None)}
   }
 }
 
@@ -15711,8 +15711,8 @@ impl<B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Verifiable for Functional
   ) -> Result<(), flatbuffers::InvalidFlatbuffer> {
     use self::flatbuffers::Verifiable;
     v.visit_table(pos)?
-     .visit_field::<flatbuffers::ForwardsUOffset<DiagLayer<'_, B>>>("diag_layer", FunctionalGroupOffset::VT_DIAG_LAYER, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<ParentRef<'_, B>>, B>>>("parent_refs", FunctionalGroupOffset::VT_PARENT_REFS, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<DiagLayer<'_, B>>>("diag_layer", FunctionalGroup::VT_DIAG_LAYER, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<ParentRef<'_, B>>, B>>>("parent_refs", FunctionalGroup::VT_PARENT_REFS, false)?
      .finish();
     Ok(())
   }
@@ -15738,11 +15738,11 @@ pub struct FunctionalGroupBuilder<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> {
 impl<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> FunctionalGroupBuilder<'a, 'b, A> {
   #[inline]
   pub fn add_diag_layer(&mut self, diag_layer: flatbuffers::WIPOffset<DiagLayer<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<DiagLayer>>(FunctionalGroupOffset::VT_DIAG_LAYER, diag_layer);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<DiagLayer>>(FunctionalGroup::VT_DIAG_LAYER, diag_layer);
   }
   #[inline]
   pub fn add_parent_refs(&mut self, parent_refs: flatbuffers::WIPOffset<flatbuffers::Vector<'b , flatbuffers::ForwardsUOffset<ParentRef<'b >>>>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(FunctionalGroupOffset::VT_PARENT_REFS, parent_refs);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(FunctionalGroup::VT_PARENT_REFS, parent_refs);
   }
   #[inline]
   pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a, A>) -> FunctionalGroupBuilder<'a, 'b, A> {
@@ -15767,16 +15767,6 @@ impl core::fmt::Debug for FunctionalGroup<'_> {
       ds.finish()
   }
 }
-pub enum ParentRefOffset {}
-impl ParentRefOffset {
-    pub const VT_REF_TYPE: flatbuffers::VOffsetT = 4;
-    pub const VT_REF_: flatbuffers::VOffsetT = 6;
-    pub const VT_NOT_INHERITED_DIAG_COMM_SHORT_NAMES: flatbuffers::VOffsetT = 8;
-    pub const VT_NOT_INHERITED_VARIABLES_SHORT_NAMES: flatbuffers::VOffsetT = 10;
-    pub const VT_NOT_INHERITED_DOPS_SHORT_NAMES: flatbuffers::VOffsetT = 12;
-    pub const VT_NOT_INHERITED_TABLES_SHORT_NAMES: flatbuffers::VOffsetT = 14;
-    pub const VT_NOT_INHERITED_GLOBAL_NEG_RESPONSES_SHORT_NAMES: flatbuffers::VOffsetT = 16;
-}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Copy for ParentRef<'a, B> {}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Clone for ParentRef<'a, B> {
   fn clone(&self) -> Self { *self }
@@ -15797,12 +15787,15 @@ impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'
   }
 }
 
-impl<'a, B: flatbuffers::ReadBuffer + ?Sized> ParentRef<'a, B> {
+impl<'a> ParentRef<'a> {
+  pub const VT_REF_TYPE: flatbuffers::VOffsetT = 4;
+  pub const VT_REF_: flatbuffers::VOffsetT = 6;
+  pub const VT_NOT_INHERITED_DIAG_COMM_SHORT_NAMES: flatbuffers::VOffsetT = 8;
+  pub const VT_NOT_INHERITED_VARIABLES_SHORT_NAMES: flatbuffers::VOffsetT = 10;
+  pub const VT_NOT_INHERITED_DOPS_SHORT_NAMES: flatbuffers::VOffsetT = 12;
+  pub const VT_NOT_INHERITED_TABLES_SHORT_NAMES: flatbuffers::VOffsetT = 14;
+  pub const VT_NOT_INHERITED_GLOBAL_NEG_RESPONSES_SHORT_NAMES: flatbuffers::VOffsetT = 16;
 
-  #[inline]
-  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
-    ParentRef { _tab: table }
-  }
   #[allow(unused_mut)]
   pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr, A: flatbuffers::Allocator + 'bldr>(
     _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr, A>,
@@ -15818,6 +15811,13 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> ParentRef<'a, B> {
     builder.add_ref_type(args.ref_type);
     builder.finish()
   }
+}
+
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> ParentRef<'a, B> {
+  #[inline]
+  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
+    ParentRef { _tab: table }
+  }
 
 
   #[inline]
@@ -15825,49 +15825,49 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> ParentRef<'a, B> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<ParentRefType>(ParentRefOffset::VT_REF_TYPE, Some(ParentRefType::NONE)).unwrap()}
+    unsafe { self._tab.get::<ParentRefType>(ParentRef::VT_REF_TYPE, Some(ParentRefType::NONE)).unwrap()}
   }
   #[inline]
   pub fn ref_(&self) -> Option<flatbuffers::Table<'a, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Table<'a, B>>>(ParentRefOffset::VT_REF_, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Table<'a, B>>>(ParentRef::VT_REF_, None)}
   }
   #[inline]
   pub fn not_inherited_diag_comm_short_names(&self) -> Option<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<&'a str>, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<&'a str>, B>>>(ParentRefOffset::VT_NOT_INHERITED_DIAG_COMM_SHORT_NAMES, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<&'a str>, B>>>(ParentRef::VT_NOT_INHERITED_DIAG_COMM_SHORT_NAMES, None)}
   }
   #[inline]
   pub fn not_inherited_variables_short_names(&self) -> Option<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<&'a str>, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<&'a str>, B>>>(ParentRefOffset::VT_NOT_INHERITED_VARIABLES_SHORT_NAMES, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<&'a str>, B>>>(ParentRef::VT_NOT_INHERITED_VARIABLES_SHORT_NAMES, None)}
   }
   #[inline]
   pub fn not_inherited_dops_short_names(&self) -> Option<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<&'a str>, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<&'a str>, B>>>(ParentRefOffset::VT_NOT_INHERITED_DOPS_SHORT_NAMES, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<&'a str>, B>>>(ParentRef::VT_NOT_INHERITED_DOPS_SHORT_NAMES, None)}
   }
   #[inline]
   pub fn not_inherited_tables_short_names(&self) -> Option<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<&'a str>, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<&'a str>, B>>>(ParentRefOffset::VT_NOT_INHERITED_TABLES_SHORT_NAMES, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<&'a str>, B>>>(ParentRef::VT_NOT_INHERITED_TABLES_SHORT_NAMES, None)}
   }
   #[inline]
   pub fn not_inherited_global_neg_responses_short_names(&self) -> Option<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<&'a str>, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<&'a str>, B>>>(ParentRefOffset::VT_NOT_INHERITED_GLOBAL_NEG_RESPONSES_SHORT_NAMES, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<&'a str>, B>>>(ParentRef::VT_NOT_INHERITED_GLOBAL_NEG_RESPONSES_SHORT_NAMES, None)}
   }
   #[inline]
   #[allow(non_snake_case)]
@@ -15953,19 +15953,19 @@ impl<B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Verifiable for ParentRef<
   ) -> Result<(), flatbuffers::InvalidFlatbuffer> {
     use self::flatbuffers::Verifiable;
     v.visit_table(pos)?
-     .visit_union::<ParentRefTypeUnionValue>("ref_type", ParentRefOffset::VT_REF_TYPE, "ref_", ParentRefOffset::VT_REF_, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<&'_ str>, B>>>("not_inherited_diag_comm_short_names", ParentRefOffset::VT_NOT_INHERITED_DIAG_COMM_SHORT_NAMES, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<&'_ str>, B>>>("not_inherited_variables_short_names", ParentRefOffset::VT_NOT_INHERITED_VARIABLES_SHORT_NAMES, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<&'_ str>, B>>>("not_inherited_dops_short_names", ParentRefOffset::VT_NOT_INHERITED_DOPS_SHORT_NAMES, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<&'_ str>, B>>>("not_inherited_tables_short_names", ParentRefOffset::VT_NOT_INHERITED_TABLES_SHORT_NAMES, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<&'_ str>, B>>>("not_inherited_global_neg_responses_short_names", ParentRefOffset::VT_NOT_INHERITED_GLOBAL_NEG_RESPONSES_SHORT_NAMES, false)?
+     .visit_union::<ParentRefTypeUnionValue>("ref_type", ParentRef::VT_REF_TYPE, "ref_", ParentRef::VT_REF_, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<&'_ str>, B>>>("not_inherited_diag_comm_short_names", ParentRef::VT_NOT_INHERITED_DIAG_COMM_SHORT_NAMES, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<&'_ str>, B>>>("not_inherited_variables_short_names", ParentRef::VT_NOT_INHERITED_VARIABLES_SHORT_NAMES, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<&'_ str>, B>>>("not_inherited_dops_short_names", ParentRef::VT_NOT_INHERITED_DOPS_SHORT_NAMES, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<&'_ str>, B>>>("not_inherited_tables_short_names", ParentRef::VT_NOT_INHERITED_TABLES_SHORT_NAMES, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<&'_ str>, B>>>("not_inherited_global_neg_responses_short_names", ParentRef::VT_NOT_INHERITED_GLOBAL_NEG_RESPONSES_SHORT_NAMES, false)?
      .finish();
     Ok(())
   }
 }
 pub struct ParentRefArgs<'a> {
     pub ref_type: ParentRefType,
-    pub ref_: Option<flatbuffers::WIPOffset<ParentRefTypeUnionValue>>,
+    pub ref_: Option<flatbuffers::WIPOffset<flatbuffers::UnionWIPOffset>>,
     pub not_inherited_diag_comm_short_names: Option<flatbuffers::WIPOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<&'a str>>>>,
     pub not_inherited_variables_short_names: Option<flatbuffers::WIPOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<&'a str>>>>,
     pub not_inherited_dops_short_names: Option<flatbuffers::WIPOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<&'a str>>>>,
@@ -15994,31 +15994,31 @@ pub struct ParentRefBuilder<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> {
 impl<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> ParentRefBuilder<'a, 'b, A> {
   #[inline]
   pub fn add_ref_type(&mut self, ref_type: ParentRefType) {
-    self.fbb_.push_slot::<ParentRefType>(ParentRefOffset::VT_REF_TYPE, ref_type, ParentRefType::NONE);
+    self.fbb_.push_slot::<ParentRefType>(ParentRef::VT_REF_TYPE, ref_type, ParentRefType::NONE);
   }
   #[inline]
-  pub fn add_ref_(&mut self, ref_: flatbuffers::WIPOffset<ParentRefTypeUnionValue>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(ParentRefOffset::VT_REF_, ref_);
+  pub fn add_ref_(&mut self, ref_: flatbuffers::WIPOffset<flatbuffers::UnionWIPOffset>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(ParentRef::VT_REF_, ref_);
   }
   #[inline]
   pub fn add_not_inherited_diag_comm_short_names(&mut self, not_inherited_diag_comm_short_names: flatbuffers::WIPOffset<flatbuffers::Vector<'b , flatbuffers::ForwardsUOffset<&'b  str>>>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(ParentRefOffset::VT_NOT_INHERITED_DIAG_COMM_SHORT_NAMES, not_inherited_diag_comm_short_names);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(ParentRef::VT_NOT_INHERITED_DIAG_COMM_SHORT_NAMES, not_inherited_diag_comm_short_names);
   }
   #[inline]
   pub fn add_not_inherited_variables_short_names(&mut self, not_inherited_variables_short_names: flatbuffers::WIPOffset<flatbuffers::Vector<'b , flatbuffers::ForwardsUOffset<&'b  str>>>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(ParentRefOffset::VT_NOT_INHERITED_VARIABLES_SHORT_NAMES, not_inherited_variables_short_names);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(ParentRef::VT_NOT_INHERITED_VARIABLES_SHORT_NAMES, not_inherited_variables_short_names);
   }
   #[inline]
   pub fn add_not_inherited_dops_short_names(&mut self, not_inherited_dops_short_names: flatbuffers::WIPOffset<flatbuffers::Vector<'b , flatbuffers::ForwardsUOffset<&'b  str>>>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(ParentRefOffset::VT_NOT_INHERITED_DOPS_SHORT_NAMES, not_inherited_dops_short_names);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(ParentRef::VT_NOT_INHERITED_DOPS_SHORT_NAMES, not_inherited_dops_short_names);
   }
   #[inline]
   pub fn add_not_inherited_tables_short_names(&mut self, not_inherited_tables_short_names: flatbuffers::WIPOffset<flatbuffers::Vector<'b , flatbuffers::ForwardsUOffset<&'b  str>>>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(ParentRefOffset::VT_NOT_INHERITED_TABLES_SHORT_NAMES, not_inherited_tables_short_names);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(ParentRef::VT_NOT_INHERITED_TABLES_SHORT_NAMES, not_inherited_tables_short_names);
   }
   #[inline]
   pub fn add_not_inherited_global_neg_responses_short_names(&mut self, not_inherited_global_neg_responses_short_names: flatbuffers::WIPOffset<flatbuffers::Vector<'b , flatbuffers::ForwardsUOffset<&'b  str>>>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(ParentRefOffset::VT_NOT_INHERITED_GLOBAL_NEG_RESPONSES_SHORT_NAMES, not_inherited_global_neg_responses_short_names);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(ParentRef::VT_NOT_INHERITED_GLOBAL_NEG_RESPONSES_SHORT_NAMES, not_inherited_global_neg_responses_short_names);
   }
   #[inline]
   pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a, A>) -> ParentRefBuilder<'a, 'b, A> {
@@ -16088,10 +16088,6 @@ impl core::fmt::Debug for ParentRef<'_> {
       ds.finish()
   }
 }
-pub enum EcuSharedDataOffset {}
-impl EcuSharedDataOffset {
-    pub const VT_DIAG_LAYER: flatbuffers::VOffsetT = 4;
-}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Copy for EcuSharedData<'a, B> {}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Clone for EcuSharedData<'a, B> {
   fn clone(&self) -> Self { *self }
@@ -16112,12 +16108,9 @@ impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'
   }
 }
 
-impl<'a, B: flatbuffers::ReadBuffer + ?Sized> EcuSharedData<'a, B> {
+impl<'a> EcuSharedData<'a> {
+  pub const VT_DIAG_LAYER: flatbuffers::VOffsetT = 4;
 
-  #[inline]
-  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
-    EcuSharedData { _tab: table }
-  }
   #[allow(unused_mut)]
   pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr, A: flatbuffers::Allocator + 'bldr>(
     _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr, A>,
@@ -16127,6 +16120,13 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> EcuSharedData<'a, B> {
     if let Some(x) = args.diag_layer { builder.add_diag_layer(x); }
     builder.finish()
   }
+}
+
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> EcuSharedData<'a, B> {
+  #[inline]
+  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
+    EcuSharedData { _tab: table }
+  }
 
 
   #[inline]
@@ -16134,7 +16134,7 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> EcuSharedData<'a, B> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<DiagLayer<'a, B>>>(EcuSharedDataOffset::VT_DIAG_LAYER, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<DiagLayer<'a, B>>>(EcuSharedData::VT_DIAG_LAYER, None)}
   }
 }
 
@@ -16145,7 +16145,7 @@ impl<B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Verifiable for EcuSharedD
   ) -> Result<(), flatbuffers::InvalidFlatbuffer> {
     use self::flatbuffers::Verifiable;
     v.visit_table(pos)?
-     .visit_field::<flatbuffers::ForwardsUOffset<DiagLayer<'_, B>>>("diag_layer", EcuSharedDataOffset::VT_DIAG_LAYER, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<DiagLayer<'_, B>>>("diag_layer", EcuSharedData::VT_DIAG_LAYER, false)?
      .finish();
     Ok(())
   }
@@ -16169,7 +16169,7 @@ pub struct EcuSharedDataBuilder<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> {
 impl<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> EcuSharedDataBuilder<'a, 'b, A> {
   #[inline]
   pub fn add_diag_layer(&mut self, diag_layer: flatbuffers::WIPOffset<DiagLayer<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<DiagLayer>>(EcuSharedDataOffset::VT_DIAG_LAYER, diag_layer);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<DiagLayer>>(EcuSharedData::VT_DIAG_LAYER, diag_layer);
   }
   #[inline]
   pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a, A>) -> EcuSharedDataBuilder<'a, 'b, A> {
@@ -16193,13 +16193,6 @@ impl core::fmt::Debug for EcuSharedData<'_> {
       ds.finish()
   }
 }
-pub enum VariantOffset {}
-impl VariantOffset {
-    pub const VT_DIAG_LAYER: flatbuffers::VOffsetT = 4;
-    pub const VT_IS_BASE_VARIANT: flatbuffers::VOffsetT = 6;
-    pub const VT_VARIANT_PATTERN: flatbuffers::VOffsetT = 8;
-    pub const VT_PARENT_REFS: flatbuffers::VOffsetT = 10;
-}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Copy for Variant<'a, B> {}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Clone for Variant<'a, B> {
   fn clone(&self) -> Self { *self }
@@ -16220,12 +16213,12 @@ impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'
   }
 }
 
-impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Variant<'a, B> {
+impl<'a> Variant<'a> {
+  pub const VT_DIAG_LAYER: flatbuffers::VOffsetT = 4;
+  pub const VT_IS_BASE_VARIANT: flatbuffers::VOffsetT = 6;
+  pub const VT_VARIANT_PATTERN: flatbuffers::VOffsetT = 8;
+  pub const VT_PARENT_REFS: flatbuffers::VOffsetT = 10;
 
-  #[inline]
-  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
-    Variant { _tab: table }
-  }
   #[allow(unused_mut)]
   pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr, A: flatbuffers::Allocator + 'bldr>(
     _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr, A>,
@@ -16238,6 +16231,13 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Variant<'a, B> {
     builder.add_is_base_variant(args.is_base_variant);
     builder.finish()
   }
+}
+
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Variant<'a, B> {
+  #[inline]
+  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
+    Variant { _tab: table }
+  }
 
 
   #[inline]
@@ -16245,28 +16245,28 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Variant<'a, B> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<DiagLayer<'a, B>>>(VariantOffset::VT_DIAG_LAYER, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<DiagLayer<'a, B>>>(Variant::VT_DIAG_LAYER, None)}
   }
   #[inline]
   pub fn is_base_variant(&self) -> bool {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<bool>(VariantOffset::VT_IS_BASE_VARIANT, Some(false)).unwrap()}
+    unsafe { self._tab.get::<bool>(Variant::VT_IS_BASE_VARIANT, Some(false)).unwrap()}
   }
   #[inline]
   pub fn variant_pattern(&self) -> Option<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<VariantPattern<'a, B>>, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<VariantPattern<'a, B>>, B>>>(VariantOffset::VT_VARIANT_PATTERN, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<VariantPattern<'a, B>>, B>>>(Variant::VT_VARIANT_PATTERN, None)}
   }
   #[inline]
   pub fn parent_refs(&self) -> Option<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<ParentRef<'a, B>>, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<ParentRef<'a, B>>, B>>>(VariantOffset::VT_PARENT_REFS, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<ParentRef<'a, B>>, B>>>(Variant::VT_PARENT_REFS, None)}
   }
 }
 
@@ -16277,10 +16277,10 @@ impl<B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Verifiable for Variant<'_
   ) -> Result<(), flatbuffers::InvalidFlatbuffer> {
     use self::flatbuffers::Verifiable;
     v.visit_table(pos)?
-     .visit_field::<flatbuffers::ForwardsUOffset<DiagLayer<'_, B>>>("diag_layer", VariantOffset::VT_DIAG_LAYER, false)?
-     .visit_field::<bool>("is_base_variant", VariantOffset::VT_IS_BASE_VARIANT, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<VariantPattern<'_, B>>, B>>>("variant_pattern", VariantOffset::VT_VARIANT_PATTERN, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<ParentRef<'_, B>>, B>>>("parent_refs", VariantOffset::VT_PARENT_REFS, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<DiagLayer<'_, B>>>("diag_layer", Variant::VT_DIAG_LAYER, false)?
+     .visit_field::<bool>("is_base_variant", Variant::VT_IS_BASE_VARIANT, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<VariantPattern<'_, B>>, B>>>("variant_pattern", Variant::VT_VARIANT_PATTERN, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<ParentRef<'_, B>>, B>>>("parent_refs", Variant::VT_PARENT_REFS, false)?
      .finish();
     Ok(())
   }
@@ -16310,19 +16310,19 @@ pub struct VariantBuilder<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> {
 impl<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> VariantBuilder<'a, 'b, A> {
   #[inline]
   pub fn add_diag_layer(&mut self, diag_layer: flatbuffers::WIPOffset<DiagLayer<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<DiagLayer>>(VariantOffset::VT_DIAG_LAYER, diag_layer);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<DiagLayer>>(Variant::VT_DIAG_LAYER, diag_layer);
   }
   #[inline]
   pub fn add_is_base_variant(&mut self, is_base_variant: bool) {
-    self.fbb_.push_slot::<bool>(VariantOffset::VT_IS_BASE_VARIANT, is_base_variant, false);
+    self.fbb_.push_slot::<bool>(Variant::VT_IS_BASE_VARIANT, is_base_variant, false);
   }
   #[inline]
   pub fn add_variant_pattern(&mut self, variant_pattern: flatbuffers::WIPOffset<flatbuffers::Vector<'b , flatbuffers::ForwardsUOffset<VariantPattern<'b >>>>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(VariantOffset::VT_VARIANT_PATTERN, variant_pattern);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(Variant::VT_VARIANT_PATTERN, variant_pattern);
   }
   #[inline]
   pub fn add_parent_refs(&mut self, parent_refs: flatbuffers::WIPOffset<flatbuffers::Vector<'b , flatbuffers::ForwardsUOffset<ParentRef<'b >>>>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(VariantOffset::VT_PARENT_REFS, parent_refs);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(Variant::VT_PARENT_REFS, parent_refs);
   }
   #[inline]
   pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a, A>) -> VariantBuilder<'a, 'b, A> {
@@ -16349,10 +16349,6 @@ impl core::fmt::Debug for Variant<'_> {
       ds.finish()
   }
 }
-pub enum SimpleValueOffset {}
-impl SimpleValueOffset {
-    pub const VT_VALUE: flatbuffers::VOffsetT = 4;
-}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Copy for SimpleValue<'a, B> {}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Clone for SimpleValue<'a, B> {
   fn clone(&self) -> Self { *self }
@@ -16373,12 +16369,9 @@ impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'
   }
 }
 
-impl<'a, B: flatbuffers::ReadBuffer + ?Sized> SimpleValue<'a, B> {
+impl<'a> SimpleValue<'a> {
+  pub const VT_VALUE: flatbuffers::VOffsetT = 4;
 
-  #[inline]
-  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
-    SimpleValue { _tab: table }
-  }
   #[allow(unused_mut)]
   pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr, A: flatbuffers::Allocator + 'bldr>(
     _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr, A>,
@@ -16388,6 +16381,13 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> SimpleValue<'a, B> {
     if let Some(x) = args.value { builder.add_value(x); }
     builder.finish()
   }
+}
+
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> SimpleValue<'a, B> {
+  #[inline]
+  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
+    SimpleValue { _tab: table }
+  }
 
 
   #[inline]
@@ -16395,7 +16395,7 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> SimpleValue<'a, B> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(SimpleValueOffset::VT_VALUE, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(SimpleValue::VT_VALUE, None)}
   }
 }
 
@@ -16406,7 +16406,7 @@ impl<B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Verifiable for SimpleValu
   ) -> Result<(), flatbuffers::InvalidFlatbuffer> {
     use self::flatbuffers::Verifiable;
     v.visit_table(pos)?
-     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("value", SimpleValueOffset::VT_VALUE, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("value", SimpleValue::VT_VALUE, false)?
      .finish();
     Ok(())
   }
@@ -16430,7 +16430,7 @@ pub struct SimpleValueBuilder<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> {
 impl<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> SimpleValueBuilder<'a, 'b, A> {
   #[inline]
   pub fn add_value(&mut self, value: flatbuffers::WIPOffset<&'b  str>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(SimpleValueOffset::VT_VALUE, value);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(SimpleValue::VT_VALUE, value);
   }
   #[inline]
   pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a, A>) -> SimpleValueBuilder<'a, 'b, A> {
@@ -16454,11 +16454,6 @@ impl core::fmt::Debug for SimpleValue<'_> {
       ds.finish()
   }
 }
-pub enum ComplexValueOffset {}
-impl ComplexValueOffset {
-    pub const VT_ENTRIES_TYPE: flatbuffers::VOffsetT = 4;
-    pub const VT_ENTRIES: flatbuffers::VOffsetT = 6;
-}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Copy for ComplexValue<'a, B> {}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Clone for ComplexValue<'a, B> {
   fn clone(&self) -> Self { *self }
@@ -16479,12 +16474,10 @@ impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'
   }
 }
 
-impl<'a, B: flatbuffers::ReadBuffer + ?Sized> ComplexValue<'a, B> {
+impl<'a> ComplexValue<'a> {
+  pub const VT_ENTRIES_TYPE: flatbuffers::VOffsetT = 4;
+  pub const VT_ENTRIES: flatbuffers::VOffsetT = 6;
 
-  #[inline]
-  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
-    ComplexValue { _tab: table }
-  }
   #[allow(unused_mut)]
   pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr, A: flatbuffers::Allocator + 'bldr>(
     _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr, A>,
@@ -16495,6 +16488,13 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> ComplexValue<'a, B> {
     if let Some(x) = args.entries_type { builder.add_entries_type(x); }
     builder.finish()
   }
+}
+
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> ComplexValue<'a, B> {
+  #[inline]
+  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
+    ComplexValue { _tab: table }
+  }
 
 
   #[inline]
@@ -16502,14 +16502,14 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> ComplexValue<'a, B> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, SimpleOrComplexValueEntry, B>>>(ComplexValueOffset::VT_ENTRIES_TYPE, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, SimpleOrComplexValueEntry, B>>>(ComplexValue::VT_ENTRIES_TYPE, None)}
   }
   #[inline]
   pub fn entries(&self) -> Option<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<flatbuffers::Table<'a, B>>, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<flatbuffers::Table<'a, B>>, B>>>(ComplexValueOffset::VT_ENTRIES, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<flatbuffers::Table<'a, B>>, B>>>(ComplexValue::VT_ENTRIES, None)}
   }
     #[inline]
     #[allow(non_snake_case)]
@@ -16550,7 +16550,7 @@ impl<B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Verifiable for ComplexVal
   ) -> Result<(), flatbuffers::InvalidFlatbuffer> {
     use self::flatbuffers::Verifiable;
     v.visit_table(pos)?
-     .visit_union_vector::<SimpleOrComplexValueEntryUnionValue>("entries_type", ComplexValueOffset::VT_ENTRIES_TYPE, "entries", ComplexValueOffset::VT_ENTRIES, false)?
+     .visit_union_vector::<SimpleOrComplexValueEntryUnionValue>("entries_type", ComplexValue::VT_ENTRIES_TYPE, "entries", ComplexValue::VT_ENTRIES, false)?
      .finish();
     Ok(())
   }
@@ -16576,11 +16576,11 @@ pub struct ComplexValueBuilder<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> {
 impl<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> ComplexValueBuilder<'a, 'b, A> {
   #[inline]
   pub fn add_entries_type(&mut self, entries_type: flatbuffers::WIPOffset<flatbuffers::Vector<'b , SimpleOrComplexValueEntry>>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(ComplexValueOffset::VT_ENTRIES_TYPE, entries_type);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(ComplexValue::VT_ENTRIES_TYPE, entries_type);
   }
   #[inline]
   pub fn add_entries(&mut self, entries: flatbuffers::WIPOffset<flatbuffers::Vector<'b , flatbuffers::ForwardsUOffset<SimpleOrComplexValueEntryUnionValue>>>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(ComplexValueOffset::VT_ENTRIES, entries);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(ComplexValue::VT_ENTRIES, entries);
   }
   #[inline]
   pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a, A>) -> ComplexValueBuilder<'a, 'b, A> {
@@ -16605,13 +16605,6 @@ impl core::fmt::Debug for ComplexValue<'_> {
       ds.finish()
   }
 }
-pub enum ProtocolOffset {}
-impl ProtocolOffset {
-    pub const VT_DIAG_LAYER: flatbuffers::VOffsetT = 4;
-    pub const VT_COM_PARAM_SPEC: flatbuffers::VOffsetT = 6;
-    pub const VT_PROT_STACK: flatbuffers::VOffsetT = 8;
-    pub const VT_PARENT_REFS: flatbuffers::VOffsetT = 10;
-}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Copy for Protocol<'a, B> {}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Clone for Protocol<'a, B> {
   fn clone(&self) -> Self { *self }
@@ -16632,12 +16625,12 @@ impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'
   }
 }
 
-impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Protocol<'a, B> {
+impl<'a> Protocol<'a> {
+  pub const VT_DIAG_LAYER: flatbuffers::VOffsetT = 4;
+  pub const VT_COM_PARAM_SPEC: flatbuffers::VOffsetT = 6;
+  pub const VT_PROT_STACK: flatbuffers::VOffsetT = 8;
+  pub const VT_PARENT_REFS: flatbuffers::VOffsetT = 10;
 
-  #[inline]
-  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
-    Protocol { _tab: table }
-  }
   #[allow(unused_mut)]
   pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr, A: flatbuffers::Allocator + 'bldr>(
     _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr, A>,
@@ -16650,6 +16643,13 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Protocol<'a, B> {
     if let Some(x) = args.diag_layer { builder.add_diag_layer(x); }
     builder.finish()
   }
+}
+
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Protocol<'a, B> {
+  #[inline]
+  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
+    Protocol { _tab: table }
+  }
 
 
   #[inline]
@@ -16657,28 +16657,28 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Protocol<'a, B> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<DiagLayer<'a, B>>>(ProtocolOffset::VT_DIAG_LAYER, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<DiagLayer<'a, B>>>(Protocol::VT_DIAG_LAYER, None)}
   }
   #[inline]
   pub fn com_param_spec(&self) -> Option<ComParamSpec<'a, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<ComParamSpec<'a, B>>>(ProtocolOffset::VT_COM_PARAM_SPEC, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<ComParamSpec<'a, B>>>(Protocol::VT_COM_PARAM_SPEC, None)}
   }
   #[inline]
   pub fn prot_stack(&self) -> Option<ProtStack<'a, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<ProtStack<'a, B>>>(ProtocolOffset::VT_PROT_STACK, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<ProtStack<'a, B>>>(Protocol::VT_PROT_STACK, None)}
   }
   #[inline]
   pub fn parent_refs(&self) -> Option<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<ParentRef<'a, B>>, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<ParentRef<'a, B>>, B>>>(ProtocolOffset::VT_PARENT_REFS, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<ParentRef<'a, B>>, B>>>(Protocol::VT_PARENT_REFS, None)}
   }
 }
 
@@ -16689,10 +16689,10 @@ impl<B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Verifiable for Protocol<'
   ) -> Result<(), flatbuffers::InvalidFlatbuffer> {
     use self::flatbuffers::Verifiable;
     v.visit_table(pos)?
-     .visit_field::<flatbuffers::ForwardsUOffset<DiagLayer<'_, B>>>("diag_layer", ProtocolOffset::VT_DIAG_LAYER, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<ComParamSpec<'_, B>>>("com_param_spec", ProtocolOffset::VT_COM_PARAM_SPEC, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<ProtStack<'_, B>>>("prot_stack", ProtocolOffset::VT_PROT_STACK, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<ParentRef<'_, B>>, B>>>("parent_refs", ProtocolOffset::VT_PARENT_REFS, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<DiagLayer<'_, B>>>("diag_layer", Protocol::VT_DIAG_LAYER, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<ComParamSpec<'_, B>>>("com_param_spec", Protocol::VT_COM_PARAM_SPEC, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<ProtStack<'_, B>>>("prot_stack", Protocol::VT_PROT_STACK, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<ParentRef<'_, B>>, B>>>("parent_refs", Protocol::VT_PARENT_REFS, false)?
      .finish();
     Ok(())
   }
@@ -16722,19 +16722,19 @@ pub struct ProtocolBuilder<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> {
 impl<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> ProtocolBuilder<'a, 'b, A> {
   #[inline]
   pub fn add_diag_layer(&mut self, diag_layer: flatbuffers::WIPOffset<DiagLayer<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<DiagLayer>>(ProtocolOffset::VT_DIAG_LAYER, diag_layer);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<DiagLayer>>(Protocol::VT_DIAG_LAYER, diag_layer);
   }
   #[inline]
   pub fn add_com_param_spec(&mut self, com_param_spec: flatbuffers::WIPOffset<ComParamSpec<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<ComParamSpec>>(ProtocolOffset::VT_COM_PARAM_SPEC, com_param_spec);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<ComParamSpec>>(Protocol::VT_COM_PARAM_SPEC, com_param_spec);
   }
   #[inline]
   pub fn add_prot_stack(&mut self, prot_stack: flatbuffers::WIPOffset<ProtStack<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<ProtStack>>(ProtocolOffset::VT_PROT_STACK, prot_stack);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<ProtStack>>(Protocol::VT_PROT_STACK, prot_stack);
   }
   #[inline]
   pub fn add_parent_refs(&mut self, parent_refs: flatbuffers::WIPOffset<flatbuffers::Vector<'b , flatbuffers::ForwardsUOffset<ParentRef<'b >>>>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(ProtocolOffset::VT_PARENT_REFS, parent_refs);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(Protocol::VT_PARENT_REFS, parent_refs);
   }
   #[inline]
   pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a, A>) -> ProtocolBuilder<'a, 'b, A> {
@@ -16761,14 +16761,6 @@ impl core::fmt::Debug for Protocol<'_> {
       ds.finish()
   }
 }
-pub enum ComParamRefOffset {}
-impl ComParamRefOffset {
-    pub const VT_SIMPLE_VALUE: flatbuffers::VOffsetT = 4;
-    pub const VT_COMPLEX_VALUE: flatbuffers::VOffsetT = 6;
-    pub const VT_COM_PARAM: flatbuffers::VOffsetT = 8;
-    pub const VT_PROTOCOL: flatbuffers::VOffsetT = 10;
-    pub const VT_PROT_STACK: flatbuffers::VOffsetT = 12;
-}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Copy for ComParamRef<'a, B> {}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Clone for ComParamRef<'a, B> {
   fn clone(&self) -> Self { *self }
@@ -16789,12 +16781,13 @@ impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'
   }
 }
 
-impl<'a, B: flatbuffers::ReadBuffer + ?Sized> ComParamRef<'a, B> {
+impl<'a> ComParamRef<'a> {
+  pub const VT_SIMPLE_VALUE: flatbuffers::VOffsetT = 4;
+  pub const VT_COMPLEX_VALUE: flatbuffers::VOffsetT = 6;
+  pub const VT_COM_PARAM: flatbuffers::VOffsetT = 8;
+  pub const VT_PROTOCOL: flatbuffers::VOffsetT = 10;
+  pub const VT_PROT_STACK: flatbuffers::VOffsetT = 12;
 
-  #[inline]
-  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
-    ComParamRef { _tab: table }
-  }
   #[allow(unused_mut)]
   pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr, A: flatbuffers::Allocator + 'bldr>(
     _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr, A>,
@@ -16808,6 +16801,13 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> ComParamRef<'a, B> {
     if let Some(x) = args.simple_value { builder.add_simple_value(x); }
     builder.finish()
   }
+}
+
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> ComParamRef<'a, B> {
+  #[inline]
+  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
+    ComParamRef { _tab: table }
+  }
 
 
   #[inline]
@@ -16815,35 +16815,35 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> ComParamRef<'a, B> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<SimpleValue<'a, B>>>(ComParamRefOffset::VT_SIMPLE_VALUE, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<SimpleValue<'a, B>>>(ComParamRef::VT_SIMPLE_VALUE, None)}
   }
   #[inline]
   pub fn complex_value(&self) -> Option<ComplexValue<'a, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<ComplexValue<'a, B>>>(ComParamRefOffset::VT_COMPLEX_VALUE, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<ComplexValue<'a, B>>>(ComParamRef::VT_COMPLEX_VALUE, None)}
   }
   #[inline]
   pub fn com_param(&self) -> Option<ComParam<'a, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<ComParam<'a, B>>>(ComParamRefOffset::VT_COM_PARAM, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<ComParam<'a, B>>>(ComParamRef::VT_COM_PARAM, None)}
   }
   #[inline]
   pub fn protocol(&self) -> Option<Protocol<'a, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<Protocol<'a, B>>>(ComParamRefOffset::VT_PROTOCOL, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<Protocol<'a, B>>>(ComParamRef::VT_PROTOCOL, None)}
   }
   #[inline]
   pub fn prot_stack(&self) -> Option<ProtStack<'a, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<ProtStack<'a, B>>>(ComParamRefOffset::VT_PROT_STACK, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<ProtStack<'a, B>>>(ComParamRef::VT_PROT_STACK, None)}
   }
 }
 
@@ -16854,11 +16854,11 @@ impl<B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Verifiable for ComParamRe
   ) -> Result<(), flatbuffers::InvalidFlatbuffer> {
     use self::flatbuffers::Verifiable;
     v.visit_table(pos)?
-     .visit_field::<flatbuffers::ForwardsUOffset<SimpleValue<'_, B>>>("simple_value", ComParamRefOffset::VT_SIMPLE_VALUE, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<ComplexValue<'_, B>>>("complex_value", ComParamRefOffset::VT_COMPLEX_VALUE, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<ComParam<'_, B>>>("com_param", ComParamRefOffset::VT_COM_PARAM, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<Protocol<'_, B>>>("protocol", ComParamRefOffset::VT_PROTOCOL, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<ProtStack<'_, B>>>("prot_stack", ComParamRefOffset::VT_PROT_STACK, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<SimpleValue<'_, B>>>("simple_value", ComParamRef::VT_SIMPLE_VALUE, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<ComplexValue<'_, B>>>("complex_value", ComParamRef::VT_COMPLEX_VALUE, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<ComParam<'_, B>>>("com_param", ComParamRef::VT_COM_PARAM, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<Protocol<'_, B>>>("protocol", ComParamRef::VT_PROTOCOL, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<ProtStack<'_, B>>>("prot_stack", ComParamRef::VT_PROT_STACK, false)?
      .finish();
     Ok(())
   }
@@ -16890,23 +16890,23 @@ pub struct ComParamRefBuilder<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> {
 impl<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> ComParamRefBuilder<'a, 'b, A> {
   #[inline]
   pub fn add_simple_value(&mut self, simple_value: flatbuffers::WIPOffset<SimpleValue<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<SimpleValue>>(ComParamRefOffset::VT_SIMPLE_VALUE, simple_value);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<SimpleValue>>(ComParamRef::VT_SIMPLE_VALUE, simple_value);
   }
   #[inline]
   pub fn add_complex_value(&mut self, complex_value: flatbuffers::WIPOffset<ComplexValue<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<ComplexValue>>(ComParamRefOffset::VT_COMPLEX_VALUE, complex_value);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<ComplexValue>>(ComParamRef::VT_COMPLEX_VALUE, complex_value);
   }
   #[inline]
   pub fn add_com_param(&mut self, com_param: flatbuffers::WIPOffset<ComParam<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<ComParam>>(ComParamRefOffset::VT_COM_PARAM, com_param);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<ComParam>>(ComParamRef::VT_COM_PARAM, com_param);
   }
   #[inline]
   pub fn add_protocol(&mut self, protocol: flatbuffers::WIPOffset<Protocol<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Protocol>>(ComParamRefOffset::VT_PROTOCOL, protocol);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Protocol>>(ComParamRef::VT_PROTOCOL, protocol);
   }
   #[inline]
   pub fn add_prot_stack(&mut self, prot_stack: flatbuffers::WIPOffset<ProtStack<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<ProtStack>>(ComParamRefOffset::VT_PROT_STACK, prot_stack);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<ProtStack>>(ComParamRef::VT_PROT_STACK, prot_stack);
   }
   #[inline]
   pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a, A>) -> ComParamRefBuilder<'a, 'b, A> {
@@ -16934,11 +16934,6 @@ impl core::fmt::Debug for ComParamRef<'_> {
       ds.finish()
   }
 }
-pub enum RegularComParamOffset {}
-impl RegularComParamOffset {
-    pub const VT_PHYSICAL_DEFAULT_VALUE: flatbuffers::VOffsetT = 4;
-    pub const VT_DOP: flatbuffers::VOffsetT = 6;
-}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Copy for RegularComParam<'a, B> {}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Clone for RegularComParam<'a, B> {
   fn clone(&self) -> Self { *self }
@@ -16959,12 +16954,10 @@ impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'
   }
 }
 
-impl<'a, B: flatbuffers::ReadBuffer + ?Sized> RegularComParam<'a, B> {
+impl<'a> RegularComParam<'a> {
+  pub const VT_PHYSICAL_DEFAULT_VALUE: flatbuffers::VOffsetT = 4;
+  pub const VT_DOP: flatbuffers::VOffsetT = 6;
 
-  #[inline]
-  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
-    RegularComParam { _tab: table }
-  }
   #[allow(unused_mut)]
   pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr, A: flatbuffers::Allocator + 'bldr>(
     _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr, A>,
@@ -16975,6 +16968,13 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> RegularComParam<'a, B> {
     if let Some(x) = args.physical_default_value { builder.add_physical_default_value(x); }
     builder.finish()
   }
+}
+
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> RegularComParam<'a, B> {
+  #[inline]
+  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
+    RegularComParam { _tab: table }
+  }
 
 
   #[inline]
@@ -16982,14 +16982,14 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> RegularComParam<'a, B> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(RegularComParamOffset::VT_PHYSICAL_DEFAULT_VALUE, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(RegularComParam::VT_PHYSICAL_DEFAULT_VALUE, None)}
   }
   #[inline]
   pub fn dop(&self) -> Option<DOP<'a, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<DOP<'a, B>>>(RegularComParamOffset::VT_DOP, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<DOP<'a, B>>>(RegularComParam::VT_DOP, None)}
   }
 }
 
@@ -17000,8 +17000,8 @@ impl<B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Verifiable for RegularCom
   ) -> Result<(), flatbuffers::InvalidFlatbuffer> {
     use self::flatbuffers::Verifiable;
     v.visit_table(pos)?
-     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("physical_default_value", RegularComParamOffset::VT_PHYSICAL_DEFAULT_VALUE, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<DOP<'_, B>>>("dop", RegularComParamOffset::VT_DOP, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("physical_default_value", RegularComParam::VT_PHYSICAL_DEFAULT_VALUE, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<DOP<'_, B>>>("dop", RegularComParam::VT_DOP, false)?
      .finish();
     Ok(())
   }
@@ -17027,11 +17027,11 @@ pub struct RegularComParamBuilder<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> {
 impl<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> RegularComParamBuilder<'a, 'b, A> {
   #[inline]
   pub fn add_physical_default_value(&mut self, physical_default_value: flatbuffers::WIPOffset<&'b  str>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(RegularComParamOffset::VT_PHYSICAL_DEFAULT_VALUE, physical_default_value);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(RegularComParam::VT_PHYSICAL_DEFAULT_VALUE, physical_default_value);
   }
   #[inline]
   pub fn add_dop(&mut self, dop: flatbuffers::WIPOffset<DOP<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<DOP>>(RegularComParamOffset::VT_DOP, dop);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<DOP>>(RegularComParam::VT_DOP, dop);
   }
   #[inline]
   pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a, A>) -> RegularComParamBuilder<'a, 'b, A> {
@@ -17056,12 +17056,6 @@ impl core::fmt::Debug for RegularComParam<'_> {
       ds.finish()
   }
 }
-pub enum ComplexComParamOffset {}
-impl ComplexComParamOffset {
-    pub const VT_COM_PARAMS: flatbuffers::VOffsetT = 4;
-    pub const VT_COMPLEX_PHYSICAL_DEFAULT_VALUES: flatbuffers::VOffsetT = 6;
-    pub const VT_ALLOW_MULTIPLE_VALUES: flatbuffers::VOffsetT = 8;
-}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Copy for ComplexComParam<'a, B> {}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Clone for ComplexComParam<'a, B> {
   fn clone(&self) -> Self { *self }
@@ -17082,12 +17076,11 @@ impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'
   }
 }
 
-impl<'a, B: flatbuffers::ReadBuffer + ?Sized> ComplexComParam<'a, B> {
+impl<'a> ComplexComParam<'a> {
+  pub const VT_COM_PARAMS: flatbuffers::VOffsetT = 4;
+  pub const VT_COMPLEX_PHYSICAL_DEFAULT_VALUES: flatbuffers::VOffsetT = 6;
+  pub const VT_ALLOW_MULTIPLE_VALUES: flatbuffers::VOffsetT = 8;
 
-  #[inline]
-  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
-    ComplexComParam { _tab: table }
-  }
   #[allow(unused_mut)]
   pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr, A: flatbuffers::Allocator + 'bldr>(
     _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr, A>,
@@ -17099,6 +17092,13 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> ComplexComParam<'a, B> {
     builder.add_allow_multiple_values(args.allow_multiple_values);
     builder.finish()
   }
+}
+
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> ComplexComParam<'a, B> {
+  #[inline]
+  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
+    ComplexComParam { _tab: table }
+  }
 
 
   #[inline]
@@ -17106,21 +17106,21 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> ComplexComParam<'a, B> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<ComParam<'a, B>>, B>>>(ComplexComParamOffset::VT_COM_PARAMS, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<ComParam<'a, B>>, B>>>(ComplexComParam::VT_COM_PARAMS, None)}
   }
   #[inline]
   pub fn complex_physical_default_values(&self) -> Option<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<ComplexValue<'a, B>>, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<ComplexValue<'a, B>>, B>>>(ComplexComParamOffset::VT_COMPLEX_PHYSICAL_DEFAULT_VALUES, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<ComplexValue<'a, B>>, B>>>(ComplexComParam::VT_COMPLEX_PHYSICAL_DEFAULT_VALUES, None)}
   }
   #[inline]
   pub fn allow_multiple_values(&self) -> bool {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<bool>(ComplexComParamOffset::VT_ALLOW_MULTIPLE_VALUES, Some(false)).unwrap()}
+    unsafe { self._tab.get::<bool>(ComplexComParam::VT_ALLOW_MULTIPLE_VALUES, Some(false)).unwrap()}
   }
 }
 
@@ -17131,9 +17131,9 @@ impl<B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Verifiable for ComplexCom
   ) -> Result<(), flatbuffers::InvalidFlatbuffer> {
     use self::flatbuffers::Verifiable;
     v.visit_table(pos)?
-     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<ComParam<'_, B>>, B>>>("com_params", ComplexComParamOffset::VT_COM_PARAMS, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<ComplexValue<'_, B>>, B>>>("complex_physical_default_values", ComplexComParamOffset::VT_COMPLEX_PHYSICAL_DEFAULT_VALUES, false)?
-     .visit_field::<bool>("allow_multiple_values", ComplexComParamOffset::VT_ALLOW_MULTIPLE_VALUES, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<ComParam<'_, B>>, B>>>("com_params", ComplexComParam::VT_COM_PARAMS, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<ComplexValue<'_, B>>, B>>>("complex_physical_default_values", ComplexComParam::VT_COMPLEX_PHYSICAL_DEFAULT_VALUES, false)?
+     .visit_field::<bool>("allow_multiple_values", ComplexComParam::VT_ALLOW_MULTIPLE_VALUES, false)?
      .finish();
     Ok(())
   }
@@ -17161,15 +17161,15 @@ pub struct ComplexComParamBuilder<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> {
 impl<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> ComplexComParamBuilder<'a, 'b, A> {
   #[inline]
   pub fn add_com_params(&mut self, com_params: flatbuffers::WIPOffset<flatbuffers::Vector<'b , flatbuffers::ForwardsUOffset<ComParam<'b >>>>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(ComplexComParamOffset::VT_COM_PARAMS, com_params);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(ComplexComParam::VT_COM_PARAMS, com_params);
   }
   #[inline]
   pub fn add_complex_physical_default_values(&mut self, complex_physical_default_values: flatbuffers::WIPOffset<flatbuffers::Vector<'b , flatbuffers::ForwardsUOffset<ComplexValue<'b >>>>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(ComplexComParamOffset::VT_COMPLEX_PHYSICAL_DEFAULT_VALUES, complex_physical_default_values);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(ComplexComParam::VT_COMPLEX_PHYSICAL_DEFAULT_VALUES, complex_physical_default_values);
   }
   #[inline]
   pub fn add_allow_multiple_values(&mut self, allow_multiple_values: bool) {
-    self.fbb_.push_slot::<bool>(ComplexComParamOffset::VT_ALLOW_MULTIPLE_VALUES, allow_multiple_values, false);
+    self.fbb_.push_slot::<bool>(ComplexComParam::VT_ALLOW_MULTIPLE_VALUES, allow_multiple_values, false);
   }
   #[inline]
   pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a, A>) -> ComplexComParamBuilder<'a, 'b, A> {
@@ -17195,18 +17195,6 @@ impl core::fmt::Debug for ComplexComParam<'_> {
       ds.finish()
   }
 }
-pub enum ComParamOffset {}
-impl ComParamOffset {
-    pub const VT_COM_PARAM_TYPE: flatbuffers::VOffsetT = 4;
-    pub const VT_SHORT_NAME: flatbuffers::VOffsetT = 6;
-    pub const VT_LONG_NAME: flatbuffers::VOffsetT = 8;
-    pub const VT_PARAM_CLASS: flatbuffers::VOffsetT = 10;
-    pub const VT_CP_TYPE: flatbuffers::VOffsetT = 12;
-    pub const VT_DISPLAY_LEVEL: flatbuffers::VOffsetT = 14;
-    pub const VT_CP_USAGE: flatbuffers::VOffsetT = 16;
-    pub const VT_SPECIFIC_DATA_TYPE: flatbuffers::VOffsetT = 18;
-    pub const VT_SPECIFIC_DATA: flatbuffers::VOffsetT = 20;
-}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Copy for ComParam<'a, B> {}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Clone for ComParam<'a, B> {
   fn clone(&self) -> Self { *self }
@@ -17227,12 +17215,17 @@ impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'
   }
 }
 
-impl<'a, B: flatbuffers::ReadBuffer + ?Sized> ComParam<'a, B> {
+impl<'a> ComParam<'a> {
+  pub const VT_COM_PARAM_TYPE: flatbuffers::VOffsetT = 4;
+  pub const VT_SHORT_NAME: flatbuffers::VOffsetT = 6;
+  pub const VT_LONG_NAME: flatbuffers::VOffsetT = 8;
+  pub const VT_PARAM_CLASS: flatbuffers::VOffsetT = 10;
+  pub const VT_CP_TYPE: flatbuffers::VOffsetT = 12;
+  pub const VT_DISPLAY_LEVEL: flatbuffers::VOffsetT = 14;
+  pub const VT_CP_USAGE: flatbuffers::VOffsetT = 16;
+  pub const VT_SPECIFIC_DATA_TYPE: flatbuffers::VOffsetT = 18;
+  pub const VT_SPECIFIC_DATA: flatbuffers::VOffsetT = 20;
 
-  #[inline]
-  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
-    ComParam { _tab: table }
-  }
   #[allow(unused_mut)]
   pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr, A: flatbuffers::Allocator + 'bldr>(
     _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr, A>,
@@ -17250,6 +17243,13 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> ComParam<'a, B> {
     builder.add_com_param_type(args.com_param_type);
     builder.finish()
   }
+}
+
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> ComParam<'a, B> {
+  #[inline]
+  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
+    ComParam { _tab: table }
+  }
 
 
   #[inline]
@@ -17257,63 +17257,63 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> ComParam<'a, B> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<ComParamType>(ComParamOffset::VT_COM_PARAM_TYPE, Some(ComParamType::REGULAR)).unwrap()}
+    unsafe { self._tab.get::<ComParamType>(ComParam::VT_COM_PARAM_TYPE, Some(ComParamType::REGULAR)).unwrap()}
   }
   #[inline]
   pub fn short_name(&self) -> Option<&'a str> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(ComParamOffset::VT_SHORT_NAME, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(ComParam::VT_SHORT_NAME, None)}
   }
   #[inline]
   pub fn long_name(&self) -> Option<LongName<'a, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<LongName<'a, B>>>(ComParamOffset::VT_LONG_NAME, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<LongName<'a, B>>>(ComParam::VT_LONG_NAME, None)}
   }
   #[inline]
   pub fn param_class(&self) -> Option<&'a str> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(ComParamOffset::VT_PARAM_CLASS, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(ComParam::VT_PARAM_CLASS, None)}
   }
   #[inline]
   pub fn cp_type(&self) -> ComParamStandardisationLevel {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<ComParamStandardisationLevel>(ComParamOffset::VT_CP_TYPE, Some(ComParamStandardisationLevel::STANDARD)).unwrap()}
+    unsafe { self._tab.get::<ComParamStandardisationLevel>(ComParam::VT_CP_TYPE, Some(ComParamStandardisationLevel::STANDARD)).unwrap()}
   }
   #[inline]
   pub fn display_level(&self) -> Option<u32> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<u32>(ComParamOffset::VT_DISPLAY_LEVEL, None)}
+    unsafe { self._tab.get::<u32>(ComParam::VT_DISPLAY_LEVEL, None)}
   }
   #[inline]
   pub fn cp_usage(&self) -> ComParamUsage {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<ComParamUsage>(ComParamOffset::VT_CP_USAGE, Some(ComParamUsage::ECU_SOFTWARE)).unwrap()}
+    unsafe { self._tab.get::<ComParamUsage>(ComParam::VT_CP_USAGE, Some(ComParamUsage::ECU_SOFTWARE)).unwrap()}
   }
   #[inline]
   pub fn specific_data_type(&self) -> ComParamSpecificData {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<ComParamSpecificData>(ComParamOffset::VT_SPECIFIC_DATA_TYPE, Some(ComParamSpecificData::NONE)).unwrap()}
+    unsafe { self._tab.get::<ComParamSpecificData>(ComParam::VT_SPECIFIC_DATA_TYPE, Some(ComParamSpecificData::NONE)).unwrap()}
   }
   #[inline]
   pub fn specific_data(&self) -> Option<flatbuffers::Table<'a, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Table<'a, B>>>(ComParamOffset::VT_SPECIFIC_DATA, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Table<'a, B>>>(ComParam::VT_SPECIFIC_DATA, None)}
   }
   #[inline]
   #[allow(non_snake_case)]
@@ -17354,14 +17354,14 @@ impl<B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Verifiable for ComParam<'
   ) -> Result<(), flatbuffers::InvalidFlatbuffer> {
     use self::flatbuffers::Verifiable;
     v.visit_table(pos)?
-     .visit_field::<ComParamType>("com_param_type", ComParamOffset::VT_COM_PARAM_TYPE, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("short_name", ComParamOffset::VT_SHORT_NAME, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<LongName<'_, B>>>("long_name", ComParamOffset::VT_LONG_NAME, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("param_class", ComParamOffset::VT_PARAM_CLASS, false)?
-     .visit_field::<ComParamStandardisationLevel>("cp_type", ComParamOffset::VT_CP_TYPE, false)?
-     .visit_field::<u32>("display_level", ComParamOffset::VT_DISPLAY_LEVEL, false)?
-     .visit_field::<ComParamUsage>("cp_usage", ComParamOffset::VT_CP_USAGE, false)?
-     .visit_union::<ComParamSpecificDataUnionValue>("specific_data_type", ComParamOffset::VT_SPECIFIC_DATA_TYPE, "specific_data", ComParamOffset::VT_SPECIFIC_DATA, false)?
+     .visit_field::<ComParamType>("com_param_type", ComParam::VT_COM_PARAM_TYPE, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("short_name", ComParam::VT_SHORT_NAME, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<LongName<'_, B>>>("long_name", ComParam::VT_LONG_NAME, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("param_class", ComParam::VT_PARAM_CLASS, false)?
+     .visit_field::<ComParamStandardisationLevel>("cp_type", ComParam::VT_CP_TYPE, false)?
+     .visit_field::<u32>("display_level", ComParam::VT_DISPLAY_LEVEL, false)?
+     .visit_field::<ComParamUsage>("cp_usage", ComParam::VT_CP_USAGE, false)?
+     .visit_union::<ComParamSpecificDataUnionValue>("specific_data_type", ComParam::VT_SPECIFIC_DATA_TYPE, "specific_data", ComParam::VT_SPECIFIC_DATA, false)?
      .finish();
     Ok(())
   }
@@ -17375,7 +17375,7 @@ pub struct ComParamArgs<'a> {
     pub display_level: Option<u32>,
     pub cp_usage: ComParamUsage,
     pub specific_data_type: ComParamSpecificData,
-    pub specific_data: Option<flatbuffers::WIPOffset<ComParamSpecificDataUnionValue>>,
+    pub specific_data: Option<flatbuffers::WIPOffset<flatbuffers::UnionWIPOffset>>,
 }
 impl<'a> Default for ComParamArgs<'a> {
   #[inline]
@@ -17401,39 +17401,39 @@ pub struct ComParamBuilder<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> {
 impl<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> ComParamBuilder<'a, 'b, A> {
   #[inline]
   pub fn add_com_param_type(&mut self, com_param_type: ComParamType) {
-    self.fbb_.push_slot::<ComParamType>(ComParamOffset::VT_COM_PARAM_TYPE, com_param_type, ComParamType::REGULAR);
+    self.fbb_.push_slot::<ComParamType>(ComParam::VT_COM_PARAM_TYPE, com_param_type, ComParamType::REGULAR);
   }
   #[inline]
   pub fn add_short_name(&mut self, short_name: flatbuffers::WIPOffset<&'b  str>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(ComParamOffset::VT_SHORT_NAME, short_name);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(ComParam::VT_SHORT_NAME, short_name);
   }
   #[inline]
   pub fn add_long_name(&mut self, long_name: flatbuffers::WIPOffset<LongName<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<LongName>>(ComParamOffset::VT_LONG_NAME, long_name);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<LongName>>(ComParam::VT_LONG_NAME, long_name);
   }
   #[inline]
   pub fn add_param_class(&mut self, param_class: flatbuffers::WIPOffset<&'b  str>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(ComParamOffset::VT_PARAM_CLASS, param_class);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(ComParam::VT_PARAM_CLASS, param_class);
   }
   #[inline]
   pub fn add_cp_type(&mut self, cp_type: ComParamStandardisationLevel) {
-    self.fbb_.push_slot::<ComParamStandardisationLevel>(ComParamOffset::VT_CP_TYPE, cp_type, ComParamStandardisationLevel::STANDARD);
+    self.fbb_.push_slot::<ComParamStandardisationLevel>(ComParam::VT_CP_TYPE, cp_type, ComParamStandardisationLevel::STANDARD);
   }
   #[inline]
   pub fn add_display_level(&mut self, display_level: u32) {
-    self.fbb_.push_slot_always::<u32>(ComParamOffset::VT_DISPLAY_LEVEL, display_level);
+    self.fbb_.push_slot_always::<u32>(ComParam::VT_DISPLAY_LEVEL, display_level);
   }
   #[inline]
   pub fn add_cp_usage(&mut self, cp_usage: ComParamUsage) {
-    self.fbb_.push_slot::<ComParamUsage>(ComParamOffset::VT_CP_USAGE, cp_usage, ComParamUsage::ECU_SOFTWARE);
+    self.fbb_.push_slot::<ComParamUsage>(ComParam::VT_CP_USAGE, cp_usage, ComParamUsage::ECU_SOFTWARE);
   }
   #[inline]
   pub fn add_specific_data_type(&mut self, specific_data_type: ComParamSpecificData) {
-    self.fbb_.push_slot::<ComParamSpecificData>(ComParamOffset::VT_SPECIFIC_DATA_TYPE, specific_data_type, ComParamSpecificData::NONE);
+    self.fbb_.push_slot::<ComParamSpecificData>(ComParam::VT_SPECIFIC_DATA_TYPE, specific_data_type, ComParamSpecificData::NONE);
   }
   #[inline]
-  pub fn add_specific_data(&mut self, specific_data: flatbuffers::WIPOffset<ComParamSpecificDataUnionValue>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(ComParamOffset::VT_SPECIFIC_DATA, specific_data);
+  pub fn add_specific_data(&mut self, specific_data: flatbuffers::WIPOffset<flatbuffers::UnionWIPOffset>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(ComParam::VT_SPECIFIC_DATA, specific_data);
   }
   #[inline]
   pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a, A>) -> ComParamBuilder<'a, 'b, A> {
@@ -17484,18 +17484,6 @@ impl core::fmt::Debug for ComParam<'_> {
       ds.finish()
   }
 }
-pub enum PhysicalDimensionOffset {}
-impl PhysicalDimensionOffset {
-    pub const VT_SHORT_NAME: flatbuffers::VOffsetT = 4;
-    pub const VT_LONG_NAME: flatbuffers::VOffsetT = 6;
-    pub const VT_LENGTH_EXP: flatbuffers::VOffsetT = 8;
-    pub const VT_MASS_EXP: flatbuffers::VOffsetT = 10;
-    pub const VT_TIME_EXP: flatbuffers::VOffsetT = 12;
-    pub const VT_CURRENT_EXP: flatbuffers::VOffsetT = 14;
-    pub const VT_TEMPERATURE_EXP: flatbuffers::VOffsetT = 16;
-    pub const VT_MOLAR_AMOUNT_EXP: flatbuffers::VOffsetT = 18;
-    pub const VT_LUMINOUS_INTENSITY_EXP: flatbuffers::VOffsetT = 20;
-}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Copy for PhysicalDimension<'a, B> {}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Clone for PhysicalDimension<'a, B> {
   fn clone(&self) -> Self { *self }
@@ -17516,12 +17504,17 @@ impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'
   }
 }
 
-impl<'a, B: flatbuffers::ReadBuffer + ?Sized> PhysicalDimension<'a, B> {
+impl<'a> PhysicalDimension<'a> {
+  pub const VT_SHORT_NAME: flatbuffers::VOffsetT = 4;
+  pub const VT_LONG_NAME: flatbuffers::VOffsetT = 6;
+  pub const VT_LENGTH_EXP: flatbuffers::VOffsetT = 8;
+  pub const VT_MASS_EXP: flatbuffers::VOffsetT = 10;
+  pub const VT_TIME_EXP: flatbuffers::VOffsetT = 12;
+  pub const VT_CURRENT_EXP: flatbuffers::VOffsetT = 14;
+  pub const VT_TEMPERATURE_EXP: flatbuffers::VOffsetT = 16;
+  pub const VT_MOLAR_AMOUNT_EXP: flatbuffers::VOffsetT = 18;
+  pub const VT_LUMINOUS_INTENSITY_EXP: flatbuffers::VOffsetT = 20;
 
-  #[inline]
-  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
-    PhysicalDimension { _tab: table }
-  }
   #[allow(unused_mut)]
   pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr, A: flatbuffers::Allocator + 'bldr>(
     _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr, A>,
@@ -17539,6 +17532,13 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> PhysicalDimension<'a, B> {
     if let Some(x) = args.short_name { builder.add_short_name(x); }
     builder.finish()
   }
+}
+
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> PhysicalDimension<'a, B> {
+  #[inline]
+  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
+    PhysicalDimension { _tab: table }
+  }
 
 
   #[inline]
@@ -17546,63 +17546,63 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> PhysicalDimension<'a, B> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(PhysicalDimensionOffset::VT_SHORT_NAME, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(PhysicalDimension::VT_SHORT_NAME, None)}
   }
   #[inline]
   pub fn long_name(&self) -> Option<LongName<'a, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<LongName<'a, B>>>(PhysicalDimensionOffset::VT_LONG_NAME, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<LongName<'a, B>>>(PhysicalDimension::VT_LONG_NAME, None)}
   }
   #[inline]
   pub fn length_exp(&self) -> Option<i32> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<i32>(PhysicalDimensionOffset::VT_LENGTH_EXP, None)}
+    unsafe { self._tab.get::<i32>(PhysicalDimension::VT_LENGTH_EXP, None)}
   }
   #[inline]
   pub fn mass_exp(&self) -> Option<i32> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<i32>(PhysicalDimensionOffset::VT_MASS_EXP, None)}
+    unsafe { self._tab.get::<i32>(PhysicalDimension::VT_MASS_EXP, None)}
   }
   #[inline]
   pub fn time_exp(&self) -> Option<i32> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<i32>(PhysicalDimensionOffset::VT_TIME_EXP, None)}
+    unsafe { self._tab.get::<i32>(PhysicalDimension::VT_TIME_EXP, None)}
   }
   #[inline]
   pub fn current_exp(&self) -> Option<i32> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<i32>(PhysicalDimensionOffset::VT_CURRENT_EXP, None)}
+    unsafe { self._tab.get::<i32>(PhysicalDimension::VT_CURRENT_EXP, None)}
   }
   #[inline]
   pub fn temperature_exp(&self) -> Option<i32> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<i32>(PhysicalDimensionOffset::VT_TEMPERATURE_EXP, None)}
+    unsafe { self._tab.get::<i32>(PhysicalDimension::VT_TEMPERATURE_EXP, None)}
   }
   #[inline]
   pub fn molar_amount_exp(&self) -> Option<i32> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<i32>(PhysicalDimensionOffset::VT_MOLAR_AMOUNT_EXP, None)}
+    unsafe { self._tab.get::<i32>(PhysicalDimension::VT_MOLAR_AMOUNT_EXP, None)}
   }
   #[inline]
   pub fn luminous_intensity_exp(&self) -> Option<i32> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<i32>(PhysicalDimensionOffset::VT_LUMINOUS_INTENSITY_EXP, None)}
+    unsafe { self._tab.get::<i32>(PhysicalDimension::VT_LUMINOUS_INTENSITY_EXP, None)}
   }
 }
 
@@ -17613,15 +17613,15 @@ impl<B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Verifiable for PhysicalDi
   ) -> Result<(), flatbuffers::InvalidFlatbuffer> {
     use self::flatbuffers::Verifiable;
     v.visit_table(pos)?
-     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("short_name", PhysicalDimensionOffset::VT_SHORT_NAME, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<LongName<'_, B>>>("long_name", PhysicalDimensionOffset::VT_LONG_NAME, false)?
-     .visit_field::<i32>("length_exp", PhysicalDimensionOffset::VT_LENGTH_EXP, false)?
-     .visit_field::<i32>("mass_exp", PhysicalDimensionOffset::VT_MASS_EXP, false)?
-     .visit_field::<i32>("time_exp", PhysicalDimensionOffset::VT_TIME_EXP, false)?
-     .visit_field::<i32>("current_exp", PhysicalDimensionOffset::VT_CURRENT_EXP, false)?
-     .visit_field::<i32>("temperature_exp", PhysicalDimensionOffset::VT_TEMPERATURE_EXP, false)?
-     .visit_field::<i32>("molar_amount_exp", PhysicalDimensionOffset::VT_MOLAR_AMOUNT_EXP, false)?
-     .visit_field::<i32>("luminous_intensity_exp", PhysicalDimensionOffset::VT_LUMINOUS_INTENSITY_EXP, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("short_name", PhysicalDimension::VT_SHORT_NAME, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<LongName<'_, B>>>("long_name", PhysicalDimension::VT_LONG_NAME, false)?
+     .visit_field::<i32>("length_exp", PhysicalDimension::VT_LENGTH_EXP, false)?
+     .visit_field::<i32>("mass_exp", PhysicalDimension::VT_MASS_EXP, false)?
+     .visit_field::<i32>("time_exp", PhysicalDimension::VT_TIME_EXP, false)?
+     .visit_field::<i32>("current_exp", PhysicalDimension::VT_CURRENT_EXP, false)?
+     .visit_field::<i32>("temperature_exp", PhysicalDimension::VT_TEMPERATURE_EXP, false)?
+     .visit_field::<i32>("molar_amount_exp", PhysicalDimension::VT_MOLAR_AMOUNT_EXP, false)?
+     .visit_field::<i32>("luminous_intensity_exp", PhysicalDimension::VT_LUMINOUS_INTENSITY_EXP, false)?
      .finish();
     Ok(())
   }
@@ -17661,39 +17661,39 @@ pub struct PhysicalDimensionBuilder<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> 
 impl<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> PhysicalDimensionBuilder<'a, 'b, A> {
   #[inline]
   pub fn add_short_name(&mut self, short_name: flatbuffers::WIPOffset<&'b  str>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(PhysicalDimensionOffset::VT_SHORT_NAME, short_name);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(PhysicalDimension::VT_SHORT_NAME, short_name);
   }
   #[inline]
   pub fn add_long_name(&mut self, long_name: flatbuffers::WIPOffset<LongName<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<LongName>>(PhysicalDimensionOffset::VT_LONG_NAME, long_name);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<LongName>>(PhysicalDimension::VT_LONG_NAME, long_name);
   }
   #[inline]
   pub fn add_length_exp(&mut self, length_exp: i32) {
-    self.fbb_.push_slot_always::<i32>(PhysicalDimensionOffset::VT_LENGTH_EXP, length_exp);
+    self.fbb_.push_slot_always::<i32>(PhysicalDimension::VT_LENGTH_EXP, length_exp);
   }
   #[inline]
   pub fn add_mass_exp(&mut self, mass_exp: i32) {
-    self.fbb_.push_slot_always::<i32>(PhysicalDimensionOffset::VT_MASS_EXP, mass_exp);
+    self.fbb_.push_slot_always::<i32>(PhysicalDimension::VT_MASS_EXP, mass_exp);
   }
   #[inline]
   pub fn add_time_exp(&mut self, time_exp: i32) {
-    self.fbb_.push_slot_always::<i32>(PhysicalDimensionOffset::VT_TIME_EXP, time_exp);
+    self.fbb_.push_slot_always::<i32>(PhysicalDimension::VT_TIME_EXP, time_exp);
   }
   #[inline]
   pub fn add_current_exp(&mut self, current_exp: i32) {
-    self.fbb_.push_slot_always::<i32>(PhysicalDimensionOffset::VT_CURRENT_EXP, current_exp);
+    self.fbb_.push_slot_always::<i32>(PhysicalDimension::VT_CURRENT_EXP, current_exp);
   }
   #[inline]
   pub fn add_temperature_exp(&mut self, temperature_exp: i32) {
-    self.fbb_.push_slot_always::<i32>(PhysicalDimensionOffset::VT_TEMPERATURE_EXP, temperature_exp);
+    self.fbb_.push_slot_always::<i32>(PhysicalDimension::VT_TEMPERATURE_EXP, temperature_exp);
   }
   #[inline]
   pub fn add_molar_amount_exp(&mut self, molar_amount_exp: i32) {
-    self.fbb_.push_slot_always::<i32>(PhysicalDimensionOffset::VT_MOLAR_AMOUNT_EXP, molar_amount_exp);
+    self.fbb_.push_slot_always::<i32>(PhysicalDimension::VT_MOLAR_AMOUNT_EXP, molar_amount_exp);
   }
   #[inline]
   pub fn add_luminous_intensity_exp(&mut self, luminous_intensity_exp: i32) {
-    self.fbb_.push_slot_always::<i32>(PhysicalDimensionOffset::VT_LUMINOUS_INTENSITY_EXP, luminous_intensity_exp);
+    self.fbb_.push_slot_always::<i32>(PhysicalDimension::VT_LUMINOUS_INTENSITY_EXP, luminous_intensity_exp);
   }
   #[inline]
   pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a, A>) -> PhysicalDimensionBuilder<'a, 'b, A> {
@@ -17725,12 +17725,6 @@ impl core::fmt::Debug for PhysicalDimension<'_> {
       ds.finish()
   }
 }
-pub enum UnitGroupOffset {}
-impl UnitGroupOffset {
-    pub const VT_SHORT_NAME: flatbuffers::VOffsetT = 4;
-    pub const VT_LONG_NAME: flatbuffers::VOffsetT = 6;
-    pub const VT_UNITREFS: flatbuffers::VOffsetT = 8;
-}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Copy for UnitGroup<'a, B> {}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Clone for UnitGroup<'a, B> {
   fn clone(&self) -> Self { *self }
@@ -17751,12 +17745,11 @@ impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'
   }
 }
 
-impl<'a, B: flatbuffers::ReadBuffer + ?Sized> UnitGroup<'a, B> {
+impl<'a> UnitGroup<'a> {
+  pub const VT_SHORT_NAME: flatbuffers::VOffsetT = 4;
+  pub const VT_LONG_NAME: flatbuffers::VOffsetT = 6;
+  pub const VT_UNITREFS: flatbuffers::VOffsetT = 8;
 
-  #[inline]
-  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
-    UnitGroup { _tab: table }
-  }
   #[allow(unused_mut)]
   pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr, A: flatbuffers::Allocator + 'bldr>(
     _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr, A>,
@@ -17768,6 +17761,13 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> UnitGroup<'a, B> {
     if let Some(x) = args.short_name { builder.add_short_name(x); }
     builder.finish()
   }
+}
+
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> UnitGroup<'a, B> {
+  #[inline]
+  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
+    UnitGroup { _tab: table }
+  }
 
 
   #[inline]
@@ -17775,21 +17775,21 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> UnitGroup<'a, B> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(UnitGroupOffset::VT_SHORT_NAME, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(UnitGroup::VT_SHORT_NAME, None)}
   }
   #[inline]
   pub fn long_name(&self) -> Option<LongName<'a, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<LongName<'a, B>>>(UnitGroupOffset::VT_LONG_NAME, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<LongName<'a, B>>>(UnitGroup::VT_LONG_NAME, None)}
   }
   #[inline]
   pub fn unitrefs(&self) -> Option<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<Unit<'a, B>>, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<Unit<'a, B>>, B>>>(UnitGroupOffset::VT_UNITREFS, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<Unit<'a, B>>, B>>>(UnitGroup::VT_UNITREFS, None)}
   }
 }
 
@@ -17800,9 +17800,9 @@ impl<B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Verifiable for UnitGroup<
   ) -> Result<(), flatbuffers::InvalidFlatbuffer> {
     use self::flatbuffers::Verifiable;
     v.visit_table(pos)?
-     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("short_name", UnitGroupOffset::VT_SHORT_NAME, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<LongName<'_, B>>>("long_name", UnitGroupOffset::VT_LONG_NAME, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<Unit<'_, B>>, B>>>("unitrefs", UnitGroupOffset::VT_UNITREFS, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("short_name", UnitGroup::VT_SHORT_NAME, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<LongName<'_, B>>>("long_name", UnitGroup::VT_LONG_NAME, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<Unit<'_, B>>, B>>>("unitrefs", UnitGroup::VT_UNITREFS, false)?
      .finish();
     Ok(())
   }
@@ -17830,15 +17830,15 @@ pub struct UnitGroupBuilder<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> {
 impl<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> UnitGroupBuilder<'a, 'b, A> {
   #[inline]
   pub fn add_short_name(&mut self, short_name: flatbuffers::WIPOffset<&'b  str>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(UnitGroupOffset::VT_SHORT_NAME, short_name);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(UnitGroup::VT_SHORT_NAME, short_name);
   }
   #[inline]
   pub fn add_long_name(&mut self, long_name: flatbuffers::WIPOffset<LongName<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<LongName>>(UnitGroupOffset::VT_LONG_NAME, long_name);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<LongName>>(UnitGroup::VT_LONG_NAME, long_name);
   }
   #[inline]
   pub fn add_unitrefs(&mut self, unitrefs: flatbuffers::WIPOffset<flatbuffers::Vector<'b , flatbuffers::ForwardsUOffset<Unit<'b >>>>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(UnitGroupOffset::VT_UNITREFS, unitrefs);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(UnitGroup::VT_UNITREFS, unitrefs);
   }
   #[inline]
   pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a, A>) -> UnitGroupBuilder<'a, 'b, A> {
@@ -17864,13 +17864,6 @@ impl core::fmt::Debug for UnitGroup<'_> {
       ds.finish()
   }
 }
-pub enum UnitSpecOffset {}
-impl UnitSpecOffset {
-    pub const VT_UNIT_GROUPS: flatbuffers::VOffsetT = 4;
-    pub const VT_UNITS: flatbuffers::VOffsetT = 6;
-    pub const VT_PHYSICAL_DIMENSIONS: flatbuffers::VOffsetT = 8;
-    pub const VT_SDGS: flatbuffers::VOffsetT = 10;
-}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Copy for UnitSpec<'a, B> {}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Clone for UnitSpec<'a, B> {
   fn clone(&self) -> Self { *self }
@@ -17891,12 +17884,12 @@ impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'
   }
 }
 
-impl<'a, B: flatbuffers::ReadBuffer + ?Sized> UnitSpec<'a, B> {
+impl<'a> UnitSpec<'a> {
+  pub const VT_UNIT_GROUPS: flatbuffers::VOffsetT = 4;
+  pub const VT_UNITS: flatbuffers::VOffsetT = 6;
+  pub const VT_PHYSICAL_DIMENSIONS: flatbuffers::VOffsetT = 8;
+  pub const VT_SDGS: flatbuffers::VOffsetT = 10;
 
-  #[inline]
-  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
-    UnitSpec { _tab: table }
-  }
   #[allow(unused_mut)]
   pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr, A: flatbuffers::Allocator + 'bldr>(
     _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr, A>,
@@ -17909,6 +17902,13 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> UnitSpec<'a, B> {
     if let Some(x) = args.unit_groups { builder.add_unit_groups(x); }
     builder.finish()
   }
+}
+
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> UnitSpec<'a, B> {
+  #[inline]
+  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
+    UnitSpec { _tab: table }
+  }
 
 
   #[inline]
@@ -17916,28 +17916,28 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> UnitSpec<'a, B> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<UnitGroup<'a, B>>, B>>>(UnitSpecOffset::VT_UNIT_GROUPS, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<UnitGroup<'a, B>>, B>>>(UnitSpec::VT_UNIT_GROUPS, None)}
   }
   #[inline]
   pub fn units(&self) -> Option<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<Unit<'a, B>>, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<Unit<'a, B>>, B>>>(UnitSpecOffset::VT_UNITS, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<Unit<'a, B>>, B>>>(UnitSpec::VT_UNITS, None)}
   }
   #[inline]
   pub fn physical_dimensions(&self) -> Option<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<PhysicalDimension<'a, B>>, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<PhysicalDimension<'a, B>>, B>>>(UnitSpecOffset::VT_PHYSICAL_DIMENSIONS, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<PhysicalDimension<'a, B>>, B>>>(UnitSpec::VT_PHYSICAL_DIMENSIONS, None)}
   }
   #[inline]
   pub fn sdgs(&self) -> Option<SDGS<'a, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<SDGS<'a, B>>>(UnitSpecOffset::VT_SDGS, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<SDGS<'a, B>>>(UnitSpec::VT_SDGS, None)}
   }
 }
 
@@ -17948,10 +17948,10 @@ impl<B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Verifiable for UnitSpec<'
   ) -> Result<(), flatbuffers::InvalidFlatbuffer> {
     use self::flatbuffers::Verifiable;
     v.visit_table(pos)?
-     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<UnitGroup<'_, B>>, B>>>("unit_groups", UnitSpecOffset::VT_UNIT_GROUPS, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<Unit<'_, B>>, B>>>("units", UnitSpecOffset::VT_UNITS, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<PhysicalDimension<'_, B>>, B>>>("physical_dimensions", UnitSpecOffset::VT_PHYSICAL_DIMENSIONS, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<SDGS<'_, B>>>("sdgs", UnitSpecOffset::VT_SDGS, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<UnitGroup<'_, B>>, B>>>("unit_groups", UnitSpec::VT_UNIT_GROUPS, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<Unit<'_, B>>, B>>>("units", UnitSpec::VT_UNITS, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<PhysicalDimension<'_, B>>, B>>>("physical_dimensions", UnitSpec::VT_PHYSICAL_DIMENSIONS, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<SDGS<'_, B>>>("sdgs", UnitSpec::VT_SDGS, false)?
      .finish();
     Ok(())
   }
@@ -17981,19 +17981,19 @@ pub struct UnitSpecBuilder<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> {
 impl<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> UnitSpecBuilder<'a, 'b, A> {
   #[inline]
   pub fn add_unit_groups(&mut self, unit_groups: flatbuffers::WIPOffset<flatbuffers::Vector<'b , flatbuffers::ForwardsUOffset<UnitGroup<'b >>>>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(UnitSpecOffset::VT_UNIT_GROUPS, unit_groups);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(UnitSpec::VT_UNIT_GROUPS, unit_groups);
   }
   #[inline]
   pub fn add_units(&mut self, units: flatbuffers::WIPOffset<flatbuffers::Vector<'b , flatbuffers::ForwardsUOffset<Unit<'b >>>>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(UnitSpecOffset::VT_UNITS, units);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(UnitSpec::VT_UNITS, units);
   }
   #[inline]
   pub fn add_physical_dimensions(&mut self, physical_dimensions: flatbuffers::WIPOffset<flatbuffers::Vector<'b , flatbuffers::ForwardsUOffset<PhysicalDimension<'b >>>>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(UnitSpecOffset::VT_PHYSICAL_DIMENSIONS, physical_dimensions);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(UnitSpec::VT_PHYSICAL_DIMENSIONS, physical_dimensions);
   }
   #[inline]
   pub fn add_sdgs(&mut self, sdgs: flatbuffers::WIPOffset<SDGS<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<SDGS>>(UnitSpecOffset::VT_SDGS, sdgs);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<SDGS>>(UnitSpec::VT_SDGS, sdgs);
   }
   #[inline]
   pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a, A>) -> UnitSpecBuilder<'a, 'b, A> {
@@ -18020,13 +18020,6 @@ impl core::fmt::Debug for UnitSpec<'_> {
       ds.finish()
   }
 }
-pub enum ComParamSubSetOffset {}
-impl ComParamSubSetOffset {
-    pub const VT_COM_PARAMS: flatbuffers::VOffsetT = 4;
-    pub const VT_COMPLEX_COM_PARAMS: flatbuffers::VOffsetT = 6;
-    pub const VT_DATA_OBJECT_PROPS: flatbuffers::VOffsetT = 8;
-    pub const VT_UNIT_SPEC: flatbuffers::VOffsetT = 10;
-}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Copy for ComParamSubSet<'a, B> {}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Clone for ComParamSubSet<'a, B> {
   fn clone(&self) -> Self { *self }
@@ -18047,12 +18040,12 @@ impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'
   }
 }
 
-impl<'a, B: flatbuffers::ReadBuffer + ?Sized> ComParamSubSet<'a, B> {
+impl<'a> ComParamSubSet<'a> {
+  pub const VT_COM_PARAMS: flatbuffers::VOffsetT = 4;
+  pub const VT_COMPLEX_COM_PARAMS: flatbuffers::VOffsetT = 6;
+  pub const VT_DATA_OBJECT_PROPS: flatbuffers::VOffsetT = 8;
+  pub const VT_UNIT_SPEC: flatbuffers::VOffsetT = 10;
 
-  #[inline]
-  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
-    ComParamSubSet { _tab: table }
-  }
   #[allow(unused_mut)]
   pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr, A: flatbuffers::Allocator + 'bldr>(
     _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr, A>,
@@ -18065,6 +18058,13 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> ComParamSubSet<'a, B> {
     if let Some(x) = args.com_params { builder.add_com_params(x); }
     builder.finish()
   }
+}
+
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> ComParamSubSet<'a, B> {
+  #[inline]
+  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
+    ComParamSubSet { _tab: table }
+  }
 
 
   #[inline]
@@ -18072,28 +18072,28 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> ComParamSubSet<'a, B> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<ComParam<'a, B>>, B>>>(ComParamSubSetOffset::VT_COM_PARAMS, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<ComParam<'a, B>>, B>>>(ComParamSubSet::VT_COM_PARAMS, None)}
   }
   #[inline]
   pub fn complex_com_params(&self) -> Option<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<ComParam<'a, B>>, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<ComParam<'a, B>>, B>>>(ComParamSubSetOffset::VT_COMPLEX_COM_PARAMS, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<ComParam<'a, B>>, B>>>(ComParamSubSet::VT_COMPLEX_COM_PARAMS, None)}
   }
   #[inline]
   pub fn data_object_props(&self) -> Option<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<DOP<'a, B>>, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<DOP<'a, B>>, B>>>(ComParamSubSetOffset::VT_DATA_OBJECT_PROPS, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<DOP<'a, B>>, B>>>(ComParamSubSet::VT_DATA_OBJECT_PROPS, None)}
   }
   #[inline]
   pub fn unit_spec(&self) -> Option<UnitSpec<'a, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<UnitSpec<'a, B>>>(ComParamSubSetOffset::VT_UNIT_SPEC, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<UnitSpec<'a, B>>>(ComParamSubSet::VT_UNIT_SPEC, None)}
   }
 }
 
@@ -18104,10 +18104,10 @@ impl<B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Verifiable for ComParamSu
   ) -> Result<(), flatbuffers::InvalidFlatbuffer> {
     use self::flatbuffers::Verifiable;
     v.visit_table(pos)?
-     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<ComParam<'_, B>>, B>>>("com_params", ComParamSubSetOffset::VT_COM_PARAMS, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<ComParam<'_, B>>, B>>>("complex_com_params", ComParamSubSetOffset::VT_COMPLEX_COM_PARAMS, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<DOP<'_, B>>, B>>>("data_object_props", ComParamSubSetOffset::VT_DATA_OBJECT_PROPS, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<UnitSpec<'_, B>>>("unit_spec", ComParamSubSetOffset::VT_UNIT_SPEC, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<ComParam<'_, B>>, B>>>("com_params", ComParamSubSet::VT_COM_PARAMS, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<ComParam<'_, B>>, B>>>("complex_com_params", ComParamSubSet::VT_COMPLEX_COM_PARAMS, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<DOP<'_, B>>, B>>>("data_object_props", ComParamSubSet::VT_DATA_OBJECT_PROPS, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<UnitSpec<'_, B>>>("unit_spec", ComParamSubSet::VT_UNIT_SPEC, false)?
      .finish();
     Ok(())
   }
@@ -18137,19 +18137,19 @@ pub struct ComParamSubSetBuilder<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> {
 impl<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> ComParamSubSetBuilder<'a, 'b, A> {
   #[inline]
   pub fn add_com_params(&mut self, com_params: flatbuffers::WIPOffset<flatbuffers::Vector<'b , flatbuffers::ForwardsUOffset<ComParam<'b >>>>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(ComParamSubSetOffset::VT_COM_PARAMS, com_params);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(ComParamSubSet::VT_COM_PARAMS, com_params);
   }
   #[inline]
   pub fn add_complex_com_params(&mut self, complex_com_params: flatbuffers::WIPOffset<flatbuffers::Vector<'b , flatbuffers::ForwardsUOffset<ComParam<'b >>>>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(ComParamSubSetOffset::VT_COMPLEX_COM_PARAMS, complex_com_params);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(ComParamSubSet::VT_COMPLEX_COM_PARAMS, complex_com_params);
   }
   #[inline]
   pub fn add_data_object_props(&mut self, data_object_props: flatbuffers::WIPOffset<flatbuffers::Vector<'b , flatbuffers::ForwardsUOffset<DOP<'b >>>>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(ComParamSubSetOffset::VT_DATA_OBJECT_PROPS, data_object_props);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(ComParamSubSet::VT_DATA_OBJECT_PROPS, data_object_props);
   }
   #[inline]
   pub fn add_unit_spec(&mut self, unit_spec: flatbuffers::WIPOffset<UnitSpec<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<UnitSpec>>(ComParamSubSetOffset::VT_UNIT_SPEC, unit_spec);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<UnitSpec>>(ComParamSubSet::VT_UNIT_SPEC, unit_spec);
   }
   #[inline]
   pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a, A>) -> ComParamSubSetBuilder<'a, 'b, A> {
@@ -18176,14 +18176,6 @@ impl core::fmt::Debug for ComParamSubSet<'_> {
       ds.finish()
   }
 }
-pub enum ProtStackOffset {}
-impl ProtStackOffset {
-    pub const VT_SHORT_NAME: flatbuffers::VOffsetT = 4;
-    pub const VT_LONG_NAME: flatbuffers::VOffsetT = 6;
-    pub const VT_PDU_PROTOCOL_TYPE: flatbuffers::VOffsetT = 8;
-    pub const VT_PHYSICAL_LINK_TYPE: flatbuffers::VOffsetT = 10;
-    pub const VT_COMPARAM_SUBSET_REFS: flatbuffers::VOffsetT = 12;
-}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Copy for ProtStack<'a, B> {}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Clone for ProtStack<'a, B> {
   fn clone(&self) -> Self { *self }
@@ -18204,12 +18196,13 @@ impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'
   }
 }
 
-impl<'a, B: flatbuffers::ReadBuffer + ?Sized> ProtStack<'a, B> {
+impl<'a> ProtStack<'a> {
+  pub const VT_SHORT_NAME: flatbuffers::VOffsetT = 4;
+  pub const VT_LONG_NAME: flatbuffers::VOffsetT = 6;
+  pub const VT_PDU_PROTOCOL_TYPE: flatbuffers::VOffsetT = 8;
+  pub const VT_PHYSICAL_LINK_TYPE: flatbuffers::VOffsetT = 10;
+  pub const VT_COMPARAM_SUBSET_REFS: flatbuffers::VOffsetT = 12;
 
-  #[inline]
-  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
-    ProtStack { _tab: table }
-  }
   #[allow(unused_mut)]
   pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr, A: flatbuffers::Allocator + 'bldr>(
     _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr, A>,
@@ -18223,6 +18216,13 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> ProtStack<'a, B> {
     if let Some(x) = args.short_name { builder.add_short_name(x); }
     builder.finish()
   }
+}
+
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> ProtStack<'a, B> {
+  #[inline]
+  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
+    ProtStack { _tab: table }
+  }
 
 
   #[inline]
@@ -18230,35 +18230,35 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> ProtStack<'a, B> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(ProtStackOffset::VT_SHORT_NAME, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(ProtStack::VT_SHORT_NAME, None)}
   }
   #[inline]
   pub fn long_name(&self) -> Option<LongName<'a, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<LongName<'a, B>>>(ProtStackOffset::VT_LONG_NAME, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<LongName<'a, B>>>(ProtStack::VT_LONG_NAME, None)}
   }
   #[inline]
   pub fn pdu_protocol_type(&self) -> Option<&'a str> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(ProtStackOffset::VT_PDU_PROTOCOL_TYPE, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(ProtStack::VT_PDU_PROTOCOL_TYPE, None)}
   }
   #[inline]
   pub fn physical_link_type(&self) -> Option<&'a str> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(ProtStackOffset::VT_PHYSICAL_LINK_TYPE, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(ProtStack::VT_PHYSICAL_LINK_TYPE, None)}
   }
   #[inline]
   pub fn comparam_subset_refs(&self) -> Option<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<ComParamSubSet<'a, B>>, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<ComParamSubSet<'a, B>>, B>>>(ProtStackOffset::VT_COMPARAM_SUBSET_REFS, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<ComParamSubSet<'a, B>>, B>>>(ProtStack::VT_COMPARAM_SUBSET_REFS, None)}
   }
 }
 
@@ -18269,11 +18269,11 @@ impl<B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Verifiable for ProtStack<
   ) -> Result<(), flatbuffers::InvalidFlatbuffer> {
     use self::flatbuffers::Verifiable;
     v.visit_table(pos)?
-     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("short_name", ProtStackOffset::VT_SHORT_NAME, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<LongName<'_, B>>>("long_name", ProtStackOffset::VT_LONG_NAME, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("pdu_protocol_type", ProtStackOffset::VT_PDU_PROTOCOL_TYPE, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("physical_link_type", ProtStackOffset::VT_PHYSICAL_LINK_TYPE, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<ComParamSubSet<'_, B>>, B>>>("comparam_subset_refs", ProtStackOffset::VT_COMPARAM_SUBSET_REFS, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("short_name", ProtStack::VT_SHORT_NAME, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<LongName<'_, B>>>("long_name", ProtStack::VT_LONG_NAME, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("pdu_protocol_type", ProtStack::VT_PDU_PROTOCOL_TYPE, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("physical_link_type", ProtStack::VT_PHYSICAL_LINK_TYPE, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<ComParamSubSet<'_, B>>, B>>>("comparam_subset_refs", ProtStack::VT_COMPARAM_SUBSET_REFS, false)?
      .finish();
     Ok(())
   }
@@ -18305,23 +18305,23 @@ pub struct ProtStackBuilder<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> {
 impl<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> ProtStackBuilder<'a, 'b, A> {
   #[inline]
   pub fn add_short_name(&mut self, short_name: flatbuffers::WIPOffset<&'b  str>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(ProtStackOffset::VT_SHORT_NAME, short_name);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(ProtStack::VT_SHORT_NAME, short_name);
   }
   #[inline]
   pub fn add_long_name(&mut self, long_name: flatbuffers::WIPOffset<LongName<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<LongName>>(ProtStackOffset::VT_LONG_NAME, long_name);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<LongName>>(ProtStack::VT_LONG_NAME, long_name);
   }
   #[inline]
   pub fn add_pdu_protocol_type(&mut self, pdu_protocol_type: flatbuffers::WIPOffset<&'b  str>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(ProtStackOffset::VT_PDU_PROTOCOL_TYPE, pdu_protocol_type);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(ProtStack::VT_PDU_PROTOCOL_TYPE, pdu_protocol_type);
   }
   #[inline]
   pub fn add_physical_link_type(&mut self, physical_link_type: flatbuffers::WIPOffset<&'b  str>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(ProtStackOffset::VT_PHYSICAL_LINK_TYPE, physical_link_type);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(ProtStack::VT_PHYSICAL_LINK_TYPE, physical_link_type);
   }
   #[inline]
   pub fn add_comparam_subset_refs(&mut self, comparam_subset_refs: flatbuffers::WIPOffset<flatbuffers::Vector<'b , flatbuffers::ForwardsUOffset<ComParamSubSet<'b >>>>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(ProtStackOffset::VT_COMPARAM_SUBSET_REFS, comparam_subset_refs);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(ProtStack::VT_COMPARAM_SUBSET_REFS, comparam_subset_refs);
   }
   #[inline]
   pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a, A>) -> ProtStackBuilder<'a, 'b, A> {
@@ -18349,10 +18349,6 @@ impl core::fmt::Debug for ProtStack<'_> {
       ds.finish()
   }
 }
-pub enum ComParamSpecOffset {}
-impl ComParamSpecOffset {
-    pub const VT_PROT_STACKS: flatbuffers::VOffsetT = 4;
-}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Copy for ComParamSpec<'a, B> {}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Clone for ComParamSpec<'a, B> {
   fn clone(&self) -> Self { *self }
@@ -18373,12 +18369,9 @@ impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'
   }
 }
 
-impl<'a, B: flatbuffers::ReadBuffer + ?Sized> ComParamSpec<'a, B> {
+impl<'a> ComParamSpec<'a> {
+  pub const VT_PROT_STACKS: flatbuffers::VOffsetT = 4;
 
-  #[inline]
-  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
-    ComParamSpec { _tab: table }
-  }
   #[allow(unused_mut)]
   pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr, A: flatbuffers::Allocator + 'bldr>(
     _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr, A>,
@@ -18388,6 +18381,13 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> ComParamSpec<'a, B> {
     if let Some(x) = args.prot_stacks { builder.add_prot_stacks(x); }
     builder.finish()
   }
+}
+
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> ComParamSpec<'a, B> {
+  #[inline]
+  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
+    ComParamSpec { _tab: table }
+  }
 
 
   #[inline]
@@ -18395,7 +18395,7 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> ComParamSpec<'a, B> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<ProtStack<'a, B>>, B>>>(ComParamSpecOffset::VT_PROT_STACKS, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<ProtStack<'a, B>>, B>>>(ComParamSpec::VT_PROT_STACKS, None)}
   }
 }
 
@@ -18406,7 +18406,7 @@ impl<B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Verifiable for ComParamSp
   ) -> Result<(), flatbuffers::InvalidFlatbuffer> {
     use self::flatbuffers::Verifiable;
     v.visit_table(pos)?
-     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<ProtStack<'_, B>>, B>>>("prot_stacks", ComParamSpecOffset::VT_PROT_STACKS, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<ProtStack<'_, B>>, B>>>("prot_stacks", ComParamSpec::VT_PROT_STACKS, false)?
      .finish();
     Ok(())
   }
@@ -18430,7 +18430,7 @@ pub struct ComParamSpecBuilder<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> {
 impl<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> ComParamSpecBuilder<'a, 'b, A> {
   #[inline]
   pub fn add_prot_stacks(&mut self, prot_stacks: flatbuffers::WIPOffset<flatbuffers::Vector<'b , flatbuffers::ForwardsUOffset<ProtStack<'b >>>>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(ComParamSpecOffset::VT_PROT_STACKS, prot_stacks);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(ComParamSpec::VT_PROT_STACKS, prot_stacks);
   }
   #[inline]
   pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a, A>) -> ComParamSpecBuilder<'a, 'b, A> {
@@ -18454,15 +18454,6 @@ impl core::fmt::Debug for ComParamSpec<'_> {
       ds.finish()
   }
 }
-pub enum LibraryOffset {}
-impl LibraryOffset {
-    pub const VT_SHORT_NAME: flatbuffers::VOffsetT = 4;
-    pub const VT_LONG_NAME: flatbuffers::VOffsetT = 6;
-    pub const VT_CODE_FILE: flatbuffers::VOffsetT = 8;
-    pub const VT_ENCRYPTION: flatbuffers::VOffsetT = 10;
-    pub const VT_SYNTAX: flatbuffers::VOffsetT = 12;
-    pub const VT_ENTRY_POINT: flatbuffers::VOffsetT = 14;
-}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Copy for Library<'a, B> {}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Clone for Library<'a, B> {
   fn clone(&self) -> Self { *self }
@@ -18483,12 +18474,14 @@ impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'
   }
 }
 
-impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Library<'a, B> {
+impl<'a> Library<'a> {
+  pub const VT_SHORT_NAME: flatbuffers::VOffsetT = 4;
+  pub const VT_LONG_NAME: flatbuffers::VOffsetT = 6;
+  pub const VT_CODE_FILE: flatbuffers::VOffsetT = 8;
+  pub const VT_ENCRYPTION: flatbuffers::VOffsetT = 10;
+  pub const VT_SYNTAX: flatbuffers::VOffsetT = 12;
+  pub const VT_ENTRY_POINT: flatbuffers::VOffsetT = 14;
 
-  #[inline]
-  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
-    Library { _tab: table }
-  }
   #[allow(unused_mut)]
   pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr, A: flatbuffers::Allocator + 'bldr>(
     _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr, A>,
@@ -18503,6 +18496,13 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Library<'a, B> {
     if let Some(x) = args.short_name { builder.add_short_name(x); }
     builder.finish()
   }
+}
+
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Library<'a, B> {
+  #[inline]
+  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
+    Library { _tab: table }
+  }
 
 
   #[inline]
@@ -18510,42 +18510,42 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Library<'a, B> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(LibraryOffset::VT_SHORT_NAME, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(Library::VT_SHORT_NAME, None)}
   }
   #[inline]
   pub fn long_name(&self) -> Option<LongName<'a, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<LongName<'a, B>>>(LibraryOffset::VT_LONG_NAME, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<LongName<'a, B>>>(Library::VT_LONG_NAME, None)}
   }
   #[inline]
   pub fn code_file(&self) -> Option<&'a str> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(LibraryOffset::VT_CODE_FILE, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(Library::VT_CODE_FILE, None)}
   }
   #[inline]
   pub fn encryption(&self) -> Option<&'a str> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(LibraryOffset::VT_ENCRYPTION, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(Library::VT_ENCRYPTION, None)}
   }
   #[inline]
   pub fn syntax(&self) -> Option<&'a str> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(LibraryOffset::VT_SYNTAX, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(Library::VT_SYNTAX, None)}
   }
   #[inline]
   pub fn entry_point(&self) -> Option<&'a str> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(LibraryOffset::VT_ENTRY_POINT, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(Library::VT_ENTRY_POINT, None)}
   }
 }
 
@@ -18556,12 +18556,12 @@ impl<B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Verifiable for Library<'_
   ) -> Result<(), flatbuffers::InvalidFlatbuffer> {
     use self::flatbuffers::Verifiable;
     v.visit_table(pos)?
-     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("short_name", LibraryOffset::VT_SHORT_NAME, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<LongName<'_, B>>>("long_name", LibraryOffset::VT_LONG_NAME, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("code_file", LibraryOffset::VT_CODE_FILE, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("encryption", LibraryOffset::VT_ENCRYPTION, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("syntax", LibraryOffset::VT_SYNTAX, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("entry_point", LibraryOffset::VT_ENTRY_POINT, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("short_name", Library::VT_SHORT_NAME, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<LongName<'_, B>>>("long_name", Library::VT_LONG_NAME, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("code_file", Library::VT_CODE_FILE, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("encryption", Library::VT_ENCRYPTION, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("syntax", Library::VT_SYNTAX, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("entry_point", Library::VT_ENTRY_POINT, false)?
      .finish();
     Ok(())
   }
@@ -18595,27 +18595,27 @@ pub struct LibraryBuilder<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> {
 impl<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> LibraryBuilder<'a, 'b, A> {
   #[inline]
   pub fn add_short_name(&mut self, short_name: flatbuffers::WIPOffset<&'b  str>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(LibraryOffset::VT_SHORT_NAME, short_name);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(Library::VT_SHORT_NAME, short_name);
   }
   #[inline]
   pub fn add_long_name(&mut self, long_name: flatbuffers::WIPOffset<LongName<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<LongName>>(LibraryOffset::VT_LONG_NAME, long_name);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<LongName>>(Library::VT_LONG_NAME, long_name);
   }
   #[inline]
   pub fn add_code_file(&mut self, code_file: flatbuffers::WIPOffset<&'b  str>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(LibraryOffset::VT_CODE_FILE, code_file);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(Library::VT_CODE_FILE, code_file);
   }
   #[inline]
   pub fn add_encryption(&mut self, encryption: flatbuffers::WIPOffset<&'b  str>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(LibraryOffset::VT_ENCRYPTION, encryption);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(Library::VT_ENCRYPTION, encryption);
   }
   #[inline]
   pub fn add_syntax(&mut self, syntax: flatbuffers::WIPOffset<&'b  str>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(LibraryOffset::VT_SYNTAX, syntax);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(Library::VT_SYNTAX, syntax);
   }
   #[inline]
   pub fn add_entry_point(&mut self, entry_point: flatbuffers::WIPOffset<&'b  str>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(LibraryOffset::VT_ENTRY_POINT, entry_point);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(Library::VT_ENTRY_POINT, entry_point);
   }
   #[inline]
   pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a, A>) -> LibraryBuilder<'a, 'b, A> {
@@ -18644,17 +18644,6 @@ impl core::fmt::Debug for Library<'_> {
       ds.finish()
   }
 }
-pub enum EcuDataOffset {}
-impl EcuDataOffset {
-    pub const VT_VERSION: flatbuffers::VOffsetT = 4;
-    pub const VT_ECU_NAME: flatbuffers::VOffsetT = 6;
-    pub const VT_REVISION: flatbuffers::VOffsetT = 8;
-    pub const VT_METADATA: flatbuffers::VOffsetT = 10;
-    pub const VT_FEATURE_FLAGS: flatbuffers::VOffsetT = 12;
-    pub const VT_VARIANTS: flatbuffers::VOffsetT = 14;
-    pub const VT_FUNCTIONAL_GROUPS: flatbuffers::VOffsetT = 16;
-    pub const VT_DTCS: flatbuffers::VOffsetT = 18;
-}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Copy for EcuData<'a, B> {}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Clone for EcuData<'a, B> {
   fn clone(&self) -> Self { *self }
@@ -18675,12 +18664,16 @@ impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'
   }
 }
 
-impl<'a, B: flatbuffers::ReadBuffer + ?Sized> EcuData<'a, B> {
+impl<'a> EcuData<'a> {
+  pub const VT_VERSION: flatbuffers::VOffsetT = 4;
+  pub const VT_ECU_NAME: flatbuffers::VOffsetT = 6;
+  pub const VT_REVISION: flatbuffers::VOffsetT = 8;
+  pub const VT_METADATA: flatbuffers::VOffsetT = 10;
+  pub const VT_FEATURE_FLAGS: flatbuffers::VOffsetT = 12;
+  pub const VT_VARIANTS: flatbuffers::VOffsetT = 14;
+  pub const VT_FUNCTIONAL_GROUPS: flatbuffers::VOffsetT = 16;
+  pub const VT_DTCS: flatbuffers::VOffsetT = 18;
 
-  #[inline]
-  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
-    EcuData { _tab: table }
-  }
   #[allow(unused_mut)]
   pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr, A: flatbuffers::Allocator + 'bldr>(
     _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr, A>,
@@ -18697,6 +18690,13 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> EcuData<'a, B> {
     if let Some(x) = args.version { builder.add_version(x); }
     builder.finish()
   }
+}
+
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> EcuData<'a, B> {
+  #[inline]
+  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
+    EcuData { _tab: table }
+  }
 
 
   #[inline]
@@ -18704,56 +18704,56 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> EcuData<'a, B> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(EcuDataOffset::VT_VERSION, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(EcuData::VT_VERSION, None)}
   }
   #[inline]
   pub fn ecu_name(&self) -> Option<&'a str> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(EcuDataOffset::VT_ECU_NAME, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(EcuData::VT_ECU_NAME, None)}
   }
   #[inline]
   pub fn revision(&self) -> Option<&'a str> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(EcuDataOffset::VT_REVISION, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(EcuData::VT_REVISION, None)}
   }
   #[inline]
   pub fn metadata(&self) -> Option<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<KeyValue<'a, B>>, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<KeyValue<'a, B>>, B>>>(EcuDataOffset::VT_METADATA, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<KeyValue<'a, B>>, B>>>(EcuData::VT_METADATA, None)}
   }
   #[inline]
   pub fn feature_flags(&self) -> Option<flatbuffers::Vector<'a, FeatureFlag, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, FeatureFlag, B>>>(EcuDataOffset::VT_FEATURE_FLAGS, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, FeatureFlag, B>>>(EcuData::VT_FEATURE_FLAGS, None)}
   }
   #[inline]
   pub fn variants(&self) -> Option<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<Variant<'a, B>>, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<Variant<'a, B>>, B>>>(EcuDataOffset::VT_VARIANTS, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<Variant<'a, B>>, B>>>(EcuData::VT_VARIANTS, None)}
   }
   #[inline]
   pub fn functional_groups(&self) -> Option<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<FunctionalGroup<'a, B>>, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<FunctionalGroup<'a, B>>, B>>>(EcuDataOffset::VT_FUNCTIONAL_GROUPS, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<FunctionalGroup<'a, B>>, B>>>(EcuData::VT_FUNCTIONAL_GROUPS, None)}
   }
   #[inline]
   pub fn dtcs(&self) -> Option<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<DTC<'a, B>>, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<DTC<'a, B>>, B>>>(EcuDataOffset::VT_DTCS, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<DTC<'a, B>>, B>>>(EcuData::VT_DTCS, None)}
   }
 }
 
@@ -18764,14 +18764,14 @@ impl<B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Verifiable for EcuData<'_
   ) -> Result<(), flatbuffers::InvalidFlatbuffer> {
     use self::flatbuffers::Verifiable;
     v.visit_table(pos)?
-     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("version", EcuDataOffset::VT_VERSION, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("ecu_name", EcuDataOffset::VT_ECU_NAME, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("revision", EcuDataOffset::VT_REVISION, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<KeyValue<'_, B>>, B>>>("metadata", EcuDataOffset::VT_METADATA, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, FeatureFlag, B>>>("feature_flags", EcuDataOffset::VT_FEATURE_FLAGS, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<Variant<'_, B>>, B>>>("variants", EcuDataOffset::VT_VARIANTS, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<FunctionalGroup<'_, B>>, B>>>("functional_groups", EcuDataOffset::VT_FUNCTIONAL_GROUPS, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<DTC<'_, B>>, B>>>("dtcs", EcuDataOffset::VT_DTCS, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("version", EcuData::VT_VERSION, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("ecu_name", EcuData::VT_ECU_NAME, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("revision", EcuData::VT_REVISION, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<KeyValue<'_, B>>, B>>>("metadata", EcuData::VT_METADATA, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, FeatureFlag, B>>>("feature_flags", EcuData::VT_FEATURE_FLAGS, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<Variant<'_, B>>, B>>>("variants", EcuData::VT_VARIANTS, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<FunctionalGroup<'_, B>>, B>>>("functional_groups", EcuData::VT_FUNCTIONAL_GROUPS, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<DTC<'_, B>>, B>>>("dtcs", EcuData::VT_DTCS, false)?
      .finish();
     Ok(())
   }
@@ -18809,35 +18809,35 @@ pub struct EcuDataBuilder<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> {
 impl<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> EcuDataBuilder<'a, 'b, A> {
   #[inline]
   pub fn add_version(&mut self, version: flatbuffers::WIPOffset<&'b  str>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(EcuDataOffset::VT_VERSION, version);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(EcuData::VT_VERSION, version);
   }
   #[inline]
   pub fn add_ecu_name(&mut self, ecu_name: flatbuffers::WIPOffset<&'b  str>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(EcuDataOffset::VT_ECU_NAME, ecu_name);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(EcuData::VT_ECU_NAME, ecu_name);
   }
   #[inline]
   pub fn add_revision(&mut self, revision: flatbuffers::WIPOffset<&'b  str>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(EcuDataOffset::VT_REVISION, revision);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(EcuData::VT_REVISION, revision);
   }
   #[inline]
   pub fn add_metadata(&mut self, metadata: flatbuffers::WIPOffset<flatbuffers::Vector<'b , flatbuffers::ForwardsUOffset<KeyValue<'b >>>>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(EcuDataOffset::VT_METADATA, metadata);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(EcuData::VT_METADATA, metadata);
   }
   #[inline]
   pub fn add_feature_flags(&mut self, feature_flags: flatbuffers::WIPOffset<flatbuffers::Vector<'b , FeatureFlag>>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(EcuDataOffset::VT_FEATURE_FLAGS, feature_flags);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(EcuData::VT_FEATURE_FLAGS, feature_flags);
   }
   #[inline]
   pub fn add_variants(&mut self, variants: flatbuffers::WIPOffset<flatbuffers::Vector<'b , flatbuffers::ForwardsUOffset<Variant<'b >>>>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(EcuDataOffset::VT_VARIANTS, variants);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(EcuData::VT_VARIANTS, variants);
   }
   #[inline]
   pub fn add_functional_groups(&mut self, functional_groups: flatbuffers::WIPOffset<flatbuffers::Vector<'b , flatbuffers::ForwardsUOffset<FunctionalGroup<'b >>>>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(EcuDataOffset::VT_FUNCTIONAL_GROUPS, functional_groups);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(EcuData::VT_FUNCTIONAL_GROUPS, functional_groups);
   }
   #[inline]
   pub fn add_dtcs(&mut self, dtcs: flatbuffers::WIPOffset<flatbuffers::Vector<'b , flatbuffers::ForwardsUOffset<DTC<'b >>>>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(EcuDataOffset::VT_DTCS, dtcs);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(EcuData::VT_DTCS, dtcs);
   }
   #[inline]
   pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a, A>) -> EcuDataBuilder<'a, 'b, A> {
@@ -18868,11 +18868,6 @@ impl core::fmt::Debug for EcuData<'_> {
       ds.finish()
   }
 }
-pub enum KeyValueOffset {}
-impl KeyValueOffset {
-    pub const VT_KEY: flatbuffers::VOffsetT = 4;
-    pub const VT_VALUE: flatbuffers::VOffsetT = 6;
-}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Copy for KeyValue<'a, B> {}
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Clone for KeyValue<'a, B> {
   fn clone(&self) -> Self { *self }
@@ -18893,12 +18888,10 @@ impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'
   }
 }
 
-impl<'a, B: flatbuffers::ReadBuffer + ?Sized> KeyValue<'a, B> {
+impl<'a> KeyValue<'a> {
+  pub const VT_KEY: flatbuffers::VOffsetT = 4;
+  pub const VT_VALUE: flatbuffers::VOffsetT = 6;
 
-  #[inline]
-  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
-    KeyValue { _tab: table }
-  }
   #[allow(unused_mut)]
   pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr, A: flatbuffers::Allocator + 'bldr>(
     _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr, A>,
@@ -18909,6 +18902,13 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> KeyValue<'a, B> {
     if let Some(x) = args.key { builder.add_key(x); }
     builder.finish()
   }
+}
+
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> KeyValue<'a, B> {
+  #[inline]
+  pub unsafe fn init_from_table(table: flatbuffers::Table<'a, B>) -> Self {
+    KeyValue { _tab: table }
+  }
 
 
   #[inline]
@@ -18916,14 +18916,14 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> KeyValue<'a, B> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(KeyValueOffset::VT_KEY, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(KeyValue::VT_KEY, None)}
   }
   #[inline]
   pub fn value(&self) -> Option<&'a str> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(KeyValueOffset::VT_VALUE, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(KeyValue::VT_VALUE, None)}
   }
 }
 
@@ -18934,8 +18934,8 @@ impl<B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Verifiable for KeyValue<'
   ) -> Result<(), flatbuffers::InvalidFlatbuffer> {
     use self::flatbuffers::Verifiable;
     v.visit_table(pos)?
-     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("key", KeyValueOffset::VT_KEY, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("value", KeyValueOffset::VT_VALUE, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("key", KeyValue::VT_KEY, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("value", KeyValue::VT_VALUE, false)?
      .finish();
     Ok(())
   }
@@ -18961,11 +18961,11 @@ pub struct KeyValueBuilder<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> {
 impl<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> KeyValueBuilder<'a, 'b, A> {
   #[inline]
   pub fn add_key(&mut self, key: flatbuffers::WIPOffset<&'b  str>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(KeyValueOffset::VT_KEY, key);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(KeyValue::VT_KEY, key);
   }
   #[inline]
   pub fn add_value(&mut self, value: flatbuffers::WIPOffset<&'b  str>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(KeyValueOffset::VT_VALUE, value);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(KeyValue::VT_VALUE, value);
   }
   #[inline]
   pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a, A>) -> KeyValueBuilder<'a, 'b, A> {
@@ -19040,15 +19040,29 @@ pub fn size_prefixed_root_as_ecu_data_with_opts<'b, 'o>(
 /// Assumes, without verification, that a buffer of bytes contains a EcuData and returns it.
 /// # Safety
 /// Callers must trust the given bytes do indeed contain a valid `EcuData`.
-pub unsafe fn root_as_ecu_data_unchecked<B: flatbuffers::ReadBuffer + ?Sized>(buf: &B) -> EcuData<'_, B> {
-  unsafe { flatbuffers::root_unchecked::<EcuData<'_, B>, B>(buf) }
+pub unsafe fn root_as_ecu_data_unchecked(buf: &[u8]) -> EcuData<'_> {
+  unsafe { flatbuffers::root_unchecked::<EcuData>(buf) }
+}
+#[inline]
+/// Like `root_as_ecu_data_unchecked`, for any `flatbuffers::ReadBuffer`.
+/// # Safety
+/// Callers must trust the given buffer does indeed contain a valid `EcuData` and that it upholds the `ReadBuffer` contract.
+pub unsafe fn root_as_ecu_data_unchecked_from<B: flatbuffers::ReadBuffer + ?Sized>(buf: &B) -> EcuData<'_, B> {
+  unsafe { flatbuffers::root_unchecked_from::<EcuData<'_, B>, B>(buf) }
 }
 #[inline]
 /// Assumes, without verification, that a buffer of bytes contains a size prefixed EcuData and returns it.
 /// # Safety
 /// Callers must trust the given bytes do indeed contain a valid size prefixed `EcuData`.
-pub unsafe fn size_prefixed_root_as_ecu_data_unchecked<B: flatbuffers::ReadBuffer + ?Sized>(buf: &B) -> EcuData<'_, B> {
-  unsafe { flatbuffers::size_prefixed_root_unchecked::<EcuData<'_, B>, B>(buf) }
+pub unsafe fn size_prefixed_root_as_ecu_data_unchecked(buf: &[u8]) -> EcuData<'_> {
+  unsafe { flatbuffers::size_prefixed_root_unchecked::<EcuData>(buf) }
+}
+#[inline]
+/// Like `size_prefixed_root_as_ecu_data_unchecked`, for any `flatbuffers::ReadBuffer`.
+/// # Safety
+/// Callers must trust the given buffer does indeed contain a valid size prefixed `EcuData` and that it upholds the `ReadBuffer` contract.
+pub unsafe fn size_prefixed_root_as_ecu_data_unchecked_from<B: flatbuffers::ReadBuffer + ?Sized>(buf: &B) -> EcuData<'_, B> {
+  unsafe { flatbuffers::size_prefixed_root_unchecked_from::<EcuData<'_, B>, B>(buf) }
 }
 #[inline]
 pub fn finish_ecu_data_buffer<'a, 'b, A: flatbuffers::Allocator + 'a>(

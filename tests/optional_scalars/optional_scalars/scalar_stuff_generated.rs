@@ -1002,7 +1002,7 @@ pub fn size_prefixed_root_as_scalar_stuff_with_opts<'b, 'o>(
 /// Assumes, without verification, that a buffer of bytes contains a ScalarStuff and returns it.
 /// # Safety
 /// Callers must trust the given bytes do indeed contain a valid `ScalarStuff`.
-pub unsafe fn root_as_scalar_stuff_unchecked(buf: &[u8]) -> ScalarStuff {
+pub unsafe fn root_as_scalar_stuff_unchecked(buf: &[u8]) -> ScalarStuff<'_> {
   unsafe { flatbuffers::root_unchecked::<ScalarStuff>(buf) }
 }
 #[inline]
@@ -1016,7 +1016,7 @@ pub unsafe fn root_as_scalar_stuff_unchecked_from<B: flatbuffers::ReadBuffer + ?
 /// Assumes, without verification, that a buffer of bytes contains a size prefixed ScalarStuff and returns it.
 /// # Safety
 /// Callers must trust the given bytes do indeed contain a valid size prefixed `ScalarStuff`.
-pub unsafe fn size_prefixed_root_as_scalar_stuff_unchecked(buf: &[u8]) -> ScalarStuff {
+pub unsafe fn size_prefixed_root_as_scalar_stuff_unchecked(buf: &[u8]) -> ScalarStuff<'_> {
   unsafe { flatbuffers::size_prefixed_root_unchecked::<ScalarStuff>(buf) }
 }
 #[inline]
