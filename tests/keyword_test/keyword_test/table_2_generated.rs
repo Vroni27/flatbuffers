@@ -10,23 +10,31 @@ use core::cmp::Ordering;
 use self::flatbuffers::{EndianScalar, Follow};
 use super::*;
 pub enum Table2Offset {}
-#[derive(Copy, Clone, PartialEq)]
+impl Table2Offset {
+    pub const VT_TYPE_TYPE: flatbuffers::VOffsetT = 4;
+    pub const VT_TYPE_: flatbuffers::VOffsetT = 6;
+}
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Copy for Table2<'a, B> {}
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Clone for Table2<'a, B> {
+  fn clone(&self) -> Self { *self }
+}
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized + PartialEq> PartialEq for Table2<'a, B> {
+  fn eq(&self, other: &Self) -> bool { self._tab.eq(&other._tab) }
+}
 
 pub struct Table2<'a, B: flatbuffers::ReadBuffer + ?Sized = [u8]> {
   pub _tab: flatbuffers::Table<'a, B>,
 }
 
-impl<'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'a, B> for Table2<'a, B> {
-  type Inner = Table2<'a, B>;
+impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'buf, B> for Table2<'a, B> {
+  type Inner = Table2<'buf, B>;
   #[inline]
-  unsafe fn follow(buf: &'a B, loc: usize) -> Self::Inner {
-    Self { _tab: unsafe { flatbuffers::Table::new(buf, loc) } }
+  unsafe fn follow(buf: &'buf B, loc: usize) -> Self::Inner {
+    Table2 { _tab: unsafe { flatbuffers::Table::new(buf, loc) } }
   }
 }
 
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Table2<'a, B> {
-  pub const VT_TYPE_TYPE: flatbuffers::VOffsetT = 4;
-  pub const VT_TYPE_: flatbuffers::VOffsetT = 6;
 
   pub const fn get_fully_qualified_name() -> &'static str {
     "KeywordTest.Table2"
@@ -72,14 +80,14 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Table2<'a, B> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<KeywordsInUnion>(Table2::VT_TYPE_TYPE, Some(KeywordsInUnion::NONE)).unwrap()}
+    unsafe { self._tab.get::<KeywordsInUnion>(Table2Offset::VT_TYPE_TYPE, Some(KeywordsInUnion::NONE)).unwrap()}
   }
   #[inline]
   pub fn type_(&self) -> Option<flatbuffers::Table<'a, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Table<'a, B>>>(Table2::VT_TYPE_, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Table<'a, B>>>(Table2Offset::VT_TYPE_, None)}
   }
   #[inline]
   #[allow(non_snake_case)]
@@ -120,7 +128,7 @@ impl<B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Verifiable for Table2<'_,
   ) -> Result<(), flatbuffers::InvalidFlatbuffer> {
     use self::flatbuffers::Verifiable;
     v.visit_table(pos)?
-     .visit_union::<KeywordsInUnionUnionValue>("type_type", Self::VT_TYPE_TYPE, "type_", Self::VT_TYPE_, false)?
+     .visit_union::<KeywordsInUnionUnionValue>("type_type", Table2Offset::VT_TYPE_TYPE, "type_", Table2Offset::VT_TYPE_, false)?
      .finish();
     Ok(())
   }
@@ -146,11 +154,11 @@ pub struct Table2Builder<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> {
 impl<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> Table2Builder<'a, 'b, A> {
   #[inline]
   pub fn add_type_type(&mut self, type_type: KeywordsInUnion) {
-    self.fbb_.push_slot::<KeywordsInUnion>(Table2::VT_TYPE_TYPE, type_type, KeywordsInUnion::NONE);
+    self.fbb_.push_slot::<KeywordsInUnion>(Table2Offset::VT_TYPE_TYPE, type_type, KeywordsInUnion::NONE);
   }
   #[inline]
   pub fn add_type_(&mut self, type_: flatbuffers::WIPOffset<KeywordsInUnionUnionValue>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(Table2::VT_TYPE_, type_);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(Table2Offset::VT_TYPE_, type_);
   }
   #[inline]
   pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a, A>) -> Table2Builder<'a, 'b, A> {

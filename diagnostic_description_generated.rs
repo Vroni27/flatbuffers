@@ -3995,7 +3995,7 @@ pub struct SD<'a, B: flatbuffers::ReadBuffer + ?Sized = [u8]> {
   pub _tab: flatbuffers::Table<'a, B>,
 }
 
-impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'buf, B> for SD<'a, B> {
+impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'buf, B> for SD<'a, B> {
   type Inner = SD<'buf, B>;
   #[inline]
   unsafe fn follow(buf: &'buf B, loc: usize) -> Self::Inner {
@@ -4133,7 +4133,7 @@ pub struct SDOrSDG<'a, B: flatbuffers::ReadBuffer + ?Sized = [u8]> {
   pub _tab: flatbuffers::Table<'a, B>,
 }
 
-impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'buf, B> for SDOrSDG<'a, B> {
+impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'buf, B> for SDOrSDG<'a, B> {
   type Inner = SDOrSDG<'buf, B>;
   #[inline]
   unsafe fn follow(buf: &'buf B, loc: usize) -> Self::Inner {
@@ -4175,7 +4175,7 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> SDOrSDG<'a, B> {
   }
   #[inline]
   #[allow(non_snake_case)]
-  pub fn sd_or_sdg_as_sd(&self) -> Option<SD<'a>> {
+  pub fn sd_or_sdg_as_sd(&self) -> Option<SD<'a, B>> {
     if self.sd_or_sdg_type() == SDxorSDG::SD {
       self.sd_or_sdg().map(|t| {
        // Safety:
@@ -4190,7 +4190,7 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> SDOrSDG<'a, B> {
 
   #[inline]
   #[allow(non_snake_case)]
-  pub fn sd_or_sdg_as_sdg(&self) -> Option<SDG<'a>> {
+  pub fn sd_or_sdg_as_sdg(&self) -> Option<SDG<'a, B>> {
     if self.sd_or_sdg_type() == SDxorSDG::SDG {
       self.sd_or_sdg().map(|t| {
        // Safety:
@@ -4304,7 +4304,7 @@ pub struct SDG<'a, B: flatbuffers::ReadBuffer + ?Sized = [u8]> {
   pub _tab: flatbuffers::Table<'a, B>,
 }
 
-impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'buf, B> for SDG<'a, B> {
+impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'buf, B> for SDG<'a, B> {
   type Inner = SDG<'buf, B>;
   #[inline]
   unsafe fn follow(buf: &'buf B, loc: usize) -> Self::Inner {
@@ -4441,7 +4441,7 @@ pub struct SDGS<'a, B: flatbuffers::ReadBuffer + ?Sized = [u8]> {
   pub _tab: flatbuffers::Table<'a, B>,
 }
 
-impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'buf, B> for SDGS<'a, B> {
+impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'buf, B> for SDGS<'a, B> {
   type Inner = SDGS<'buf, B>;
   #[inline]
   unsafe fn follow(buf: &'buf B, loc: usize) -> Self::Inner {
@@ -4552,7 +4552,7 @@ pub struct Audience<'a, B: flatbuffers::ReadBuffer + ?Sized = [u8]> {
   pub _tab: flatbuffers::Table<'a, B>,
 }
 
-impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'buf, B> for Audience<'a, B> {
+impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'buf, B> for Audience<'a, B> {
   type Inner = Audience<'buf, B>;
   #[inline]
   unsafe fn follow(buf: &'buf B, loc: usize) -> Self::Inner {
@@ -4753,7 +4753,7 @@ pub struct LeadingLengthInfoType<'a, B: flatbuffers::ReadBuffer + ?Sized = [u8]>
   pub _tab: flatbuffers::Table<'a, B>,
 }
 
-impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'buf, B> for LeadingLengthInfoType<'a, B> {
+impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'buf, B> for LeadingLengthInfoType<'a, B> {
   type Inner = LeadingLengthInfoType<'buf, B>;
   #[inline]
   unsafe fn follow(buf: &'buf B, loc: usize) -> Self::Inner {
@@ -4860,7 +4860,7 @@ pub struct MinMaxLengthType<'a, B: flatbuffers::ReadBuffer + ?Sized = [u8]> {
   pub _tab: flatbuffers::Table<'a, B>,
 }
 
-impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'buf, B> for MinMaxLengthType<'a, B> {
+impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'buf, B> for MinMaxLengthType<'a, B> {
   type Inner = MinMaxLengthType<'buf, B>;
   #[inline]
   unsafe fn follow(buf: &'buf B, loc: usize) -> Self::Inner {
@@ -4997,7 +4997,7 @@ pub struct ParamLengthInfoType<'a, B: flatbuffers::ReadBuffer + ?Sized = [u8]> {
   pub _tab: flatbuffers::Table<'a, B>,
 }
 
-impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'buf, B> for ParamLengthInfoType<'a, B> {
+impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'buf, B> for ParamLengthInfoType<'a, B> {
   type Inner = ParamLengthInfoType<'buf, B>;
   #[inline]
   unsafe fn follow(buf: &'buf B, loc: usize) -> Self::Inner {
@@ -5104,7 +5104,7 @@ pub struct StandardLengthType<'a, B: flatbuffers::ReadBuffer + ?Sized = [u8]> {
   pub _tab: flatbuffers::Table<'a, B>,
 }
 
-impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'buf, B> for StandardLengthType<'a, B> {
+impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'buf, B> for StandardLengthType<'a, B> {
   type Inner = StandardLengthType<'buf, B>;
   #[inline]
   unsafe fn follow(buf: &'buf B, loc: usize) -> Self::Inner {
@@ -5139,11 +5139,11 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> StandardLengthType<'a, B> {
     unsafe { self._tab.get::<u32>(StandardLengthTypeOffset::VT_BIT_LENGTH, Some(0)).unwrap()}
   }
   #[inline]
-  pub fn bit_mask(&self) -> Option<flatbuffers::Vector<'a, u8>> {
+  pub fn bit_mask(&self) -> Option<flatbuffers::Vector<'a, u8, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, u8>>>(StandardLengthTypeOffset::VT_BIT_MASK, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, u8, B>>>(StandardLengthTypeOffset::VT_BIT_MASK, None)}
   }
   #[inline]
   pub fn condensed(&self) -> bool {
@@ -5162,7 +5162,7 @@ impl<B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Verifiable for StandardLe
     use self::flatbuffers::Verifiable;
     v.visit_table(pos)?
      .visit_field::<u32>("bit_length", StandardLengthTypeOffset::VT_BIT_LENGTH, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, u8>>>("bit_mask", StandardLengthTypeOffset::VT_BIT_MASK, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, u8, B>>>("bit_mask", StandardLengthTypeOffset::VT_BIT_MASK, false)?
      .visit_field::<bool>("condensed", StandardLengthTypeOffset::VT_CONDENSED, false)?
      .finish();
     Ok(())
@@ -5246,7 +5246,7 @@ pub struct DiagCodedType<'a, B: flatbuffers::ReadBuffer + ?Sized = [u8]> {
   pub _tab: flatbuffers::Table<'a, B>,
 }
 
-impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'buf, B> for DiagCodedType<'a, B> {
+impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'buf, B> for DiagCodedType<'a, B> {
   type Inner = DiagCodedType<'buf, B>;
   #[inline]
   unsafe fn follow(buf: &'buf B, loc: usize) -> Self::Inner {
@@ -5320,7 +5320,7 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> DiagCodedType<'a, B> {
   }
   #[inline]
   #[allow(non_snake_case)]
-  pub fn specific_data_as_leading_length_info_type(&self) -> Option<LeadingLengthInfoType<'a>> {
+  pub fn specific_data_as_leading_length_info_type(&self) -> Option<LeadingLengthInfoType<'a, B>> {
     if self.specific_data_type() == SpecificDataType::LeadingLengthInfoType {
       self.specific_data().map(|t| {
        // Safety:
@@ -5335,7 +5335,7 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> DiagCodedType<'a, B> {
 
   #[inline]
   #[allow(non_snake_case)]
-  pub fn specific_data_as_min_max_length_type(&self) -> Option<MinMaxLengthType<'a>> {
+  pub fn specific_data_as_min_max_length_type(&self) -> Option<MinMaxLengthType<'a, B>> {
     if self.specific_data_type() == SpecificDataType::MinMaxLengthType {
       self.specific_data().map(|t| {
        // Safety:
@@ -5350,7 +5350,7 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> DiagCodedType<'a, B> {
 
   #[inline]
   #[allow(non_snake_case)]
-  pub fn specific_data_as_param_length_info_type(&self) -> Option<ParamLengthInfoType<'a>> {
+  pub fn specific_data_as_param_length_info_type(&self) -> Option<ParamLengthInfoType<'a, B>> {
     if self.specific_data_type() == SpecificDataType::ParamLengthInfoType {
       self.specific_data().map(|t| {
        // Safety:
@@ -5365,7 +5365,7 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> DiagCodedType<'a, B> {
 
   #[inline]
   #[allow(non_snake_case)]
-  pub fn specific_data_as_standard_length_type(&self) -> Option<StandardLengthType<'a>> {
+  pub fn specific_data_as_standard_length_type(&self) -> Option<StandardLengthType<'a, B>> {
     if self.specific_data_type() == SpecificDataType::StandardLengthType {
       self.specific_data().map(|t| {
        // Safety:
@@ -5524,7 +5524,7 @@ pub struct Text<'a, B: flatbuffers::ReadBuffer + ?Sized = [u8]> {
   pub _tab: flatbuffers::Table<'a, B>,
 }
 
-impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'buf, B> for Text<'a, B> {
+impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'buf, B> for Text<'a, B> {
   type Inner = Text<'buf, B>;
   #[inline]
   unsafe fn follow(buf: &'buf B, loc: usize) -> Self::Inner {
@@ -5646,7 +5646,7 @@ pub struct Limit<'a, B: flatbuffers::ReadBuffer + ?Sized = [u8]> {
   pub _tab: flatbuffers::Table<'a, B>,
 }
 
-impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'buf, B> for Limit<'a, B> {
+impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'buf, B> for Limit<'a, B> {
   type Inner = Limit<'buf, B>;
   #[inline]
   unsafe fn follow(buf: &'buf B, loc: usize) -> Self::Inner {
@@ -5769,7 +5769,7 @@ pub struct CompuValues<'a, B: flatbuffers::ReadBuffer + ?Sized = [u8]> {
   pub _tab: flatbuffers::Table<'a, B>,
 }
 
-impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'buf, B> for CompuValues<'a, B> {
+impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'buf, B> for CompuValues<'a, B> {
   type Inner = CompuValues<'buf, B>;
   #[inline]
   unsafe fn follow(buf: &'buf B, loc: usize) -> Self::Inner {
@@ -5907,7 +5907,7 @@ pub struct CompuRationalCoEffs<'a, B: flatbuffers::ReadBuffer + ?Sized = [u8]> {
   pub _tab: flatbuffers::Table<'a, B>,
 }
 
-impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'buf, B> for CompuRationalCoEffs<'a, B> {
+impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'buf, B> for CompuRationalCoEffs<'a, B> {
   type Inner = CompuRationalCoEffs<'buf, B>;
   #[inline]
   unsafe fn follow(buf: &'buf B, loc: usize) -> Self::Inner {
@@ -5934,18 +5934,18 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> CompuRationalCoEffs<'a, B> {
 
 
   #[inline]
-  pub fn numerator(&self) -> Option<flatbuffers::Vector<'a, f64>> {
+  pub fn numerator(&self) -> Option<flatbuffers::Vector<'a, f64, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, f64>>>(CompuRationalCoEffsOffset::VT_NUMERATOR, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, f64, B>>>(CompuRationalCoEffsOffset::VT_NUMERATOR, None)}
   }
   #[inline]
-  pub fn denominator(&self) -> Option<flatbuffers::Vector<'a, f64>> {
+  pub fn denominator(&self) -> Option<flatbuffers::Vector<'a, f64, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, f64>>>(CompuRationalCoEffsOffset::VT_DENOMINATOR, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, f64, B>>>(CompuRationalCoEffsOffset::VT_DENOMINATOR, None)}
   }
 }
 
@@ -5956,8 +5956,8 @@ impl<B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Verifiable for CompuRatio
   ) -> Result<(), flatbuffers::InvalidFlatbuffer> {
     use self::flatbuffers::Verifiable;
     v.visit_table(pos)?
-     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, f64>>>("numerator", CompuRationalCoEffsOffset::VT_NUMERATOR, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, f64>>>("denominator", CompuRationalCoEffsOffset::VT_DENOMINATOR, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, f64, B>>>("numerator", CompuRationalCoEffsOffset::VT_NUMERATOR, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, f64, B>>>("denominator", CompuRationalCoEffsOffset::VT_DENOMINATOR, false)?
      .finish();
     Ok(())
   }
@@ -6033,7 +6033,7 @@ pub struct CompuScale<'a, B: flatbuffers::ReadBuffer + ?Sized = [u8]> {
   pub _tab: flatbuffers::Table<'a, B>,
 }
 
-impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'buf, B> for CompuScale<'a, B> {
+impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'buf, B> for CompuScale<'a, B> {
   type Inner = CompuScale<'buf, B>;
   #[inline]
   unsafe fn follow(buf: &'buf B, loc: usize) -> Self::Inner {
@@ -6219,7 +6219,7 @@ pub struct CompuDefaultValue<'a, B: flatbuffers::ReadBuffer + ?Sized = [u8]> {
   pub _tab: flatbuffers::Table<'a, B>,
 }
 
-impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'buf, B> for CompuDefaultValue<'a, B> {
+impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'buf, B> for CompuDefaultValue<'a, B> {
   type Inner = CompuDefaultValue<'buf, B>;
   #[inline]
   unsafe fn follow(buf: &'buf B, loc: usize) -> Self::Inner {
@@ -6342,7 +6342,7 @@ pub struct CompuInternalToPhys<'a, B: flatbuffers::ReadBuffer + ?Sized = [u8]> {
   pub _tab: flatbuffers::Table<'a, B>,
 }
 
-impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'buf, B> for CompuInternalToPhys<'a, B> {
+impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'buf, B> for CompuInternalToPhys<'a, B> {
   type Inner = CompuInternalToPhys<'buf, B>;
   #[inline]
   unsafe fn follow(buf: &'buf B, loc: usize) -> Self::Inner {
@@ -6481,7 +6481,7 @@ pub struct CompuPhysToInternal<'a, B: flatbuffers::ReadBuffer + ?Sized = [u8]> {
   pub _tab: flatbuffers::Table<'a, B>,
 }
 
-impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'buf, B> for CompuPhysToInternal<'a, B> {
+impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'buf, B> for CompuPhysToInternal<'a, B> {
   type Inner = CompuPhysToInternal<'buf, B>;
   #[inline]
   unsafe fn follow(buf: &'buf B, loc: usize) -> Self::Inner {
@@ -6620,7 +6620,7 @@ pub struct CompuMethod<'a, B: flatbuffers::ReadBuffer + ?Sized = [u8]> {
   pub _tab: flatbuffers::Table<'a, B>,
 }
 
-impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'buf, B> for CompuMethod<'a, B> {
+impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'buf, B> for CompuMethod<'a, B> {
   type Inner = CompuMethod<'buf, B>;
   #[inline]
   unsafe fn follow(buf: &'buf B, loc: usize) -> Self::Inner {
@@ -6759,7 +6759,7 @@ pub struct PhysicalType<'a, B: flatbuffers::ReadBuffer + ?Sized = [u8]> {
   pub _tab: flatbuffers::Table<'a, B>,
 }
 
-impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'buf, B> for PhysicalType<'a, B> {
+impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'buf, B> for PhysicalType<'a, B> {
   type Inner = PhysicalType<'buf, B>;
   #[inline]
   unsafe fn follow(buf: &'buf B, loc: usize) -> Self::Inner {
@@ -6900,7 +6900,7 @@ pub struct Unit<'a, B: flatbuffers::ReadBuffer + ?Sized = [u8]> {
   pub _tab: flatbuffers::Table<'a, B>,
 }
 
-impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'buf, B> for Unit<'a, B> {
+impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'buf, B> for Unit<'a, B> {
   type Inner = Unit<'buf, B>;
   #[inline]
   unsafe fn follow(buf: &'buf B, loc: usize) -> Self::Inner {
@@ -7072,7 +7072,7 @@ pub struct ScaleConstr<'a, B: flatbuffers::ReadBuffer + ?Sized = [u8]> {
   pub _tab: flatbuffers::Table<'a, B>,
 }
 
-impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'buf, B> for ScaleConstr<'a, B> {
+impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'buf, B> for ScaleConstr<'a, B> {
   type Inner = ScaleConstr<'buf, B>;
   #[inline]
   unsafe fn follow(buf: &'buf B, loc: usize) -> Self::Inner {
@@ -7227,7 +7227,7 @@ pub struct InternalConstr<'a, B: flatbuffers::ReadBuffer + ?Sized = [u8]> {
   pub _tab: flatbuffers::Table<'a, B>,
 }
 
-impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'buf, B> for InternalConstr<'a, B> {
+impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'buf, B> for InternalConstr<'a, B> {
   type Inner = InternalConstr<'buf, B>;
   #[inline]
   unsafe fn follow(buf: &'buf B, loc: usize) -> Self::Inner {
@@ -7370,7 +7370,7 @@ pub struct DTC<'a, B: flatbuffers::ReadBuffer + ?Sized = [u8]> {
   pub _tab: flatbuffers::Table<'a, B>,
 }
 
-impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'buf, B> for DTC<'a, B> {
+impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'buf, B> for DTC<'a, B> {
   type Inner = DTC<'buf, B>;
   #[inline]
   unsafe fn follow(buf: &'buf B, loc: usize) -> Self::Inner {
@@ -7576,7 +7576,7 @@ pub struct NormalDOP<'a, B: flatbuffers::ReadBuffer + ?Sized = [u8]> {
   pub _tab: flatbuffers::Table<'a, B>,
 }
 
-impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'buf, B> for NormalDOP<'a, B> {
+impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'buf, B> for NormalDOP<'a, B> {
   type Inner = NormalDOP<'buf, B>;
   #[inline]
   unsafe fn follow(buf: &'buf B, loc: usize) -> Self::Inner {
@@ -7763,7 +7763,7 @@ pub struct Field<'a, B: flatbuffers::ReadBuffer + ?Sized = [u8]> {
   pub _tab: flatbuffers::Table<'a, B>,
 }
 
-impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'buf, B> for Field<'a, B> {
+impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'buf, B> for Field<'a, B> {
   type Inner = Field<'buf, B>;
   #[inline]
   unsafe fn follow(buf: &'buf B, loc: usize) -> Self::Inner {
@@ -7902,7 +7902,7 @@ pub struct StaticField<'a, B: flatbuffers::ReadBuffer + ?Sized = [u8]> {
   pub _tab: flatbuffers::Table<'a, B>,
 }
 
-impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'buf, B> for StaticField<'a, B> {
+impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'buf, B> for StaticField<'a, B> {
   type Inner = StaticField<'buf, B>;
   #[inline]
   unsafe fn follow(buf: &'buf B, loc: usize) -> Self::Inner {
@@ -8041,7 +8041,7 @@ pub struct EndOfPduField<'a, B: flatbuffers::ReadBuffer + ?Sized = [u8]> {
   pub _tab: flatbuffers::Table<'a, B>,
 }
 
-impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'buf, B> for EndOfPduField<'a, B> {
+impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'buf, B> for EndOfPduField<'a, B> {
   type Inner = EndOfPduField<'buf, B>;
   #[inline]
   unsafe fn follow(buf: &'buf B, loc: usize) -> Self::Inner {
@@ -8180,7 +8180,7 @@ pub struct EnvDataDesc<'a, B: flatbuffers::ReadBuffer + ?Sized = [u8]> {
   pub _tab: flatbuffers::Table<'a, B>,
 }
 
-impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'buf, B> for EnvDataDesc<'a, B> {
+impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'buf, B> for EnvDataDesc<'a, B> {
   type Inner = EnvDataDesc<'buf, B>;
   #[inline]
   unsafe fn follow(buf: &'buf B, loc: usize) -> Self::Inner {
@@ -8318,7 +8318,7 @@ pub struct EnvData<'a, B: flatbuffers::ReadBuffer + ?Sized = [u8]> {
   pub _tab: flatbuffers::Table<'a, B>,
 }
 
-impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'buf, B> for EnvData<'a, B> {
+impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'buf, B> for EnvData<'a, B> {
   type Inner = EnvData<'buf, B>;
   #[inline]
   unsafe fn follow(buf: &'buf B, loc: usize) -> Self::Inner {
@@ -8345,11 +8345,11 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> EnvData<'a, B> {
 
 
   #[inline]
-  pub fn dtc_values(&self) -> Option<flatbuffers::Vector<'a, u32>> {
+  pub fn dtc_values(&self) -> Option<flatbuffers::Vector<'a, u32, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, u32>>>(EnvDataOffset::VT_DTC_VALUES, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, u32, B>>>(EnvDataOffset::VT_DTC_VALUES, None)}
   }
   #[inline]
   pub fn params(&self) -> Option<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<Param<'a, B>>, B>> {
@@ -8367,7 +8367,7 @@ impl<B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Verifiable for EnvData<'_
   ) -> Result<(), flatbuffers::InvalidFlatbuffer> {
     use self::flatbuffers::Verifiable;
     v.visit_table(pos)?
-     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, u32>>>("dtc_values", EnvDataOffset::VT_DTC_VALUES, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, u32, B>>>("dtc_values", EnvDataOffset::VT_DTC_VALUES, false)?
      .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<Param<'_, B>>, B>>>("params", EnvDataOffset::VT_PARAMS, false)?
      .finish();
     Ok(())
@@ -8441,7 +8441,7 @@ pub struct Structure<'a, B: flatbuffers::ReadBuffer + ?Sized = [u8]> {
   pub _tab: flatbuffers::Table<'a, B>,
 }
 
-impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'buf, B> for Structure<'a, B> {
+impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'buf, B> for Structure<'a, B> {
   type Inner = Structure<'buf, B>;
   #[inline]
   unsafe fn follow(buf: &'buf B, loc: usize) -> Self::Inner {
@@ -8582,7 +8582,7 @@ pub struct DTCDOP<'a, B: flatbuffers::ReadBuffer + ?Sized = [u8]> {
   pub _tab: flatbuffers::Table<'a, B>,
 }
 
-impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'buf, B> for DTCDOP<'a, B> {
+impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'buf, B> for DTCDOP<'a, B> {
   type Inner = DTCDOP<'buf, B>;
   #[inline]
   unsafe fn follow(buf: &'buf B, loc: usize) -> Self::Inner {
@@ -8752,7 +8752,7 @@ pub struct LongName<'a, B: flatbuffers::ReadBuffer + ?Sized = [u8]> {
   pub _tab: flatbuffers::Table<'a, B>,
 }
 
-impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'buf, B> for LongName<'a, B> {
+impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'buf, B> for LongName<'a, B> {
   type Inner = LongName<'buf, B>;
   #[inline]
   unsafe fn follow(buf: &'buf B, loc: usize) -> Self::Inner {
@@ -8875,7 +8875,7 @@ pub struct SwitchKey<'a, B: flatbuffers::ReadBuffer + ?Sized = [u8]> {
   pub _tab: flatbuffers::Table<'a, B>,
 }
 
-impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'buf, B> for SwitchKey<'a, B> {
+impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'buf, B> for SwitchKey<'a, B> {
   type Inner = SwitchKey<'buf, B>;
   #[inline]
   unsafe fn follow(buf: &'buf B, loc: usize) -> Self::Inner {
@@ -9014,7 +9014,7 @@ pub struct DefaultCase<'a, B: flatbuffers::ReadBuffer + ?Sized = [u8]> {
   pub _tab: flatbuffers::Table<'a, B>,
 }
 
-impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'buf, B> for DefaultCase<'a, B> {
+impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'buf, B> for DefaultCase<'a, B> {
   type Inner = DefaultCase<'buf, B>;
   #[inline]
   unsafe fn follow(buf: &'buf B, loc: usize) -> Self::Inner {
@@ -9155,7 +9155,7 @@ pub struct Case<'a, B: flatbuffers::ReadBuffer + ?Sized = [u8]> {
   pub _tab: flatbuffers::Table<'a, B>,
 }
 
-impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'buf, B> for Case<'a, B> {
+impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'buf, B> for Case<'a, B> {
   type Inner = Case<'buf, B>;
   #[inline]
   unsafe fn follow(buf: &'buf B, loc: usize) -> Self::Inner {
@@ -9328,7 +9328,7 @@ pub struct MUXDOP<'a, B: flatbuffers::ReadBuffer + ?Sized = [u8]> {
   pub _tab: flatbuffers::Table<'a, B>,
 }
 
-impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'buf, B> for MUXDOP<'a, B> {
+impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'buf, B> for MUXDOP<'a, B> {
   type Inner = MUXDOP<'buf, B>;
   #[inline]
   unsafe fn follow(buf: &'buf B, loc: usize) -> Self::Inner {
@@ -9499,7 +9499,7 @@ pub struct DetermineNumberOfItems<'a, B: flatbuffers::ReadBuffer + ?Sized = [u8]
   pub _tab: flatbuffers::Table<'a, B>,
 }
 
-impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'buf, B> for DetermineNumberOfItems<'a, B> {
+impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'buf, B> for DetermineNumberOfItems<'a, B> {
   type Inner = DetermineNumberOfItems<'buf, B>;
   #[inline]
   unsafe fn follow(buf: &'buf B, loc: usize) -> Self::Inner {
@@ -9638,7 +9638,7 @@ pub struct DynamicLengthField<'a, B: flatbuffers::ReadBuffer + ?Sized = [u8]> {
   pub _tab: flatbuffers::Table<'a, B>,
 }
 
-impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'buf, B> for DynamicLengthField<'a, B> {
+impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'buf, B> for DynamicLengthField<'a, B> {
   type Inner = DynamicLengthField<'buf, B>;
   #[inline]
   unsafe fn follow(buf: &'buf B, loc: usize) -> Self::Inner {
@@ -9779,7 +9779,7 @@ pub struct DOP<'a, B: flatbuffers::ReadBuffer + ?Sized = [u8]> {
   pub _tab: flatbuffers::Table<'a, B>,
 }
 
-impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'buf, B> for DOP<'a, B> {
+impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'buf, B> for DOP<'a, B> {
   type Inner = DOP<'buf, B>;
   #[inline]
   unsafe fn follow(buf: &'buf B, loc: usize) -> Self::Inner {
@@ -9845,7 +9845,7 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> DOP<'a, B> {
   }
   #[inline]
   #[allow(non_snake_case)]
-  pub fn specific_data_as_normal_dop(&self) -> Option<NormalDOP<'a>> {
+  pub fn specific_data_as_normal_dop(&self) -> Option<NormalDOP<'a, B>> {
     if self.specific_data_type() == SpecificDOPData::NormalDOP {
       self.specific_data().map(|t| {
        // Safety:
@@ -9860,7 +9860,7 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> DOP<'a, B> {
 
   #[inline]
   #[allow(non_snake_case)]
-  pub fn specific_data_as_end_of_pdu_field(&self) -> Option<EndOfPduField<'a>> {
+  pub fn specific_data_as_end_of_pdu_field(&self) -> Option<EndOfPduField<'a, B>> {
     if self.specific_data_type() == SpecificDOPData::EndOfPduField {
       self.specific_data().map(|t| {
        // Safety:
@@ -9875,7 +9875,7 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> DOP<'a, B> {
 
   #[inline]
   #[allow(non_snake_case)]
-  pub fn specific_data_as_static_field(&self) -> Option<StaticField<'a>> {
+  pub fn specific_data_as_static_field(&self) -> Option<StaticField<'a, B>> {
     if self.specific_data_type() == SpecificDOPData::StaticField {
       self.specific_data().map(|t| {
        // Safety:
@@ -9890,7 +9890,7 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> DOP<'a, B> {
 
   #[inline]
   #[allow(non_snake_case)]
-  pub fn specific_data_as_env_data_desc(&self) -> Option<EnvDataDesc<'a>> {
+  pub fn specific_data_as_env_data_desc(&self) -> Option<EnvDataDesc<'a, B>> {
     if self.specific_data_type() == SpecificDOPData::EnvDataDesc {
       self.specific_data().map(|t| {
        // Safety:
@@ -9905,7 +9905,7 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> DOP<'a, B> {
 
   #[inline]
   #[allow(non_snake_case)]
-  pub fn specific_data_as_env_data(&self) -> Option<EnvData<'a>> {
+  pub fn specific_data_as_env_data(&self) -> Option<EnvData<'a, B>> {
     if self.specific_data_type() == SpecificDOPData::EnvData {
       self.specific_data().map(|t| {
        // Safety:
@@ -9920,7 +9920,7 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> DOP<'a, B> {
 
   #[inline]
   #[allow(non_snake_case)]
-  pub fn specific_data_as_dtcdop(&self) -> Option<DTCDOP<'a>> {
+  pub fn specific_data_as_dtcdop(&self) -> Option<DTCDOP<'a, B>> {
     if self.specific_data_type() == SpecificDOPData::DTCDOP {
       self.specific_data().map(|t| {
        // Safety:
@@ -9935,7 +9935,7 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> DOP<'a, B> {
 
   #[inline]
   #[allow(non_snake_case)]
-  pub fn specific_data_as_structure(&self) -> Option<Structure<'a>> {
+  pub fn specific_data_as_structure(&self) -> Option<Structure<'a, B>> {
     if self.specific_data_type() == SpecificDOPData::Structure {
       self.specific_data().map(|t| {
        // Safety:
@@ -9950,7 +9950,7 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> DOP<'a, B> {
 
   #[inline]
   #[allow(non_snake_case)]
-  pub fn specific_data_as_muxdop(&self) -> Option<MUXDOP<'a>> {
+  pub fn specific_data_as_muxdop(&self) -> Option<MUXDOP<'a, B>> {
     if self.specific_data_type() == SpecificDOPData::MUXDOP {
       self.specific_data().map(|t| {
        // Safety:
@@ -9965,7 +9965,7 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> DOP<'a, B> {
 
   #[inline]
   #[allow(non_snake_case)]
-  pub fn specific_data_as_dynamic_length_field(&self) -> Option<DynamicLengthField<'a>> {
+  pub fn specific_data_as_dynamic_length_field(&self) -> Option<DynamicLengthField<'a, B>> {
     if self.specific_data_type() == SpecificDOPData::DynamicLengthField {
       self.specific_data().map(|t| {
        // Safety:
@@ -10151,7 +10151,7 @@ pub struct State<'a, B: flatbuffers::ReadBuffer + ?Sized = [u8]> {
   pub _tab: flatbuffers::Table<'a, B>,
 }
 
-impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'buf, B> for State<'a, B> {
+impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'buf, B> for State<'a, B> {
   type Inner = State<'buf, B>;
   #[inline]
   unsafe fn follow(buf: &'buf B, loc: usize) -> Self::Inner {
@@ -10276,7 +10276,7 @@ pub struct StateChart<'a, B: flatbuffers::ReadBuffer + ?Sized = [u8]> {
   pub _tab: flatbuffers::Table<'a, B>,
 }
 
-impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'buf, B> for StateChart<'a, B> {
+impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'buf, B> for StateChart<'a, B> {
   type Inner = StateChart<'buf, B>;
   #[inline]
   unsafe fn follow(buf: &'buf B, loc: usize) -> Self::Inner {
@@ -10447,7 +10447,7 @@ pub struct StateTransition<'a, B: flatbuffers::ReadBuffer + ?Sized = [u8]> {
   pub _tab: flatbuffers::Table<'a, B>,
 }
 
-impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'buf, B> for StateTransition<'a, B> {
+impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'buf, B> for StateTransition<'a, B> {
   type Inner = StateTransition<'buf, B>;
   #[inline]
   unsafe fn follow(buf: &'buf B, loc: usize) -> Self::Inner {
@@ -10585,7 +10585,7 @@ pub struct StateTransitionRef<'a, B: flatbuffers::ReadBuffer + ?Sized = [u8]> {
   pub _tab: flatbuffers::Table<'a, B>,
 }
 
-impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'buf, B> for StateTransitionRef<'a, B> {
+impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'buf, B> for StateTransitionRef<'a, B> {
   type Inner = StateTransitionRef<'buf, B>;
   #[inline]
   unsafe fn follow(buf: &'buf B, loc: usize) -> Self::Inner {
@@ -10709,7 +10709,7 @@ pub struct PreConditionStateRef<'a, B: flatbuffers::ReadBuffer + ?Sized = [u8]> 
   pub _tab: flatbuffers::Table<'a, B>,
 }
 
-impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'buf, B> for PreConditionStateRef<'a, B> {
+impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'buf, B> for PreConditionStateRef<'a, B> {
   type Inner = PreConditionStateRef<'buf, B>;
   #[inline]
   unsafe fn follow(buf: &'buf B, loc: usize) -> Self::Inner {
@@ -10875,7 +10875,7 @@ pub struct TableRow<'a, B: flatbuffers::ReadBuffer + ?Sized = [u8]> {
   pub _tab: flatbuffers::Table<'a, B>,
 }
 
-impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'buf, B> for TableRow<'a, B> {
+impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'buf, B> for TableRow<'a, B> {
   type Inner = TableRow<'buf, B>;
   #[inline]
   unsafe fn follow(buf: &'buf B, loc: usize) -> Self::Inner {
@@ -11190,7 +11190,7 @@ pub struct TableDiagCommConnector<'a, B: flatbuffers::ReadBuffer + ?Sized = [u8]
   pub _tab: flatbuffers::Table<'a, B>,
 }
 
-impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'buf, B> for TableDiagCommConnector<'a, B> {
+impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'buf, B> for TableDiagCommConnector<'a, B> {
   type Inner = TableDiagCommConnector<'buf, B>;
   #[inline]
   unsafe fn follow(buf: &'buf B, loc: usize) -> Self::Inner {
@@ -11240,7 +11240,7 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> TableDiagCommConnector<'a, B> {
   }
   #[inline]
   #[allow(non_snake_case)]
-  pub fn diag_comm_as_diag_service(&self) -> Option<DiagService<'a>> {
+  pub fn diag_comm_as_diag_service(&self) -> Option<DiagService<'a, B>> {
     if self.diag_comm_type() == DiagServiceOrJob::DiagService {
       self.diag_comm().map(|t| {
        // Safety:
@@ -11255,7 +11255,7 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> TableDiagCommConnector<'a, B> {
 
   #[inline]
   #[allow(non_snake_case)]
-  pub fn diag_comm_as_single_ecu_job(&self) -> Option<SingleEcuJob<'a>> {
+  pub fn diag_comm_as_single_ecu_job(&self) -> Option<SingleEcuJob<'a, B>> {
     if self.diag_comm_type() == DiagServiceOrJob::SingleEcuJob {
       self.diag_comm().map(|t| {
        // Safety:
@@ -11383,7 +11383,7 @@ pub struct TableDop<'a, B: flatbuffers::ReadBuffer + ?Sized = [u8]> {
   pub _tab: flatbuffers::Table<'a, B>,
 }
 
-impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'buf, B> for TableDop<'a, B> {
+impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'buf, B> for TableDop<'a, B> {
   type Inner = TableDop<'buf, B>;
   #[inline]
   unsafe fn follow(buf: &'buf B, loc: usize) -> Self::Inner {
@@ -11617,7 +11617,7 @@ pub struct CodedConst<'a, B: flatbuffers::ReadBuffer + ?Sized = [u8]> {
   pub _tab: flatbuffers::Table<'a, B>,
 }
 
-impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'buf, B> for CodedConst<'a, B> {
+impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'buf, B> for CodedConst<'a, B> {
   type Inner = CodedConst<'buf, B>;
   #[inline]
   unsafe fn follow(buf: &'buf B, loc: usize) -> Self::Inner {
@@ -11737,7 +11737,7 @@ pub struct Dynamic<'a, B: flatbuffers::ReadBuffer + ?Sized = [u8]> {
   pub _tab: flatbuffers::Table<'a, B>,
 }
 
-impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'buf, B> for Dynamic<'a, B> {
+impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'buf, B> for Dynamic<'a, B> {
   type Inner = Dynamic<'buf, B>;
   #[inline]
   unsafe fn follow(buf: &'buf B, loc: usize) -> Self::Inner {
@@ -11825,7 +11825,7 @@ pub struct LengthKeyRef<'a, B: flatbuffers::ReadBuffer + ?Sized = [u8]> {
   pub _tab: flatbuffers::Table<'a, B>,
 }
 
-impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'buf, B> for LengthKeyRef<'a, B> {
+impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'buf, B> for LengthKeyRef<'a, B> {
   type Inner = LengthKeyRef<'buf, B>;
   #[inline]
   unsafe fn follow(buf: &'buf B, loc: usize) -> Self::Inner {
@@ -11931,7 +11931,7 @@ pub struct MatchingRequestParam<'a, B: flatbuffers::ReadBuffer + ?Sized = [u8]> 
   pub _tab: flatbuffers::Table<'a, B>,
 }
 
-impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'buf, B> for MatchingRequestParam<'a, B> {
+impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'buf, B> for MatchingRequestParam<'a, B> {
   type Inner = MatchingRequestParam<'buf, B>;
   #[inline]
   unsafe fn follow(buf: &'buf B, loc: usize) -> Self::Inner {
@@ -12053,7 +12053,7 @@ pub struct NrcConst<'a, B: flatbuffers::ReadBuffer + ?Sized = [u8]> {
   pub _tab: flatbuffers::Table<'a, B>,
 }
 
-impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'buf, B> for NrcConst<'a, B> {
+impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'buf, B> for NrcConst<'a, B> {
   type Inner = NrcConst<'buf, B>;
   #[inline]
   unsafe fn follow(buf: &'buf B, loc: usize) -> Self::Inner {
@@ -12080,11 +12080,11 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> NrcConst<'a, B> {
 
 
   #[inline]
-  pub fn coded_values(&self) -> Option<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<&'a str>>> {
+  pub fn coded_values(&self) -> Option<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<&'a str>, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<&'a str>>>>(NrcConstOffset::VT_CODED_VALUES, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<&'a str>, B>>>(NrcConstOffset::VT_CODED_VALUES, None)}
   }
   #[inline]
   pub fn diag_coded_type(&self) -> Option<DiagCodedType<'a, B>> {
@@ -12102,7 +12102,7 @@ impl<B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Verifiable for NrcConst<'
   ) -> Result<(), flatbuffers::InvalidFlatbuffer> {
     use self::flatbuffers::Verifiable;
     v.visit_table(pos)?
-     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<&'_ str>>>>("coded_values", NrcConstOffset::VT_CODED_VALUES, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<&'_ str>, B>>>("coded_values", NrcConstOffset::VT_CODED_VALUES, false)?
      .visit_field::<flatbuffers::ForwardsUOffset<DiagCodedType<'_, B>>>("diag_coded_type", NrcConstOffset::VT_DIAG_CODED_TYPE, false)?
      .finish();
     Ok(())
@@ -12175,7 +12175,7 @@ pub struct PhysConst<'a, B: flatbuffers::ReadBuffer + ?Sized = [u8]> {
   pub _tab: flatbuffers::Table<'a, B>,
 }
 
-impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'buf, B> for PhysConst<'a, B> {
+impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'buf, B> for PhysConst<'a, B> {
   type Inner = PhysConst<'buf, B>;
   #[inline]
   unsafe fn follow(buf: &'buf B, loc: usize) -> Self::Inner {
@@ -12296,7 +12296,7 @@ pub struct Reserved<'a, B: flatbuffers::ReadBuffer + ?Sized = [u8]> {
   pub _tab: flatbuffers::Table<'a, B>,
 }
 
-impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'buf, B> for Reserved<'a, B> {
+impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'buf, B> for Reserved<'a, B> {
   type Inner = Reserved<'buf, B>;
   #[inline]
   unsafe fn follow(buf: &'buf B, loc: usize) -> Self::Inner {
@@ -12402,7 +12402,7 @@ pub struct System<'a, B: flatbuffers::ReadBuffer + ?Sized = [u8]> {
   pub _tab: flatbuffers::Table<'a, B>,
 }
 
-impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'buf, B> for System<'a, B> {
+impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'buf, B> for System<'a, B> {
   type Inner = System<'buf, B>;
   #[inline]
   unsafe fn follow(buf: &'buf B, loc: usize) -> Self::Inner {
@@ -12525,7 +12525,7 @@ pub struct TableEntry<'a, B: flatbuffers::ReadBuffer + ?Sized = [u8]> {
   pub _tab: flatbuffers::Table<'a, B>,
 }
 
-impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'buf, B> for TableEntry<'a, B> {
+impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'buf, B> for TableEntry<'a, B> {
   type Inner = TableEntry<'buf, B>;
   #[inline]
   unsafe fn follow(buf: &'buf B, loc: usize) -> Self::Inner {
@@ -12663,7 +12663,7 @@ pub struct TableKey<'a, B: flatbuffers::ReadBuffer + ?Sized = [u8]> {
   pub _tab: flatbuffers::Table<'a, B>,
 }
 
-impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'buf, B> for TableKey<'a, B> {
+impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'buf, B> for TableKey<'a, B> {
   type Inner = TableKey<'buf, B>;
   #[inline]
   unsafe fn follow(buf: &'buf B, loc: usize) -> Self::Inner {
@@ -12705,7 +12705,7 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> TableKey<'a, B> {
   }
   #[inline]
   #[allow(non_snake_case)]
-  pub fn table_key_reference_as_table_dop(&self) -> Option<TableDop<'a>> {
+  pub fn table_key_reference_as_table_dop(&self) -> Option<TableDop<'a, B>> {
     if self.table_key_reference_type() == TableKeyReference::TableDop {
       self.table_key_reference().map(|t| {
        // Safety:
@@ -12720,7 +12720,7 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> TableKey<'a, B> {
 
   #[inline]
   #[allow(non_snake_case)]
-  pub fn table_key_reference_as_table_row(&self) -> Option<TableRow<'a>> {
+  pub fn table_key_reference_as_table_row(&self) -> Option<TableRow<'a, B>> {
     if self.table_key_reference_type() == TableKeyReference::TableRow {
       self.table_key_reference().map(|t| {
        // Safety:
@@ -12832,7 +12832,7 @@ pub struct TableStruct<'a, B: flatbuffers::ReadBuffer + ?Sized = [u8]> {
   pub _tab: flatbuffers::Table<'a, B>,
 }
 
-impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'buf, B> for TableStruct<'a, B> {
+impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'buf, B> for TableStruct<'a, B> {
   type Inner = TableStruct<'buf, B>;
   #[inline]
   unsafe fn follow(buf: &'buf B, loc: usize) -> Self::Inner {
@@ -12938,7 +12938,7 @@ pub struct Value<'a, B: flatbuffers::ReadBuffer + ?Sized = [u8]> {
   pub _tab: flatbuffers::Table<'a, B>,
 }
 
-impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'buf, B> for Value<'a, B> {
+impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'buf, B> for Value<'a, B> {
   type Inner = Value<'buf, B>;
   #[inline]
   unsafe fn follow(buf: &'buf B, loc: usize) -> Self::Inner {
@@ -13068,7 +13068,7 @@ pub struct Param<'a, B: flatbuffers::ReadBuffer + ?Sized = [u8]> {
   pub _tab: flatbuffers::Table<'a, B>,
 }
 
-impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'buf, B> for Param<'a, B> {
+impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'buf, B> for Param<'a, B> {
   type Inner = Param<'buf, B>;
   #[inline]
   unsafe fn follow(buf: &'buf B, loc: usize) -> Self::Inner {
@@ -13174,7 +13174,7 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Param<'a, B> {
   }
   #[inline]
   #[allow(non_snake_case)]
-  pub fn specific_data_as_coded_const(&self) -> Option<CodedConst<'a>> {
+  pub fn specific_data_as_coded_const(&self) -> Option<CodedConst<'a, B>> {
     if self.specific_data_type() == ParamSpecificData::CodedConst {
       self.specific_data().map(|t| {
        // Safety:
@@ -13189,7 +13189,7 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Param<'a, B> {
 
   #[inline]
   #[allow(non_snake_case)]
-  pub fn specific_data_as_dynamic(&self) -> Option<Dynamic<'a>> {
+  pub fn specific_data_as_dynamic(&self) -> Option<Dynamic<'a, B>> {
     if self.specific_data_type() == ParamSpecificData::Dynamic {
       self.specific_data().map(|t| {
        // Safety:
@@ -13204,7 +13204,7 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Param<'a, B> {
 
   #[inline]
   #[allow(non_snake_case)]
-  pub fn specific_data_as_matching_request_param(&self) -> Option<MatchingRequestParam<'a>> {
+  pub fn specific_data_as_matching_request_param(&self) -> Option<MatchingRequestParam<'a, B>> {
     if self.specific_data_type() == ParamSpecificData::MatchingRequestParam {
       self.specific_data().map(|t| {
        // Safety:
@@ -13219,7 +13219,7 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Param<'a, B> {
 
   #[inline]
   #[allow(non_snake_case)]
-  pub fn specific_data_as_nrc_const(&self) -> Option<NrcConst<'a>> {
+  pub fn specific_data_as_nrc_const(&self) -> Option<NrcConst<'a, B>> {
     if self.specific_data_type() == ParamSpecificData::NrcConst {
       self.specific_data().map(|t| {
        // Safety:
@@ -13234,7 +13234,7 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Param<'a, B> {
 
   #[inline]
   #[allow(non_snake_case)]
-  pub fn specific_data_as_phys_const(&self) -> Option<PhysConst<'a>> {
+  pub fn specific_data_as_phys_const(&self) -> Option<PhysConst<'a, B>> {
     if self.specific_data_type() == ParamSpecificData::PhysConst {
       self.specific_data().map(|t| {
        // Safety:
@@ -13249,7 +13249,7 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Param<'a, B> {
 
   #[inline]
   #[allow(non_snake_case)]
-  pub fn specific_data_as_reserved(&self) -> Option<Reserved<'a>> {
+  pub fn specific_data_as_reserved(&self) -> Option<Reserved<'a, B>> {
     if self.specific_data_type() == ParamSpecificData::Reserved {
       self.specific_data().map(|t| {
        // Safety:
@@ -13264,7 +13264,7 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Param<'a, B> {
 
   #[inline]
   #[allow(non_snake_case)]
-  pub fn specific_data_as_value(&self) -> Option<Value<'a>> {
+  pub fn specific_data_as_value(&self) -> Option<Value<'a, B>> {
     if self.specific_data_type() == ParamSpecificData::Value {
       self.specific_data().map(|t| {
        // Safety:
@@ -13279,7 +13279,7 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Param<'a, B> {
 
   #[inline]
   #[allow(non_snake_case)]
-  pub fn specific_data_as_table_entry(&self) -> Option<TableEntry<'a>> {
+  pub fn specific_data_as_table_entry(&self) -> Option<TableEntry<'a, B>> {
     if self.specific_data_type() == ParamSpecificData::TableEntry {
       self.specific_data().map(|t| {
        // Safety:
@@ -13294,7 +13294,7 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Param<'a, B> {
 
   #[inline]
   #[allow(non_snake_case)]
-  pub fn specific_data_as_table_key(&self) -> Option<TableKey<'a>> {
+  pub fn specific_data_as_table_key(&self) -> Option<TableKey<'a, B>> {
     if self.specific_data_type() == ParamSpecificData::TableKey {
       self.specific_data().map(|t| {
        // Safety:
@@ -13309,7 +13309,7 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Param<'a, B> {
 
   #[inline]
   #[allow(non_snake_case)]
-  pub fn specific_data_as_table_struct(&self) -> Option<TableStruct<'a>> {
+  pub fn specific_data_as_table_struct(&self) -> Option<TableStruct<'a, B>> {
     if self.specific_data_type() == ParamSpecificData::TableStruct {
       self.specific_data().map(|t| {
        // Safety:
@@ -13324,7 +13324,7 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Param<'a, B> {
 
   #[inline]
   #[allow(non_snake_case)]
-  pub fn specific_data_as_system(&self) -> Option<System<'a>> {
+  pub fn specific_data_as_system(&self) -> Option<System<'a, B>> {
     if self.specific_data_type() == ParamSpecificData::System {
       self.specific_data().map(|t| {
        // Safety:
@@ -13339,7 +13339,7 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Param<'a, B> {
 
   #[inline]
   #[allow(non_snake_case)]
-  pub fn specific_data_as_length_key_ref(&self) -> Option<LengthKeyRef<'a>> {
+  pub fn specific_data_as_length_key_ref(&self) -> Option<LengthKeyRef<'a, B>> {
     if self.specific_data_type() == ParamSpecificData::LengthKeyRef {
       self.specific_data().map(|t| {
        // Safety:
@@ -13585,7 +13585,7 @@ pub struct FunctClass<'a, B: flatbuffers::ReadBuffer + ?Sized = [u8]> {
   pub _tab: flatbuffers::Table<'a, B>,
 }
 
-impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'buf, B> for FunctClass<'a, B> {
+impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'buf, B> for FunctClass<'a, B> {
   type Inner = FunctClass<'buf, B>;
   #[inline]
   unsafe fn follow(buf: &'buf B, loc: usize) -> Self::Inner {
@@ -13691,7 +13691,7 @@ pub struct Request<'a, B: flatbuffers::ReadBuffer + ?Sized = [u8]> {
   pub _tab: flatbuffers::Table<'a, B>,
 }
 
-impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'buf, B> for Request<'a, B> {
+impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'buf, B> for Request<'a, B> {
   type Inner = Request<'buf, B>;
   #[inline]
   unsafe fn follow(buf: &'buf B, loc: usize) -> Self::Inner {
@@ -13814,7 +13814,7 @@ pub struct Response<'a, B: flatbuffers::ReadBuffer + ?Sized = [u8]> {
   pub _tab: flatbuffers::Table<'a, B>,
 }
 
-impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'buf, B> for Response<'a, B> {
+impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'buf, B> for Response<'a, B> {
   type Inner = Response<'buf, B>;
   #[inline]
   unsafe fn follow(buf: &'buf B, loc: usize) -> Self::Inner {
@@ -13952,7 +13952,7 @@ pub struct AdditionalAudience<'a, B: flatbuffers::ReadBuffer + ?Sized = [u8]> {
   pub _tab: flatbuffers::Table<'a, B>,
 }
 
-impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'buf, B> for AdditionalAudience<'a, B> {
+impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'buf, B> for AdditionalAudience<'a, B> {
   type Inner = AdditionalAudience<'buf, B>;
   #[inline]
   unsafe fn follow(buf: &'buf B, loc: usize) -> Self::Inner {
@@ -14085,7 +14085,7 @@ pub struct DiagComm<'a, B: flatbuffers::ReadBuffer + ?Sized = [u8]> {
   pub _tab: flatbuffers::Table<'a, B>,
 }
 
-impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'buf, B> for DiagComm<'a, B> {
+impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'buf, B> for DiagComm<'a, B> {
   type Inner = DiagComm<'buf, B>;
   #[inline]
   unsafe fn follow(buf: &'buf B, loc: usize) -> Self::Inner {
@@ -14390,7 +14390,7 @@ pub struct DiagService<'a, B: flatbuffers::ReadBuffer + ?Sized = [u8]> {
   pub _tab: flatbuffers::Table<'a, B>,
 }
 
-impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'buf, B> for DiagService<'a, B> {
+impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'buf, B> for DiagService<'a, B> {
   type Inner = DiagService<'buf, B>;
   #[inline]
   unsafe fn follow(buf: &'buf B, loc: usize) -> Self::Inner {
@@ -14628,7 +14628,7 @@ pub struct ProgCode<'a, B: flatbuffers::ReadBuffer + ?Sized = [u8]> {
   pub _tab: flatbuffers::Table<'a, B>,
 }
 
-impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'buf, B> for ProgCode<'a, B> {
+impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'buf, B> for ProgCode<'a, B> {
   type Inner = ProgCode<'buf, B>;
   #[inline]
   unsafe fn follow(buf: &'buf B, loc: usize) -> Self::Inner {
@@ -14817,7 +14817,7 @@ pub struct JobParam<'a, B: flatbuffers::ReadBuffer + ?Sized = [u8]> {
   pub _tab: flatbuffers::Table<'a, B>,
 }
 
-impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'buf, B> for JobParam<'a, B> {
+impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'buf, B> for JobParam<'a, B> {
   type Inner = JobParam<'buf, B>;
   #[inline]
   unsafe fn follow(buf: &'buf B, loc: usize) -> Self::Inner {
@@ -14990,7 +14990,7 @@ pub struct SingleEcuJob<'a, B: flatbuffers::ReadBuffer + ?Sized = [u8]> {
   pub _tab: flatbuffers::Table<'a, B>,
 }
 
-impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'buf, B> for SingleEcuJob<'a, B> {
+impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'buf, B> for SingleEcuJob<'a, B> {
   type Inner = SingleEcuJob<'buf, B>;
   #[inline]
   unsafe fn follow(buf: &'buf B, loc: usize) -> Self::Inner {
@@ -15162,7 +15162,7 @@ pub struct MatchingParameter<'a, B: flatbuffers::ReadBuffer + ?Sized = [u8]> {
   pub _tab: flatbuffers::Table<'a, B>,
 }
 
-impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'buf, B> for MatchingParameter<'a, B> {
+impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'buf, B> for MatchingParameter<'a, B> {
   type Inner = MatchingParameter<'buf, B>;
   #[inline]
   unsafe fn follow(buf: &'buf B, loc: usize) -> Self::Inner {
@@ -15315,7 +15315,7 @@ pub struct VariantPattern<'a, B: flatbuffers::ReadBuffer + ?Sized = [u8]> {
   pub _tab: flatbuffers::Table<'a, B>,
 }
 
-impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'buf, B> for VariantPattern<'a, B> {
+impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'buf, B> for VariantPattern<'a, B> {
   type Inner = VariantPattern<'buf, B>;
   #[inline]
   unsafe fn follow(buf: &'buf B, loc: usize) -> Self::Inner {
@@ -15428,7 +15428,7 @@ pub struct DiagLayer<'a, B: flatbuffers::ReadBuffer + ?Sized = [u8]> {
   pub _tab: flatbuffers::Table<'a, B>,
 }
 
-impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'buf, B> for DiagLayer<'a, B> {
+impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'buf, B> for DiagLayer<'a, B> {
   type Inner = DiagLayer<'buf, B>;
   #[inline]
   unsafe fn follow(buf: &'buf B, loc: usize) -> Self::Inner {
@@ -15662,7 +15662,7 @@ pub struct FunctionalGroup<'a, B: flatbuffers::ReadBuffer + ?Sized = [u8]> {
   pub _tab: flatbuffers::Table<'a, B>,
 }
 
-impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'buf, B> for FunctionalGroup<'a, B> {
+impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'buf, B> for FunctionalGroup<'a, B> {
   type Inner = FunctionalGroup<'buf, B>;
   #[inline]
   unsafe fn follow(buf: &'buf B, loc: usize) -> Self::Inner {
@@ -15789,7 +15789,7 @@ pub struct ParentRef<'a, B: flatbuffers::ReadBuffer + ?Sized = [u8]> {
   pub _tab: flatbuffers::Table<'a, B>,
 }
 
-impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'buf, B> for ParentRef<'a, B> {
+impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'buf, B> for ParentRef<'a, B> {
   type Inner = ParentRef<'buf, B>;
   #[inline]
   unsafe fn follow(buf: &'buf B, loc: usize) -> Self::Inner {
@@ -15835,43 +15835,43 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> ParentRef<'a, B> {
     unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Table<'a, B>>>(ParentRefOffset::VT_REF_, None)}
   }
   #[inline]
-  pub fn not_inherited_diag_comm_short_names(&self) -> Option<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<&'a str>>> {
+  pub fn not_inherited_diag_comm_short_names(&self) -> Option<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<&'a str>, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<&'a str>>>>(ParentRefOffset::VT_NOT_INHERITED_DIAG_COMM_SHORT_NAMES, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<&'a str>, B>>>(ParentRefOffset::VT_NOT_INHERITED_DIAG_COMM_SHORT_NAMES, None)}
   }
   #[inline]
-  pub fn not_inherited_variables_short_names(&self) -> Option<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<&'a str>>> {
+  pub fn not_inherited_variables_short_names(&self) -> Option<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<&'a str>, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<&'a str>>>>(ParentRefOffset::VT_NOT_INHERITED_VARIABLES_SHORT_NAMES, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<&'a str>, B>>>(ParentRefOffset::VT_NOT_INHERITED_VARIABLES_SHORT_NAMES, None)}
   }
   #[inline]
-  pub fn not_inherited_dops_short_names(&self) -> Option<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<&'a str>>> {
+  pub fn not_inherited_dops_short_names(&self) -> Option<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<&'a str>, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<&'a str>>>>(ParentRefOffset::VT_NOT_INHERITED_DOPS_SHORT_NAMES, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<&'a str>, B>>>(ParentRefOffset::VT_NOT_INHERITED_DOPS_SHORT_NAMES, None)}
   }
   #[inline]
-  pub fn not_inherited_tables_short_names(&self) -> Option<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<&'a str>>> {
+  pub fn not_inherited_tables_short_names(&self) -> Option<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<&'a str>, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<&'a str>>>>(ParentRefOffset::VT_NOT_INHERITED_TABLES_SHORT_NAMES, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<&'a str>, B>>>(ParentRefOffset::VT_NOT_INHERITED_TABLES_SHORT_NAMES, None)}
   }
   #[inline]
-  pub fn not_inherited_global_neg_responses_short_names(&self) -> Option<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<&'a str>>> {
+  pub fn not_inherited_global_neg_responses_short_names(&self) -> Option<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<&'a str>, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<&'a str>>>>(ParentRefOffset::VT_NOT_INHERITED_GLOBAL_NEG_RESPONSES_SHORT_NAMES, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<&'a str>, B>>>(ParentRefOffset::VT_NOT_INHERITED_GLOBAL_NEG_RESPONSES_SHORT_NAMES, None)}
   }
   #[inline]
   #[allow(non_snake_case)]
-  pub fn ref__as_variant(&self) -> Option<Variant<'a>> {
+  pub fn ref__as_variant(&self) -> Option<Variant<'a, B>> {
     if self.ref_type() == ParentRefType::Variant {
       self.ref_().map(|t| {
        // Safety:
@@ -15886,7 +15886,7 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> ParentRef<'a, B> {
 
   #[inline]
   #[allow(non_snake_case)]
-  pub fn ref__as_protocol(&self) -> Option<Protocol<'a>> {
+  pub fn ref__as_protocol(&self) -> Option<Protocol<'a, B>> {
     if self.ref_type() == ParentRefType::Protocol {
       self.ref_().map(|t| {
        // Safety:
@@ -15901,7 +15901,7 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> ParentRef<'a, B> {
 
   #[inline]
   #[allow(non_snake_case)]
-  pub fn ref__as_functional_group(&self) -> Option<FunctionalGroup<'a>> {
+  pub fn ref__as_functional_group(&self) -> Option<FunctionalGroup<'a, B>> {
     if self.ref_type() == ParentRefType::FunctionalGroup {
       self.ref_().map(|t| {
        // Safety:
@@ -15916,7 +15916,7 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> ParentRef<'a, B> {
 
   #[inline]
   #[allow(non_snake_case)]
-  pub fn ref__as_table_dop(&self) -> Option<TableDop<'a>> {
+  pub fn ref__as_table_dop(&self) -> Option<TableDop<'a, B>> {
     if self.ref_type() == ParentRefType::TableDop {
       self.ref_().map(|t| {
        // Safety:
@@ -15931,7 +15931,7 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> ParentRef<'a, B> {
 
   #[inline]
   #[allow(non_snake_case)]
-  pub fn ref__as_ecu_shared_data(&self) -> Option<EcuSharedData<'a>> {
+  pub fn ref__as_ecu_shared_data(&self) -> Option<EcuSharedData<'a, B>> {
     if self.ref_type() == ParentRefType::EcuSharedData {
       self.ref_().map(|t| {
        // Safety:
@@ -15954,11 +15954,11 @@ impl<B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Verifiable for ParentRef<
     use self::flatbuffers::Verifiable;
     v.visit_table(pos)?
      .visit_union::<ParentRefTypeUnionValue>("ref_type", ParentRefOffset::VT_REF_TYPE, "ref_", ParentRefOffset::VT_REF_, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<&'_ str>>>>("not_inherited_diag_comm_short_names", ParentRefOffset::VT_NOT_INHERITED_DIAG_COMM_SHORT_NAMES, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<&'_ str>>>>("not_inherited_variables_short_names", ParentRefOffset::VT_NOT_INHERITED_VARIABLES_SHORT_NAMES, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<&'_ str>>>>("not_inherited_dops_short_names", ParentRefOffset::VT_NOT_INHERITED_DOPS_SHORT_NAMES, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<&'_ str>>>>("not_inherited_tables_short_names", ParentRefOffset::VT_NOT_INHERITED_TABLES_SHORT_NAMES, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<&'_ str>>>>("not_inherited_global_neg_responses_short_names", ParentRefOffset::VT_NOT_INHERITED_GLOBAL_NEG_RESPONSES_SHORT_NAMES, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<&'_ str>, B>>>("not_inherited_diag_comm_short_names", ParentRefOffset::VT_NOT_INHERITED_DIAG_COMM_SHORT_NAMES, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<&'_ str>, B>>>("not_inherited_variables_short_names", ParentRefOffset::VT_NOT_INHERITED_VARIABLES_SHORT_NAMES, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<&'_ str>, B>>>("not_inherited_dops_short_names", ParentRefOffset::VT_NOT_INHERITED_DOPS_SHORT_NAMES, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<&'_ str>, B>>>("not_inherited_tables_short_names", ParentRefOffset::VT_NOT_INHERITED_TABLES_SHORT_NAMES, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<&'_ str>, B>>>("not_inherited_global_neg_responses_short_names", ParentRefOffset::VT_NOT_INHERITED_GLOBAL_NEG_RESPONSES_SHORT_NAMES, false)?
      .finish();
     Ok(())
   }
@@ -16104,7 +16104,7 @@ pub struct EcuSharedData<'a, B: flatbuffers::ReadBuffer + ?Sized = [u8]> {
   pub _tab: flatbuffers::Table<'a, B>,
 }
 
-impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'buf, B> for EcuSharedData<'a, B> {
+impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'buf, B> for EcuSharedData<'a, B> {
   type Inner = EcuSharedData<'buf, B>;
   #[inline]
   unsafe fn follow(buf: &'buf B, loc: usize) -> Self::Inner {
@@ -16212,7 +16212,7 @@ pub struct Variant<'a, B: flatbuffers::ReadBuffer + ?Sized = [u8]> {
   pub _tab: flatbuffers::Table<'a, B>,
 }
 
-impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'buf, B> for Variant<'a, B> {
+impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'buf, B> for Variant<'a, B> {
   type Inner = Variant<'buf, B>;
   #[inline]
   unsafe fn follow(buf: &'buf B, loc: usize) -> Self::Inner {
@@ -16365,7 +16365,7 @@ pub struct SimpleValue<'a, B: flatbuffers::ReadBuffer + ?Sized = [u8]> {
   pub _tab: flatbuffers::Table<'a, B>,
 }
 
-impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'buf, B> for SimpleValue<'a, B> {
+impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'buf, B> for SimpleValue<'a, B> {
   type Inner = SimpleValue<'buf, B>;
   #[inline]
   unsafe fn follow(buf: &'buf B, loc: usize) -> Self::Inner {
@@ -16471,7 +16471,7 @@ pub struct ComplexValue<'a, B: flatbuffers::ReadBuffer + ?Sized = [u8]> {
   pub _tab: flatbuffers::Table<'a, B>,
 }
 
-impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'buf, B> for ComplexValue<'a, B> {
+impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'buf, B> for ComplexValue<'a, B> {
   type Inner = ComplexValue<'buf, B>;
   #[inline]
   unsafe fn follow(buf: &'buf B, loc: usize) -> Self::Inner {
@@ -16498,11 +16498,11 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> ComplexValue<'a, B> {
 
 
   #[inline]
-  pub fn entries_type(&self) -> Option<flatbuffers::Vector<'a, SimpleOrComplexValueEntry>> {
+  pub fn entries_type(&self) -> Option<flatbuffers::Vector<'a, SimpleOrComplexValueEntry, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, SimpleOrComplexValueEntry>>>(ComplexValueOffset::VT_ENTRIES_TYPE, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, SimpleOrComplexValueEntry, B>>>(ComplexValueOffset::VT_ENTRIES_TYPE, None)}
   }
   #[inline]
   pub fn entries(&self) -> Option<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<flatbuffers::Table<'a, B>>, B>> {
@@ -16513,12 +16513,12 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> ComplexValue<'a, B> {
   }
     #[inline]
     #[allow(non_snake_case)]
-    pub fn entries_item_as_simple_value(&self, idx: usize) -> Option<SimpleValue<'a>> {
+    pub fn entries_item_as_simple_value(&self, idx: usize) -> Option<SimpleValue<'a, B>> {
       if let Some(tags) = self.entries_type() {
         if let Some(tables) = self.entries() {
           if let Some((tag, table)) = tags.iter().zip(tables.iter()).nth(idx) {
             if tag == SimpleOrComplexValueEntry::SimpleValue {
-              return Some(unsafe { <SimpleValue>::init_from_table(table) });
+              return Some(unsafe { <SimpleValue<'a, B>>::init_from_table(table) });
             }
           }
         }
@@ -16528,12 +16528,12 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> ComplexValue<'a, B> {
 
     #[inline]
     #[allow(non_snake_case)]
-    pub fn entries_item_as_complex_value(&self, idx: usize) -> Option<ComplexValue<'a>> {
+    pub fn entries_item_as_complex_value(&self, idx: usize) -> Option<ComplexValue<'a, B>> {
       if let Some(tags) = self.entries_type() {
         if let Some(tables) = self.entries() {
           if let Some((tag, table)) = tags.iter().zip(tables.iter()).nth(idx) {
             if tag == SimpleOrComplexValueEntry::ComplexValue {
-              return Some(unsafe { <ComplexValue>::init_from_table(table) });
+              return Some(unsafe { <ComplexValue<'a, B>>::init_from_table(table) });
             }
           }
         }
@@ -16624,7 +16624,7 @@ pub struct Protocol<'a, B: flatbuffers::ReadBuffer + ?Sized = [u8]> {
   pub _tab: flatbuffers::Table<'a, B>,
 }
 
-impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'buf, B> for Protocol<'a, B> {
+impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'buf, B> for Protocol<'a, B> {
   type Inner = Protocol<'buf, B>;
   #[inline]
   unsafe fn follow(buf: &'buf B, loc: usize) -> Self::Inner {
@@ -16781,7 +16781,7 @@ pub struct ComParamRef<'a, B: flatbuffers::ReadBuffer + ?Sized = [u8]> {
   pub _tab: flatbuffers::Table<'a, B>,
 }
 
-impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'buf, B> for ComParamRef<'a, B> {
+impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'buf, B> for ComParamRef<'a, B> {
   type Inner = ComParamRef<'buf, B>;
   #[inline]
   unsafe fn follow(buf: &'buf B, loc: usize) -> Self::Inner {
@@ -16951,7 +16951,7 @@ pub struct RegularComParam<'a, B: flatbuffers::ReadBuffer + ?Sized = [u8]> {
   pub _tab: flatbuffers::Table<'a, B>,
 }
 
-impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'buf, B> for RegularComParam<'a, B> {
+impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'buf, B> for RegularComParam<'a, B> {
   type Inner = RegularComParam<'buf, B>;
   #[inline]
   unsafe fn follow(buf: &'buf B, loc: usize) -> Self::Inner {
@@ -17074,7 +17074,7 @@ pub struct ComplexComParam<'a, B: flatbuffers::ReadBuffer + ?Sized = [u8]> {
   pub _tab: flatbuffers::Table<'a, B>,
 }
 
-impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'buf, B> for ComplexComParam<'a, B> {
+impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'buf, B> for ComplexComParam<'a, B> {
   type Inner = ComplexComParam<'buf, B>;
   #[inline]
   unsafe fn follow(buf: &'buf B, loc: usize) -> Self::Inner {
@@ -17219,7 +17219,7 @@ pub struct ComParam<'a, B: flatbuffers::ReadBuffer + ?Sized = [u8]> {
   pub _tab: flatbuffers::Table<'a, B>,
 }
 
-impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'buf, B> for ComParam<'a, B> {
+impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'buf, B> for ComParam<'a, B> {
   type Inner = ComParam<'buf, B>;
   #[inline]
   unsafe fn follow(buf: &'buf B, loc: usize) -> Self::Inner {
@@ -17317,7 +17317,7 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> ComParam<'a, B> {
   }
   #[inline]
   #[allow(non_snake_case)]
-  pub fn specific_data_as_regular_com_param(&self) -> Option<RegularComParam<'a>> {
+  pub fn specific_data_as_regular_com_param(&self) -> Option<RegularComParam<'a, B>> {
     if self.specific_data_type() == ComParamSpecificData::RegularComParam {
       self.specific_data().map(|t| {
        // Safety:
@@ -17332,7 +17332,7 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> ComParam<'a, B> {
 
   #[inline]
   #[allow(non_snake_case)]
-  pub fn specific_data_as_complex_com_param(&self) -> Option<ComplexComParam<'a>> {
+  pub fn specific_data_as_complex_com_param(&self) -> Option<ComplexComParam<'a, B>> {
     if self.specific_data_type() == ComParamSpecificData::ComplexComParam {
       self.specific_data().map(|t| {
        // Safety:
@@ -17508,7 +17508,7 @@ pub struct PhysicalDimension<'a, B: flatbuffers::ReadBuffer + ?Sized = [u8]> {
   pub _tab: flatbuffers::Table<'a, B>,
 }
 
-impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'buf, B> for PhysicalDimension<'a, B> {
+impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'buf, B> for PhysicalDimension<'a, B> {
   type Inner = PhysicalDimension<'buf, B>;
   #[inline]
   unsafe fn follow(buf: &'buf B, loc: usize) -> Self::Inner {
@@ -17743,7 +17743,7 @@ pub struct UnitGroup<'a, B: flatbuffers::ReadBuffer + ?Sized = [u8]> {
   pub _tab: flatbuffers::Table<'a, B>,
 }
 
-impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'buf, B> for UnitGroup<'a, B> {
+impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'buf, B> for UnitGroup<'a, B> {
   type Inner = UnitGroup<'buf, B>;
   #[inline]
   unsafe fn follow(buf: &'buf B, loc: usize) -> Self::Inner {
@@ -17883,7 +17883,7 @@ pub struct UnitSpec<'a, B: flatbuffers::ReadBuffer + ?Sized = [u8]> {
   pub _tab: flatbuffers::Table<'a, B>,
 }
 
-impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'buf, B> for UnitSpec<'a, B> {
+impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'buf, B> for UnitSpec<'a, B> {
   type Inner = UnitSpec<'buf, B>;
   #[inline]
   unsafe fn follow(buf: &'buf B, loc: usize) -> Self::Inner {
@@ -18039,7 +18039,7 @@ pub struct ComParamSubSet<'a, B: flatbuffers::ReadBuffer + ?Sized = [u8]> {
   pub _tab: flatbuffers::Table<'a, B>,
 }
 
-impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'buf, B> for ComParamSubSet<'a, B> {
+impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'buf, B> for ComParamSubSet<'a, B> {
   type Inner = ComParamSubSet<'buf, B>;
   #[inline]
   unsafe fn follow(buf: &'buf B, loc: usize) -> Self::Inner {
@@ -18196,7 +18196,7 @@ pub struct ProtStack<'a, B: flatbuffers::ReadBuffer + ?Sized = [u8]> {
   pub _tab: flatbuffers::Table<'a, B>,
 }
 
-impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'buf, B> for ProtStack<'a, B> {
+impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'buf, B> for ProtStack<'a, B> {
   type Inner = ProtStack<'buf, B>;
   #[inline]
   unsafe fn follow(buf: &'buf B, loc: usize) -> Self::Inner {
@@ -18365,7 +18365,7 @@ pub struct ComParamSpec<'a, B: flatbuffers::ReadBuffer + ?Sized = [u8]> {
   pub _tab: flatbuffers::Table<'a, B>,
 }
 
-impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'buf, B> for ComParamSpec<'a, B> {
+impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'buf, B> for ComParamSpec<'a, B> {
   type Inner = ComParamSpec<'buf, B>;
   #[inline]
   unsafe fn follow(buf: &'buf B, loc: usize) -> Self::Inner {
@@ -18475,7 +18475,7 @@ pub struct Library<'a, B: flatbuffers::ReadBuffer + ?Sized = [u8]> {
   pub _tab: flatbuffers::Table<'a, B>,
 }
 
-impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'buf, B> for Library<'a, B> {
+impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'buf, B> for Library<'a, B> {
   type Inner = Library<'buf, B>;
   #[inline]
   unsafe fn follow(buf: &'buf B, loc: usize) -> Self::Inner {
@@ -18667,7 +18667,7 @@ pub struct EcuData<'a, B: flatbuffers::ReadBuffer + ?Sized = [u8]> {
   pub _tab: flatbuffers::Table<'a, B>,
 }
 
-impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'buf, B> for EcuData<'a, B> {
+impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'buf, B> for EcuData<'a, B> {
   type Inner = EcuData<'buf, B>;
   #[inline]
   unsafe fn follow(buf: &'buf B, loc: usize) -> Self::Inner {
@@ -18728,11 +18728,11 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> EcuData<'a, B> {
     unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<KeyValue<'a, B>>, B>>>(EcuDataOffset::VT_METADATA, None)}
   }
   #[inline]
-  pub fn feature_flags(&self) -> Option<flatbuffers::Vector<'a, FeatureFlag>> {
+  pub fn feature_flags(&self) -> Option<flatbuffers::Vector<'a, FeatureFlag, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, FeatureFlag>>>(EcuDataOffset::VT_FEATURE_FLAGS, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, FeatureFlag, B>>>(EcuDataOffset::VT_FEATURE_FLAGS, None)}
   }
   #[inline]
   pub fn variants(&self) -> Option<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<Variant<'a, B>>, B>> {
@@ -18768,7 +18768,7 @@ impl<B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Verifiable for EcuData<'_
      .visit_field::<flatbuffers::ForwardsUOffset<&str>>("ecu_name", EcuDataOffset::VT_ECU_NAME, false)?
      .visit_field::<flatbuffers::ForwardsUOffset<&str>>("revision", EcuDataOffset::VT_REVISION, false)?
      .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<KeyValue<'_, B>>, B>>>("metadata", EcuDataOffset::VT_METADATA, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, FeatureFlag>>>("feature_flags", EcuDataOffset::VT_FEATURE_FLAGS, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, FeatureFlag, B>>>("feature_flags", EcuDataOffset::VT_FEATURE_FLAGS, false)?
      .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<Variant<'_, B>>, B>>>("variants", EcuDataOffset::VT_VARIANTS, false)?
      .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<FunctionalGroup<'_, B>>, B>>>("functional_groups", EcuDataOffset::VT_FUNCTIONAL_GROUPS, false)?
      .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<DTC<'_, B>>, B>>>("dtcs", EcuDataOffset::VT_DTCS, false)?
@@ -18885,7 +18885,7 @@ pub struct KeyValue<'a, B: flatbuffers::ReadBuffer + ?Sized = [u8]> {
   pub _tab: flatbuffers::Table<'a, B>,
 }
 
-impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'buf, B> for KeyValue<'a, B> {
+impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'buf, B> for KeyValue<'a, B> {
   type Inner = KeyValue<'buf, B>;
   #[inline]
   unsafe fn follow(buf: &'buf B, loc: usize) -> Self::Inner {
@@ -18997,8 +18997,8 @@ impl core::fmt::Debug for KeyValue<'_> {
 /// catch every error, or be maximally performant. For the
 /// previous, unchecked, behavior use
 /// `root_as_ecu_data_unchecked`.
-pub fn root_as_ecu_data<B: flatbuffers::ReadBuffer + ?Sized>(buf: &B) -> Result<EcuData<'_, B>, flatbuffers::InvalidFlatbuffer> {
-  flatbuffers::root_with_buffer::<EcuData<'_, B>, B>(buf)
+pub fn root_as_ecu_data(buf: &[u8]) -> Result<EcuData<'_>, flatbuffers::InvalidFlatbuffer> {
+  flatbuffers::root::<EcuData>(buf)
 }
 #[inline]
 /// Verifies that a buffer of bytes contains a size prefixed
@@ -19007,8 +19007,8 @@ pub fn root_as_ecu_data<B: flatbuffers::ReadBuffer + ?Sized>(buf: &B) -> Result<
 /// catch every error, or be maximally performant. For the
 /// previous, unchecked, behavior use
 /// `size_prefixed_root_as_ecu_data_unchecked`.
-pub fn size_prefixed_root_as_ecu_data<B: flatbuffers::ReadBuffer + ?Sized>(buf: &B) -> Result<EcuData<'_, B>, flatbuffers::InvalidFlatbuffer> {
-  flatbuffers::size_prefixed_root_with_buffer::<EcuData<'_, B>, B>(buf)
+pub fn size_prefixed_root_as_ecu_data(buf: &[u8]) -> Result<EcuData<'_>, flatbuffers::InvalidFlatbuffer> {
+  flatbuffers::size_prefixed_root::<EcuData>(buf)
 }
 #[inline]
 /// Verifies, with the given options, that a buffer of bytes
@@ -19017,11 +19017,11 @@ pub fn size_prefixed_root_as_ecu_data<B: flatbuffers::ReadBuffer + ?Sized>(buf: 
 /// catch every error, or be maximally performant. For the
 /// previous, unchecked, behavior use
 /// `root_as_ecu_data_unchecked`.
-pub fn root_as_ecu_data_with_opts<'b, 'o, B: flatbuffers::ReadBuffer + ?Sized>(
+pub fn root_as_ecu_data_with_opts<'b, 'o>(
   opts: &'o flatbuffers::VerifierOptions,
-  buf: &'b B,
-) -> Result<EcuData<'b, B>, flatbuffers::InvalidFlatbuffer> {
-  flatbuffers::root_with_buffer_and_opts::<EcuData<'b, B>, B>(opts, buf)
+  buf: &'b [u8],
+) -> Result<EcuData<'b>, flatbuffers::InvalidFlatbuffer> {
+  flatbuffers::root_with_opts::<EcuData<'b>>(opts, buf)
 }
 #[inline]
 /// Verifies, with the given verifier options, that a buffer of
@@ -19030,11 +19030,11 @@ pub fn root_as_ecu_data_with_opts<'b, 'o, B: flatbuffers::ReadBuffer + ?Sized>(
 /// catch every error, or be maximally performant. For the
 /// previous, unchecked, behavior use
 /// `root_as_ecu_data_unchecked`.
-pub fn size_prefixed_root_as_ecu_data_with_opts<'b, 'o, B: flatbuffers::ReadBuffer + ?Sized>(
+pub fn size_prefixed_root_as_ecu_data_with_opts<'b, 'o>(
   opts: &'o flatbuffers::VerifierOptions,
-  buf: &'b B,
-) -> Result<EcuData<'b, B>, flatbuffers::InvalidFlatbuffer> {
-  flatbuffers::size_prefixed_root_with_buffer_and_opts::<EcuData<'b, B>, B>(opts, buf)
+  buf: &'b [u8],
+) -> Result<EcuData<'b>, flatbuffers::InvalidFlatbuffer> {
+  flatbuffers::size_prefixed_root_with_opts::<EcuData<'b>>(opts, buf)
 }
 #[inline]
 /// Assumes, without verification, that a buffer of bytes contains a EcuData and returns it.

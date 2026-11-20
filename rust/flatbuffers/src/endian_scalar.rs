@@ -170,8 +170,8 @@ pub unsafe fn read_scalar_at<T: EndianScalar, B: ReadBuffer + ?Sized>(
     loc: usize,
 ) -> T {
     let size = size_of::<T::Scalar>();
-    let guard = buf.pin_bytes(loc, size);
-    read_scalar::<T>(&*guard)
+    let bytes = buf.bytes(loc, size);
+    read_scalar::<T>(bytes)
 }
 
 /// Read an EndianScalar from the provided byte slice. Performs endian

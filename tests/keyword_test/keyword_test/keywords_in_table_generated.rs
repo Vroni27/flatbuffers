@@ -10,25 +10,33 @@ use core::cmp::Ordering;
 use self::flatbuffers::{EndianScalar, Follow};
 use super::*;
 pub enum KeywordsInTableOffset {}
-#[derive(Copy, Clone, PartialEq)]
+impl KeywordsInTableOffset {
+    pub const VT_IS: flatbuffers::VOffsetT = 4;
+    pub const VT_PRIVATE: flatbuffers::VOffsetT = 6;
+    pub const VT_TYPE_: flatbuffers::VOffsetT = 8;
+    pub const VT_DEFAULT: flatbuffers::VOffsetT = 10;
+}
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Copy for KeywordsInTable<'a, B> {}
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Clone for KeywordsInTable<'a, B> {
+  fn clone(&self) -> Self { *self }
+}
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized + PartialEq> PartialEq for KeywordsInTable<'a, B> {
+  fn eq(&self, other: &Self) -> bool { self._tab.eq(&other._tab) }
+}
 
 pub struct KeywordsInTable<'a, B: flatbuffers::ReadBuffer + ?Sized = [u8]> {
   pub _tab: flatbuffers::Table<'a, B>,
 }
 
-impl<'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'a, B> for KeywordsInTable<'a, B> {
-  type Inner = KeywordsInTable<'a, B>;
+impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'buf, B> for KeywordsInTable<'a, B> {
+  type Inner = KeywordsInTable<'buf, B>;
   #[inline]
-  unsafe fn follow(buf: &'a B, loc: usize) -> Self::Inner {
-    Self { _tab: unsafe { flatbuffers::Table::new(buf, loc) } }
+  unsafe fn follow(buf: &'buf B, loc: usize) -> Self::Inner {
+    KeywordsInTable { _tab: unsafe { flatbuffers::Table::new(buf, loc) } }
   }
 }
 
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> KeywordsInTable<'a, B> {
-  pub const VT_IS: flatbuffers::VOffsetT = 4;
-  pub const VT_PRIVATE: flatbuffers::VOffsetT = 6;
-  pub const VT_TYPE_: flatbuffers::VOffsetT = 8;
-  pub const VT_DEFAULT: flatbuffers::VOffsetT = 10;
 
   pub const fn get_fully_qualified_name() -> &'static str {
     "KeywordTest.KeywordsInTable"
@@ -69,28 +77,28 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> KeywordsInTable<'a, B> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<ABC>(KeywordsInTable::VT_IS, Some(ABC::void)).unwrap()}
+    unsafe { self._tab.get::<ABC>(KeywordsInTableOffset::VT_IS, Some(ABC::void)).unwrap()}
   }
   #[inline]
   pub fn private(&self) -> public {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<public>(KeywordsInTable::VT_PRIVATE, Some(public::NONE)).unwrap()}
+    unsafe { self._tab.get::<public>(KeywordsInTableOffset::VT_PRIVATE, Some(public::NONE)).unwrap()}
   }
   #[inline]
   pub fn type_(&self) -> i32 {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<i32>(KeywordsInTable::VT_TYPE_, Some(0)).unwrap()}
+    unsafe { self._tab.get::<i32>(KeywordsInTableOffset::VT_TYPE_, Some(0)).unwrap()}
   }
   #[inline]
   pub fn default(&self) -> bool {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<bool>(KeywordsInTable::VT_DEFAULT, Some(false)).unwrap()}
+    unsafe { self._tab.get::<bool>(KeywordsInTableOffset::VT_DEFAULT, Some(false)).unwrap()}
   }
 }
 
@@ -101,10 +109,10 @@ impl<B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Verifiable for KeywordsIn
   ) -> Result<(), flatbuffers::InvalidFlatbuffer> {
     use self::flatbuffers::Verifiable;
     v.visit_table(pos)?
-     .visit_field::<ABC>("is", Self::VT_IS, false)?
-     .visit_field::<public>("private", Self::VT_PRIVATE, false)?
-     .visit_field::<i32>("type_", Self::VT_TYPE_, false)?
-     .visit_field::<bool>("default", Self::VT_DEFAULT, false)?
+     .visit_field::<ABC>("is", KeywordsInTableOffset::VT_IS, false)?
+     .visit_field::<public>("private", KeywordsInTableOffset::VT_PRIVATE, false)?
+     .visit_field::<i32>("type_", KeywordsInTableOffset::VT_TYPE_, false)?
+     .visit_field::<bool>("default", KeywordsInTableOffset::VT_DEFAULT, false)?
      .finish();
     Ok(())
   }
@@ -134,19 +142,19 @@ pub struct KeywordsInTableBuilder<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> {
 impl<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> KeywordsInTableBuilder<'a, 'b, A> {
   #[inline]
   pub fn add_is(&mut self, is: ABC) {
-    self.fbb_.push_slot::<ABC>(KeywordsInTable::VT_IS, is, ABC::void);
+    self.fbb_.push_slot::<ABC>(KeywordsInTableOffset::VT_IS, is, ABC::void);
   }
   #[inline]
   pub fn add_private(&mut self, private: public) {
-    self.fbb_.push_slot::<public>(KeywordsInTable::VT_PRIVATE, private, public::NONE);
+    self.fbb_.push_slot::<public>(KeywordsInTableOffset::VT_PRIVATE, private, public::NONE);
   }
   #[inline]
   pub fn add_type_(&mut self, type_: i32) {
-    self.fbb_.push_slot::<i32>(KeywordsInTable::VT_TYPE_, type_, 0);
+    self.fbb_.push_slot::<i32>(KeywordsInTableOffset::VT_TYPE_, type_, 0);
   }
   #[inline]
   pub fn add_default(&mut self, default: bool) {
-    self.fbb_.push_slot::<bool>(KeywordsInTable::VT_DEFAULT, default, false);
+    self.fbb_.push_slot::<bool>(KeywordsInTableOffset::VT_DEFAULT, default, false);
   }
   #[inline]
   pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a, A>) -> KeywordsInTableBuilder<'a, 'b, A> {

@@ -142,7 +142,6 @@ impl<'a, T: Follow<'a, B> + 'a, B: ReadBuffer + ?Sized> Vector<'a, T, B> {
 /// # Safety
 ///
 /// `buf` must contain a value of T at `loc` and have alignment of 1.
-/// For a pager, the page must remain pinned for the lifetime `'a`.
 pub unsafe fn follow_cast_ref<'a, T: Sized + 'a, B: ReadBuffer + ?Sized>(
     buf: &'a B,
     loc: usize,

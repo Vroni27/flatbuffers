@@ -12,17 +12,25 @@ use self::serde::ser::{Serialize, Serializer, SerializeStruct};
 use self::flatbuffers::{EndianScalar, Follow};
 use super::*;
 pub enum InParentNamespaceOffset {}
-#[derive(Copy, Clone, PartialEq)]
+impl InParentNamespaceOffset {
+}
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Copy for InParentNamespace<'a, B> {}
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Clone for InParentNamespace<'a, B> {
+  fn clone(&self) -> Self { *self }
+}
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized + PartialEq> PartialEq for InParentNamespace<'a, B> {
+  fn eq(&self, other: &Self) -> bool { self._tab.eq(&other._tab) }
+}
 
 pub struct InParentNamespace<'a, B: flatbuffers::ReadBuffer + ?Sized = [u8]> {
   pub _tab: flatbuffers::Table<'a, B>,
 }
 
-impl<'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'a, B> for InParentNamespace<'a, B> {
-  type Inner = InParentNamespace<'a, B>;
+impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'buf, B> for InParentNamespace<'a, B> {
+  type Inner = InParentNamespace<'buf, B>;
   #[inline]
-  unsafe fn follow(buf: &'a B, loc: usize) -> Self::Inner {
-    Self { _tab: unsafe { flatbuffers::Table::new(buf, loc) } }
+  unsafe fn follow(buf: &'buf B, loc: usize) -> Self::Inner {
+    InParentNamespace { _tab: unsafe { flatbuffers::Table::new(buf, loc) } }
   }
 }
 

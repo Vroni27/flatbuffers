@@ -10,23 +10,31 @@ use core::cmp::Ordering;
 use self::flatbuffers::{EndianScalar, Follow};
 use super::*;
 pub enum GameMessageWrapperOffset {}
-#[derive(Copy, Clone, PartialEq)]
+impl GameMessageWrapperOffset {
+    pub const VT_MESSAGE_TYPE: flatbuffers::VOffsetT = 4;
+    pub const VT_MESSAGE: flatbuffers::VOffsetT = 6;
+}
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Copy for GameMessageWrapper<'a, B> {}
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Clone for GameMessageWrapper<'a, B> {
+  fn clone(&self) -> Self { *self }
+}
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized + PartialEq> PartialEq for GameMessageWrapper<'a, B> {
+  fn eq(&self, other: &Self) -> bool { self._tab.eq(&other._tab) }
+}
 
 pub struct GameMessageWrapper<'a, B: flatbuffers::ReadBuffer + ?Sized = [u8]> {
   pub _tab: flatbuffers::Table<'a, B>,
 }
 
-impl<'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'a, B> for GameMessageWrapper<'a, B> {
-  type Inner = GameMessageWrapper<'a, B>;
+impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'buf, B> for GameMessageWrapper<'a, B> {
+  type Inner = GameMessageWrapper<'buf, B>;
   #[inline]
-  unsafe fn follow(buf: &'a B, loc: usize) -> Self::Inner {
-    Self { _tab: unsafe { flatbuffers::Table::new(buf, loc) } }
+  unsafe fn follow(buf: &'buf B, loc: usize) -> Self::Inner {
+    GameMessageWrapper { _tab: unsafe { flatbuffers::Table::new(buf, loc) } }
   }
 }
 
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> GameMessageWrapper<'a, B> {
-  pub const VT_MESSAGE_TYPE: flatbuffers::VOffsetT = 4;
-  pub const VT_MESSAGE: flatbuffers::VOffsetT = 6;
 
   pub const fn get_fully_qualified_name() -> &'static str {
     "RustNamerTest.GameMessageWrapper"
@@ -77,14 +85,14 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> GameMessageWrapper<'a, B> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<GameMessage>(GameMessageWrapper::VT_MESSAGE_TYPE, Some(GameMessage::NONE)).unwrap()}
+    unsafe { self._tab.get::<GameMessage>(GameMessageWrapperOffset::VT_MESSAGE_TYPE, Some(GameMessage::NONE)).unwrap()}
   }
   #[inline]
   pub fn Message(&self) -> Option<flatbuffers::Table<'a, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Table<'a, B>>>(GameMessageWrapper::VT_MESSAGE, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Table<'a, B>>>(GameMessageWrapperOffset::VT_MESSAGE, None)}
   }
   #[inline]
   #[allow(non_snake_case)]
@@ -140,7 +148,7 @@ impl<B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Verifiable for GameMessag
   ) -> Result<(), flatbuffers::InvalidFlatbuffer> {
     use self::flatbuffers::Verifiable;
     v.visit_table(pos)?
-     .visit_union::<GameMessageUnionValue>("Message_type", Self::VT_MESSAGE_TYPE, "Message", Self::VT_MESSAGE, false)?
+     .visit_union::<GameMessageUnionValue>("Message_type", GameMessageWrapperOffset::VT_MESSAGE_TYPE, "Message", GameMessageWrapperOffset::VT_MESSAGE, false)?
      .finish();
     Ok(())
   }
@@ -166,11 +174,11 @@ pub struct GameMessageWrapperBuilder<'a: 'b, 'b, A: flatbuffers::Allocator + 'a>
 impl<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> GameMessageWrapperBuilder<'a, 'b, A> {
   #[inline]
   pub fn add_Message_type(&mut self, Message_type: GameMessage) {
-    self.fbb_.push_slot::<GameMessage>(GameMessageWrapper::VT_MESSAGE_TYPE, Message_type, GameMessage::NONE);
+    self.fbb_.push_slot::<GameMessage>(GameMessageWrapperOffset::VT_MESSAGE_TYPE, Message_type, GameMessage::NONE);
   }
   #[inline]
   pub fn add_Message(&mut self, Message: flatbuffers::WIPOffset<GameMessageUnionValue>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(GameMessageWrapper::VT_MESSAGE, Message);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(GameMessageWrapperOffset::VT_MESSAGE, Message);
   }
   #[inline]
   pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a, A>) -> GameMessageWrapperBuilder<'a, 'b, A> {

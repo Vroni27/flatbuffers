@@ -10,17 +10,25 @@ use core::cmp::Ordering;
 use self::flatbuffers::{EndianScalar, Follow};
 use super::*;
 pub enum PlayerInputChangeOffset {}
-#[derive(Copy, Clone, PartialEq)]
+impl PlayerInputChangeOffset {
+}
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Copy for PlayerInputChange<'a, B> {}
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Clone for PlayerInputChange<'a, B> {
+  fn clone(&self) -> Self { *self }
+}
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized + PartialEq> PartialEq for PlayerInputChange<'a, B> {
+  fn eq(&self, other: &Self) -> bool { self._tab.eq(&other._tab) }
+}
 
 pub struct PlayerInputChange<'a, B: flatbuffers::ReadBuffer + ?Sized = [u8]> {
   pub _tab: flatbuffers::Table<'a, B>,
 }
 
-impl<'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'a, B> for PlayerInputChange<'a, B> {
-  type Inner = PlayerInputChange<'a, B>;
+impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'buf, B> for PlayerInputChange<'a, B> {
+  type Inner = PlayerInputChange<'buf, B>;
   #[inline]
-  unsafe fn follow(buf: &'a B, loc: usize) -> Self::Inner {
-    Self { _tab: unsafe { flatbuffers::Table::new(buf, loc) } }
+  unsafe fn follow(buf: &'buf B, loc: usize) -> Self::Inner {
+    PlayerInputChange { _tab: unsafe { flatbuffers::Table::new(buf, loc) } }
   }
 }
 

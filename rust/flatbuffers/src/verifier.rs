@@ -313,11 +313,6 @@ impl Default for VerifierOptions {
 }
 
 /// Carries the verification state. Should not be reused between tables.
-///
-/// Internally the verifier always works on a contiguous `&'buf [u8]` slice.
-/// When the backing store is a custom [`ReadBuffer`] (e.g. a user-space pager),
-/// use [`Verifier::new_with_buffer`] which pins the entire buffer once — this
-/// is unavoidable since verification must read every byte.
 #[derive(Debug)]
 pub struct Verifier<'opts, 'buf> {
     buffer: &'buf [u8],
@@ -331,23 +326,6 @@ impl<'opts, 'buf> Verifier<'opts, 'buf> {
     /// Create a verifier for a plain byte slice.
     pub fn new(opts: &'opts VerifierOptions, buffer: &'buf [u8]) -> Self {
         Self { opts, buffer, depth: 0, num_tables: 0, apparent_size: 0 }
-    }
-
-    /// Create a verifier for any [`ReadBuffer`] backing store.
-    ///
-    /// Calls [`ReadBuffer::bytes`]`(0, buffer.len())` once to obtain a
-    /// `&'buf [u8]` view of the whole buffer. For a pager this pins every page
-    /// for `'buf` — unavoidable since verification reads every byte anyway.
-    ///
-    /// # Safety
-    /// The `ReadBuffer` contract requires the returned bytes to remain valid
-    /// for `'buf`; see [`ReadBuffer::bytes`] for details.
-    pub unsafe fn new_with_buffer<B: ReadBuffer + ?Sized>(
-        opts: &'opts VerifierOptions,
-        buffer: &'buf B,
-    ) -> Self {
-        let slice = buffer.bytes(0, buffer.len());
-        Self::new(opts, slice)
     }
 
     /// Resets verifier internal state.

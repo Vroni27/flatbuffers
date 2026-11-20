@@ -166,8 +166,8 @@ impl<'a, T: Follow<'a, B>, B: ReadBuffer + ?Sized> Follow<'a, B> for ForwardsUOf
     type Inner = T::Inner;
     #[inline(always)]
     unsafe fn follow(buf: &'a B, loc: usize) -> Self::Inner {
-        let guard = buf.pin_bytes(loc, SIZE_UOFFSET);
-        let off = read_scalar::<u32>(&*guard) as usize;
+        let bytes = buf.bytes(loc, SIZE_UOFFSET);
+        let off = read_scalar::<u32>(bytes) as usize;
         T::follow(buf, loc + off)
     }
 }
@@ -187,8 +187,8 @@ impl<'a, T: Follow<'a, B>, B: ReadBuffer + ?Sized> Follow<'a, B> for ForwardsVOf
     type Inner = T::Inner;
     #[inline(always)]
     unsafe fn follow(buf: &'a B, loc: usize) -> Self::Inner {
-        let guard = buf.pin_bytes(loc, SIZE_VOFFSET);
-        let off = read_scalar::<VOffsetT>(&*guard) as usize;
+        let bytes = buf.bytes(loc, SIZE_VOFFSET);
+        let off = read_scalar::<VOffsetT>(bytes) as usize;
         T::follow(buf, loc + off)
     }
 }
@@ -217,8 +217,8 @@ impl<'a, T: Follow<'a, B>, B: ReadBuffer + ?Sized> Follow<'a, B> for BackwardsSO
     type Inner = T::Inner;
     #[inline(always)]
     unsafe fn follow(buf: &'a B, loc: usize) -> Self::Inner {
-        let guard = buf.pin_bytes(loc, SIZE_SOFFSET);
-        let off = read_scalar::<SOffsetT>(&*guard);
+        let bytes = buf.bytes(loc, SIZE_SOFFSET);
+        let off = read_scalar::<SOffsetT>(bytes);
         T::follow(buf, (loc as SOffsetT - off) as usize)
     }
 }

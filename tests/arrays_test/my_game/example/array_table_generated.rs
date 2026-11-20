@@ -10,22 +10,30 @@ use core::cmp::Ordering;
 use self::flatbuffers::{EndianScalar, Follow};
 use super::*;
 pub enum ArrayTableOffset {}
-#[derive(Copy, Clone, PartialEq)]
+impl ArrayTableOffset {
+    pub const VT_A: flatbuffers::VOffsetT = 4;
+}
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Copy for ArrayTable<'a, B> {}
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Clone for ArrayTable<'a, B> {
+  fn clone(&self) -> Self { *self }
+}
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized + PartialEq> PartialEq for ArrayTable<'a, B> {
+  fn eq(&self, other: &Self) -> bool { self._tab.eq(&other._tab) }
+}
 
 pub struct ArrayTable<'a, B: flatbuffers::ReadBuffer + ?Sized = [u8]> {
   pub _tab: flatbuffers::Table<'a, B>,
 }
 
-impl<'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'a, B> for ArrayTable<'a, B> {
-  type Inner = ArrayTable<'a, B>;
+impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'buf, B> for ArrayTable<'a, B> {
+  type Inner = ArrayTable<'buf, B>;
   #[inline]
-  unsafe fn follow(buf: &'a B, loc: usize) -> Self::Inner {
-    Self { _tab: unsafe { flatbuffers::Table::new(buf, loc) } }
+  unsafe fn follow(buf: &'buf B, loc: usize) -> Self::Inner {
+    ArrayTable { _tab: unsafe { flatbuffers::Table::new(buf, loc) } }
   }
 }
 
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> ArrayTable<'a, B> {
-  pub const VT_A: flatbuffers::VOffsetT = 4;
 
   pub const fn get_fully_qualified_name() -> &'static str {
     "MyGame.Example.ArrayTable"
@@ -59,7 +67,7 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> ArrayTable<'a, B> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<ArrayStruct>(ArrayTable::VT_A, None)}
+    unsafe { self._tab.get::<ArrayStruct>(ArrayTableOffset::VT_A, None)}
   }
 }
 
@@ -70,7 +78,7 @@ impl<B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Verifiable for ArrayTable
   ) -> Result<(), flatbuffers::InvalidFlatbuffer> {
     use self::flatbuffers::Verifiable;
     v.visit_table(pos)?
-     .visit_field::<ArrayStruct>("a", Self::VT_A, false)?
+     .visit_field::<ArrayStruct>("a", ArrayTableOffset::VT_A, false)?
      .finish();
     Ok(())
   }
@@ -94,7 +102,7 @@ pub struct ArrayTableBuilder<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> {
 impl<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> ArrayTableBuilder<'a, 'b, A> {
   #[inline]
   pub fn add_a(&mut self, a: &ArrayStruct) {
-    self.fbb_.push_slot_always::<&ArrayStruct>(ArrayTable::VT_A, a);
+    self.fbb_.push_slot_always::<&ArrayStruct>(ArrayTableOffset::VT_A, a);
   }
   #[inline]
   pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a, A>) -> ArrayTableBuilder<'a, 'b, A> {
@@ -149,8 +157,8 @@ impl ArrayTableT {
 /// catch every error, or be maximally performant. For the
 /// previous, unchecked, behavior use
 /// `root_as_array_table_unchecked`.
-pub fn root_as_array_table<B: flatbuffers::ReadBuffer + ?Sized>(buf: &B) -> Result<ArrayTable<'_, B>, flatbuffers::InvalidFlatbuffer> {
-  flatbuffers::root_with_buffer::<ArrayTable<'_, B>, B>(buf)
+pub fn root_as_array_table(buf: &[u8]) -> Result<ArrayTable<'_>, flatbuffers::InvalidFlatbuffer> {
+  flatbuffers::root::<ArrayTable>(buf)
 }
 #[inline]
 /// Verifies that a buffer of bytes contains a size prefixed
@@ -159,8 +167,8 @@ pub fn root_as_array_table<B: flatbuffers::ReadBuffer + ?Sized>(buf: &B) -> Resu
 /// catch every error, or be maximally performant. For the
 /// previous, unchecked, behavior use
 /// `size_prefixed_root_as_array_table_unchecked`.
-pub fn size_prefixed_root_as_array_table<B: flatbuffers::ReadBuffer + ?Sized>(buf: &B) -> Result<ArrayTable<'_, B>, flatbuffers::InvalidFlatbuffer> {
-  flatbuffers::size_prefixed_root_with_buffer::<ArrayTable<'_, B>, B>(buf)
+pub fn size_prefixed_root_as_array_table(buf: &[u8]) -> Result<ArrayTable<'_>, flatbuffers::InvalidFlatbuffer> {
+  flatbuffers::size_prefixed_root::<ArrayTable>(buf)
 }
 #[inline]
 /// Verifies, with the given options, that a buffer of bytes
@@ -169,11 +177,11 @@ pub fn size_prefixed_root_as_array_table<B: flatbuffers::ReadBuffer + ?Sized>(bu
 /// catch every error, or be maximally performant. For the
 /// previous, unchecked, behavior use
 /// `root_as_array_table_unchecked`.
-pub fn root_as_array_table_with_opts<'b, 'o, B: flatbuffers::ReadBuffer + ?Sized>(
+pub fn root_as_array_table_with_opts<'b, 'o>(
   opts: &'o flatbuffers::VerifierOptions,
-  buf: &'b B,
-) -> Result<ArrayTable<'b, B>, flatbuffers::InvalidFlatbuffer> {
-  flatbuffers::root_with_buffer_and_opts::<ArrayTable<'b, B>, B>(opts, buf)
+  buf: &'b [u8],
+) -> Result<ArrayTable<'b>, flatbuffers::InvalidFlatbuffer> {
+  flatbuffers::root_with_opts::<ArrayTable<'b>>(opts, buf)
 }
 #[inline]
 /// Verifies, with the given verifier options, that a buffer of
@@ -182,11 +190,11 @@ pub fn root_as_array_table_with_opts<'b, 'o, B: flatbuffers::ReadBuffer + ?Sized
 /// catch every error, or be maximally performant. For the
 /// previous, unchecked, behavior use
 /// `root_as_array_table_unchecked`.
-pub fn size_prefixed_root_as_array_table_with_opts<'b, 'o, B: flatbuffers::ReadBuffer + ?Sized>(
+pub fn size_prefixed_root_as_array_table_with_opts<'b, 'o>(
   opts: &'o flatbuffers::VerifierOptions,
-  buf: &'b B,
-) -> Result<ArrayTable<'b, B>, flatbuffers::InvalidFlatbuffer> {
-  flatbuffers::size_prefixed_root_with_buffer_and_opts::<ArrayTable<'b, B>, B>(opts, buf)
+  buf: &'b [u8],
+) -> Result<ArrayTable<'b>, flatbuffers::InvalidFlatbuffer> {
+  flatbuffers::size_prefixed_root_with_opts::<ArrayTable<'b>>(opts, buf)
 }
 #[inline]
 /// Assumes, without verification, that a buffer of bytes contains a ArrayTable and returns it.

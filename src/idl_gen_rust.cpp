@@ -1656,9 +1656,9 @@ class RustGenerator : public BaseGenerator {
     const auto WrapForwardsUOffset = [](std::string ty) -> std::string {
       return "flatbuffers::ForwardsUOffset<" + ty + ">";
     };
-     const auto WrapVector = [&](std::string ty) -> std::string {
-       return "flatbuffers::Vector<" + lifetime + ", " + ty + ", B>";
-     };
+    const auto WrapVector = [&](std::string ty) -> std::string {
+      return "flatbuffers::Vector<" + lifetime + ", " + ty + ", B>";
+    };
     const auto WrapArray = [&](std::string ty, uint16_t length) -> std::string {
       return "flatbuffers::Array<" + lifetime + ", " + ty + ", " +
              NumToString(length) + ">";
@@ -1845,7 +1845,7 @@ class RustGenerator : public BaseGenerator {
     code_ += "  pub _tab: flatbuffers::Table<'a, B>,";
     code_ += "}";
     code_ += "";
-     code_ += "impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'buf, B> for {{STRUCT_TY}}<'a, B> {";
+    code_ += "impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'buf, B> for {{STRUCT_TY}}<'a, B> {";
     code_ += "  type Inner = {{STRUCT_TY}}<'buf, B>;";
     code_ += "  #[inline]";
     code_ += "  unsafe fn follow(buf: &'buf B, loc: usize) -> Self::Inner {";
@@ -1998,7 +1998,7 @@ class RustGenerator : public BaseGenerator {
             code_ +=
                 "          .map(|x: (&Vec<{{ENUM_TY}}>, "
                 "flatbuffers::Vector<'_, "
-                "flatbuffers::ForwardsUOffset<flatbuffers::Table<'_, B>>>)| {";
+                "flatbuffers::ForwardsUOffset<flatbuffers::Table<'_, B>>, B>)| {";
             code_ += "            x.0.iter().zip(x.1.iter()).map(|t| {";
             code_ += "              let key = t.0;";
             code_ += "              let table = t.1;";
@@ -2141,17 +2141,17 @@ class RustGenerator : public BaseGenerator {
               code_.SetValue("RETURN_TYPE",
                              "&'a " + code_.GetValue("U_ELEMENT_TABLE_TYPE"));
             } else {
-               code_.SetValue("CLOSURE", "");
-               code_.SetValue("INIT_FUNCTION_CALL", "init_from_table");
-               // For tables, include the B parameter; for structs, just 'a
-               if (IsStruct(ev.union_type)) {
-                 code_.SetValue("RETURN_TYPE",
-                                code_.GetValue("U_ELEMENT_TABLE_TYPE") + "<'a>");
-               } else {
-                 code_.SetValue("RETURN_TYPE",
-                                code_.GetValue("U_ELEMENT_TABLE_TYPE") + "<'a, B>");
-               }
-             }
+              code_.SetValue("CLOSURE", "");
+              code_.SetValue("INIT_FUNCTION_CALL", "init_from_table");
+              // For tables, include the B parameter; for structs, just 'a
+              if (IsStruct(ev.union_type)) {
+                code_.SetValue("RETURN_TYPE",
+                               code_.GetValue("U_ELEMENT_TABLE_TYPE") + "<'a>");
+              } else {
+                code_.SetValue("RETURN_TYPE",
+                               code_.GetValue("U_ELEMENT_TABLE_TYPE") + "<'a, B>");
+              }
+            }
             code_ += "#[inline]";
             code_ += "#[allow(non_snake_case)]";
             code_ +=
@@ -2219,13 +2219,12 @@ class RustGenerator : public BaseGenerator {
                              "follow(table.buf(), table.loc())");
               code_.SetValue("RETURN_TYPE",
                              "&'a " + code_.GetValue("U_ELEMENT_TABLE_TYPE"));
-               } else {
-                 const auto typname = code_.GetValue("U_ELEMENT_TABLE_TYPE");
-                 code_.SetValue("INIT_FUNCTION_CALL", 
-                                "<" + typname + "<'a, B>>::init_from_table(table)");
-                 code_.SetValue("RETURN_TYPE",
-                                typname + "<'a, B>");
-               }
+            } else {
+              const auto typname = code_.GetValue("U_ELEMENT_TABLE_TYPE");
+              code_.SetValue("INIT_FUNCTION_CALL",
+                             "<" + typname + "<'a, B>>::init_from_table(table)");
+              code_.SetValue("RETURN_TYPE", typname + "<'a, B>");
+            }
             code_ += "  #[inline]";
             code_ += "  #[allow(non_snake_case)]";
             code_ +=
@@ -2237,11 +2236,11 @@ class RustGenerator : public BaseGenerator {
             code_ +=
                 "        if let Some((tag, table)) = "
                 "tags.iter().zip(tables.iter()).nth(idx) {";
-             code_ += "          if tag == {{U_ELEMENT_ENUM_TYPE}} {";
-             code_ +=
-                 "            return "
-                 "Some(unsafe { {{INIT_FUNCTION_CALL}} });";
-             code_ += "          }";
+            code_ += "          if tag == {{U_ELEMENT_ENUM_TYPE}} {";
+            code_ +=
+                "            return "
+                "Some(unsafe { {{INIT_FUNCTION_CALL}} });";
+            code_ += "          }";
             code_ += "        }";
             code_ += "      }";
             code_ += "    }";
@@ -2465,7 +2464,7 @@ class RustGenerator : public BaseGenerator {
       if (!field.IsRequired()) return;
       code_ +=
           "  self.fbb_.required(o, {{STRUCT_TY}}Offset::{{OFFSET_NAME}},"
-          "\"{{FIELD}}\");"; 
+          "\"{{FIELD}}\");";
     });
     code_ += "    flatbuffers::WIPOffset::new(o.value())";
     code_ += "  }";
@@ -2747,9 +2746,9 @@ class RustGenerator : public BaseGenerator {
     code_ += "/// previous, unchecked, behavior use";
     code_ += "/// `root_as_{{STRUCT_FN}}_unchecked`.";
     code_ +=
-        "pub fn root_as_{{STRUCT_FN}}<B: flatbuffers::ReadBuffer + ?Sized>(buf: &B) "
-        "-> Result<{{STRUCT_TY}}<'_, B>, flatbuffers::InvalidFlatbuffer> {";
-    code_ += "  flatbuffers::root_with_buffer::<{{STRUCT_TY}}<'_, B>, B>(buf)";
+        "pub fn root_as_{{STRUCT_FN}}(buf: &[u8]) "
+        "-> Result<{{STRUCT_TY}}<'_>, flatbuffers::InvalidFlatbuffer> {";
+    code_ += "  flatbuffers::root::<{{STRUCT_TY}}>(buf)";
     code_ += "}";
     code_ += "#[inline]";
     code_ += "/// Verifies that a buffer of bytes contains a size prefixed";
@@ -2760,9 +2759,9 @@ class RustGenerator : public BaseGenerator {
     code_ += "/// `size_prefixed_root_as_{{STRUCT_FN}}_unchecked`.";
     code_ +=
         "pub fn size_prefixed_root_as_{{STRUCT_FN}}"
-        "<B: flatbuffers::ReadBuffer + ?Sized>(buf: &B) -> Result<{{STRUCT_TY}}<'_, B>, "
+        "(buf: &[u8]) -> Result<{{STRUCT_TY}}<'_>, "
         "flatbuffers::InvalidFlatbuffer> {";
-    code_ += "  flatbuffers::size_prefixed_root_with_buffer::<{{STRUCT_TY}}<'_, B>, B>(buf)";
+    code_ += "  flatbuffers::size_prefixed_root::<{{STRUCT_TY}}>(buf)";
     code_ += "}";
     // Verifier with options root fns.
     code_ += "#[inline]";
@@ -2772,13 +2771,13 @@ class RustGenerator : public BaseGenerator {
     code_ += "/// catch every error, or be maximally performant. For the";
     code_ += "/// previous, unchecked, behavior use";
     code_ += "/// `root_as_{{STRUCT_FN}}_unchecked`.";
-    code_ += "pub fn root_as_{{STRUCT_FN}}_with_opts<'b, 'o, B: flatbuffers::ReadBuffer + ?Sized>(";
+    code_ += "pub fn root_as_{{STRUCT_FN}}_with_opts<'b, 'o>(";
     code_ += "  opts: &'o flatbuffers::VerifierOptions,";
-    code_ += "  buf: &'b B,";
+    code_ += "  buf: &'b [u8],";
     code_ +=
-        ") -> Result<{{STRUCT_TY}}<'b, B>, flatbuffers::InvalidFlatbuffer>"
+        ") -> Result<{{STRUCT_TY}}<'b>, flatbuffers::InvalidFlatbuffer>"
         " {";
-    code_ += "  flatbuffers::root_with_buffer_and_opts::<{{STRUCT_TY}}<'b, B>, B>(opts, buf)";
+    code_ += "  flatbuffers::root_with_opts::<{{STRUCT_TY}}<'b>>(opts, buf)";
     code_ += "}";
     code_ += "#[inline]";
     code_ += "/// Verifies, with the given verifier options, that a buffer of";
@@ -2789,15 +2788,15 @@ class RustGenerator : public BaseGenerator {
     code_ += "/// `root_as_{{STRUCT_FN}}_unchecked`.";
     code_ +=
         "pub fn size_prefixed_root_as_{{STRUCT_FN}}_with_opts"
-        "<'b, 'o, B: flatbuffers::ReadBuffer + ?Sized>(";
+        "<'b, 'o>(";
     code_ += "  opts: &'o flatbuffers::VerifierOptions,";
-    code_ += "  buf: &'b B,";
+    code_ += "  buf: &'b [u8],";
     code_ +=
-        ") -> Result<{{STRUCT_TY}}<'b, B>, flatbuffers::InvalidFlatbuffer>"
+        ") -> Result<{{STRUCT_TY}}<'b>, flatbuffers::InvalidFlatbuffer>"
         " {";
     code_ +=
-        "  flatbuffers::size_prefixed_root_with_buffer_and_opts::<{{STRUCT_TY}}"
-        "<'b, B>, B>(opts, buf)";
+        "  flatbuffers::size_prefixed_root_with_opts::<{{STRUCT_TY}}"
+        "<'b>>(opts, buf)";
     code_ += "}";
     // Unchecked root fns.
     code_ += "#[inline]";

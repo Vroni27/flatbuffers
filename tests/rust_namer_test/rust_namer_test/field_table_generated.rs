@@ -10,17 +10,25 @@ use core::cmp::Ordering;
 use self::flatbuffers::{EndianScalar, Follow};
 use super::*;
 pub enum FieldTableOffset {}
-#[derive(Copy, Clone, PartialEq)]
+impl FieldTableOffset {
+}
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Copy for FieldTable<'a, B> {}
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Clone for FieldTable<'a, B> {
+  fn clone(&self) -> Self { *self }
+}
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized + PartialEq> PartialEq for FieldTable<'a, B> {
+  fn eq(&self, other: &Self) -> bool { self._tab.eq(&other._tab) }
+}
 
 pub struct FieldTable<'a, B: flatbuffers::ReadBuffer + ?Sized = [u8]> {
   pub _tab: flatbuffers::Table<'a, B>,
 }
 
-impl<'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'a, B> for FieldTable<'a, B> {
-  type Inner = FieldTable<'a, B>;
+impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'buf, B> for FieldTable<'a, B> {
+  type Inner = FieldTable<'buf, B>;
   #[inline]
-  unsafe fn follow(buf: &'a B, loc: usize) -> Self::Inner {
-    Self { _tab: unsafe { flatbuffers::Table::new(buf, loc) } }
+  unsafe fn follow(buf: &'buf B, loc: usize) -> Self::Inner {
+    FieldTable { _tab: unsafe { flatbuffers::Table::new(buf, loc) } }
   }
 }
 

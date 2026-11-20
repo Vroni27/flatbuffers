@@ -10,23 +10,31 @@ use core::cmp::Ordering;
 use self::flatbuffers::{EndianScalar, Follow};
 use super::*;
 pub enum WeaponOffset {}
-#[derive(Copy, Clone, PartialEq)]
+impl WeaponOffset {
+    pub const VT_NAME: flatbuffers::VOffsetT = 4;
+    pub const VT_DAMAGE: flatbuffers::VOffsetT = 6;
+}
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Copy for Weapon<'a, B> {}
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Clone for Weapon<'a, B> {
+  fn clone(&self) -> Self { *self }
+}
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized + PartialEq> PartialEq for Weapon<'a, B> {
+  fn eq(&self, other: &Self) -> bool { self._tab.eq(&other._tab) }
+}
 
 pub struct Weapon<'a, B: flatbuffers::ReadBuffer + ?Sized = [u8]> {
   pub _tab: flatbuffers::Table<'a, B>,
 }
 
-impl<'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'a, B> for Weapon<'a, B> {
-  type Inner = Weapon<'a, B>;
+impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'buf, B> for Weapon<'a, B> {
+  type Inner = Weapon<'buf, B>;
   #[inline]
-  unsafe fn follow(buf: &'a B, loc: usize) -> Self::Inner {
-    Self { _tab: unsafe { flatbuffers::Table::new(buf, loc) } }
+  unsafe fn follow(buf: &'buf B, loc: usize) -> Self::Inner {
+    Weapon { _tab: unsafe { flatbuffers::Table::new(buf, loc) } }
   }
 }
 
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Weapon<'a, B> {
-  pub const VT_NAME: flatbuffers::VOffsetT = 4;
-  pub const VT_DAMAGE: flatbuffers::VOffsetT = 6;
 
   pub const fn get_fully_qualified_name() -> &'static str {
     "MyGame.Sample.Weapon"
@@ -63,14 +71,14 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Weapon<'a, B> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(Weapon::VT_NAME, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(WeaponOffset::VT_NAME, None)}
   }
   #[inline]
   pub fn damage(&self) -> i16 {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<i16>(Weapon::VT_DAMAGE, Some(0)).unwrap()}
+    unsafe { self._tab.get::<i16>(WeaponOffset::VT_DAMAGE, Some(0)).unwrap()}
   }
 }
 
@@ -81,8 +89,8 @@ impl<B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Verifiable for Weapon<'_,
   ) -> Result<(), flatbuffers::InvalidFlatbuffer> {
     use self::flatbuffers::Verifiable;
     v.visit_table(pos)?
-     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("name", Self::VT_NAME, false)?
-     .visit_field::<i16>("damage", Self::VT_DAMAGE, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("name", WeaponOffset::VT_NAME, false)?
+     .visit_field::<i16>("damage", WeaponOffset::VT_DAMAGE, false)?
      .finish();
     Ok(())
   }
@@ -108,11 +116,11 @@ pub struct WeaponBuilder<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> {
 impl<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> WeaponBuilder<'a, 'b, A> {
   #[inline]
   pub fn add_name(&mut self, name: flatbuffers::WIPOffset<&'b  str>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(Weapon::VT_NAME, name);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(WeaponOffset::VT_NAME, name);
   }
   #[inline]
   pub fn add_damage(&mut self, damage: i16) {
-    self.fbb_.push_slot::<i16>(Weapon::VT_DAMAGE, damage, 0);
+    self.fbb_.push_slot::<i16>(WeaponOffset::VT_DAMAGE, damage, 0);
   }
   #[inline]
   pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a, A>) -> WeaponBuilder<'a, 'b, A> {

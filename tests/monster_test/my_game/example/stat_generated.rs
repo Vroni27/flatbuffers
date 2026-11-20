@@ -10,24 +10,32 @@ use core::cmp::Ordering;
 use self::flatbuffers::{EndianScalar, Follow};
 use super::*;
 pub enum StatOffset {}
-#[derive(Copy, Clone, PartialEq)]
+impl StatOffset {
+    pub const VT_ID: flatbuffers::VOffsetT = 4;
+    pub const VT_VAL: flatbuffers::VOffsetT = 6;
+    pub const VT_COUNT: flatbuffers::VOffsetT = 8;
+}
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Copy for Stat<'a, B> {}
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Clone for Stat<'a, B> {
+  fn clone(&self) -> Self { *self }
+}
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized + PartialEq> PartialEq for Stat<'a, B> {
+  fn eq(&self, other: &Self) -> bool { self._tab.eq(&other._tab) }
+}
 
 pub struct Stat<'a, B: flatbuffers::ReadBuffer + ?Sized = [u8]> {
   pub _tab: flatbuffers::Table<'a, B>,
 }
 
-impl<'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'a, B> for Stat<'a, B> {
-  type Inner = Stat<'a, B>;
+impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'buf, B> for Stat<'a, B> {
+  type Inner = Stat<'buf, B>;
   #[inline]
-  unsafe fn follow(buf: &'a B, loc: usize) -> Self::Inner {
-    Self { _tab: unsafe { flatbuffers::Table::new(buf, loc) } }
+  unsafe fn follow(buf: &'buf B, loc: usize) -> Self::Inner {
+    Stat { _tab: unsafe { flatbuffers::Table::new(buf, loc) } }
   }
 }
 
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Stat<'a, B> {
-  pub const VT_ID: flatbuffers::VOffsetT = 4;
-  pub const VT_VAL: flatbuffers::VOffsetT = 6;
-  pub const VT_COUNT: flatbuffers::VOffsetT = 8;
 
   pub const fn get_fully_qualified_name() -> &'static str {
     "MyGame.Example.Stat"
@@ -67,21 +75,21 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Stat<'a, B> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(Stat::VT_ID, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(StatOffset::VT_ID, None)}
   }
   #[inline]
   pub fn val(&self) -> i64 {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<i64>(Stat::VT_VAL, Some(0)).unwrap()}
+    unsafe { self._tab.get::<i64>(StatOffset::VT_VAL, Some(0)).unwrap()}
   }
   #[inline]
   pub fn count(&self) -> u16 {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<u16>(Stat::VT_COUNT, Some(0)).unwrap()}
+    unsafe { self._tab.get::<u16>(StatOffset::VT_COUNT, Some(0)).unwrap()}
   }
   #[inline]
   pub fn key_compare_less_than(&self, o: &Stat) -> bool {
@@ -102,9 +110,9 @@ impl<B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Verifiable for Stat<'_, B
   ) -> Result<(), flatbuffers::InvalidFlatbuffer> {
     use self::flatbuffers::Verifiable;
     v.visit_table(pos)?
-     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("id", Self::VT_ID, false)?
-     .visit_field::<i64>("val", Self::VT_VAL, false)?
-     .visit_field::<u16>("count", Self::VT_COUNT, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("id", StatOffset::VT_ID, false)?
+     .visit_field::<i64>("val", StatOffset::VT_VAL, false)?
+     .visit_field::<u16>("count", StatOffset::VT_COUNT, false)?
      .finish();
     Ok(())
   }
@@ -132,15 +140,15 @@ pub struct StatBuilder<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> {
 impl<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> StatBuilder<'a, 'b, A> {
   #[inline]
   pub fn add_id(&mut self, id: flatbuffers::WIPOffset<&'b  str>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(Stat::VT_ID, id);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(StatOffset::VT_ID, id);
   }
   #[inline]
   pub fn add_val(&mut self, val: i64) {
-    self.fbb_.push_slot::<i64>(Stat::VT_VAL, val, 0);
+    self.fbb_.push_slot::<i64>(StatOffset::VT_VAL, val, 0);
   }
   #[inline]
   pub fn add_count(&mut self, count: u16) {
-    self.fbb_.push_slot::<u16>(Stat::VT_COUNT, count, 0);
+    self.fbb_.push_slot::<u16>(StatOffset::VT_COUNT, count, 0);
   }
   #[inline]
   pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a, A>) -> StatBuilder<'a, 'b, A> {

@@ -10,17 +10,25 @@ use core::cmp::Ordering;
 use self::flatbuffers::{EndianScalar, Follow};
 use super::*;
 pub enum PlayerSpectateOffset {}
-#[derive(Copy, Clone, PartialEq)]
+impl PlayerSpectateOffset {
+}
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Copy for PlayerSpectate<'a, B> {}
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Clone for PlayerSpectate<'a, B> {
+  fn clone(&self) -> Self { *self }
+}
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized + PartialEq> PartialEq for PlayerSpectate<'a, B> {
+  fn eq(&self, other: &Self) -> bool { self._tab.eq(&other._tab) }
+}
 
 pub struct PlayerSpectate<'a, B: flatbuffers::ReadBuffer + ?Sized = [u8]> {
   pub _tab: flatbuffers::Table<'a, B>,
 }
 
-impl<'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'a, B> for PlayerSpectate<'a, B> {
-  type Inner = PlayerSpectate<'a, B>;
+impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'buf, B> for PlayerSpectate<'a, B> {
+  type Inner = PlayerSpectate<'buf, B>;
   #[inline]
-  unsafe fn follow(buf: &'a B, loc: usize) -> Self::Inner {
-    Self { _tab: unsafe { flatbuffers::Table::new(buf, loc) } }
+  unsafe fn follow(buf: &'buf B, loc: usize) -> Self::Inner {
+    PlayerSpectate { _tab: unsafe { flatbuffers::Table::new(buf, loc) } }
   }
 }
 

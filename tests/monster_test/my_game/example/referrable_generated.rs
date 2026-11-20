@@ -10,22 +10,30 @@ use core::cmp::Ordering;
 use self::flatbuffers::{EndianScalar, Follow};
 use super::*;
 pub enum ReferrableOffset {}
-#[derive(Copy, Clone, PartialEq)]
+impl ReferrableOffset {
+    pub const VT_ID: flatbuffers::VOffsetT = 4;
+}
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Copy for Referrable<'a, B> {}
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Clone for Referrable<'a, B> {
+  fn clone(&self) -> Self { *self }
+}
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized + PartialEq> PartialEq for Referrable<'a, B> {
+  fn eq(&self, other: &Self) -> bool { self._tab.eq(&other._tab) }
+}
 
 pub struct Referrable<'a, B: flatbuffers::ReadBuffer + ?Sized = [u8]> {
   pub _tab: flatbuffers::Table<'a, B>,
 }
 
-impl<'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'a, B> for Referrable<'a, B> {
-  type Inner = Referrable<'a, B>;
+impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'buf, B> for Referrable<'a, B> {
+  type Inner = Referrable<'buf, B>;
   #[inline]
-  unsafe fn follow(buf: &'a B, loc: usize) -> Self::Inner {
-    Self { _tab: unsafe { flatbuffers::Table::new(buf, loc) } }
+  unsafe fn follow(buf: &'buf B, loc: usize) -> Self::Inner {
+    Referrable { _tab: unsafe { flatbuffers::Table::new(buf, loc) } }
   }
 }
 
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Referrable<'a, B> {
-  pub const VT_ID: flatbuffers::VOffsetT = 4;
 
   pub const fn get_fully_qualified_name() -> &'static str {
     "MyGame.Example.Referrable"
@@ -57,7 +65,7 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Referrable<'a, B> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<u64>(Referrable::VT_ID, Some(0)).unwrap()}
+    unsafe { self._tab.get::<u64>(ReferrableOffset::VT_ID, Some(0)).unwrap()}
   }
   #[inline]
   pub fn key_compare_less_than(&self, o: &Referrable) -> bool {
@@ -78,7 +86,7 @@ impl<B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Verifiable for Referrable
   ) -> Result<(), flatbuffers::InvalidFlatbuffer> {
     use self::flatbuffers::Verifiable;
     v.visit_table(pos)?
-     .visit_field::<u64>("id", Self::VT_ID, false)?
+     .visit_field::<u64>("id", ReferrableOffset::VT_ID, false)?
      .finish();
     Ok(())
   }
@@ -102,7 +110,7 @@ pub struct ReferrableBuilder<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> {
 impl<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> ReferrableBuilder<'a, 'b, A> {
   #[inline]
   pub fn add_id(&mut self, id: u64) {
-    self.fbb_.push_slot::<u64>(Referrable::VT_ID, id, 0);
+    self.fbb_.push_slot::<u64>(ReferrableOffset::VT_ID, id, 0);
   }
   #[inline]
   pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a, A>) -> ReferrableBuilder<'a, 'b, A> {

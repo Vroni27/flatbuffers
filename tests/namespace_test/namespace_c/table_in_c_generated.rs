@@ -10,23 +10,31 @@ use core::cmp::Ordering;
 use self::flatbuffers::{EndianScalar, Follow};
 use super::*;
 pub enum TableInCOffset {}
-#[derive(Copy, Clone, PartialEq)]
+impl TableInCOffset {
+    pub const VT_REFER_TO_A1: flatbuffers::VOffsetT = 4;
+    pub const VT_REFER_TO_A2: flatbuffers::VOffsetT = 6;
+}
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Copy for TableInC<'a, B> {}
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Clone for TableInC<'a, B> {
+  fn clone(&self) -> Self { *self }
+}
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized + PartialEq> PartialEq for TableInC<'a, B> {
+  fn eq(&self, other: &Self) -> bool { self._tab.eq(&other._tab) }
+}
 
 pub struct TableInC<'a, B: flatbuffers::ReadBuffer + ?Sized = [u8]> {
   pub _tab: flatbuffers::Table<'a, B>,
 }
 
-impl<'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'a, B> for TableInC<'a, B> {
-  type Inner = TableInC<'a, B>;
+impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'buf, B> for TableInC<'a, B> {
+  type Inner = TableInC<'buf, B>;
   #[inline]
-  unsafe fn follow(buf: &'a B, loc: usize) -> Self::Inner {
-    Self { _tab: unsafe { flatbuffers::Table::new(buf, loc) } }
+  unsafe fn follow(buf: &'buf B, loc: usize) -> Self::Inner {
+    TableInC { _tab: unsafe { flatbuffers::Table::new(buf, loc) } }
   }
 }
 
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> TableInC<'a, B> {
-  pub const VT_REFER_TO_A1: flatbuffers::VOffsetT = 4;
-  pub const VT_REFER_TO_A2: flatbuffers::VOffsetT = 6;
 
   pub const fn get_fully_qualified_name() -> &'static str {
     "NamespaceC.TableInC"
@@ -65,14 +73,14 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> TableInC<'a, B> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<super::namespace_a::TableInFirstNS<'a, B>>>(TableInC::VT_REFER_TO_A1, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<super::namespace_a::TableInFirstNS<'a, B>>>(TableInCOffset::VT_REFER_TO_A1, None)}
   }
   #[inline]
   pub fn refer_to_a2(&self) -> Option<super::namespace_a::SecondTableInA<'a, B>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<super::namespace_a::SecondTableInA<'a, B>>>(TableInC::VT_REFER_TO_A2, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<super::namespace_a::SecondTableInA<'a, B>>>(TableInCOffset::VT_REFER_TO_A2, None)}
   }
 }
 
@@ -83,8 +91,8 @@ impl<B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Verifiable for TableInC<'
   ) -> Result<(), flatbuffers::InvalidFlatbuffer> {
     use self::flatbuffers::Verifiable;
     v.visit_table(pos)?
-     .visit_field::<flatbuffers::ForwardsUOffset<super::namespace_a::TableInFirstNS>>("refer_to_a1", Self::VT_REFER_TO_A1, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<super::namespace_a::SecondTableInA>>("refer_to_a2", Self::VT_REFER_TO_A2, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<super::namespace_a::TableInFirstNS<'_, B>>>("refer_to_a1", TableInCOffset::VT_REFER_TO_A1, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<super::namespace_a::SecondTableInA<'_, B>>>("refer_to_a2", TableInCOffset::VT_REFER_TO_A2, false)?
      .finish();
     Ok(())
   }
@@ -110,11 +118,11 @@ pub struct TableInCBuilder<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> {
 impl<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> TableInCBuilder<'a, 'b, A> {
   #[inline]
   pub fn add_refer_to_a1(&mut self, refer_to_a1: flatbuffers::WIPOffset<super::namespace_a::TableInFirstNS<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<super::namespace_a::TableInFirstNS>>(TableInC::VT_REFER_TO_A1, refer_to_a1);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<super::namespace_a::TableInFirstNS>>(TableInCOffset::VT_REFER_TO_A1, refer_to_a1);
   }
   #[inline]
   pub fn add_refer_to_a2(&mut self, refer_to_a2: flatbuffers::WIPOffset<super::namespace_a::SecondTableInA<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<super::namespace_a::SecondTableInA>>(TableInC::VT_REFER_TO_A2, refer_to_a2);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<super::namespace_a::SecondTableInA>>(TableInCOffset::VT_REFER_TO_A2, refer_to_a2);
   }
   #[inline]
   pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a, A>) -> TableInCBuilder<'a, 'b, A> {

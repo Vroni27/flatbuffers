@@ -10,22 +10,30 @@ use core::cmp::Ordering;
 use self::flatbuffers::{EndianScalar, Follow};
 use super::*;
 pub enum TableAOffset {}
-#[derive(Copy, Clone, PartialEq)]
+impl TableAOffset {
+    pub const VT_B: flatbuffers::VOffsetT = 4;
+}
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Copy for TableA<'a, B> {}
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Clone for TableA<'a, B> {
+  fn clone(&self) -> Self { *self }
+}
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized + PartialEq> PartialEq for TableA<'a, B> {
+  fn eq(&self, other: &Self) -> bool { self._tab.eq(&other._tab) }
+}
 
 pub struct TableA<'a, B: flatbuffers::ReadBuffer + ?Sized = [u8]> {
   pub _tab: flatbuffers::Table<'a, B>,
 }
 
-impl<'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'a, B> for TableA<'a, B> {
-  type Inner = TableA<'a, B>;
+impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'buf, B> for TableA<'a, B> {
+  type Inner = TableA<'buf, B>;
   #[inline]
-  unsafe fn follow(buf: &'a B, loc: usize) -> Self::Inner {
-    Self { _tab: unsafe { flatbuffers::Table::new(buf, loc) } }
+  unsafe fn follow(buf: &'buf B, loc: usize) -> Self::Inner {
+    TableA { _tab: unsafe { flatbuffers::Table::new(buf, loc) } }
   }
 }
 
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> TableA<'a, B> {
-  pub const VT_B: flatbuffers::VOffsetT = 4;
 
   pub const fn get_fully_qualified_name() -> &'static str {
     "TableA"
@@ -59,7 +67,7 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> TableA<'a, B> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<my_game::other_name_space::TableB<'a, B>>>(TableA::VT_B, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<my_game::other_name_space::TableB<'a, B>>>(TableAOffset::VT_B, None)}
   }
 }
 
@@ -70,7 +78,7 @@ impl<B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Verifiable for TableA<'_,
   ) -> Result<(), flatbuffers::InvalidFlatbuffer> {
     use self::flatbuffers::Verifiable;
     v.visit_table(pos)?
-     .visit_field::<flatbuffers::ForwardsUOffset<my_game::other_name_space::TableB>>("b", Self::VT_B, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<my_game::other_name_space::TableB<'_, B>>>("b", TableAOffset::VT_B, false)?
      .finish();
     Ok(())
   }
@@ -94,7 +102,7 @@ pub struct TableABuilder<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> {
 impl<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> TableABuilder<'a, 'b, A> {
   #[inline]
   pub fn add_b(&mut self, b: flatbuffers::WIPOffset<my_game::other_name_space::TableB<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<my_game::other_name_space::TableB>>(TableA::VT_B, b);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<my_game::other_name_space::TableB>>(TableAOffset::VT_B, b);
   }
   #[inline]
   pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a, A>) -> TableABuilder<'a, 'b, A> {

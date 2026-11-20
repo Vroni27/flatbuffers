@@ -10,27 +10,35 @@ use core::cmp::Ordering;
 use self::flatbuffers::{EndianScalar, Follow};
 use super::*;
 pub enum MoreDefaultsOffset {}
-#[derive(Copy, Clone, PartialEq)]
+impl MoreDefaultsOffset {
+    pub const VT_INTS: flatbuffers::VOffsetT = 4;
+    pub const VT_FLOATS: flatbuffers::VOffsetT = 6;
+    pub const VT_EMPTY_STRING: flatbuffers::VOffsetT = 8;
+    pub const VT_SOME_STRING: flatbuffers::VOffsetT = 10;
+    pub const VT_ABCS: flatbuffers::VOffsetT = 12;
+    pub const VT_BOOLS: flatbuffers::VOffsetT = 14;
+}
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Copy for MoreDefaults<'a, B> {}
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Clone for MoreDefaults<'a, B> {
+  fn clone(&self) -> Self { *self }
+}
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized + PartialEq> PartialEq for MoreDefaults<'a, B> {
+  fn eq(&self, other: &Self) -> bool { self._tab.eq(&other._tab) }
+}
 
 pub struct MoreDefaults<'a, B: flatbuffers::ReadBuffer + ?Sized = [u8]> {
   pub _tab: flatbuffers::Table<'a, B>,
 }
 
-impl<'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'a, B> for MoreDefaults<'a, B> {
-  type Inner = MoreDefaults<'a, B>;
+impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'buf, B> for MoreDefaults<'a, B> {
+  type Inner = MoreDefaults<'buf, B>;
   #[inline]
-  unsafe fn follow(buf: &'a B, loc: usize) -> Self::Inner {
-    Self { _tab: unsafe { flatbuffers::Table::new(buf, loc) } }
+  unsafe fn follow(buf: &'buf B, loc: usize) -> Self::Inner {
+    MoreDefaults { _tab: unsafe { flatbuffers::Table::new(buf, loc) } }
   }
 }
 
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> MoreDefaults<'a, B> {
-  pub const VT_INTS: flatbuffers::VOffsetT = 4;
-  pub const VT_FLOATS: flatbuffers::VOffsetT = 6;
-  pub const VT_EMPTY_STRING: flatbuffers::VOffsetT = 8;
-  pub const VT_SOME_STRING: flatbuffers::VOffsetT = 10;
-  pub const VT_ABCS: flatbuffers::VOffsetT = 12;
-  pub const VT_BOOLS: flatbuffers::VOffsetT = 14;
 
   pub const fn get_fully_qualified_name() -> &'static str {
     "MoreDefaults"
@@ -91,46 +99,46 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> MoreDefaults<'a, B> {
   }
 
   #[inline]
-  pub fn ints(&self) -> flatbuffers::Vector<'a, i32> {
+  pub fn ints(&self) -> flatbuffers::Vector<'a, i32, B> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, i32>>>(MoreDefaults::VT_INTS, Some(Default::default())).unwrap()}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, i32, B>>>(MoreDefaultsOffset::VT_INTS, Some(Default::default())).unwrap()}
   }
   #[inline]
-  pub fn floats(&self) -> flatbuffers::Vector<'a, f32> {
+  pub fn floats(&self) -> flatbuffers::Vector<'a, f32, B> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, f32>>>(MoreDefaults::VT_FLOATS, Some(Default::default())).unwrap()}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, f32, B>>>(MoreDefaultsOffset::VT_FLOATS, Some(Default::default())).unwrap()}
   }
   #[inline]
   pub fn empty_string(&self) -> &'a str {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(MoreDefaults::VT_EMPTY_STRING, Some(&"")).unwrap()}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(MoreDefaultsOffset::VT_EMPTY_STRING, Some(&"")).unwrap()}
   }
   #[inline]
   pub fn some_string(&self) -> &'a str {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(MoreDefaults::VT_SOME_STRING, Some(&"some")).unwrap()}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(MoreDefaultsOffset::VT_SOME_STRING, Some(&"some")).unwrap()}
   }
   #[inline]
-  pub fn abcs(&self) -> flatbuffers::Vector<'a, ABC> {
+  pub fn abcs(&self) -> flatbuffers::Vector<'a, ABC, B> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, ABC>>>(MoreDefaults::VT_ABCS, Some(Default::default())).unwrap()}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, ABC, B>>>(MoreDefaultsOffset::VT_ABCS, Some(Default::default())).unwrap()}
   }
   #[inline]
-  pub fn bools(&self) -> flatbuffers::Vector<'a, bool> {
+  pub fn bools(&self) -> flatbuffers::Vector<'a, bool, B> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, bool>>>(MoreDefaults::VT_BOOLS, Some(Default::default())).unwrap()}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, bool, B>>>(MoreDefaultsOffset::VT_BOOLS, Some(Default::default())).unwrap()}
   }
 }
 
@@ -141,12 +149,12 @@ impl<B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Verifiable for MoreDefaul
   ) -> Result<(), flatbuffers::InvalidFlatbuffer> {
     use self::flatbuffers::Verifiable;
     v.visit_table(pos)?
-     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, i32>>>("ints", Self::VT_INTS, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, f32>>>("floats", Self::VT_FLOATS, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("empty_string", Self::VT_EMPTY_STRING, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("some_string", Self::VT_SOME_STRING, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, ABC>>>("abcs", Self::VT_ABCS, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, bool>>>("bools", Self::VT_BOOLS, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, i32, B>>>("ints", MoreDefaultsOffset::VT_INTS, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, f32, B>>>("floats", MoreDefaultsOffset::VT_FLOATS, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("empty_string", MoreDefaultsOffset::VT_EMPTY_STRING, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<&str>>("some_string", MoreDefaultsOffset::VT_SOME_STRING, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, ABC, B>>>("abcs", MoreDefaultsOffset::VT_ABCS, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, bool, B>>>("bools", MoreDefaultsOffset::VT_BOOLS, false)?
      .finish();
     Ok(())
   }
@@ -180,27 +188,27 @@ pub struct MoreDefaultsBuilder<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> {
 impl<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> MoreDefaultsBuilder<'a, 'b, A> {
   #[inline]
   pub fn add_ints(&mut self, ints: flatbuffers::WIPOffset<flatbuffers::Vector<'b , i32>>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(MoreDefaults::VT_INTS, ints);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(MoreDefaultsOffset::VT_INTS, ints);
   }
   #[inline]
   pub fn add_floats(&mut self, floats: flatbuffers::WIPOffset<flatbuffers::Vector<'b , f32>>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(MoreDefaults::VT_FLOATS, floats);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(MoreDefaultsOffset::VT_FLOATS, floats);
   }
   #[inline]
   pub fn add_empty_string(&mut self, empty_string: flatbuffers::WIPOffset<&'b  str>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(MoreDefaults::VT_EMPTY_STRING, empty_string);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(MoreDefaultsOffset::VT_EMPTY_STRING, empty_string);
   }
   #[inline]
   pub fn add_some_string(&mut self, some_string: flatbuffers::WIPOffset<&'b  str>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(MoreDefaults::VT_SOME_STRING, some_string);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(MoreDefaultsOffset::VT_SOME_STRING, some_string);
   }
   #[inline]
   pub fn add_abcs(&mut self, abcs: flatbuffers::WIPOffset<flatbuffers::Vector<'b , ABC>>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(MoreDefaults::VT_ABCS, abcs);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(MoreDefaultsOffset::VT_ABCS, abcs);
   }
   #[inline]
   pub fn add_bools(&mut self, bools: flatbuffers::WIPOffset<flatbuffers::Vector<'b , bool>>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(MoreDefaults::VT_BOOLS, bools);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(MoreDefaultsOffset::VT_BOOLS, bools);
   }
   #[inline]
   pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a, A>) -> MoreDefaultsBuilder<'a, 'b, A> {

@@ -10,22 +10,30 @@ use core::cmp::Ordering;
 use self::flatbuffers::{EndianScalar, Follow};
 use super::*;
 pub enum TableInNestedNSOffset {}
-#[derive(Copy, Clone, PartialEq)]
+impl TableInNestedNSOffset {
+    pub const VT_FOO: flatbuffers::VOffsetT = 4;
+}
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Copy for TableInNestedNS<'a, B> {}
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized> Clone for TableInNestedNS<'a, B> {
+  fn clone(&self) -> Self { *self }
+}
+impl<'a, B: flatbuffers::ReadBuffer + ?Sized + PartialEq> PartialEq for TableInNestedNS<'a, B> {
+  fn eq(&self, other: &Self) -> bool { self._tab.eq(&other._tab) }
+}
 
 pub struct TableInNestedNS<'a, B: flatbuffers::ReadBuffer + ?Sized = [u8]> {
   pub _tab: flatbuffers::Table<'a, B>,
 }
 
-impl<'a, B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Follow<'a, B> for TableInNestedNS<'a, B> {
-  type Inner = TableInNestedNS<'a, B>;
+impl<'buf, 'a, B: flatbuffers::ReadBuffer + ?Sized + 'buf> flatbuffers::Follow<'buf, B> for TableInNestedNS<'a, B> {
+  type Inner = TableInNestedNS<'buf, B>;
   #[inline]
-  unsafe fn follow(buf: &'a B, loc: usize) -> Self::Inner {
-    Self { _tab: unsafe { flatbuffers::Table::new(buf, loc) } }
+  unsafe fn follow(buf: &'buf B, loc: usize) -> Self::Inner {
+    TableInNestedNS { _tab: unsafe { flatbuffers::Table::new(buf, loc) } }
   }
 }
 
 impl<'a, B: flatbuffers::ReadBuffer + ?Sized> TableInNestedNS<'a, B> {
-  pub const VT_FOO: flatbuffers::VOffsetT = 4;
 
   pub const fn get_fully_qualified_name() -> &'static str {
     "NamespaceA.NamespaceB.TableInNestedNS"
@@ -57,7 +65,7 @@ impl<'a, B: flatbuffers::ReadBuffer + ?Sized> TableInNestedNS<'a, B> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<i32>(TableInNestedNS::VT_FOO, Some(0)).unwrap()}
+    unsafe { self._tab.get::<i32>(TableInNestedNSOffset::VT_FOO, Some(0)).unwrap()}
   }
 }
 
@@ -68,7 +76,7 @@ impl<B: flatbuffers::ReadBuffer + ?Sized> flatbuffers::Verifiable for TableInNes
   ) -> Result<(), flatbuffers::InvalidFlatbuffer> {
     use self::flatbuffers::Verifiable;
     v.visit_table(pos)?
-     .visit_field::<i32>("foo", Self::VT_FOO, false)?
+     .visit_field::<i32>("foo", TableInNestedNSOffset::VT_FOO, false)?
      .finish();
     Ok(())
   }
@@ -92,7 +100,7 @@ pub struct TableInNestedNSBuilder<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> {
 impl<'a: 'b, 'b, A: flatbuffers::Allocator + 'a> TableInNestedNSBuilder<'a, 'b, A> {
   #[inline]
   pub fn add_foo(&mut self, foo: i32) {
-    self.fbb_.push_slot::<i32>(TableInNestedNS::VT_FOO, foo, 0);
+    self.fbb_.push_slot::<i32>(TableInNestedNSOffset::VT_FOO, foo, 0);
   }
   #[inline]
   pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a, A>) -> TableInNestedNSBuilder<'a, 'b, A> {
